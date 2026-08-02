@@ -21,6 +21,17 @@ taf.sh is the company/consultancy site (sole proprietorship) — multi-page, sta
 - Teal is the single accent: `text-accent`, `bg-accent` + `text-accent-contrast` (fills), `bg-accent-soft` (tints), `border-accent`, `text-accent-strong`. Use it sparingly — `[*]` markers, `Fig N.` captions, terminal `$` prompts and cursor, primary CTAs, link hovers, focus rings
 - Conventions: monospace accents with `[*]` list markers, `Fig N.` stat captions, terminal-style cards, otherwise monochrome
 
+## Motion
+
+All of it is CSS — no animation library, no client router.
+
+- Navigation uses native **cross-document view transitions** (`@view-transition { navigation: auto }` in `global.css`). The page body sinks out and rises in; the sticky nav is pulled out of the root snapshot with `view-transition-name: site-nav` so it holds still
+- Product names morph between the index list and the product `<h1>`: both ends set `view-transition-name: product-<id>` plus `view-transition-class: product-title`. New product pages must pass a matching `id` to `ProductPage` and add the same `id` to the `products` array in `index.astro`
+- Theme switching runs through `document.startViewTransition({ types: ["theme"] })`, and `:active-view-transition-type(theme)` swaps the slide for a cross-fade
+- Section entrances use the `.reveal` utility — a scroll-driven animation (`animation-timeline: view()`), no IntersectionObserver. Note the `--reveal-timeline` indirection in `global.css`: without it Lightning CSS folds the timeline into the `animation` shorthand, a form browsers reject
+- Transition defaults (`180ms`, `--ease-site`) come from `@theme`, so bare `transition-colors` utilities are already on-brand
+- Everything above is disabled under `prefers-reduced-motion: reduce`, in CSS and in the theme-toggle script
+
 ## Structure
 
 - `src/layouts/Layout.astro` — base HTML shell (fonts, meta, Nav + Footer)
