@@ -99,8 +99,30 @@ const modes = [
 		});
 	};
 
+	const reduced = matchMedia("(prefers-reduced-motion: reduce)");
+
+	/**
+	 * Cross-fade the palette swap with a same-document view transition. The
+	 * `theme` type lets global.css swap the navigation animation for a plain
+	 * fade; browsers without the API just repaint instantly.
+	 */
+	const supportsTypes = CSS.supports(
+		"selector(:active-view-transition-type(theme))",
+	);
+
+	const select = (mode: Mode) => {
+		if (!document.startViewTransition || reduced.matches) return apply(mode);
+		// Without transition types the root would reuse the navigation slide,
+		// which reads wrong for a palette swap — repaint instantly instead.
+		if (!supportsTypes) return apply(mode);
+		document.startViewTransition({
+			update: () => apply(mode),
+			types: ["theme"],
+		} as unknown as () => void);
+	};
+
 	document.querySelectorAll<HTMLButtonElement>("[data-theme-set]").forEach((button) => {
-		button.addEventListener("click", () => apply(button.dataset.themeSet as Mode));
+		button.addEventListener("click", () => select(button.dataset.themeSet as Mode));
 	});
 
 	media.addEventListener("change", () => {
