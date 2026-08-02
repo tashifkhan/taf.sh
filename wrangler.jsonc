@@ -1,0 +1,28 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "taf-sh",
+  // Today's date — Workers compatibility
+  "compatibility_date": "2026-08-01",
+  "main": "worker/index.ts",
+  "workers_dev": true,
+  "preview_urls": true,
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS",
+    // Static multipage site — serve 404.html for missing paths when present
+    "not_found_handling": "404-page",
+    // PostHog reverse proxy must run before asset lookup
+    "run_worker_first": ["/ph", "/ph/*"]
+  },
+  // Zone routes — intercepts proxied traffic for apex + www.
+  // Prefer these over custom_domain when DNS records already exist in the zone.
+  "routes": [
+    { "pattern": "taf.sh", "zone_name": "taf.sh" },
+    { "pattern": "taf.sh/*", "zone_name": "taf.sh" },
+    { "pattern": "www.taf.sh", "zone_name": "taf.sh" },
+    { "pattern": "www.taf.sh/*", "zone_name": "taf.sh" }
+  ],
+  "observability": {
+    "enabled": true
+  }
+}

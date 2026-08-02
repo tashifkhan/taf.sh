@@ -1,0 +1,85 @@
+/**
+ * Cloudflare Worker for taf.sh
+ * - Serves the Astro static build via Workers Assets
+ * - Reverse-proxies /ph/* to PostHog EU (same-origin analytics)
+ */
+
+const API_HOST = "eu.i.posthog.com";
+const ASSET_HOST = "eu-assets.i.posthog.com";
+
+interface Env {
+	ASSETS: Fetcher;
+}
+
+function stripPhPrefix(pathname: string): string {
+	// /ph -> /  |  /ph/static/x -> /static/x  |  /ph/e/ -> /e/
+	if (pathname === "/ph") return "/";
+	if (pathname.startsWith("/ph/")) return pathname.slice(3) || "/";
+	return pathname;
+}
+
+async function proxyPostHog(
+	request: Request,
+	ctx: ExecutionContext,
+): Promise<Response> {
+	const url = new URL(request.url);
+	const pathname = stripPhPrefix(url.pathname);
+	const pathWithSearch = pathname + url.search;
+
+	const isAsset =
+		pathname.startsWith("/static/") || pathname.startsWith("/array/");
+
+	if (isAsset) {
+		const cacheKey = new Request(url.toString(), request);
+		const cached = await caches.default.match(cacheKey);
+		if (cached) return cached;
+
+		const assetRes = await fetch(`https://${ASSET_HOST}${pathWithSearch}`, {
+			method: request.method,
+			headers: request.headers,
+			redirect: "follow",
+		});
+
+		// Cache successful asset responses at the edge
+		if (assetRes.ok) {
+			ctx.waitUntil(caches.default.put(cacheKey, assetRes.clone()));
+		}
+		return assetRes;
+	}
+
+	const ip = request.headers.get("CF-Connecting-IP") || "";
+	const headers = new Headers(request.headers);
+	headers.delete("cookie");
+	headers.delete("host");
+	headers.set("X-Forwarded-For", ip);
+
+	const body =
+		request.method !== "GET" && request.method !== "HEAD"
+			? await request.arrayBuffer()
+			: null;
+
+	return fetch(`https://${API_HOST}${pathWithSearch}`, {
+		method: request.method,
+		headers,
+		body,
+		redirect: "follow",
+	});
+}
+
+export default {
+	async fetch(
+		request: Request,
+		env: Env,
+		ctx: ExecutionContext,
+	): Promise<Response> {
+		const url = new URL(request.url);
+
+		// PostHog reverse proxy (run_worker_first for /ph*)
+		if (url.pathname === "/ph" || url.pathname.startsWith("/ph/")) {
+			return proxyPostHog(request, ctx);
+		}
+
+		// Fallback for non-asset requests that still hit the worker
+		return env.ASSETS.fetch(request);
+	},
+};
