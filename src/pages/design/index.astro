@@ -1,0 +1,743 @@
+---
+/**
+ * Design lab — 21 directions in three rounds.
+ * Round 1: Terminal+, Blueprint, Man page, Ledger (kept).
+ * Round 2: Broadsheet, Bauhaus, Zine, Tategaki, Chat, Wayfinding, Wiki, Deco, Riso.
+ * Round 3: Label, Patent, Teletext, Desktop, Museum, Gamebook, Ticker, Cassette.
+ * Selection in localStorage. Selector uses inline script (no bundling).
+ */
+import "@fontsource/ibm-plex-sans/400.css";
+import "@fontsource/ibm-plex-sans/500.css";
+import "@fontsource/ibm-plex-sans/600.css";
+import "@fontsource/ibm-plex-sans/700.css";
+import "@fontsource/ibm-plex-mono/400.css";
+import "@fontsource/ibm-plex-mono/500.css";
+import "../../styles/global.css";
+
+import ThemeScript from "../../components/ThemeScript.astro";
+import ThemeToggle from "../../components/ThemeToggle.astro";
+
+import V3Terminal from "../../components/designs/V3Terminal.astro";
+import VBlueprint from "../../components/designs/VBlueprint.astro";
+import VManpage from "../../components/designs/VManpage.astro";
+import VLedger from "../../components/designs/VLedger.astro";
+import VBroadsheet from "../../components/designs/VBroadsheet.astro";
+import VBauhaus from "../../components/designs/VBauhaus.astro";
+import VZine from "../../components/designs/VZine.astro";
+import VTategaki from "../../components/designs/VTategaki.astro";
+import VChat from "../../components/designs/VChat.astro";
+import VWayfinding from "../../components/designs/VWayfinding.astro";
+import VWiki from "../../components/designs/VWiki.astro";
+import VDeco from "../../components/designs/VDeco.astro";
+import VRiso from "../../components/designs/VRiso.astro";
+import VLabel from "../../components/designs/VLabel.astro";
+import VPatent from "../../components/designs/VPatent.astro";
+import VTeletext from "../../components/designs/VTeletext.astro";
+import VDesktop from "../../components/designs/VDesktop.astro";
+import VMuseum from "../../components/designs/VMuseum.astro";
+import VGamebook from "../../components/designs/VGamebook.astro";
+import VTicker from "../../components/designs/VTicker.astro";
+import VCassette from "../../components/designs/VCassette.astro";
+
+const panels = {
+	terminal: V3Terminal,
+	blueprint: VBlueprint,
+	manpage: VManpage,
+	ledger: VLedger,
+	broadsheet: VBroadsheet,
+	bauhaus: VBauhaus,
+	zine: VZine,
+	tategaki: VTategaki,
+	chat: VChat,
+	wayfinding: VWayfinding,
+	wiki: VWiki,
+	deco: VDeco,
+	riso: VRiso,
+	label: VLabel,
+	patent: VPatent,
+	teletext: VTeletext,
+	desktop: VDesktop,
+	museum: VMuseum,
+	gamebook: VGamebook,
+	ticker: VTicker,
+	cassette: VCassette,
+} as const;
+
+type VariantId = keyof typeof panels;
+
+interface Variant {
+	id: VariantId;
+	num: string;
+	name: string;
+	tag: string;
+	blurb: string;
+	round: 1 | 2 | 3;
+}
+
+const variants: Variant[] = [
+	{
+		id: "terminal",
+		num: "01",
+		name: "Terminal+",
+		tag: "Elevated mono",
+		blurb: "OpenCode DNA with light elevation — kept from last round.",
+		round: 1,
+	},
+	{
+		id: "blueprint",
+		num: "02",
+		name: "Blueprint",
+		tag: "Schematic",
+		blurb: "Navy + cyan construction drawing — kept from last round.",
+		round: 1,
+	},
+	{
+		id: "manpage",
+		num: "03",
+		name: "Man page",
+		tag: "Unix manual",
+		blurb: "NAME / SYNOPSIS / DESCRIPTION. Documentation as the site.",
+		round: 1,
+	},
+	{
+		id: "ledger",
+		num: "04",
+		name: "Ledger",
+		tag: "Book of account",
+		blurb: "Ruled paper, columns, particulars & balance. Quiet profession.",
+		round: 1,
+	},
+	{
+		id: "broadsheet",
+		num: "05",
+		name: "Broadsheet",
+		tag: "Newspaper",
+		blurb:
+			"A printed front page: blackletter masthead, lead story in columns, products as articles, services as classified ads.",
+		round: 2,
+	},
+	{
+		id: "bauhaus",
+		num: "06",
+		name: "Bauhaus",
+		tag: "Geometric",
+		blurb:
+			"Modernist poster: circles, triangles, diagonals, primary ink on cream. Form follows function, loudly.",
+		round: 2,
+	},
+	{
+		id: "zine",
+		num: "07",
+		name: "Zine",
+		tag: "Punk collage",
+		blurb:
+			"Xeroxed cut-and-paste: marker highlights, tape, rotated flyers, and a clip-and-save coupon CTA.",
+		round: 2,
+	},
+	{
+		id: "tategaki",
+		num: "08",
+		name: "Tategaki",
+		tag: "Japanese minimal",
+		blurb:
+			"Vertical text, sumi ink, vermilion hanko, vast negative space. Quiet precision over persuasion.",
+		round: 2,
+	},
+	{
+		id: "chat",
+		num: "09",
+		name: "Chat",
+		tag: "Conversation",
+		blurb:
+			"The site as a messaging thread — bubbles, link previews, typing indicator. Meta: CliniQ runs a clinic this way.",
+		round: 2,
+	},
+	{
+		id: "wayfinding",
+		num: "10",
+		name: "Wayfinding",
+		tag: "Transit signage",
+		blurb:
+			"Airport concourse: departures board, gate assignments, yellow arrows. All gates, one pilot.",
+		round: 2,
+	},
+	{
+		id: "wiki",
+		num: "11",
+		name: "Wiki",
+		tag: "Encyclopedia",
+		blurb:
+			"The studio as a reference article: infobox, citations, deadpan prose. Oddly trustworthy.",
+		round: 2,
+	},
+	{
+		id: "deco",
+		num: "12",
+		name: "Deco",
+		tag: "1920s gold",
+		blurb:
+			"Grand-hotel art deco: black lacquer, gold leaf, sunbursts, engraved invitation CTA.",
+		round: 2,
+	},
+	{
+		id: "riso",
+		num: "13",
+		name: "Riso",
+		tag: "Print shop",
+		blurb:
+			"Risograph press: fluoro pink + teal drums, multiply overprints, misregistration, grain.",
+		round: 2,
+	},
+	{
+		id: "label",
+		num: "14",
+		name: "Label",
+		tag: "Packaging",
+		blurb:
+			"The studio as an FDA facts panel: hairlines and 10pt rules, % of week as a bar chart, ingredients, warning box, barcode.",
+		round: 3,
+	},
+	{
+		id: "patent",
+		num: "15",
+		name: "Patent",
+		tag: "Filing",
+		blurb:
+			"Filed as a utility patent: two-column specification, numbered claims, FIG. 1 with lead lines, and a reference-numeral table. Every noun gets a number.",
+		round: 3,
+	},
+	{
+		id: "teletext",
+		num: "16",
+		name: "Teletext",
+		tag: "Ceefax",
+		blurb:
+			"Page 100 on a CRT: seven colours on black, mosaic block graphics, double-height headings, FASTEXT bar. Information as broadcast, not narrative.",
+		round: 3,
+	},
+	{
+		id: "desktop",
+		num: "17",
+		name: "Desktop",
+		tag: "Window manager",
+		blurb:
+			"A 1990s GUI: bevelled grey chrome, striped title bars, products in a file-manager list view, and a modal alert as the CTA.",
+		round: 3,
+	},
+	{
+		id: "museum",
+		num: "18",
+		name: "Museum",
+		tag: "Exhibition",
+		blurb:
+			"Wall labels, accession numbers, medium-and-dimensions lines, a curator's note. Nothing is sold; everything is on view.",
+		round: 3,
+	},
+	{
+		id: "gamebook",
+		num: "19",
+		name: "Gamebook",
+		tag: "Turn to §",
+		blurb:
+			"Choose-your-own-path: numbered paragraphs, in-page choices, an adventure sheet instead of a stats band, and an ending that is the contact page.",
+		round: 3,
+	},
+	{
+		id: "ticker",
+		num: "20",
+		name: "Ticker",
+		tag: "Market data",
+		blurb:
+			"Amber phosphor trading desk: running tape, product quote board, engagement wire, function-key bar. Density as the whole argument.",
+		round: 3,
+	},
+	{
+		id: "cassette",
+		num: "21",
+		name: "Cassette",
+		tag: "Liner notes",
+		blurb:
+			"A J-card album: spine, drawn tape shell, Side A shipped / Side B to order, credits in small caps, margin notes in pen.",
+		round: 3,
+	},
+];
+
+const rounds = [
+	{ n: 1, label: "Round 1 — kept" },
+	{ n: 2, label: "Round 2 — new directions" },
+	{ n: 3, label: "Round 3 — new patterns" },
+] as const;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="robots" content="noindex" />
+		<ThemeScript />
+		<title>Design lab · taf.sh</title>
+	</head>
+	<body class="lab-body">
+		<div class="lab" id="lab">
+			<div class="lab-top">
+				<div class="lab-brand">
+					<a href="/" class="lab-back">← Original site</a>
+					<strong class="lab-title">Design lab</strong>
+					<span class="lab-hint">21 directions · ← → to cycle · keys 1–9</span>
+				</div>
+				<div class="lab-actions">
+					<ThemeToggle />
+					<span class="lab-selected" id="lab-selected">None selected</span>
+					<button type="button" class="lab-choose" id="lab-choose">
+						Select this design
+					</button>
+				</div>
+			</div>
+
+			<div class="lab-tabs" id="lab-tabs" role="tablist" aria-label="Design variants">
+				{
+					rounds.map((round) => (
+						<>
+							<span class="lab-round" aria-hidden="true">
+								{round.label}
+							</span>
+							{variants
+								.filter((v) => v.round === round.n)
+								.map((v) => (
+									<button
+										type="button"
+										class:list={["lab-tab", { "is-on": v.id === "terminal" }]}
+										role="tab"
+										id={`tab-${v.id}`}
+										data-id={v.id}
+										data-name={v.name}
+										data-blurb={v.blurb}
+										aria-selected={v.id === "terminal" ? "true" : "false"}
+										aria-controls={`panel-${v.id}`}
+									>
+										<span class="lab-tab-num">{v.num}</span>
+										<span class="lab-tab-name">{v.name}</span>
+										<span class="lab-tab-tag">{v.tag}</span>
+									</button>
+								))}
+						</>
+					))
+				}
+			</div>
+
+			<p class="lab-desc" id="lab-desc">{variants[0].blurb}</p>
+		</div>
+
+		<main class="lab-stage" id="lab-stage">
+			{
+				variants.map((v) => {
+					const Panel = panels[v.id];
+					return (
+						<section
+							class:list={["lab-panel", { "is-on": v.id === "terminal" }]}
+							id={`panel-${v.id}`}
+							role="tabpanel"
+							data-id={v.id}
+							aria-labelledby={`tab-${v.id}`}
+							{...(v.id === "terminal" ? {} : { hidden: true })}
+						>
+							<Panel />
+						</section>
+					);
+				})
+			}
+		</main>
+
+		<div class="lab-toast" id="lab-toast" hidden>
+			<span id="lab-toast-msg">Saved</span>
+			<button type="button" id="lab-toast-x" aria-label="Close">×</button>
+		</div>
+
+		<style is:global>
+			.lab-body {
+				margin: 0;
+				background: var(--color-background);
+				color: var(--color-foreground);
+			}
+			.lab {
+				position: sticky;
+				top: 0;
+				z-index: 9999;
+				background: color-mix(in srgb, var(--color-background) 92%, transparent);
+				backdrop-filter: blur(12px);
+				border-bottom: 1px solid var(--color-border);
+				font-family: "IBM Plex Sans", system-ui, sans-serif;
+			}
+			.lab-top {
+				display: flex;
+				flex-wrap: wrap;
+				align-items: center;
+				justify-content: space-between;
+				gap: 0.75rem 1rem;
+				max-width: 90rem;
+				margin: 0 auto;
+				padding: 0.75rem 1rem 0.4rem;
+			}
+			.lab-brand {
+				display: flex;
+				flex-wrap: wrap;
+				align-items: baseline;
+				gap: 0.5rem 1rem;
+			}
+			.lab-back {
+				font-family: "IBM Plex Mono", monospace;
+				font-size: 0.75rem;
+				color: var(--color-muted);
+				text-decoration: none;
+			}
+			.lab-back:hover {
+				color: var(--color-foreground);
+			}
+			.lab-title {
+				font-size: 0.95rem;
+				font-weight: 600;
+			}
+			.lab-hint {
+				font-size: 0.75rem;
+				color: var(--color-muted);
+			}
+			.lab-actions {
+				display: flex;
+				align-items: center;
+				gap: 0.75rem;
+			}
+			.lab-selected {
+				font-family: "IBM Plex Mono", monospace;
+				font-size: 0.7rem;
+				color: var(--color-muted);
+			}
+			.lab-selected.has {
+				color: var(--color-accent);
+			}
+			.lab-choose {
+				appearance: none;
+				-webkit-appearance: none;
+				padding: 0.5rem 1rem;
+				background: var(--color-foreground);
+				color: var(--color-background);
+				border: none;
+				font-family: "IBM Plex Mono", monospace;
+				font-size: 0.75rem;
+				font-weight: 500;
+				cursor: pointer;
+				border-radius: 2px;
+			}
+			.lab-choose:hover {
+				opacity: 0.9;
+			}
+			.lab-choose.is-picked {
+				background: var(--color-accent);
+				color: var(--color-accent-contrast);
+			}
+			.lab-tabs {
+				display: flex;
+				align-items: center;
+				gap: 0.4rem;
+				max-width: 90rem;
+				margin: 0 auto;
+				padding: 0.35rem 1rem 0.55rem;
+				overflow-x: auto;
+				-webkit-overflow-scrolling: touch;
+				scrollbar-width: thin;
+			}
+			.lab-round {
+				flex: 0 0 auto;
+				font-family: "IBM Plex Mono", monospace;
+				font-size: 0.62rem;
+				letter-spacing: 0.08em;
+				text-transform: uppercase;
+				color: var(--color-faint);
+				padding: 0 0.5rem 0 0.15rem;
+				white-space: nowrap;
+			}
+			.lab-tab {
+				appearance: none;
+				-webkit-appearance: none;
+				flex: 0 0 auto;
+				display: flex;
+				flex-direction: column;
+				align-items: flex-start;
+				gap: 0.1rem;
+				min-width: 7.25rem;
+				padding: 0.5rem 0.75rem;
+				background: var(--color-surface);
+				border: 1px solid var(--color-border);
+				border-radius: 8px;
+				color: var(--color-secondary);
+				cursor: pointer;
+				text-align: left;
+				font-family: inherit;
+			}
+			.lab-tab:hover {
+				border-color: var(--color-border-strong);
+				color: var(--color-foreground);
+			}
+			.lab-tab.is-on {
+				border-color: var(--color-accent);
+				background: var(--color-elevated);
+				color: var(--color-foreground);
+			}
+			.lab-tab.is-picked {
+				box-shadow: inset 0 -2px 0 var(--color-accent);
+			}
+			.lab-tab-num {
+				font-family: "IBM Plex Mono", monospace;
+				font-size: 0.65rem;
+				color: var(--color-muted);
+			}
+			.lab-tab-name {
+				font-size: 0.85rem;
+				font-weight: 600;
+				white-space: nowrap;
+			}
+			.lab-tab-tag {
+				font-size: 0.65rem;
+				color: var(--color-muted);
+				white-space: nowrap;
+			}
+			.lab-desc {
+				max-width: 90rem;
+				margin: 0 auto;
+				padding: 0 1rem 0.7rem;
+				font-size: 0.8rem;
+				color: var(--color-muted);
+				line-height: 1.4;
+			}
+			.lab-panel {
+				display: none;
+			}
+			.lab-panel.is-on {
+				display: block;
+			}
+			.lab-panel[hidden] {
+				display: none !important;
+			}
+			.lab-toast {
+				position: fixed;
+				bottom: 1.25rem;
+				left: 50%;
+				transform: translateX(-50%);
+				z-index: 10000;
+				display: flex;
+				align-items: center;
+				gap: 1rem;
+				padding: 0.85rem 1.1rem;
+				background: var(--color-elevated);
+				border: 1px solid var(--color-border-strong);
+				border-radius: 8px;
+				font-size: 0.85rem;
+				box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+				max-width: calc(100% - 2rem);
+			}
+			.lab-toast[hidden] {
+				display: none !important;
+			}
+			.lab-toast button {
+				appearance: none;
+				background: none;
+				border: none;
+				color: var(--color-muted);
+				font-size: 1.25rem;
+				cursor: pointer;
+				line-height: 1;
+			}
+			@media (max-width: 640px) {
+				.lab-hint {
+					display: none;
+				}
+			}
+		</style>
+
+		<script is:inline>
+			(function () {
+				var STORAGE = "taf.sh.design-selection";
+				var tabs = Array.prototype.slice.call(
+					document.querySelectorAll("#lab-tabs .lab-tab"),
+				);
+				var panels = document.querySelectorAll("#lab-stage .lab-panel");
+				var desc = document.getElementById("lab-desc");
+				var choose = document.getElementById("lab-choose");
+				var selected = document.getElementById("lab-selected");
+				var toast = document.getElementById("lab-toast");
+				var toastMsg = document.getElementById("lab-toast-msg");
+				var toastX = document.getElementById("lab-toast-x");
+			var activeId = "terminal";
+			var pickedId = null;
+
+			function validId(id) {
+				for (var i = 0; i < tabs.length; i++) {
+					if (tabs[i].getAttribute("data-id") === id) return true;
+				}
+				return false;
+			}
+			(function () {
+				var m = (window.location.hash || "").replace(/^#\/?/, "");
+				var q = new URLSearchParams(window.location.search).get("v");
+				if (q && validId(q)) activeId = q;
+				else if (m && validId(m)) activeId = m;
+			})();
+
+				function showPanel(id) {
+					activeId = id;
+					var activeTab = null;
+					for (var i = 0; i < tabs.length; i++) {
+						var t = tabs[i];
+						var on = t.getAttribute("data-id") === id;
+						t.classList.toggle("is-on", on);
+						t.setAttribute("aria-selected", on ? "true" : "false");
+						if (on) activeTab = t;
+					}
+					for (var j = 0; j < panels.length; j++) {
+						var p = panels[j];
+						var show = p.getAttribute("data-id") === id;
+						p.classList.toggle("is-on", show);
+						if (show) p.removeAttribute("hidden");
+						else p.setAttribute("hidden", "");
+					}
+					if (desc && activeTab) {
+						desc.textContent = activeTab.getAttribute("data-blurb") || "";
+					}
+					if (choose && activeTab) {
+						var name = activeTab.getAttribute("data-name") || id;
+						if (pickedId === id) {
+							choose.textContent = "✓ Selected";
+							choose.classList.add("is-picked");
+						} else {
+							choose.textContent = 'Select "' + name + '"';
+							choose.classList.remove("is-picked");
+						}
+					if (activeTab.scrollIntoView) {
+						activeTab.scrollIntoView({
+							block: "nearest",
+							inline: "nearest",
+						});
+					}
+				}
+				try {
+					if (window.history.replaceState) {
+						window.history.replaceState(null, "", "#" + id);
+					}
+				} catch (e) {}
+				try {
+					window.scrollTo(0, 0);
+				} catch (e) {}
+				}
+
+				function step(delta) {
+					var idx = -1;
+					for (var i = 0; i < tabs.length; i++) {
+						if (tabs[i].getAttribute("data-id") === activeId) idx = i;
+					}
+					var next =
+						(idx + delta + tabs.length) % tabs.length;
+					var id = tabs[next] && tabs[next].getAttribute("data-id");
+					if (id) showPanel(id);
+				}
+
+				function markPicked(id, name) {
+					pickedId = id;
+					if (selected) {
+						selected.textContent = "Selected: " + name;
+						selected.classList.add("has");
+					}
+					for (var i = 0; i < tabs.length; i++) {
+						tabs[i].classList.toggle(
+							"is-picked",
+							tabs[i].getAttribute("data-id") === id,
+						);
+					}
+					if (choose && activeId === id) {
+						choose.textContent = "✓ Selected";
+						choose.classList.add("is-picked");
+					}
+				}
+
+				var tabBar = document.getElementById("lab-tabs");
+				if (tabBar) {
+					tabBar.addEventListener("click", function (e) {
+						var btn = e.target.closest(".lab-tab");
+						if (!btn || !tabBar.contains(btn)) return;
+						e.preventDefault();
+						var id = btn.getAttribute("data-id");
+						if (id) showPanel(id);
+					});
+				}
+
+				if (choose) {
+					choose.addEventListener("click", function (e) {
+						e.preventDefault();
+						var tab = document.querySelector(
+							'.lab-tab[data-id="' + activeId + '"]',
+						);
+						var name = (tab && tab.getAttribute("data-name")) || activeId;
+						try {
+							localStorage.setItem(
+								STORAGE,
+								JSON.stringify({
+									id: activeId,
+									name: name,
+									at: new Date().toISOString(),
+								}),
+							);
+						} catch (err) {}
+						markPicked(activeId, name);
+						if (toast && toastMsg) {
+							toastMsg.textContent =
+								'"' + name + '" saved — tell the agent to apply it.';
+							toast.hidden = false;
+							setTimeout(function () {
+								toast.hidden = true;
+							}, 4500);
+						}
+					});
+				}
+
+				if (toastX) {
+					toastX.addEventListener("click", function () {
+						if (toast) toast.hidden = true;
+					});
+				}
+
+				document.addEventListener("keydown", function (e) {
+					if (
+						e.target &&
+						(e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA")
+					)
+						return;
+					if (e.key === "ArrowRight") {
+						e.preventDefault();
+						step(1);
+						return;
+					}
+					if (e.key === "ArrowLeft") {
+						e.preventDefault();
+						step(-1);
+						return;
+					}
+					var n = parseInt(e.key, 10);
+					if (n >= 1 && n <= Math.min(9, tabs.length)) {
+						var t = tabs[n - 1];
+						if (t) showPanel(t.getAttribute("data-id"));
+					}
+				});
+
+				try {
+					var raw = localStorage.getItem(STORAGE);
+					if (raw) {
+						var data = JSON.parse(raw);
+						if (data && data.id && data.name) markPicked(data.id, data.name);
+					}
+				} catch (err) {}
+
+				showPanel(activeId);
+			})();
+		</script>
+	</body>
+</html>
