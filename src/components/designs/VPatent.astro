@@ -1,0 +1,603 @@
+---
+/**
+ * Patent — the studio filed as a utility patent application. Two-column
+ * specification, numbered claims, a line-art FIG. 1 with lead lines, and a
+ * reference-numeral table. Every noun gets a number.
+ */
+import "@fontsource/eb-garamond/400.css";
+import "@fontsource/eb-garamond/400-italic.css";
+import "@fontsource/eb-garamond/500.css";
+import "@fontsource/eb-garamond/600.css";
+import "@fontsource/eb-garamond/700.css";
+import { products, services, process, stats, email } from "./data";
+
+const numerals = [
+	{ n: "100", label: "Studio (taf.sh)", note: "sole proprietorship" },
+	{ n: "110", label: "Operator", note: "single engineer" },
+	{ n: "120", label: "Product engineering module" },
+	{ n: "130", label: "AI systems module" },
+	{ n: "140", label: "Messaging platform module" },
+	{ n: "150", label: "Web presence module" },
+	{ n: "200", label: "TalentSync AI", note: "job-seeker subsystem" },
+	{ n: "210", label: "TalentSync HR", note: "recruiter subsystem" },
+	{ n: "220", label: "CliniQ", note: "clinical messaging subsystem" },
+	{ n: "300", label: "Engagement channel", note: "client interface" },
+];
+
+const claims = [
+	{
+		n: 1,
+		body: "A software studio comprising: a single operator (110) configured to perform discovery, architecture, implementation, and deployment without intermediate handoff; and at least one production system (200, 210, 220) operated by said operator on the same stack offered to clients.",
+		dependent: false,
+	},
+	{
+		n: 2,
+		body: "The studio of claim 1, wherein the operator (110) delivers a running increment at intervals not exceeding one week.",
+		dependent: true,
+	},
+	{
+		n: 3,
+		body: "The studio of claim 1, further comprising an AI systems module (130) configured to execute LLM pipelines, retrieval-augmented generation, and evaluation-driven scoring in a production environment.",
+		dependent: true,
+	},
+	{
+		n: 4,
+		body: "The studio of claim 1, further comprising a messaging platform module (140) configured to conduct appointment scheduling, reminder dispatch, and follow-up over a consumer chat transport.",
+		dependent: true,
+	},
+	{
+		n: 5,
+		body: "The studio of claim 1, wherein, upon termination of an engagement, the client is placed in possession of source code, infrastructure definitions, and documentation, without residual dependency on the operator (110).",
+		dependent: true,
+	},
+];
+---
+
+<div class="vp">
+	<article class="vp-doc">
+		<!-- COVER SHEET -->
+		<header class="vp-cover">
+			<div class="vp-cover-top">
+				<div class="vp-seal" aria-hidden="true">
+					<svg viewBox="0 0 100 100" role="presentation">
+						<circle cx="50" cy="50" r="47" fill="none" stroke="#1a1713" stroke-width="1.5"></circle>
+						<circle cx="50" cy="50" r="41" fill="none" stroke="#1a1713" stroke-width="0.6"></circle>
+						<path d="M50 20 L57 42 L80 42 L61 55 L68 77 L50 63 L32 77 L39 55 L20 42 L43 42 Z" fill="#1a1713"></path>
+					</svg>
+				</div>
+				<div class="vp-cover-title">
+					<p class="vp-office">Independent Patent Office · Studio Division</p>
+					<h1>Software Studio Application Publication</h1>
+					<p class="vp-inventor">Khan, Tashif Ahmad</p>
+				</div>
+			</div>
+
+			<dl class="vp-meta">
+				<div><dt>Pub. No.</dt><dd>TAF 2026/0000001 A1</dd></div>
+				<div><dt>Pub. Date</dt><dd>Jul. 25, 2026</dd></div>
+				<div><dt>Appl. No.</dt><dd>18/000,001</dd></div>
+				<div><dt>Filed</dt><dd>Continuously</dd></div>
+				<div><dt>Int. Cl.</dt><dd>G06F 8/00 · G06N 20/00 · H04L 51/02</dd></div>
+				<div><dt>Status</dt><dd>Reduced to practice</dd></div>
+			</dl>
+
+			<section class="vp-abstract">
+				<h2>(57) Abstract</h2>
+				<p>
+					A studio (100) for the design, construction, and operation of software
+					systems is disclosed. The studio comprises a single operator (110)
+					coupled directly to a client engagement channel (300), thereby
+					eliminating the account layer conventionally interposed between
+					specification and implementation. Embodiments include a hiring
+					intelligence subsystem (200, 210) and a clinical messaging subsystem
+					(220), each reduced to practice and operated by the studio itself.
+					Weekly delivery of running software is claimed as the operative
+					measure of progress.
+				</p>
+			</section>
+		</header>
+
+		<!-- DRAWING -->
+		<section class="vp-plate" id="products">
+			<p class="vp-plate-head">Sheet 1 of 1 · FIG. 1</p>
+			<svg class="vp-drawing" viewBox="0 0 700 400" role="img" aria-label="Figure 1: studio architecture">
+				<defs>
+					<marker id="vp-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+						<path d="M0 0 L10 5 L0 10 z" fill="#1a1713"></path>
+					</marker>
+				</defs>
+				<g fill="none" stroke="#1a1713" stroke-width="1.6">
+					<!-- studio boundary -->
+					<rect x="30" y="30" width="640" height="340" stroke-dasharray="7 5"></rect>
+					<!-- operator -->
+					<circle cx="120" cy="200" r="42"></circle>
+					<path d="M120 176 a12 12 0 1 1 0.01 0"></path>
+					<path d="M99 226 q21 -26 42 0"></path>
+					<!-- modules -->
+					<rect x="250" y="60" width="150" height="52"></rect>
+					<rect x="250" y="132" width="150" height="52"></rect>
+					<rect x="250" y="204" width="150" height="52"></rect>
+					<rect x="250" y="276" width="150" height="52"></rect>
+					<!-- subsystems -->
+					<rect x="490" y="96" width="140" height="46"></rect>
+					<rect x="490" y="168" width="140" height="46"></rect>
+					<rect x="490" y="240" width="140" height="46"></rect>
+					<!-- links -->
+					<path d="M162 200 L250 86" marker-end="url(#vp-arrow)"></path>
+					<path d="M162 200 L250 158" marker-end="url(#vp-arrow)"></path>
+					<path d="M162 200 L250 230" marker-end="url(#vp-arrow)"></path>
+					<path d="M162 200 L250 302" marker-end="url(#vp-arrow)"></path>
+					<path d="M400 119 L490 119" marker-end="url(#vp-arrow)"></path>
+					<path d="M400 191 L490 191" marker-end="url(#vp-arrow)"></path>
+					<path d="M400 263 L490 263" marker-end="url(#vp-arrow)"></path>
+					<!-- engagement channel -->
+					<path d="M120 158 L120 60 L200 60" stroke-dasharray="4 4"></path>
+				</g>
+				<g class="vp-num" fill="#1a1713">
+					<text x="44" y="52">100</text>
+					<text x="104" y="264">110</text>
+					<text x="410" y="80">120</text>
+					<text x="410" y="152">130</text>
+					<text x="410" y="224">140</text>
+					<text x="410" y="296">150</text>
+					<text x="640" y="92">200</text>
+					<text x="640" y="164">210</text>
+					<text x="640" y="236">220</text>
+					<text x="206" y="56">300</text>
+				</g>
+				<g class="vp-cap" fill="#1a1713">
+					<text x="325" y="91">PRODUCT ENG.</text>
+					<text x="325" y="163">AI SYSTEMS</text>
+					<text x="325" y="235">MESSAGING</text>
+					<text x="325" y="307">WEB PRESENCE</text>
+					<text x="560" y="124">TALENTSYNC AI</text>
+					<text x="560" y="196">TALENTSYNC HR</text>
+					<text x="560" y="268">CLINIQ</text>
+				</g>
+			</svg>
+		</section>
+
+		<!-- SPECIFICATION -->
+		<section class="vp-spec">
+			<h2 class="vp-h">Detailed Description of the Preferred Embodiment</h2>
+
+			<div class="vp-cols">
+				<p>
+					<span class="vp-para">[0001]</span> Referring now to FIG. 1, a studio
+					(100) is shown in which an operator (110) is directly coupled to four
+					functional modules (120, 130, 140, 150). Unlike conventional
+					arrangements, no intermediate personnel are interposed between the
+					party who specifies the work and the party who performs it.
+				</p>
+				{
+					services.map((s, i) => (
+						<p>
+							<span class="vp-para">
+								[{String(2 + i).padStart(4, "0")}]
+							</span>{" "}
+							The module designated ({120 + i * 10}), herein{" "}
+							<strong>{s.title.toLowerCase()}</strong>, is configured such that{" "}
+							{s.body.charAt(0).toLowerCase() + s.body.slice(1)} In a preferred
+							embodiment the module operates without dependency on the remaining
+							modules, though combined operation is contemplated.
+						</p>
+					))
+				}
+				<p>
+					<span class="vp-para">[0006]</span> Three subsystems have been reduced
+					to practice and are operated by the studio itself, thereby serving both
+					as commercial products and as continuous verification of the disclosed
+					method.
+				</p>
+				{
+					products.map((p, i) => (
+						<p>
+							<span class="vp-para">
+								[{String(7 + i).padStart(4, "0")}]
+							</span>{" "}
+							Subsystem ({200 + i * 10}), commercially designated{" "}
+							<a href={p.href}>
+								<strong>{p.name}</strong>
+							</a>
+							, is presently in a state of <em>{p.status.toLowerCase()}</em>.{" "}
+							{p.desc}
+						</p>
+					))
+				}
+				<p>
+					<span class="vp-para">[0010]</span> The engagement channel (300)
+					proceeds in four stages, each of which is described in Table 2 below.
+					Progress is measured by the delivery of running software and by no
+					other instrument.
+				</p>
+			</div>
+		</section>
+
+		<!-- TABLES -->
+		<section class="vp-tables">
+			<div class="vp-table-wrap">
+				<p class="vp-table-cap">Table 1 — Reference Numerals</p>
+				<table class="vp-table">
+					<tbody>
+						{
+							numerals.map((r) => (
+								<tr>
+									<td class="vp-td-n">{r.n}</td>
+									<td>{r.label}</td>
+									<td class="vp-td-note">{r.note ?? "—"}</td>
+								</tr>
+							))
+						}
+					</tbody>
+				</table>
+			</div>
+
+			<div class="vp-table-wrap">
+				<p class="vp-table-cap">Table 2 — Engagement Channel (300)</p>
+				<table class="vp-table">
+					<tbody>
+						{
+							process.map((p) => (
+								<tr>
+									<td class="vp-td-n">{`30${p.step}`}</td>
+									<td>{p.title}</td>
+									<td class="vp-td-note">{p.body}</td>
+								</tr>
+							))
+						}
+					</tbody>
+				</table>
+			</div>
+
+			<div class="vp-table-wrap">
+				<p class="vp-table-cap">Table 3 — Measured Quantities</p>
+				<table class="vp-table">
+					<tbody>
+						{
+							stats.map((s) => (
+								<tr>
+									<td class="vp-td-n">{s.fig.replace(".", "").toUpperCase()}</td>
+									<td>{s.label}</td>
+									<td class="vp-td-note">{s.value}</td>
+								</tr>
+							))
+						}
+					</tbody>
+				</table>
+			</div>
+		</section>
+
+		<!-- CLAIMS -->
+		<section class="vp-claims">
+			<h2 class="vp-h">What is claimed is:</h2>
+			<ol class="vp-claim-list">
+				{
+					claims.map((c) => (
+						<li class:list={{ "is-dep": c.dependent }}>
+							<span class="vp-claim-n">{c.n}.</span>
+							<span>{c.body}</span>
+						</li>
+					))
+				}
+			</ol>
+		</section>
+
+		<!-- CORRESPONDENCE -->
+		<footer class="vp-corr">
+			<p class="vp-corr-label">Correspondence Address</p>
+			<p class="vp-corr-name">Tashif Ahmad Khan</p>
+			<p class="vp-corr-line">
+				<a href={`mailto:${email}`}>{email}</a> · <a href="/contact">taf.sh/contact</a>
+			</p>
+			<a class="vp-corr-cta" href="/contact">File a request →</a>
+			<p class="vp-corr-fine">
+				This publication is a design exploration. No monopoly is asserted over
+				working directly with the person who writes the code.
+			</p>
+		</footer>
+	</article>
+</div>
+
+<style>
+	.vp {
+		--ink: #1a1713;
+		--paper: #f4f0e6;
+		--faint: #6a635a;
+		--rule: #b9b0a0;
+		background: #ddd7c8;
+		color: var(--ink);
+		font-family: "EB Garamond", Georgia, "Times New Roman", serif;
+		font-size: 1.05rem;
+		min-height: 100vh;
+		padding: 2rem 1rem 4rem;
+	}
+	.vp-doc {
+		max-width: 54rem;
+		margin: 0 auto;
+		background: var(--paper);
+		border: 1px solid var(--rule);
+		padding: 2.5rem 2.25rem 3rem;
+		box-shadow: 0 2px 24px rgba(40, 32, 20, 0.18);
+	}
+	.vp a {
+		color: inherit;
+		text-decoration-color: var(--rule);
+		text-underline-offset: 2px;
+	}
+	.vp a:hover {
+		text-decoration-color: var(--ink);
+	}
+
+	/* cover */
+	.vp-cover-top {
+		display: flex;
+		align-items: center;
+		gap: 1.25rem;
+		border-bottom: 3px double var(--ink);
+		padding-bottom: 1rem;
+	}
+	.vp-seal {
+		flex: 0 0 58px;
+		width: 58px;
+	}
+	.vp-seal svg {
+		display: block;
+		width: 100%;
+	}
+	.vp-office {
+		margin: 0;
+		font-family: "IBM Plex Mono", monospace;
+		font-size: 0.6rem;
+		letter-spacing: 0.2em;
+		text-transform: uppercase;
+		color: var(--faint);
+	}
+	.vp-cover-title h1 {
+		margin: 0.25rem 0 0.2rem;
+		font-size: clamp(1.5rem, 4.5vw, 2.1rem);
+		font-weight: 700;
+		line-height: 1.1;
+		letter-spacing: -0.01em;
+	}
+	.vp-inventor {
+		margin: 0;
+		font-size: 0.85rem;
+		font-style: italic;
+		color: var(--faint);
+	}
+
+	.vp-meta {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+		gap: 0.35rem 1.5rem;
+		margin: 1rem 0 1.5rem;
+		font-family: "IBM Plex Mono", monospace;
+		font-size: 0.7rem;
+	}
+	.vp-meta div {
+		display: flex;
+		gap: 0.5rem;
+		border-bottom: 1px dotted var(--rule);
+		padding-bottom: 0.2rem;
+	}
+	.vp-meta dt {
+		color: var(--faint);
+		white-space: nowrap;
+	}
+	.vp-meta dd {
+		margin: 0;
+	}
+
+	.vp-abstract {
+		border-top: 1px solid var(--ink);
+		border-bottom: 1px solid var(--ink);
+		padding: 0.9rem 0;
+	}
+	.vp-abstract h2 {
+		margin: 0 0 0.4rem;
+		font-family: "IBM Plex Mono", monospace;
+		font-size: 0.68rem;
+		letter-spacing: 0.16em;
+		text-transform: uppercase;
+	}
+	.vp-abstract p {
+		margin: 0;
+		font-size: 0.9rem;
+		line-height: 1.65;
+		text-align: justify;
+		hyphens: auto;
+	}
+
+	/* drawing */
+	.vp-plate {
+		margin: 2.25rem 0;
+		border: 1.5px solid var(--ink);
+		padding: 1rem;
+		background: #faf7ef;
+	}
+	.vp-plate-head {
+		margin: 0 0 0.5rem;
+		font-family: "IBM Plex Mono", monospace;
+		font-size: 0.62rem;
+		letter-spacing: 0.16em;
+		text-transform: uppercase;
+		color: var(--faint);
+		text-align: right;
+	}
+	.vp-drawing {
+		display: block;
+		width: 100%;
+		height: auto;
+	}
+	.vp-num {
+		font-family: "IBM Plex Mono", monospace;
+		font-size: 13px;
+		font-weight: 500;
+	}
+	.vp-cap {
+		font-family: "IBM Plex Mono", monospace;
+		font-size: 11px;
+		text-anchor: middle;
+		letter-spacing: 0.06em;
+	}
+
+	/* spec */
+	.vp-h {
+		margin: 0 0 0.9rem;
+		font-size: 0.95rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.06em;
+		border-bottom: 1px solid var(--ink);
+		padding-bottom: 0.3rem;
+	}
+	.vp-cols {
+		column-count: 2;
+		column-gap: 2rem;
+		column-rule: 1px solid var(--rule);
+		font-size: 0.83rem;
+		line-height: 1.6;
+		text-align: justify;
+		hyphens: auto;
+	}
+	.vp-cols p {
+		margin: 0 0 0.75rem;
+		break-inside: avoid-column;
+	}
+	.vp-para {
+		font-family: "IBM Plex Mono", monospace;
+		font-size: 0.7rem;
+		color: var(--faint);
+	}
+
+	/* tables */
+	.vp-tables {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+		gap: 1.5rem;
+		margin: 2.25rem 0;
+	}
+	.vp-table-cap {
+		margin: 0 0 0.4rem;
+		font-family: "IBM Plex Mono", monospace;
+		font-size: 0.65rem;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+		color: var(--faint);
+	}
+	.vp-table {
+		width: 100%;
+		border-collapse: collapse;
+		font-size: 0.75rem;
+		border-top: 1.5px solid var(--ink);
+		border-bottom: 1.5px solid var(--ink);
+	}
+	.vp-table td {
+		padding: 0.3rem 0.4rem 0.3rem 0;
+		vertical-align: top;
+		border-bottom: 1px dotted var(--rule);
+	}
+	.vp-table tr:last-child td {
+		border-bottom: none;
+	}
+	.vp-td-n {
+		font-family: "IBM Plex Mono", monospace;
+		white-space: nowrap;
+		color: var(--faint);
+		width: 3.5rem;
+	}
+	.vp-td-note {
+		font-style: italic;
+		color: var(--faint);
+	}
+
+	/* claims */
+	.vp-claims {
+		margin-top: 2.25rem;
+	}
+	.vp-claim-list {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		font-size: 0.85rem;
+		line-height: 1.7;
+	}
+	.vp-claim-list li {
+		display: flex;
+		gap: 0.75rem;
+		margin-bottom: 0.9rem;
+		text-align: justify;
+	}
+	.vp-claim-list li.is-dep {
+		padding-left: 1.5rem;
+	}
+	.vp-claim-n {
+		font-family: "IBM Plex Mono", monospace;
+		font-size: 0.75rem;
+		padding-top: 0.2rem;
+	}
+
+	/* correspondence */
+	.vp-corr {
+		margin-top: 2.5rem;
+		border-top: 3px double var(--ink);
+		padding-top: 1.25rem;
+		text-align: center;
+	}
+	.vp-corr-label {
+		margin: 0;
+		font-family: "IBM Plex Mono", monospace;
+		font-size: 0.6rem;
+		letter-spacing: 0.2em;
+		text-transform: uppercase;
+		color: var(--faint);
+	}
+	.vp-corr-name {
+		margin: 0.35rem 0 0.15rem;
+		font-size: 1.15rem;
+		font-weight: 700;
+	}
+	.vp-corr-line {
+		margin: 0;
+		font-family: "IBM Plex Mono", monospace;
+		font-size: 0.75rem;
+	}
+	.vp-corr-cta {
+		display: inline-block;
+		margin: 1.25rem 0 1rem;
+		padding: 0.6rem 1.5rem;
+		border: 1.5px solid var(--ink);
+		font-family: "IBM Plex Mono", monospace;
+		font-size: 0.75rem;
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+		text-decoration: none;
+	}
+	.vp-corr-cta:hover {
+		background: var(--ink);
+		color: var(--paper);
+	}
+	.vp-corr-fine {
+		margin: 0;
+		font-size: 0.7rem;
+		font-style: italic;
+		color: var(--faint);
+	}
+
+	@media (max-width: 700px) {
+		.vp {
+			padding: 1rem 0.5rem 3rem;
+		}
+		.vp-doc {
+			padding: 1.25rem 1rem 2rem;
+		}
+		.vp-cols {
+			column-count: 1;
+		}
+		.vp-cover-top {
+			flex-direction: column;
+			text-align: center;
+			gap: 0.75rem;
+		}
+	}
+</style>

@@ -1,0 +1,754 @@
+---
+/**
+ * Desktop — the studio as a 1990s window manager. Bevelled grey chrome,
+ * striped title bars, a file-manager list view of the products, a text
+ * document, a control panel, and a modal alert as the call to action.
+ */
+import "@fontsource/silkscreen/400.css";
+import { products, services, process, stats, traits, email } from "./data";
+
+const kinds: Record<string, string> = {
+	Live: "application",
+	Beta: "application (beta)",
+	"In development": "project folder",
+};
+const sizes = ["412K", "268K", "96K"];
+const modified = ["Jul 24 2026", "Jul 19 2026", "Jul 11 2026"];
+---
+
+<div class="vd">
+	<!-- MENU BAR -->
+	<div class="vd-menubar">
+		<span class="vd-menu vd-menu--mark" aria-hidden="true">
+			<svg viewBox="0 0 30 42" width="11" height="15">
+				<path d="M0 12V0H30V12H18V24H12V12H0Z" fill="currentColor"></path>
+				<path d="M12 24H18V42H12V24Z" fill="currentColor" opacity="0.55"></path>
+			</svg>
+		</span>
+		<span class="vd-menu">File</span>
+		<span class="vd-menu">Edit</span>
+		<span class="vd-menu">View</span>
+		<span class="vd-menu">Special</span>
+		<span class="vd-menu-spacer"></span>
+		<span class="vd-menu vd-menu--right">taf.sh</span>
+	</div>
+
+	<!-- DESKTOP -->
+	<div class="vd-desk">
+		<!-- desktop icons -->
+		<div class="vd-icons">
+			<a class="vd-dicon" href="#vd-products">
+				<svg viewBox="0 0 32 32" aria-hidden="true">
+					<rect x="3" y="6" width="26" height="20" fill="#fff" stroke="#000" stroke-width="2"></rect>
+					<rect x="6" y="9" width="20" height="3" fill="#000"></rect>
+					<circle cx="24" cy="21" r="2" fill="#000"></circle>
+				</svg>
+				<span>Studio HD</span>
+			</a>
+			<a class="vd-dicon" href="#vd-services">
+				<svg viewBox="0 0 32 32" aria-hidden="true">
+					<path d="M3 9h10l3 3h13v16H3z" fill="#fff" stroke="#000" stroke-width="2"></path>
+				</svg>
+				<span>Services</span>
+			</a>
+			<a class="vd-dicon" href="/contact">
+				<svg viewBox="0 0 32 32" aria-hidden="true">
+					<rect x="4" y="8" width="24" height="16" fill="#fff" stroke="#000" stroke-width="2"></rect>
+					<path d="M4 8l12 9 12-9" fill="none" stroke="#000" stroke-width="2"></path>
+				</svg>
+				<span>Mailbox</span>
+			</a>
+			<span class="vd-dicon is-dim">
+				<svg viewBox="0 0 32 32" aria-hidden="true">
+					<path d="M8 10h16l-2 18H10z" fill="#fff" stroke="#000" stroke-width="2"></path>
+					<rect x="6" y="6" width="20" height="4" fill="#fff" stroke="#000" stroke-width="2"></rect>
+				</svg>
+				<span>Status decks</span>
+			</span>
+		</div>
+
+		<div class="vd-stack">
+			<!-- ABOUT WINDOW -->
+			<section class="vd-win vd-win--about is-active">
+				<header class="vd-title">
+					<span class="vd-close" aria-hidden="true"></span>
+					<span class="vd-stripes" aria-hidden="true"></span>
+					<h1>About This Studio</h1>
+					<span class="vd-stripes" aria-hidden="true"></span>
+					<span class="vd-zoom" aria-hidden="true"></span>
+				</header>
+				<div class="vd-body vd-about">
+					<div class="vd-about-mark" aria-hidden="true">
+						<svg viewBox="0 0 30 42">
+							<path d="M0 12V0H30V12H18V24H12V12H0Z" fill="#000"></path>
+							<path d="M12 24H18V42H12V24Z" fill="#666"></path>
+						</svg>
+					</div>
+					<div class="vd-about-txt">
+						<p class="vd-about-name">taf.sh</p>
+						<p class="vd-about-ver">Version 2026.7 &#183; Sole proprietorship</p>
+						<dl class="vd-specs">
+							<div><dt>Operator</dt><dd>Tashif Ahmad Khan</dd></div>
+							<div><dt>Built&nbsp;in</dt><dd>TypeScript, Python, Astro</dd></div>
+							<div><dt>Memory</dt><dd>3 products in production</dd></div>
+							<div><dt>Handoff</dt><dd>None — one person, end to end</dd></div>
+						</dl>
+						<p class="vd-about-fine">
+							&#169; 2026 taf.sh. Independent software studio. All work performed
+							by the person you talk to.
+						</p>
+					</div>
+				</div>
+			</section>
+
+			<!-- PRODUCTS: FILE MANAGER -->
+			<section class="vd-win vd-win--files" id="vd-products">
+				<header class="vd-title">
+					<span class="vd-close" aria-hidden="true"></span>
+					<span class="vd-stripes" aria-hidden="true"></span>
+					<h1>Studio HD : Products</h1>
+					<span class="vd-stripes" aria-hidden="true"></span>
+					<span class="vd-zoom" aria-hidden="true"></span>
+				</header>
+				<p class="vd-infobar">
+					<span>3 items</span><span>1.2 MB in disk</span><span>18.4 MB available</span>
+				</p>
+				<div class="vd-body vd-files">
+					<table class="vd-table">
+						<thead>
+							<tr>
+								<th>Name</th>
+								<th>Kind</th>
+								<th>Size</th>
+								<th>Last Modified</th>
+							</tr>
+						</thead>
+						<tbody>
+							{
+								products.map((p, i) => (
+									<tr>
+										<td>
+											<a href={p.href} class="vd-file">
+												<svg viewBox="0 0 32 32" aria-hidden="true">
+													<path
+														d="M6 3h13l7 7v19H6z"
+														fill="#fff"
+														stroke="#000"
+														stroke-width="2"
+													/>
+													<path
+														d="M19 3v7h7"
+														fill="none"
+														stroke="#000"
+														stroke-width="2"
+													/>
+												</svg>
+												<span>{p.name}</span>
+											</a>
+										</td>
+										<td>{kinds[p.status]}</td>
+										<td>{sizes[i]}</td>
+										<td>{modified[i]}</td>
+									</tr>
+									<tr class="vd-row-note">
+										<td colspan="4">{p.desc}</td>
+									</tr>
+								))
+							}
+						</tbody>
+					</table>
+				</div>
+			</section>
+
+			<!-- SERVICES: ICON VIEW -->
+			<section class="vd-win vd-win--icons" id="vd-services">
+				<header class="vd-title">
+					<span class="vd-close" aria-hidden="true"></span>
+					<span class="vd-stripes" aria-hidden="true"></span>
+					<h1>Services</h1>
+					<span class="vd-stripes" aria-hidden="true"></span>
+					<span class="vd-zoom" aria-hidden="true"></span>
+				</header>
+				<div class="vd-body vd-iconview">
+					{
+						services.map((s) => (
+							<div class="vd-app">
+								<svg viewBox="0 0 32 32" aria-hidden="true">
+									<rect
+										x="4"
+										y="4"
+										width="24"
+										height="24"
+										fill="#fff"
+										stroke="#000"
+										stroke-width="2"
+									/>
+									<rect x="8" y="8" width="16" height="6" fill="#000" />
+									<rect x="8" y="18" width="10" height="2" fill="#000" />
+									<rect x="8" y="22" width="14" height="2" fill="#000" />
+								</svg>
+								<p class="vd-app-name">{s.title}</p>
+								<p class="vd-app-desc">{s.body}</p>
+							</div>
+						))
+					}
+				</div>
+			</section>
+
+			<!-- PROCESS: TEXT DOCUMENT -->
+			<section class="vd-win vd-win--text">
+				<header class="vd-title">
+					<span class="vd-close" aria-hidden="true"></span>
+					<span class="vd-stripes" aria-hidden="true"></span>
+					<h1>process.txt</h1>
+					<span class="vd-stripes" aria-hidden="true"></span>
+					<span class="vd-zoom" aria-hidden="true"></span>
+				</header>
+				<div class="vd-body vd-text">
+					<pre>{`HOW AN ENGAGEMENT RUNS
+======================
+
+${process.map((p) => `${p.step}. ${p.title}\n   ${p.body}`).join("\n\n")}
+
+Progress is measured in running software.
+Nothing else counts as progress.`}</pre>
+				</div>
+				<div class="vd-scrollbar" aria-hidden="true">
+					<span class="vd-thumb"></span>
+				</div>
+			</section>
+
+			<!-- CONTROL PANEL: TRAITS + STATS -->
+			<section class="vd-win vd-win--panel">
+				<header class="vd-title">
+					<span class="vd-close" aria-hidden="true"></span>
+					<span class="vd-stripes" aria-hidden="true"></span>
+					<h1>Control Panel</h1>
+					<span class="vd-stripes" aria-hidden="true"></span>
+					<span class="vd-zoom" aria-hidden="true"></span>
+				</header>
+				<div class="vd-body vd-panel">
+					<fieldset class="vd-field">
+						<legend>Operating characteristics</legend>
+						{
+							traits.map((t) => (
+								<label class="vd-check">
+									<span class="vd-box is-on" aria-hidden="true">
+										&#10003;
+									</span>
+									<span>
+										<strong>{t.title}</strong>
+										<em>{t.body}</em>
+									</span>
+								</label>
+							))
+						}
+					</fieldset>
+					<fieldset class="vd-field">
+						<legend>Meters</legend>
+						{
+							stats.map((s) => (
+								<p class="vd-meter">
+									<span class="vd-meter-l">{s.label}</span>
+									<span class="vd-meter-v">{s.value}</span>
+								</p>
+							))
+						}
+					</fieldset>
+				</div>
+			</section>
+
+			<!-- ALERT -->
+			<section class="vd-alert" role="note">
+				<div class="vd-alert-inner">
+					<div class="vd-alert-icon" aria-hidden="true">
+						<svg viewBox="0 0 32 32">
+							<path d="M16 3 30 28H2z" fill="#fff" stroke="#000" stroke-width="2"></path>
+							<rect x="15" y="12" width="2" height="8" fill="#000"></rect>
+							<rect x="15" y="22" width="2" height="2" fill="#000"></rect>
+						</svg>
+					</div>
+					<div>
+						<p class="vd-alert-msg">
+							You are about to start a project with one person who does all of
+							it. This action cannot be delegated.
+						</p>
+						<p class="vd-alert-sub">
+							Reply to <a href={`mailto:${email}`}>{email}</a> or open the
+							contact page.
+						</p>
+					</div>
+				</div>
+				<div class="vd-alert-btns">
+					<a class="vd-btn" href="/about">Read more</a>
+					<a class="vd-btn is-default" href="/contact">Start a project</a>
+				</div>
+			</section>
+		</div>
+	</div>
+</div>
+
+<style>
+	.vd {
+		--face: #c8c6c1;
+		--face-lit: #efeeeb;
+		--face-dim: #85837e;
+		--ink: #0a0a0a;
+		--paper: #fbfbf9;
+		background: #8a8a8a;
+		background-image:
+			repeating-linear-gradient(45deg, #7f7f7f 0 2px, transparent 2px 4px);
+		min-height: 100vh;
+		color: var(--ink);
+		font-family: "IBM Plex Sans", Geneva, Verdana, sans-serif;
+		font-size: 0.82rem;
+		padding-bottom: 3rem;
+	}
+
+	/* menu bar */
+	.vd-menubar {
+		display: flex;
+		align-items: center;
+		gap: 1.1rem;
+		background: var(--paper);
+		border-bottom: 2px solid var(--ink);
+		padding: 0.25rem 0.75rem;
+		position: sticky;
+		top: 0;
+		z-index: 20;
+	}
+	.vd-menu {
+		font-family: "Silkscreen", "IBM Plex Sans", sans-serif;
+		font-size: 0.62rem;
+		letter-spacing: 0.02em;
+	}
+	.vd-menu--mark {
+		display: flex;
+		align-items: center;
+	}
+	.vd-menu-spacer {
+		flex: 1;
+	}
+	.vd-menu--right {
+		opacity: 0.7;
+	}
+
+	.vd-desk {
+		display: grid;
+		grid-template-columns: 7rem 1fr;
+		gap: 1.25rem;
+		max-width: 76rem;
+		margin: 0 auto;
+		padding: 1.25rem 1rem 0;
+	}
+	.vd-icons {
+		display: flex;
+		flex-direction: column;
+		gap: 1.1rem;
+		padding-top: 0.25rem;
+	}
+	.vd-dicon {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 0.3rem;
+		color: var(--paper);
+		text-decoration: none;
+		text-align: center;
+	}
+	.vd-dicon svg {
+		width: 34px;
+		height: 34px;
+	}
+	.vd-dicon span {
+		font-family: "Silkscreen", monospace;
+		font-size: 0.55rem;
+		line-height: 1.3;
+		background: rgba(0, 0, 0, 0.45);
+		padding: 0.1rem 0.25rem;
+	}
+	.vd-dicon:hover span {
+		background: var(--ink);
+	}
+	.vd-dicon.is-dim {
+		opacity: 0.45;
+	}
+
+	.vd-stack {
+		display: grid;
+		grid-template-columns: repeat(12, 1fr);
+		gap: 1.25rem;
+		align-items: start;
+	}
+
+	/* window chrome */
+	.vd-win {
+		background: var(--face);
+		border: 2px solid var(--ink);
+		box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.45);
+		scroll-margin-top: 3rem;
+	}
+	.vd-win--about {
+		grid-column: span 5;
+	}
+	.vd-win--files {
+		grid-column: span 7;
+	}
+	.vd-win--icons {
+		grid-column: span 7;
+	}
+	.vd-win--text {
+		grid-column: span 5;
+		position: relative;
+	}
+	.vd-win--panel {
+		grid-column: span 12;
+	}
+
+	.vd-title {
+		display: flex;
+		align-items: center;
+		gap: 0.4rem;
+		padding: 0.25rem 0.4rem;
+		border-bottom: 2px solid var(--ink);
+		background: var(--face-lit);
+	}
+	.vd-title h1 {
+		margin: 0;
+		font-family: "Silkscreen", monospace;
+		font-size: 0.6rem;
+		white-space: nowrap;
+		padding: 0 0.35rem;
+	}
+	.vd-stripes {
+		flex: 1;
+		height: 11px;
+		background: repeating-linear-gradient(
+			180deg,
+			var(--ink) 0 1px,
+			transparent 1px 3px
+		);
+		opacity: 0.85;
+	}
+	.vd-close,
+	.vd-zoom {
+		flex: 0 0 11px;
+		width: 11px;
+		height: 11px;
+		border: 2px solid var(--ink);
+		background: var(--face);
+	}
+	.vd-zoom {
+		box-shadow: inset -3px -3px 0 var(--ink);
+	}
+
+	.vd-body {
+		background: var(--paper);
+		padding: 0.9rem;
+	}
+	.vd-infobar {
+		display: flex;
+		gap: 1.25rem;
+		margin: 0;
+		padding: 0.2rem 0.6rem;
+		border-bottom: 2px solid var(--ink);
+		background: var(--face);
+		font-size: 0.7rem;
+	}
+
+	/* about */
+	.vd-about {
+		display: flex;
+		gap: 1rem;
+		align-items: flex-start;
+	}
+	.vd-about-mark {
+		flex: 0 0 42px;
+	}
+	.vd-about-mark svg {
+		width: 42px;
+	}
+	.vd-about-name {
+		margin: 0;
+		font-family: "Silkscreen", monospace;
+		font-size: 1.15rem;
+	}
+	.vd-about-ver {
+		margin: 0.25rem 0 0.75rem;
+		font-size: 0.72rem;
+		color: #4a4a4a;
+	}
+	.vd-specs {
+		margin: 0 0 0.75rem;
+		border-top: 1px solid #b5b3ae;
+	}
+	.vd-specs div {
+		display: flex;
+		gap: 0.75rem;
+		border-bottom: 1px solid #dcdad5;
+		padding: 0.25rem 0;
+	}
+	.vd-specs dt {
+		flex: 0 0 5.5rem;
+		font-weight: 600;
+	}
+	.vd-specs dd {
+		margin: 0;
+	}
+	.vd-about-fine {
+		margin: 0;
+		font-size: 0.66rem;
+		color: #5c5a56;
+	}
+
+	/* file manager */
+	.vd-files {
+		padding: 0;
+	}
+	.vd-table {
+		width: 100%;
+		border-collapse: collapse;
+		font-size: 0.75rem;
+	}
+	.vd-table th {
+		text-align: left;
+		font-family: "Silkscreen", monospace;
+		font-size: 0.55rem;
+		font-weight: 400;
+		padding: 0.35rem 0.6rem;
+		background: var(--face);
+		border-bottom: 2px solid var(--ink);
+		border-right: 1px solid var(--face-dim);
+	}
+	.vd-table td {
+		padding: 0.3rem 0.6rem;
+		border-bottom: 1px solid #e3e1dc;
+		white-space: nowrap;
+	}
+	.vd-file {
+		display: flex;
+		align-items: center;
+		gap: 0.4rem;
+		color: inherit;
+		text-decoration: none;
+	}
+	.vd-file svg {
+		width: 15px;
+		height: 15px;
+		flex: 0 0 15px;
+	}
+	.vd-file:hover span {
+		background: var(--ink);
+		color: var(--paper);
+	}
+	.vd-row-note td {
+		white-space: normal;
+		padding: 0 0.6rem 0.5rem 2.1rem;
+		font-size: 0.72rem;
+		color: #55534f;
+		border-bottom: 1px solid #cfcdc8;
+	}
+
+	/* icon view */
+	.vd-iconview {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr));
+		gap: 1.1rem;
+	}
+	.vd-app {
+		text-align: center;
+	}
+	.vd-app svg {
+		width: 30px;
+		height: 30px;
+	}
+	.vd-app-name {
+		margin: 0.3rem 0 0.2rem;
+		font-family: "Silkscreen", monospace;
+		font-size: 0.56rem;
+		line-height: 1.4;
+	}
+	.vd-app-desc {
+		margin: 0;
+		font-size: 0.7rem;
+		color: #55534f;
+		line-height: 1.45;
+	}
+
+	/* text window */
+	.vd-text {
+		padding: 0.75rem 0.9rem;
+		max-height: 22rem;
+		overflow: auto;
+	}
+	.vd-text pre {
+		margin: 0;
+		font-family: "IBM Plex Mono", monospace;
+		font-size: 0.7rem;
+		line-height: 1.6;
+		white-space: pre-wrap;
+	}
+	.vd-scrollbar {
+		position: absolute;
+		right: 2px;
+		top: 26px;
+		bottom: 2px;
+		width: 14px;
+		background: repeating-linear-gradient(
+			45deg,
+			#d9d7d2 0 2px,
+			#b8b6b1 2px 4px
+		);
+		border-left: 2px solid var(--ink);
+	}
+	.vd-thumb {
+		display: block;
+		margin: 2px;
+		height: 46px;
+		background: var(--face);
+		border: 2px solid var(--ink);
+	}
+
+	/* control panel */
+	.vd-panel {
+		display: grid;
+		grid-template-columns: 2fr 1fr;
+		gap: 1.25rem;
+	}
+	.vd-field {
+		border: 2px solid var(--face-dim);
+		padding: 0.75rem 0.9rem 0.9rem;
+		margin: 0;
+	}
+	.vd-field legend {
+		font-family: "Silkscreen", monospace;
+		font-size: 0.55rem;
+		padding: 0 0.35rem;
+	}
+	.vd-check {
+		display: flex;
+		gap: 0.6rem;
+		align-items: flex-start;
+		margin-bottom: 0.55rem;
+	}
+	.vd-box {
+		flex: 0 0 14px;
+		width: 14px;
+		height: 14px;
+		border: 2px solid var(--ink);
+		background: var(--paper);
+		font-size: 0.65rem;
+		line-height: 0.85;
+		text-align: center;
+		color: transparent;
+	}
+	.vd-box.is-on {
+		color: var(--ink);
+	}
+	.vd-check strong {
+		display: block;
+		font-size: 0.76rem;
+	}
+	.vd-check em {
+		font-style: normal;
+		font-size: 0.72rem;
+		color: #55534f;
+	}
+	.vd-meter {
+		display: flex;
+		justify-content: space-between;
+		align-items: baseline;
+		gap: 0.75rem;
+		margin: 0 0 0.5rem;
+		border-bottom: 1px dotted var(--face-dim);
+		padding-bottom: 0.35rem;
+		font-size: 0.74rem;
+	}
+	.vd-meter-v {
+		font-family: "Silkscreen", monospace;
+		font-size: 0.85rem;
+	}
+
+	/* alert */
+	.vd-alert {
+		grid-column: span 12;
+		justify-self: center;
+		max-width: 30rem;
+		background: var(--face);
+		border: 3px solid var(--ink);
+		box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.5);
+		padding: 1.1rem 1.1rem 0.9rem;
+		margin-bottom: 2rem;
+	}
+	.vd-alert-inner {
+		display: flex;
+		gap: 0.9rem;
+		align-items: flex-start;
+	}
+	.vd-alert-icon svg {
+		width: 34px;
+		height: 34px;
+	}
+	.vd-alert-msg {
+		margin: 0 0 0.4rem;
+		font-size: 0.82rem;
+		line-height: 1.5;
+	}
+	.vd-alert-sub {
+		margin: 0;
+		font-size: 0.72rem;
+		color: #45433f;
+	}
+	.vd-alert-sub a {
+		color: inherit;
+	}
+	.vd-alert-btns {
+		display: flex;
+		justify-content: flex-end;
+		gap: 0.6rem;
+		margin-top: 1rem;
+	}
+	.vd-btn {
+		display: inline-block;
+		padding: 0.35rem 1rem;
+		background: var(--face-lit);
+		border: 2px solid var(--ink);
+		border-radius: 6px;
+		color: var(--ink);
+		text-decoration: none;
+		font-size: 0.76rem;
+	}
+	.vd-btn:hover {
+		background: var(--ink);
+		color: var(--paper);
+	}
+	.vd-btn.is-default {
+		box-shadow: 0 0 0 2px var(--ink);
+		font-weight: 600;
+	}
+
+	@media (max-width: 900px) {
+		.vd-desk {
+			grid-template-columns: 1fr;
+		}
+		.vd-icons {
+			flex-direction: row;
+			flex-wrap: wrap;
+			gap: 1rem 1.5rem;
+		}
+		.vd-stack > * {
+			grid-column: span 12 !important;
+		}
+		.vd-panel {
+			grid-template-columns: 1fr;
+		}
+	}
+	@media (max-width: 560px) {
+		.vd-table th:nth-child(2),
+		.vd-table td:nth-child(2),
+		.vd-table th:nth-child(3),
+		.vd-table td:nth-child(3) {
+			display: none;
+		}
+	}
+</style>

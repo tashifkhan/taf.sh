@@ -1,0 +1,600 @@
+---
+/**
+ * Label — the studio as FDA-style packaging. Nutrition panel typography:
+ * hairlines, 7pt rules, a bar chart of the week, ingredients, barcode.
+ * Loud in structure, silent in colour.
+ */
+import { products, services, stats, process, email } from "./data";
+
+/** Deterministic barcode: bar widths cycled from a fixed digit string. */
+const digits = "4021 7734 9910 2846 5537 8102 6693 4471".replace(/\s/g, "");
+const barcode = [digits, digits, digits]
+	.join("")
+	.split("")
+	.map((d, i) => ({ w: (Number(d) % 4) + 1, gap: i % 3 === 0 ? 3 : 2 }));
+
+const allocation = [
+	{ label: "Product engineering", pct: 45, dv: "45%" },
+	{ label: "AI systems", pct: 30, dv: "30%" },
+	{ label: "Messaging platforms", pct: 15, dv: "15%" },
+	{ label: "Web presence", pct: 10, dv: "10%" },
+];
+
+const ingredients = [
+	"TypeScript",
+	"Astro",
+	"React Native",
+	"Python",
+	"FastAPI",
+	"PostgreSQL",
+	"Redis",
+	"Celery",
+	"LLM inference",
+	"Vector search",
+	"WhatsApp Business API",
+	"Docker",
+	"Cloudflare",
+	"Contains no account managers.",
+];
+---
+
+<div class="vl">
+	<div class="vl-sheet">
+		<!-- FRONT OF PACK -->
+		<header class="vl-front">
+			<p class="vl-kicker">Independent software · Sole proprietorship</p>
+			<h1 class="vl-brand">taf<span>.sh</span></h1>
+			<p class="vl-net">
+				NET CONTENTS: <strong>1</strong> ENGINEER · <strong>3</strong> PRODUCTS
+			</p>
+			<p class="vl-claim">Built, shipped &amp; operated by the same person</p>
+		</header>
+
+		<!-- THE PANEL -->
+		<section class="vl-panel" aria-label="Studio facts">
+			<h2 class="vl-panel-title">Studio Facts</h2>
+			<div class="vl-rule vl-rule--thin"></div>
+			<p class="vl-serving">
+				<span>4 services per package</span>
+				<strong>Serving size 1 engagement</strong>
+			</p>
+			<div class="vl-rule vl-rule--fat"></div>
+
+			<p class="vl-amount">Amount per week</p>
+			<p class="vl-calories">
+				<span>Shipping velocity</span>
+				<strong>1 increment</strong>
+			</p>
+
+			<div class="vl-rule vl-rule--mid"></div>
+			<p class="vl-dv">% of week</p>
+
+			{
+				allocation.map((a) => (
+					<div class="vl-row">
+						<p class="vl-row-top">
+							<strong>{a.label}</strong>
+							<span>{a.dv}</span>
+						</p>
+						<div class="vl-bar">
+							<span style={`width:${a.pct}%`} />
+						</div>
+					</div>
+				))
+			}
+
+			<div class="vl-rule vl-rule--fat"></div>
+
+			<dl class="vl-sub">
+				{
+					services.map((s) => (
+						<div>
+							<dt>{s.title}</dt>
+							<dd>{s.body}</dd>
+						</div>
+					))
+				}
+			</dl>
+
+			<div class="vl-rule vl-rule--thin"></div>
+			<p class="vl-foot-note">
+				% of week is a typical allocation. Actual mix varies with the engagement.
+				One operator; capacity is finite and honestly stated.
+			</p>
+		</section>
+
+		<!-- CONTAINS -->
+		<section class="vl-contains" id="products">
+			<h2 class="vl-h">Contains</h2>
+			<div class="vl-rule vl-rule--fat"></div>
+			{
+				products.map((p) => (
+					<a class="vl-item" href={p.href}>
+						<span class="vl-item-idx">{p.index}</span>
+						<span class="vl-item-body">
+							<strong>{p.name}</strong>
+							<em>{p.tag}</em>
+							<span>{p.desc}</span>
+						</span>
+						<span class="vl-item-status">{p.status}</span>
+					</a>
+				))
+			}
+		</section>
+
+		<!-- INGREDIENTS -->
+		<section class="vl-ingredients">
+			<h2 class="vl-h">Ingredients</h2>
+			<div class="vl-rule vl-rule--mid"></div>
+			<p class="vl-ing-body">
+				{
+					ingredients.map((ing, i) => (
+						<>
+							<span class:list={["vl-ing", { "is-note": ing.endsWith(".") }]}>
+								{ing}
+							</span>
+							{i < ingredients.length - 1 ? ", " : ""}
+						</>
+					))
+				}
+			</p>
+		</section>
+
+		<!-- DIRECTIONS -->
+		<section class="vl-directions">
+			<h2 class="vl-h">Directions for use</h2>
+			<div class="vl-rule vl-rule--mid"></div>
+			<ol class="vl-steps">
+				{
+					process.map((p) => (
+						<li>
+							<strong>{p.title}.</strong> {p.body}
+						</li>
+					))
+				}
+			</ol>
+		</section>
+
+		<!-- WARNING -->
+		<aside class="vl-warning">
+			<h2>Warning</h2>
+			<p>
+				Contains no account team, no discovery phase billed as delivery, and no
+				handoff between the person who sold the work and the person who does it.
+				Discontinue use if you require weekly status decks.
+			</p>
+		</aside>
+
+		<!-- FIGURES -->
+		<section class="vl-figures">
+			{
+				stats.map((s) => (
+					<div class="vl-fig">
+						<strong>{s.value}</strong>
+						<span>{s.label}</span>
+						<em>{s.fig}</em>
+					</div>
+				))
+			}
+		</section>
+
+		<!-- BACK OF PACK -->
+		<footer class="vl-back">
+			<div class="vl-barcode" aria-hidden="true">
+				{
+					barcode.map((b) => (
+						<>
+							<i style={`width:${b.w}px`} />
+							<u style={`width:${b.gap}px`} />
+						</>
+					))
+				}
+			</div>
+			<p class="vl-lot">LOT 2026-07 · SKU TAF-SH-001</p>
+
+			<div class="vl-distrib">
+				<p class="vl-distrib-label">Distributed by</p>
+				<p class="vl-distrib-name">Tashif Ahmad Khan</p>
+				<p class="vl-distrib-addr">
+					Independent studio · Remote<br />
+					Questions or comments? <a href={`mailto:${email}`}>{email}</a>
+				</p>
+			</div>
+
+			<a class="vl-cta" href="/contact">Open a package →</a>
+			<p class="vl-fineprint">
+				Best used within one quarter of opening. Code, infrastructure and
+				documentation are yours on completion. Recyclable.
+			</p>
+		</footer>
+	</div>
+</div>
+
+<style>
+	.vl {
+		--ink: #0a0a0a;
+		--paper: #ffffff;
+		--wash: #f2f2f0;
+		background: #d8d6d1;
+		color: var(--ink);
+		font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
+		min-height: 100vh;
+		padding: 2rem 1rem 4rem;
+		-webkit-font-smoothing: antialiased;
+	}
+	.vl-sheet {
+		max-width: 46rem;
+		margin: 0 auto;
+		background: var(--paper);
+		border: 2px solid var(--ink);
+		padding: 1.75rem;
+		box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.18);
+	}
+
+	/* rules — the whole language of a facts panel */
+	.vl-rule {
+		background: var(--ink);
+		margin: 0.4rem 0;
+	}
+	.vl-rule--thin {
+		height: 1px;
+	}
+	.vl-rule--mid {
+		height: 5px;
+	}
+	.vl-rule--fat {
+		height: 10px;
+	}
+
+	/* front of pack */
+	.vl-front {
+		text-align: center;
+		padding-bottom: 1.5rem;
+	}
+	.vl-kicker {
+		margin: 0;
+		font-family: "IBM Plex Mono", monospace;
+		font-size: 0.62rem;
+		letter-spacing: 0.22em;
+		text-transform: uppercase;
+	}
+	.vl-brand {
+		margin: 0.5rem 0 0.35rem;
+		font-size: clamp(3.5rem, 16vw, 7rem);
+		font-weight: 700;
+		letter-spacing: -0.05em;
+		line-height: 0.85;
+	}
+	.vl-brand span {
+		font-weight: 400;
+	}
+	.vl-net {
+		margin: 0;
+		font-family: "IBM Plex Mono", monospace;
+		font-size: 0.7rem;
+		letter-spacing: 0.12em;
+	}
+	.vl-claim {
+		margin: 0.9rem auto 0;
+		max-width: 22rem;
+		padding: 0.4rem 0;
+		border-top: 2px solid var(--ink);
+		border-bottom: 2px solid var(--ink);
+		font-size: 0.8rem;
+		font-style: italic;
+	}
+
+	/* the panel */
+	.vl-panel {
+		border: 3px solid var(--ink);
+		padding: 0.75rem 0.9rem 1rem;
+	}
+	.vl-panel-title {
+		margin: 0;
+		font-size: clamp(2rem, 8vw, 2.9rem);
+		font-weight: 700;
+		letter-spacing: -0.04em;
+		line-height: 1;
+	}
+	.vl-serving,
+	.vl-calories,
+	.vl-row-top {
+		display: flex;
+		justify-content: space-between;
+		align-items: baseline;
+		gap: 1rem;
+		margin: 0.25rem 0;
+		font-size: 0.8rem;
+	}
+	.vl-serving span {
+		font-size: 0.75rem;
+	}
+	.vl-amount {
+		margin: 0.35rem 0 0;
+		font-size: 0.72rem;
+		font-weight: 700;
+	}
+	.vl-calories {
+		align-items: flex-end;
+		margin: 0;
+	}
+	.vl-calories span {
+		font-size: 1.35rem;
+		font-weight: 700;
+		letter-spacing: -0.02em;
+	}
+	.vl-calories strong {
+		font-size: 1.7rem;
+		letter-spacing: -0.03em;
+	}
+	.vl-dv {
+		margin: 0.2rem 0 0.35rem;
+		text-align: right;
+		font-size: 0.68rem;
+		font-weight: 700;
+	}
+	.vl-row {
+		border-top: 1px solid var(--ink);
+		padding: 0.4rem 0 0.5rem;
+	}
+	.vl-row-top {
+		margin: 0 0 0.35rem;
+	}
+	.vl-row-top strong {
+		font-weight: 700;
+	}
+	.vl-bar {
+		height: 6px;
+		background: var(--wash);
+		border: 1px solid var(--ink);
+	}
+	.vl-bar span {
+		display: block;
+		height: 100%;
+		background: var(--ink);
+	}
+	.vl-sub {
+		margin: 0.5rem 0;
+	}
+	.vl-sub div {
+		border-top: 1px solid #c9c9c5;
+		padding: 0.45rem 0;
+	}
+	.vl-sub div:first-child {
+		border-top: none;
+	}
+	.vl-sub dt {
+		font-size: 0.78rem;
+		font-weight: 700;
+	}
+	.vl-sub dd {
+		margin: 0.1rem 0 0;
+		font-size: 0.78rem;
+		color: #3a3a3a;
+	}
+	.vl-foot-note {
+		margin: 0.35rem 0 0;
+		font-size: 0.66rem;
+		line-height: 1.45;
+		color: #3a3a3a;
+	}
+
+	/* shared section heading */
+	.vl-h {
+		margin: 2.25rem 0 0;
+		font-size: 1.35rem;
+		font-weight: 700;
+		letter-spacing: -0.02em;
+	}
+
+	/* contains */
+	.vl-item {
+		display: grid;
+		grid-template-columns: 2rem 1fr auto;
+		gap: 0.75rem;
+		align-items: start;
+		padding: 0.8rem 0;
+		border-bottom: 1px solid var(--ink);
+		color: inherit;
+		text-decoration: none;
+	}
+	.vl-item:hover {
+		background: var(--wash);
+	}
+	.vl-item-idx {
+		font-family: "IBM Plex Mono", monospace;
+		font-size: 0.7rem;
+		padding-top: 0.15rem;
+	}
+	.vl-item-body strong {
+		display: block;
+		font-size: 1rem;
+		font-weight: 700;
+	}
+	.vl-item-body em {
+		display: block;
+		font-family: "IBM Plex Mono", monospace;
+		font-size: 0.62rem;
+		font-style: normal;
+		letter-spacing: 0.16em;
+		text-transform: uppercase;
+		margin: 0.1rem 0 0.25rem;
+	}
+	.vl-item-body > span {
+		font-size: 0.8rem;
+		color: #3a3a3a;
+	}
+	.vl-item-status {
+		font-family: "IBM Plex Mono", monospace;
+		font-size: 0.6rem;
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+		border: 1.5px solid var(--ink);
+		padding: 0.15rem 0.4rem;
+		white-space: nowrap;
+	}
+
+	/* ingredients */
+	.vl-ing-body {
+		margin: 0.5rem 0 0;
+		font-size: 0.82rem;
+		line-height: 1.6;
+	}
+	.vl-ing {
+		font-weight: 700;
+	}
+	.vl-ing.is-note {
+		font-weight: 400;
+		font-style: italic;
+	}
+
+	/* directions */
+	.vl-steps {
+		margin: 0.6rem 0 0;
+		padding-left: 1.2rem;
+		font-size: 0.82rem;
+		line-height: 1.6;
+	}
+	.vl-steps li {
+		margin-bottom: 0.35rem;
+	}
+
+	/* warning */
+	.vl-warning {
+		margin-top: 2rem;
+		border: 3px solid var(--ink);
+		padding: 0.85rem 1rem;
+		background: var(--wash);
+	}
+	.vl-warning h2 {
+		margin: 0 0 0.35rem;
+		font-size: 0.72rem;
+		letter-spacing: 0.24em;
+		text-transform: uppercase;
+	}
+	.vl-warning p {
+		margin: 0;
+		font-size: 0.8rem;
+		line-height: 1.55;
+	}
+
+	/* figures */
+	.vl-figures {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 1px;
+		margin-top: 2rem;
+		background: var(--ink);
+		border: 2px solid var(--ink);
+	}
+	.vl-fig {
+		background: var(--paper);
+		padding: 0.85rem 0.75rem;
+		text-align: center;
+	}
+	.vl-fig strong {
+		display: block;
+		font-size: 2rem;
+		font-weight: 700;
+		letter-spacing: -0.04em;
+		line-height: 1;
+	}
+	.vl-fig span {
+		display: block;
+		font-size: 0.68rem;
+		margin: 0.3rem 0 0.2rem;
+	}
+	.vl-fig em {
+		font-family: "IBM Plex Mono", monospace;
+		font-size: 0.58rem;
+		font-style: normal;
+		color: #6a6a6a;
+	}
+
+	/* back of pack */
+	.vl-back {
+		margin-top: 2.25rem;
+		border-top: 10px solid var(--ink);
+		padding-top: 1rem;
+	}
+	.vl-barcode {
+		display: flex;
+		align-items: flex-end;
+		height: 52px;
+		overflow: hidden;
+	}
+	.vl-barcode i {
+		display: block;
+		height: 100%;
+		background: var(--ink);
+	}
+	.vl-barcode u {
+		display: block;
+		height: 100%;
+	}
+	.vl-lot {
+		margin: 0.3rem 0 1.25rem;
+		font-family: "IBM Plex Mono", monospace;
+		font-size: 0.62rem;
+		letter-spacing: 0.16em;
+	}
+	.vl-distrib-label {
+		margin: 0;
+		font-size: 0.62rem;
+		letter-spacing: 0.2em;
+		text-transform: uppercase;
+	}
+	.vl-distrib-name {
+		margin: 0.1rem 0 0.25rem;
+		font-size: 1.05rem;
+		font-weight: 700;
+	}
+	.vl-distrib-addr {
+		margin: 0;
+		font-size: 0.76rem;
+		line-height: 1.5;
+	}
+	.vl-distrib-addr a {
+		color: inherit;
+	}
+	.vl-cta {
+		display: block;
+		margin: 1.25rem 0 0.75rem;
+		padding: 0.85rem;
+		background: var(--ink);
+		color: var(--paper);
+		text-align: center;
+		text-decoration: none;
+		font-weight: 700;
+		font-size: 0.9rem;
+		letter-spacing: 0.02em;
+	}
+	.vl-cta:hover {
+		background: #333;
+	}
+	.vl-fineprint {
+		margin: 0;
+		font-size: 0.62rem;
+		line-height: 1.5;
+		color: #5a5a5a;
+	}
+
+	@media (max-width: 560px) {
+		.vl {
+			padding: 1rem 0.5rem 3rem;
+		}
+		.vl-sheet {
+			padding: 1rem;
+		}
+		.vl-item {
+			grid-template-columns: 1.5rem 1fr;
+		}
+		.vl-item-status {
+			grid-column: 2;
+			justify-self: start;
+		}
+		.vl-figures {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>
