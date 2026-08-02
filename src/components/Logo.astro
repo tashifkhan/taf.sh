@@ -1,0 +1,26 @@
+---
+interface Props {
+	class?: string;
+}
+
+const { class: className = "h-7 w-auto" } = Astro.props;
+---
+
+<!-- Shell-prompt mark: pixel chevron ">" + blinking block cursor -->
+<svg
+	class={className}
+	viewBox="0 0 42 30"
+	fill="none"
+	xmlns="http://www.w3.org/2000/svg"
+	aria-hidden="true"
+>
+	<path
+		d="M0 0H6V6H0V0Z M6 6H12V12H6V6Z M12 12H18V18H12V12Z M6 18H12V24H6V18Z M0 24H6V30H0V24Z"
+		fill="currentColor"></path>
+	<rect
+		x="24"
+		width="18"
+		height="30"
+		fill="var(--color-accent)"
+		class="cursor-blink"></rect>
+</svg>

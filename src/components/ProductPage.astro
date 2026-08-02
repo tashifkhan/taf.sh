@@ -1,0 +1,155 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+interface Feature {
+	title: string;
+	body: string;
+}
+
+interface Spec {
+	label: string;
+	value: string;
+	href?: string;
+}
+
+interface Props {
+	name: string;
+	tagline: string;
+	description: string;
+	status: string;
+	url?: string;
+	features: Feature[];
+	specs: Spec[];
+	next: { name: string; href: string };
+}
+
+const { name, tagline, description, status, url, features, specs, next } =
+	Astro.props;
+---
+
+<Layout title={name} description={tagline}>
+	<article class="mx-auto max-w-6xl px-6 py-16 md:py-20">
+		<a
+			href="/#products"
+			class="font-mono text-sm text-muted transition-colors hover:text-foreground"
+		>
+			← all products
+		</a>
+
+		<!-- Header -->
+		<header class="mt-10">
+			<div class="flex flex-wrap items-center gap-3 font-mono text-xs">
+				<span class="text-accent">[*]</span>
+				<span class="border border-border px-2 py-0.5 text-secondary"
+					>{status}</span
+				>
+				{
+					url && (
+						<a
+							href={`https://${url}`}
+							target="_blank"
+							rel="noopener noreferrer"
+							class="text-muted transition-colors hover:text-foreground"
+						>
+							{url} ↗
+						</a>
+					)
+				}
+			</div>
+			<h1
+				class="mt-6 text-4xl font-semibold tracking-tight text-foreground md:text-6xl"
+			>
+				{name}
+			</h1>
+			<p class="mt-5 max-w-2xl text-lg leading-8 text-secondary">{tagline}</p>
+			<p class="mt-4 max-w-2xl leading-7 text-secondary">{description}</p>
+
+			{
+				url && (
+					<div class="mt-8 flex flex-wrap gap-4 font-mono text-sm">
+						<a
+							href={`https://${url}`}
+							target="_blank"
+							rel="noopener noreferrer"
+							class="bg-accent px-5 py-2.5 text-accent-contrast transition-opacity hover:opacity-85"
+						>
+							Visit {name} ↗
+						</a>
+					</div>
+				)
+			}
+		</header>
+
+		<!-- Features -->
+		<section class="mt-20 border-t border-border pt-16">
+			<h2 class="text-2xl font-semibold tracking-tight text-foreground">
+				What it does
+			</h2>
+			<ul class="mt-10 grid gap-x-12 gap-y-10 md:grid-cols-2">
+				{
+					features.map((feature) => (
+						<li>
+							<p class="flex gap-3">
+								<span class="font-mono text-sm text-accent">[*]</span>
+								<strong class="font-semibold text-foreground">
+									{feature.title}
+								</strong>
+							</p>
+							<p class="mt-2 pl-8 text-sm leading-6 text-secondary">
+								{feature.body}
+							</p>
+						</li>
+					))
+				}
+			</ul>
+		</section>
+
+		<!-- Specs -->
+		<section class="mt-20 border-t border-border pt-16">
+			<h2 class="text-2xl font-semibold tracking-tight text-foreground">
+				Details
+			</h2>
+			<dl
+				class="mt-8 max-w-3xl divide-y divide-border border-y border-border font-mono text-sm"
+			>
+				{
+					specs.map((spec) => (
+						<div class="grid gap-1 py-4 sm:grid-cols-[12rem_1fr] sm:gap-6">
+							<dt class="text-muted">{spec.label}</dt>
+							<dd class="text-secondary">
+								{spec.href ? (
+									<a
+										href={spec.href}
+										target="_blank"
+										rel="noopener noreferrer"
+										class="text-foreground underline underline-offset-4 hover:text-accent"
+									>
+										{spec.value} ↗
+									</a>
+								) : (
+									spec.value
+								)}
+							</dd>
+						</div>
+					))
+				}
+			</dl>
+		</section>
+
+		<!-- Next product -->
+		<footer class="mt-20 border-t border-border pt-10">
+			<a href={next.href} class="group inline-flex items-baseline gap-4">
+				<span class="font-mono text-sm text-muted">Next</span>
+				<span
+					class="text-2xl font-semibold text-foreground group-hover:underline group-hover:underline-offset-4"
+				>
+					{next.name}
+				</span>
+				<span
+					class="font-mono text-sm text-muted transition-colors group-hover:text-accent"
+					>→</span
+				>
+			</a>
+		</footer>
+	</article>
+</Layout>

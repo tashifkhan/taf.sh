@@ -1,23 +1,49 @@
+---
+import "@fontsource/ibm-plex-sans/400.css";
+import "@fontsource/ibm-plex-sans/500.css";
+import "@fontsource/ibm-plex-sans/600.css";
+import "@fontsource/ibm-plex-sans/700.css";
+import "@fontsource/ibm-plex-mono/400.css";
+import "@fontsource/ibm-plex-mono/500.css";
+import "../styles/global.css";
+
+import Nav from "../components/Nav.astro";
+import Footer from "../components/Footer.astro";
+import ThemeScript from "../components/ThemeScript.astro";
+
+interface Props {
+	title: string;
+	description?: string;
+}
+
+const {
+	title,
+	description = "taf.sh — an independent software studio and consultancy. AI-native products and engineering, built and run by one engineer.",
+} = Astro.props;
+---
+
 <!doctype html>
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
+		<link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48" />
+		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+		<link rel="manifest" href="/site.webmanifest" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
+		<meta name="description" content={description} />
+		<ThemeScript />
+		<meta property="og:title" content={`${title} · taf.sh`} />
+		<meta property="og:description" content={description} />
+		<meta property="og:type" content="website" />
+		<title>{title} · taf.sh</title>
 	</head>
-	<body>
-		<slot />
+	<body class="flex min-h-screen flex-col">
+		<Nav />
+		<main class="flex-1">
+			<slot />
+		</main>
+		<Footer />
 	</body>
 </html>
-
-<style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
-</style>
