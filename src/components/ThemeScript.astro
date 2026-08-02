@@ -1,0 +1,26 @@
+---
+/**
+ * Blocking, inline: applies the stored theme override before first paint so the
+ * page never flashes the wrong palette. Absent an override, CSS `color-scheme:
+ * light dark` already follows the OS, so nothing is set here.
+ */
+---
+
+<meta name="theme-color" content="#0e0d0d" data-theme-color />
+<script is:inline>
+	(() => {
+		const stored = localStorage.getItem("taf-theme");
+		if (stored === "light" || stored === "dark") {
+			document.documentElement.dataset.theme = stored;
+		}
+		const resolved =
+			stored === "light" || stored === "dark"
+				? stored
+				: matchMedia("(prefers-color-scheme: light)").matches
+					? "light"
+					: "dark";
+		document
+			.querySelector("meta[data-theme-color]")
+			?.setAttribute("content", resolved === "light" ? "#f4f2f0" : "#0e0d0d");
+	})();
+</script>
