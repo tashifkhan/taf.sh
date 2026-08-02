@@ -1,9 +1,11 @@
 /**
  * Cloudflare Worker for taf.sh
+ * - Canonical host redirects (www + workers.dev → taf.sh)
  * - Serves the Astro static build via Workers Assets
  * - Reverse-proxies /ph/* to PostHog EU (same-origin analytics)
  */
 
+const CANONICAL_HOST = "taf.sh";
 const API_HOST = "eu.i.posthog.com";
 const ASSET_HOST = "eu-assets.i.posthog.com";
 
@@ -16,6 +18,19 @@ function stripPhPrefix(pathname: string): string {
 	if (pathname === "/ph") return "/";
 	if (pathname.startsWith("/ph/")) return pathname.slice(3) || "/";
 	return pathname;
+}
+
+function canonicalRedirect(url: URL): Response | null {
+	// Apex taf.sh is the only host that serves content.
+	// www.taf.sh and *.workers.dev (plus any other alias) 301 here.
+	if (url.hostname === CANONICAL_HOST) return null;
+
+	const target = new URL(url.toString());
+	target.protocol = "https:";
+	target.hostname = CANONICAL_HOST;
+	target.port = "";
+
+	return Response.redirect(target.toString(), 301);
 }
 
 async function proxyPostHog(
@@ -74,12 +89,14 @@ export default {
 	): Promise<Response> {
 		const url = new URL(request.url);
 
-		// PostHog reverse proxy (run_worker_first for /ph*)
+		const redirect = canonicalRedirect(url);
+		if (redirect) return redirect;
+
+		// PostHog reverse proxy
 		if (url.pathname === "/ph" || url.pathname.startsWith("/ph/")) {
 			return proxyPostHog(request, ctx);
 		}
 
-		// Fallback for non-asset requests that still hit the worker
 		return env.ASSETS.fetch(request);
 	},
 };
