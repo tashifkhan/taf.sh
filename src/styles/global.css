@@ -26,6 +26,11 @@
 	--color-accent-strong: light-dark(#0b5b50, #7ce3d9);
 	--color-accent-soft: light-dark(rgba(15, 122, 108, 0.1), rgba(79, 209, 197, 0.14));
 	--color-accent-contrast: light-dark(#ffffff, #04211f);
+
+	/* One easing + duration for every `transition-*` utility on the site */
+	--default-transition-duration: 180ms;
+	--default-transition-timing-function: cubic-bezier(0.2, 0.7, 0.3, 1);
+	--ease-site: cubic-bezier(0.2, 0.7, 0.3, 1);
 }
 
 @layer base {
@@ -33,6 +38,8 @@
 		/* system preference by default; the toggle pins one via data-theme */
 		color-scheme: light dark;
 		scroll-behavior: smooth;
+		/* lets height/width animate to and from `auto` */
+		interpolate-size: allow-keywords;
 	}
 
 	html[data-theme="dark"] {
@@ -77,5 +84,131 @@
 @media (prefers-reduced-motion: reduce) {
 	.cursor-blink {
 		animation: none;
+	}
+}
+
+/*
+ * ---------------------------------------------------------------------------
+ * Cross-document view transitions
+ * ---------------------------------------------------------------------------
+ * The site is plain static Astro with no client-side router, so navigation is
+ * animated by the browser itself. Anything unsupported simply hard-cuts as
+ * before — there is no JS fallback and none is needed.
+ */
+@view-transition {
+	navigation: auto;
+}
+
+@keyframes vt-fade-in {
+	from {
+		opacity: 0;
+	}
+}
+
+@keyframes vt-fade-out {
+	to {
+		opacity: 0;
+	}
+}
+
+@keyframes vt-rise-in {
+	from {
+		opacity: 0;
+		transform: translateY(14px);
+	}
+}
+
+@keyframes vt-sink-out {
+	to {
+		opacity: 0;
+		transform: translateY(-8px);
+	}
+}
+
+/* Page body: the outgoing view drops away, the incoming one rises into place. */
+::view-transition-old(root) {
+	animation: 140ms ease-in both vt-sink-out;
+}
+
+::view-transition-new(root) {
+	animation: 280ms 60ms var(--ease-site) both vt-rise-in;
+}
+
+/*
+ * The nav is identical and sticky on every page, so it is lifted out of the
+ * root snapshot and cross-fades in place instead of sliding with the content.
+ */
+::view-transition-group(site-nav) {
+	animation-duration: 220ms;
+}
+
+/*
+ * Shared-element morph: a product name in the index list flies into the <h1>
+ * of its product page. Both ends carry `view-transition-class: product-title`,
+ * so one rule tunes all three pairs.
+ */
+::view-transition-group(.product-title) {
+	animation-duration: 340ms;
+	animation-timing-function: var(--ease-site);
+}
+
+/* Theme switches cross-fade the whole page rather than sliding it. */
+:root:active-view-transition-type(theme)::view-transition-old(root) {
+	animation: 220ms ease both vt-fade-out;
+}
+
+:root:active-view-transition-type(theme)::view-transition-new(root) {
+	animation: 220ms ease both vt-fade-in;
+}
+
+/*
+ * ---------------------------------------------------------------------------
+ * Scroll-driven reveals
+ * ---------------------------------------------------------------------------
+ * `animation-timeline: view()` ties the reveal to the element's own progress
+ * through the viewport — no IntersectionObserver, no JS. Elements already on
+ * screen at load are past the entry range, so they render at their final state.
+ */
+@keyframes reveal-in {
+	from {
+		opacity: 0;
+		transform: translateY(16px);
+	}
+}
+
+@supports (animation-timeline: view()) {
+	@media (prefers-reduced-motion: no-preference) {
+		.reveal {
+			/*
+			 * The timeline goes through a custom property on purpose: Lightning
+			 * CSS otherwise folds these longhands into `animation: ... view()`,
+			 * a shorthand form browsers reject — which silently drops the whole
+			 * declaration. `var()` keeps it a longhand through minification.
+			 */
+			--reveal-timeline: view();
+			animation: reveal-in linear both;
+			animation-timeline: var(--reveal-timeline);
+			animation-range: entry 0% cover 20%;
+		}
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	/*
+	 * Named one by one rather than with `::view-transition-*(*)`: the wildcard
+	 * is newer than the rest of the API, and a single unsupported selector
+	 * would invalidate the whole list and leave motion on.
+	 */
+	::view-transition-old(root),
+	::view-transition-new(root),
+	::view-transition-group(site-nav),
+	::view-transition-group(product-talentsync),
+	::view-transition-group(product-talentsync-hr),
+	::view-transition-group(product-cliniq) {
+		animation: none !important;
+	}
+
+	html {
+		scroll-behavior: auto;
 	}
 }

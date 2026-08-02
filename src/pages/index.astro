@@ -31,6 +31,7 @@ const traits = [
 const products = [
 	{
 		index: "01",
+		id: "talentsync",
 		name: "TalentSync AI",
 		desc: "Resume intelligence for job seekers — ATS feedback, career-path prediction, free and unlimited.",
 		href: "/products/talentsync",
@@ -38,6 +39,7 @@ const products = [
 	},
 	{
 		index: "02",
+		id: "talentsync-hr",
 		name: "TalentSync HR",
 		desc: "Recruiting intelligence for teams — evidence-backed candidate scoring, external validation, ranked shortlists.",
 		href: "/products/talentsync-hr",
@@ -45,6 +47,7 @@ const products = [
 	},
 	{
 		index: "03",
+		id: "cliniq",
 		name: "CliniQ",
 		desc: "A clinical practice that runs on WhatsApp — appointments, reminders, and follow-ups over chat.",
 		href: "/products/cliniq",
@@ -122,7 +125,7 @@ const services = [
 	<!-- What is taf.sh -->
 	<section class="border-t border-border">
 		<div
-			class="mx-auto grid max-w-6xl gap-12 px-6 py-20 md:grid-cols-[1fr_1.2fr]"
+			class="reveal mx-auto grid max-w-6xl gap-12 px-6 py-20 md:grid-cols-[1fr_1.2fr]"
 		>
 			<div>
 				<h2 class="text-3xl font-semibold tracking-tight text-foreground">
@@ -160,7 +163,7 @@ const services = [
 
 	<!-- Products -->
 	<section id="products" class="scroll-mt-16 border-t border-border">
-		<div class="mx-auto max-w-6xl px-6 py-20">
+		<div class="reveal mx-auto max-w-6xl px-6 py-20">
 			<p class="font-mono text-sm text-accent">[*]</p>
 			<h2 class="mt-2 text-3xl font-semibold tracking-tight text-foreground">
 				Products
@@ -180,7 +183,10 @@ const services = [
 							<span class="font-mono text-sm text-muted">{product.index}</span>
 							<span>
 								<span class="flex flex-wrap items-center gap-3">
-									<span class="text-xl font-semibold text-foreground group-hover:underline group-hover:underline-offset-4">
+									<span
+										class="text-xl font-semibold text-foreground group-hover:underline group-hover:underline-offset-4"
+										style={`view-transition-name: product-${product.id}; view-transition-class: product-title`}
+									>
 										{product.name}
 									</span>
 									<span
@@ -210,7 +216,7 @@ const services = [
 
 	<!-- Stats, opencode "Fig." style -->
 	<section class="border-t border-border">
-		<div class="mx-auto max-w-6xl px-6 py-20">
+		<div class="reveal mx-auto max-w-6xl px-6 py-20">
 			<p class="max-w-2xl leading-7 text-secondary">
 				<span class="mr-2 font-mono text-sm text-accent">[*]</span>
 				Every product above is a running system with real users — architected,
@@ -251,7 +257,7 @@ const services = [
 	<!-- Services teaser -->
 	<section class="border-t border-border">
 		<div
-			class="mx-auto grid max-w-6xl gap-12 px-6 py-20 md:grid-cols-[1fr_1.2fr]"
+			class="reveal mx-auto grid max-w-6xl gap-12 px-6 py-20 md:grid-cols-[1fr_1.2fr]"
 		>
 			<div>
 				<h2 class="text-3xl font-semibold tracking-tight text-foreground">
@@ -283,7 +289,7 @@ const services = [
 
 	<!-- CTA -->
 	<section class="border-t border-border">
-		<div class="mx-auto max-w-6xl px-6 py-24 text-center">
+		<div class="reveal mx-auto max-w-6xl px-6 py-24 text-center">
 			<h2 class="text-3xl font-semibold tracking-tight text-foreground">
 				Have something to build?
 			</h2>

@@ -13,6 +13,8 @@ interface Spec {
 }
 
 interface Props {
+	/** Slug shared with the index list — drives the shared-element morph. */
+	id: string;
 	name: string;
 	tagline: string;
 	description: string;
@@ -23,7 +25,7 @@ interface Props {
 	next: { name: string; href: string };
 }
 
-const { name, tagline, description, status, url, features, specs, next } =
+const { id, name, tagline, description, status, url, features, specs, next } =
 	Astro.props;
 ---
 
@@ -58,6 +60,7 @@ const { name, tagline, description, status, url, features, specs, next } =
 			</div>
 			<h1
 				class="mt-6 text-4xl font-semibold tracking-tight text-foreground md:text-6xl"
+				style={`view-transition-name: product-${id}; view-transition-class: product-title`}
 			>
 				{name}
 			</h1>
@@ -81,7 +84,7 @@ const { name, tagline, description, status, url, features, specs, next } =
 		</header>
 
 		<!-- Features -->
-		<section class="mt-20 border-t border-border pt-16">
+		<section class="reveal mt-20 border-t border-border pt-16">
 			<h2 class="text-2xl font-semibold tracking-tight text-foreground">
 				What it does
 			</h2>
@@ -105,7 +108,7 @@ const { name, tagline, description, status, url, features, specs, next } =
 		</section>
 
 		<!-- Specs -->
-		<section class="mt-20 border-t border-border pt-16">
+		<section class="reveal mt-20 border-t border-border pt-16">
 			<h2 class="text-2xl font-semibold tracking-tight text-foreground">
 				Details
 			</h2>
