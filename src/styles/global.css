@@ -1,0 +1,81 @@
+@import "tailwindcss";
+
+/*
+ * Theming: every token is a `light-dark()` pair, so the whole palette follows the
+ * `color-scheme` set on <html> (see the base layer below). No JS is needed for the
+ * system preference — the inline script in Layout.astro only handles the manual
+ * override stored in localStorage.
+ */
+@theme {
+	--font-sans: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+	--font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+	/* OpenCode-inspired warm grayscale — light(paper), dark(ink) */
+	--color-background: light-dark(#f4f2f0, #0e0d0d);
+	--color-surface: light-dark(#fbfaf9, #151313);
+	--color-elevated: light-dark(#ffffff, #1c1a1a);
+	--color-border: light-dark(#e0dbd8, #292626);
+	--color-border-strong: light-dark(#c7c1bd, #3b3737);
+	--color-foreground: light-dark(#171615, #f2f1f0);
+	--color-secondary: light-dark(#45403e, #b7b1b1);
+	--color-muted: light-dark(#6d6764, #7a7676);
+	--color-faint: light-dark(#a09a96, #4b4646);
+
+	/* Teal — the one non-grayscale hue in the system */
+	--color-accent: light-dark(#0f7a6c, #4fd1c5);
+	--color-accent-strong: light-dark(#0b5b50, #7ce3d9);
+	--color-accent-soft: light-dark(rgba(15, 122, 108, 0.1), rgba(79, 209, 197, 0.14));
+	--color-accent-contrast: light-dark(#ffffff, #04211f);
+}
+
+@layer base {
+	html {
+		/* system preference by default; the toggle pins one via data-theme */
+		color-scheme: light dark;
+		scroll-behavior: smooth;
+	}
+
+	html[data-theme="dark"] {
+		color-scheme: dark;
+	}
+
+	html[data-theme="light"] {
+		color-scheme: light;
+	}
+
+	body {
+		@apply bg-background font-sans text-foreground antialiased;
+	}
+
+	::selection {
+		background: var(--color-accent);
+		color: var(--color-accent-contrast);
+	}
+
+	:focus-visible {
+		outline: 2px solid var(--color-accent);
+		outline-offset: 2px;
+	}
+}
+
+/* Blinking terminal cursor */
+@keyframes blink {
+	0%,
+	49% {
+		opacity: 1;
+	}
+	50%,
+	100% {
+		opacity: 0;
+	}
+}
+
+.cursor-blink {
+	animation: blink 1.06s step-end infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.cursor-blink {
+		animation: none;
+	}
+}
