@@ -1,0 +1,580 @@
+---
+/**
+ * Museum — the studio as an exhibition. Wall labels, accession numbers,
+ * medium-and-dimensions lines, a curator's note, and vast quiet margins.
+ * Nothing is sold; everything is on view.
+ */
+import "@fontsource/eb-garamond/400.css";
+import "@fontsource/eb-garamond/400-italic.css";
+import "@fontsource/eb-garamond/500.css";
+import "@fontsource/eb-garamond/600.css";
+import { products, services, process, stats, email } from "./data";
+
+const works = [
+	{
+		medium: "TypeScript, Python, LLM inference, vector retrieval; on Postgres",
+		dims: "Dimensions variable; unlimited edition",
+		acc: "TAF.2024.01",
+		year: "2024–",
+		credit: "Collection of the studio. Free and unlimited to the public.",
+	},
+	{
+		medium: "TypeScript, evaluation harness, ranked scoring; on Postgres",
+		dims: "Dimensions variable; edition of one per team",
+		acc: "TAF.2025.02",
+		year: "2025–",
+		credit: "Collection of the studio. Currently in limited release.",
+	},
+	{
+		medium: "WhatsApp Business API, queues, scheduling; on Postgres",
+		dims: "Dimensions variable; sited in clinic",
+		acc: "TAF.2026.03",
+		year: "2026–",
+		credit: "Commissioned by practice. In fabrication.",
+	},
+];
+
+/** Each work gets an abstract plate — no photography in this exhibition. */
+const plates = [
+	{ id: "p1", label: "Plate I" },
+	{ id: "p2", label: "Plate II" },
+	{ id: "p3", label: "Plate III" },
+];
+---
+
+<div class="vmu">
+	<!-- ENTRANCE PLATE -->
+	<header class="vmu-entrance">
+		<p class="vmu-inst">Gallery of Applied Software</p>
+		<h1 class="vmu-exh">
+			taf.sh<span class="vmu-colon">:</span>
+			<em>Works Made and Kept Running</em>
+		</h1>
+		<p class="vmu-dates">25 July 2026 &#8212; ongoing &#183; Gallery 1&#8211;3</p>
+		<div class="vmu-hair"></div>
+		<p class="vmu-sub">
+			A single-operator practice. Three works in production, four techniques,
+			no assistants.
+		</p>
+	</header>
+
+	<!-- CURATOR'S NOTE -->
+	<section class="vmu-note">
+		<p class="vmu-label">Curator's note</p>
+		<div class="vmu-note-body">
+			<p class="vmu-first">
+				The works assembled here share an unusual condition: each is still
+				running. They were not made for exhibition and then retired to storage.
+				They receive users, hold state, fail occasionally, and are repaired by
+				the same hand that made them.
+			</p>
+			<p>
+				The practice is deliberately small. There is no studio of assistants, no
+				account layer between the commission and the making. Visitors who wish
+				to commission work will speak to the maker, because there is nobody else
+				to speak to. The techniques room documents what that hand can do; the
+				provenance room documents how a commission proceeds.
+			</p>
+			<p class="vmu-sig">&#8212; T. A. Khan, operator and curator</p>
+		</div>
+	</section>
+
+	<!-- WORKS -->
+	<section class="vmu-works" id="products">
+		<p class="vmu-room">Galleries 1&#8211;3 &#183; Works in the exhibition</p>
+		{
+			products.map((p, i) => (
+				<article class="vmu-work">
+					<div class:list={["vmu-plate", plates[i].id]} aria-hidden="true">
+						<span class="vmu-plate-cap">{plates[i].label}</span>
+					</div>
+					<div class="vmu-wall">
+						<p class="vmu-acc">{works[i].acc}</p>
+						<h2 class="vmu-work-title">
+							<a href={p.href}>{p.name}</a>
+						</h2>
+						<p class="vmu-work-year">
+							Tashif Ahmad Khan, {works[i].year}
+						</p>
+						<p class="vmu-work-medium">{works[i].medium}</p>
+						<p class="vmu-work-dims">{works[i].dims}</p>
+						<div class="vmu-hair vmu-hair--short" />
+						<p class="vmu-work-desc">{p.desc}</p>
+						<p class="vmu-work-credit">{works[i].credit}</p>
+						<p class="vmu-work-status">
+							<span>{p.tag}</span>
+							<span>{p.status}</span>
+						</p>
+					</div>
+				</article>
+			))
+		}
+	</section>
+
+	<!-- TECHNIQUES -->
+	<section class="vmu-tech">
+		<p class="vmu-room">Study room &#183; Techniques</p>
+		<div class="vmu-tech-grid">
+			{
+				services.map((s, i) => (
+					<div class="vmu-tech-item">
+						<p class="vmu-tech-n">{String(i + 1).padStart(2, "0")}</p>
+						<h3>{s.title}</h3>
+						<p>{s.body}</p>
+					</div>
+				))
+			}
+		</div>
+	</section>
+
+	<!-- PROVENANCE -->
+	<section class="vmu-prov">
+		<p class="vmu-room">Archive &#183; Provenance of a commission</p>
+		<ol class="vmu-prov-list">
+			{
+				process.map((p) => (
+					<li>
+						<span class="vmu-prov-n">{p.step}</span>
+						<span>
+							<strong>{p.title}</strong>
+							<em>{p.body}</em>
+						</span>
+					</li>
+				))
+			}
+		</ol>
+	</section>
+
+	<!-- INVENTORY -->
+	<section class="vmu-inv">
+		{
+			stats.map((s) => (
+				<div class="vmu-inv-item">
+					<p class="vmu-inv-v">{s.value}</p>
+					<p class="vmu-inv-l">{s.label}</p>
+					<p class="vmu-inv-f">{s.fig}</p>
+				</div>
+			))
+		}
+	</section>
+
+	<!-- VISITOR INFORMATION -->
+	<footer class="vmu-visit">
+		<div class="vmu-hair"></div>
+		<p class="vmu-label">Visitor information</p>
+		<div class="vmu-visit-grid">
+			<div>
+				<h3>Admission</h3>
+				<p>Free. TalentSync AI is free and unlimited to the public.</p>
+			</div>
+			<div>
+				<h3>Commissions</h3>
+				<p>
+					A small number are accepted each year. Written scope precedes any
+					making.
+				</p>
+			</div>
+			<div>
+				<h3>Correspondence</h3>
+				<p>
+					<a href={`mailto:${email}`}>{email}</a>
+					<br />
+					<a href="/contact">taf.sh/contact</a>
+				</p>
+			</div>
+		</div>
+		<a class="vmu-cta" href="/contact">Enquire about a commission</a>
+		<p class="vmu-fine">
+			Photography permitted. Works remain the property of the client on
+			completion &#8212; code, infrastructure, and documentation included.
+		</p>
+	</footer>
+</div>
+
+<style>
+	.vmu {
+		--paper: #f6f3ec;
+		--ink: #1b1917;
+		--soft: #6d675f;
+		--hair: #cfc8bb;
+		background: var(--paper);
+		color: var(--ink);
+		font-family: "EB Garamond", Georgia, serif;
+		font-size: 1.05rem;
+		line-height: 1.65;
+		min-height: 100vh;
+		padding: 0 1.5rem 5rem;
+	}
+	.vmu a {
+		color: inherit;
+		text-decoration: none;
+		border-bottom: 1px solid var(--hair);
+	}
+	.vmu a:hover {
+		border-bottom-color: var(--ink);
+	}
+	.vmu-hair {
+		height: 1px;
+		background: var(--hair);
+		margin: 1.75rem 0;
+	}
+	.vmu-hair--short {
+		width: 3rem;
+		margin: 0.85rem 0;
+		background: var(--ink);
+	}
+	.vmu-label,
+	.vmu-room {
+		font-family: "IBM Plex Mono", monospace;
+		font-size: 0.6rem;
+		letter-spacing: 0.28em;
+		text-transform: uppercase;
+		color: var(--soft);
+		margin: 0 0 1.5rem;
+	}
+
+	/* entrance */
+	.vmu-entrance {
+		max-width: 48rem;
+		margin: 0 auto;
+		padding: 6rem 0 4rem;
+		text-align: center;
+	}
+	.vmu-inst {
+		margin: 0 0 2.5rem;
+		font-family: "IBM Plex Mono", monospace;
+		font-size: 0.62rem;
+		letter-spacing: 0.34em;
+		text-transform: uppercase;
+		color: var(--soft);
+	}
+	.vmu-exh {
+		margin: 0;
+		font-size: clamp(2.6rem, 8vw, 5rem);
+		font-weight: 400;
+		line-height: 1.05;
+		letter-spacing: -0.01em;
+	}
+	.vmu-exh em {
+		display: block;
+		font-size: 0.62em;
+		color: var(--soft);
+		margin-top: 0.35rem;
+	}
+	.vmu-colon {
+		color: var(--soft);
+	}
+	.vmu-dates {
+		margin: 1.5rem 0 0;
+		font-size: 0.9rem;
+		font-style: italic;
+		color: var(--soft);
+	}
+	.vmu-sub {
+		max-width: 30rem;
+		margin: 0 auto;
+		font-size: 1.05rem;
+	}
+
+	/* curator's note */
+	.vmu-note {
+		display: grid;
+		grid-template-columns: 12rem minmax(0, 34rem);
+		gap: 3rem;
+		justify-content: center;
+		max-width: 60rem;
+		margin: 4rem auto 0;
+		padding-top: 3rem;
+		border-top: 1px solid var(--hair);
+	}
+	.vmu-note-body p {
+		margin: 0 0 1.1rem;
+	}
+	.vmu-first::first-letter {
+		float: left;
+		font-size: 3.6rem;
+		line-height: 0.82;
+		padding: 0.1rem 0.6rem 0 0;
+		font-weight: 500;
+	}
+	.vmu-sig {
+		font-style: italic;
+		color: var(--soft);
+	}
+
+	/* works */
+	.vmu-works {
+		max-width: 68rem;
+		margin: 6rem auto 0;
+	}
+	.vmu-work {
+		display: grid;
+		grid-template-columns: 1fr 20rem;
+		gap: 3.5rem;
+		align-items: start;
+		margin-bottom: 6rem;
+	}
+	.vmu-plate {
+		position: relative;
+		aspect-ratio: 4 / 3;
+		border: 1px solid var(--hair);
+		background: #eceadf;
+		overflow: hidden;
+	}
+	.vmu-plate-cap {
+		position: absolute;
+		left: 0.75rem;
+		bottom: 0.6rem;
+		font-family: "IBM Plex Mono", monospace;
+		font-size: 0.58rem;
+		letter-spacing: 0.2em;
+		text-transform: uppercase;
+		color: var(--soft);
+		z-index: 2;
+	}
+	/* three abstract compositions, drawn in gradients */
+	.p1 {
+		background-image:
+			repeating-linear-gradient(
+				90deg,
+				rgba(27, 25, 23, 0.9) 0 2px,
+				transparent 2px 14px
+			),
+			linear-gradient(180deg, #e6e2d4, #d9d4c4);
+	}
+	.p2 {
+		background-image:
+			radial-gradient(circle at 30% 55%, rgba(27, 25, 23, 0.92) 0 18%, transparent 18.5%),
+			radial-gradient(circle at 62% 40%, rgba(27, 25, 23, 0.35) 0 26%, transparent 26.5%),
+			linear-gradient(180deg, #eae6da, #ddd8c8);
+	}
+	.p3 {
+		background-image:
+			repeating-linear-gradient(
+				-38deg,
+				rgba(27, 25, 23, 0.85) 0 1px,
+				transparent 1px 11px
+			),
+			linear-gradient(140deg, #e9e5d8, #d5cfbe);
+	}
+
+	.vmu-acc {
+		margin: 0 0 0.75rem;
+		font-family: "IBM Plex Mono", monospace;
+		font-size: 0.6rem;
+		letter-spacing: 0.18em;
+		color: var(--soft);
+	}
+	.vmu-work-title {
+		margin: 0;
+		font-size: 1.75rem;
+		font-weight: 500;
+		line-height: 1.15;
+	}
+	.vmu-work-title a {
+		border-bottom: none;
+	}
+	.vmu-work-title a:hover {
+		border-bottom: 1px solid var(--ink);
+	}
+	.vmu-work-year {
+		margin: 0.35rem 0 0.85rem;
+		font-style: italic;
+		color: var(--soft);
+		font-size: 0.95rem;
+	}
+	.vmu-work-medium,
+	.vmu-work-dims {
+		margin: 0;
+		font-size: 0.88rem;
+		color: var(--soft);
+		line-height: 1.5;
+	}
+	.vmu-work-desc {
+		margin: 0 0 0.85rem;
+		font-size: 1rem;
+	}
+	.vmu-work-credit {
+		margin: 0 0 1.1rem;
+		font-size: 0.85rem;
+		font-style: italic;
+		color: var(--soft);
+	}
+	.vmu-work-status {
+		display: flex;
+		gap: 0.5rem;
+		margin: 0;
+	}
+	.vmu-work-status span {
+		font-family: "IBM Plex Mono", monospace;
+		font-size: 0.58rem;
+		letter-spacing: 0.16em;
+		text-transform: uppercase;
+		border: 1px solid var(--hair);
+		padding: 0.2rem 0.5rem;
+		color: var(--soft);
+	}
+
+	/* techniques */
+	.vmu-tech,
+	.vmu-prov {
+		max-width: 60rem;
+		margin: 0 auto;
+		padding-top: 3.5rem;
+		border-top: 1px solid var(--hair);
+	}
+	.vmu-tech-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+		gap: 2.5rem 3rem;
+	}
+	.vmu-tech-n {
+		margin: 0 0 0.5rem;
+		font-family: "IBM Plex Mono", monospace;
+		font-size: 0.62rem;
+		color: var(--soft);
+	}
+	.vmu-tech-item h3 {
+		margin: 0 0 0.35rem;
+		font-size: 1.2rem;
+		font-weight: 500;
+	}
+	.vmu-tech-item p {
+		margin: 0;
+		font-size: 0.95rem;
+		color: var(--soft);
+	}
+
+	/* provenance */
+	.vmu-prov {
+		margin-top: 4.5rem;
+	}
+	.vmu-prov-list {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		max-width: 42rem;
+	}
+	.vmu-prov-list li {
+		display: grid;
+		grid-template-columns: 3rem 1fr;
+		gap: 1rem;
+		padding: 1.1rem 0;
+		border-bottom: 1px solid var(--hair);
+	}
+	.vmu-prov-n {
+		font-family: "IBM Plex Mono", monospace;
+		font-size: 0.7rem;
+		color: var(--soft);
+		padding-top: 0.35rem;
+	}
+	.vmu-prov-list strong {
+		display: block;
+		font-size: 1.15rem;
+		font-weight: 500;
+	}
+	.vmu-prov-list em {
+		font-style: normal;
+		color: var(--soft);
+		font-size: 0.95rem;
+	}
+
+	/* inventory */
+	.vmu-inv {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 2rem;
+		max-width: 48rem;
+		margin: 5rem auto 0;
+		text-align: center;
+	}
+	.vmu-inv-v {
+		margin: 0;
+		font-size: 3.5rem;
+		line-height: 1;
+		font-weight: 400;
+	}
+	.vmu-inv-l {
+		margin: 0.5rem 0 0.25rem;
+		font-size: 0.9rem;
+	}
+	.vmu-inv-f {
+		margin: 0;
+		font-family: "IBM Plex Mono", monospace;
+		font-size: 0.58rem;
+		letter-spacing: 0.16em;
+		text-transform: uppercase;
+		color: var(--soft);
+	}
+
+	/* visitor info */
+	.vmu-visit {
+		max-width: 60rem;
+		margin: 5rem auto 0;
+		text-align: center;
+	}
+	.vmu-visit-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+		gap: 2.5rem;
+		text-align: left;
+		max-width: 46rem;
+		margin: 0 auto;
+	}
+	.vmu-visit-grid h3 {
+		margin: 0 0 0.35rem;
+		font-family: "IBM Plex Mono", monospace;
+		font-size: 0.6rem;
+		letter-spacing: 0.2em;
+		text-transform: uppercase;
+		color: var(--soft);
+		font-weight: 400;
+	}
+	.vmu-visit-grid p {
+		margin: 0;
+		font-size: 0.95rem;
+	}
+	.vmu-cta {
+		display: inline-block;
+		margin: 3rem 0 1.5rem;
+		padding: 0.75rem 2rem;
+		border: 1px solid var(--ink);
+		font-size: 0.95rem;
+		letter-spacing: 0.02em;
+	}
+	.vmu-cta:hover {
+		background: var(--ink);
+		color: var(--paper);
+	}
+	.vmu-fine {
+		max-width: 32rem;
+		margin: 0 auto;
+		font-size: 0.82rem;
+		font-style: italic;
+		color: var(--soft);
+	}
+
+	@media (max-width: 860px) {
+		.vmu-note {
+			grid-template-columns: 1fr;
+			gap: 1rem;
+		}
+		.vmu-work {
+			grid-template-columns: 1fr;
+			gap: 1.5rem;
+			margin-bottom: 4rem;
+		}
+	}
+	@media (max-width: 560px) {
+		.vmu {
+			padding: 0 1.1rem 3.5rem;
+		}
+		.vmu-entrance {
+			padding: 3.5rem 0 2.5rem;
+		}
+		.vmu-inv {
+			grid-template-columns: 1fr;
+			gap: 2rem;
+		}
+	}
+</style>

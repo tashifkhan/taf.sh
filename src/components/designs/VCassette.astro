@@ -1,0 +1,710 @@
+---
+/**
+ * Cassette — the studio as an album with liner notes. A J-card spine, a
+ * drawn tape shell, Side A / Side B tracklists, credits in small caps, and
+ * hand-written annotations in the margin.
+ */
+import "@fontsource/archivo-narrow/400.css";
+import "@fontsource/archivo-narrow/500.css";
+import "@fontsource/archivo-narrow/600.css";
+import "@fontsource/archivo-narrow/700.css";
+import "@fontsource/caveat/400.css";
+import "@fontsource/caveat/600.css";
+import { products, services, process, stats, traits, email } from "./data";
+
+const sideA = products.map((p, i) => ({
+	n: String(i + 1).padStart(2, "0"),
+	title: p.name,
+	sub: p.desc,
+	time: ["4:12", "3:48", "5:31"][i],
+	href: p.href,
+	badge: p.status,
+}));
+
+const sideB = services.map((s, i) => ({
+	n: String(i + 1).padStart(2, "0"),
+	title: s.title,
+	sub: s.body,
+	time: ["3:05", "4:44", "2:58", "3:22"][i],
+}));
+---
+
+<div class="vc">
+	<div class="vc-jcard">
+		<!-- SPINE -->
+		<div class="vc-spine" aria-hidden="true">
+			<span class="vc-spine-txt">taf.sh &#8212; WORKS &amp; SERVICES &#183; C60</span>
+		</div>
+
+		<!-- FRONT -->
+		<header class="vc-front">
+			<p class="vc-label-top">
+				<span class="vc-chip">TYPE II</span>
+				<span class="vc-chip">HIGH BIAS</span>
+				<span class="vc-chip">C60</span>
+				<span class="vc-dolby" aria-hidden="true">&#9702;&#9702;</span>
+			</p>
+			<h1 class="vc-artist">taf<span>.sh</span></h1>
+			<p class="vc-album">Works &amp; Services</p>
+			<p class="vc-sub">
+				An independent software studio &#183; recorded live, one take, one
+				operator
+			</p>
+
+			<!-- TAPE SHELL -->
+			<div class="vc-shell" aria-hidden="true">
+				<div class="vc-shell-body">
+					<div class="vc-shell-label">
+						<span class="vc-shell-side">A</span>
+						<span class="vc-shell-lines">
+							<i></i><i></i><i></i>
+						</span>
+					</div>
+					<div class="vc-window">
+						<span class="vc-reel vc-reel--l"><b></b></span>
+						<span class="vc-tape"></span>
+						<span class="vc-reel vc-reel--r"><b></b></span>
+					</div>
+					<div class="vc-shell-foot">
+						<span class="vc-hole"></span>
+						<span class="vc-slot"></span>
+						<span class="vc-hole"></span>
+					</div>
+				</div>
+			</div>
+
+			<p class="vc-hand vc-hand--front">still playing after 3 years →</p>
+		</header>
+
+		<!-- TRACKLISTS -->
+		<section class="vc-sides">
+			<div class="vc-side" id="products">
+				<p class="vc-side-h">
+					<span class="vc-side-letter">A</span>
+					<span>Things already built</span>
+					<span class="vc-side-time">13:31</span>
+				</p>
+				<ol class="vc-tracks">
+					{
+						sideA.map((t) => (
+							<li>
+								<a href={t.href}>
+									<span class="vc-tk-n">{t.n}</span>
+									<span class="vc-tk-body">
+										<span class="vc-tk-title">
+											{t.title}
+											<em>{t.badge}</em>
+										</span>
+										<span class="vc-tk-sub">{t.sub}</span>
+									</span>
+									<span class="vc-tk-time">{t.time}</span>
+								</a>
+							</li>
+						))
+					}
+				</ol>
+				<p class="vc-hand">all three run in production — not demos</p>
+			</div>
+
+			<div class="vc-side">
+				<p class="vc-side-h">
+					<span class="vc-side-letter">B</span>
+					<span>Things built to order</span>
+					<span class="vc-side-time">14:09</span>
+				</p>
+				<ol class="vc-tracks">
+					{
+						sideB.map((t) => (
+							<li>
+								<span class="vc-tk-static">
+									<span class="vc-tk-n">{t.n}</span>
+									<span class="vc-tk-body">
+										<span class="vc-tk-title">{t.title}</span>
+										<span class="vc-tk-sub">{t.sub}</span>
+									</span>
+									<span class="vc-tk-time">{t.time}</span>
+								</span>
+							</li>
+						))
+					}
+				</ol>
+				<p class="vc-hand">same stack as side A</p>
+			</div>
+		</section>
+
+		<!-- SESSION NOTES -->
+		<section class="vc-notes">
+			<h2 class="vc-h">Session notes</h2>
+			<div class="vc-notes-grid">
+				<div class="vc-notes-body">
+					<p>
+						Every track on this tape was written, arranged, performed, mixed and
+						mastered by the same person. There is no session band, no producer
+						standing between the brief and the take. If a part is wrong, the
+						person who played it fixes it.
+					</p>
+					<p>
+						Side A was recorded over three years and is still being overdubbed —
+						these systems are live and take real traffic. Side B is recorded to
+						order, in the room, with the client present.
+					</p>
+				</div>
+				<ol class="vc-runsheet">
+					{
+						process.map((p) => (
+							<li>
+								<span class="vc-run-n">{p.step}</span>
+								<span>
+									<strong>{p.title}</strong>
+									<em>{p.body}</em>
+								</span>
+							</li>
+						))
+					}
+				</ol>
+			</div>
+		</section>
+
+		<!-- CREDITS -->
+		<section class="vc-credits">
+			<div class="vc-credit-col">
+				<h3>Personnel</h3>
+				<p>
+					<b>Tashif Ahmad Khan</b> &#8212; architecture, backend, frontend,
+					infrastructure, LLM pipelines, mobile, design, on-call
+				</p>
+				<p class="vc-credit-note">
+					No additional musicians appear on this recording.
+				</p>
+			</div>
+			<div class="vc-credit-col">
+				<h3>Engineering</h3>
+				{
+					traits.map((t) => (
+						<p>
+							<b>{t.title}</b> &#8212; {t.body}
+						</p>
+					))
+				}
+			</div>
+			<div class="vc-credit-col">
+				<h3>Pressing</h3>
+				{
+					stats.map((s) => (
+						<p>
+							<b>{s.value}</b> &#8212; {s.label.toLowerCase()}
+						</p>
+					))
+				}
+				<p class="vc-credit-note">
+					Unlimited edition. Master tapes handed to the client on completion.
+				</p>
+			</div>
+		</section>
+
+		<!-- BACK / CTA -->
+		<footer class="vc-back">
+			<div class="vc-back-l">
+				<p class="vc-back-h">Book studio time</p>
+				<p class="vc-back-b">
+					A small number of sessions each year. Bring a rough demo or nothing at
+					all.
+				</p>
+				<p class="vc-back-mail">
+					<a href={`mailto:${email}`}>{email}</a>
+				</p>
+			</div>
+			<a class="vc-play" href="/contact">
+				<span class="vc-play-tri" aria-hidden="true"></span>
+				PLAY
+			</a>
+		</footer>
+
+		<p class="vc-legal">
+			&#9415; &amp; &#9412; 2026 taf.sh &#183; All rights reserved to the client
+			&#183; Unauthorised status decks strictly prohibited &#183; Made in one
+			room
+		</p>
+	</div>
+</div>
+
+<style>
+	.vc {
+		--paper: #efe7d6;
+		--paper-2: #e5dbc5;
+		--ink: #1c1a17;
+		--soft: #6a6157;
+		--rule: #c3b79c;
+		--hot: #d9452b;
+		--cool: #1f6f6b;
+		background: #2a2724;
+		background-image: radial-gradient(
+			circle at 50% 0%,
+			#3a3631,
+			#211f1c 70%
+		);
+		color: var(--ink);
+		font-family: "Archivo Narrow", "IBM Plex Sans", sans-serif;
+		font-size: 0.95rem;
+		line-height: 1.55;
+		min-height: 100vh;
+		padding: 2rem 1rem 4rem;
+	}
+	.vc-jcard {
+		position: relative;
+		max-width: 50rem;
+		margin: 0 auto;
+		background: var(--paper);
+		border: 1px solid var(--rule);
+		box-shadow: 0 20px 60px rgba(0, 0, 0, 0.55);
+		padding: 2rem 2rem 2.5rem 4.25rem;
+	}
+	.vc a {
+		color: inherit;
+		text-decoration: none;
+	}
+
+	/* spine */
+	.vc-spine {
+		position: absolute;
+		left: 0;
+		top: 0;
+		bottom: 0;
+		width: 2.6rem;
+		background: var(--ink);
+		color: var(--paper);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border-right: 4px solid var(--hot);
+	}
+	.vc-spine-txt {
+		writing-mode: vertical-rl;
+		transform: rotate(180deg);
+		font-size: 0.72rem;
+		letter-spacing: 0.34em;
+		text-transform: uppercase;
+		white-space: nowrap;
+	}
+
+	/* front */
+	.vc-label-top {
+		display: flex;
+		align-items: center;
+		gap: 0.4rem;
+		margin: 0 0 1.25rem;
+	}
+	.vc-chip {
+		border: 1.5px solid var(--ink);
+		padding: 0 0.4rem;
+		font-family: "IBM Plex Mono", monospace;
+		font-size: 0.56rem;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+	}
+	.vc-dolby {
+		margin-left: auto;
+		font-size: 0.9rem;
+		letter-spacing: -0.15em;
+		color: var(--soft);
+	}
+	.vc-artist {
+		margin: 0;
+		font-size: clamp(3rem, 13vw, 6rem);
+		font-weight: 700;
+		line-height: 0.82;
+		letter-spacing: -0.03em;
+		text-transform: uppercase;
+	}
+	.vc-artist span {
+		color: var(--hot);
+	}
+	.vc-album {
+		margin: 0.5rem 0 0;
+		font-size: 1.5rem;
+		font-weight: 400;
+		font-style: italic;
+		color: var(--cool);
+	}
+	.vc-sub {
+		margin: 0.35rem 0 1.75rem;
+		font-size: 0.9rem;
+		color: var(--soft);
+		max-width: 28rem;
+	}
+
+	/* tape shell */
+	.vc-shell {
+		background: var(--paper-2);
+		border: 1px solid var(--rule);
+		padding: 1.25rem;
+		display: flex;
+		justify-content: center;
+	}
+	.vc-shell-body {
+		width: min(100%, 25rem);
+		background: #2c2926;
+		border-radius: 6px;
+		padding: 0.6rem;
+		box-shadow: inset 0 0 0 2px #4a4540;
+	}
+	.vc-shell-label {
+		background: var(--paper);
+		border-radius: 2px;
+		padding: 0.4rem 0.6rem;
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+		border-top: 5px solid var(--hot);
+	}
+	.vc-shell-side {
+		font-weight: 700;
+		font-size: 1.1rem;
+	}
+	.vc-shell-lines {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		gap: 4px;
+	}
+	.vc-shell-lines i {
+		display: block;
+		height: 1px;
+		background: var(--rule);
+	}
+	.vc-window {
+		margin: 0.5rem 0;
+		background: #16130f;
+		border-radius: 4px;
+		padding: 0.6rem 0.9rem;
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+	}
+	.vc-reel {
+		width: 44px;
+		height: 44px;
+		border-radius: 50%;
+		background: #d8d2c6;
+		border: 3px solid #8d8678;
+		display: grid;
+		place-items: center;
+		flex: 0 0 auto;
+	}
+	.vc-reel b {
+		width: 14px;
+		height: 14px;
+		border-radius: 50%;
+		background: #16130f;
+		display: block;
+		box-shadow: 0 0 0 3px #8d8678;
+	}
+	.vc-reel--l {
+		box-shadow: 0 0 0 10px #3a332a;
+	}
+	.vc-reel--r {
+		box-shadow: 0 0 0 5px #3a332a;
+	}
+	.vc-tape {
+		flex: 1;
+		height: 3px;
+		background: #6b5d47;
+	}
+	.vc-shell-foot {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 0.75rem;
+		padding: 0 0.5rem;
+	}
+	.vc-hole {
+		width: 14px;
+		height: 14px;
+		border-radius: 50%;
+		background: #16130f;
+	}
+	.vc-slot {
+		flex: 1;
+		height: 6px;
+		background: #16130f;
+		border-radius: 3px;
+	}
+
+	/* handwriting */
+	.vc-hand {
+		font-family: "Caveat", cursive;
+		font-size: 1.15rem;
+		color: var(--cool);
+		margin: 0.6rem 0 0;
+	}
+	.vc-hand--front {
+		text-align: right;
+		transform: rotate(-1.5deg);
+		color: var(--hot);
+	}
+
+	/* sides */
+	.vc-sides {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 2.5rem;
+		margin-top: 2.5rem;
+		padding-top: 1.5rem;
+		border-top: 3px double var(--ink);
+	}
+	.vc-side-h {
+		display: flex;
+		align-items: center;
+		gap: 0.6rem;
+		margin: 0 0 0.75rem;
+		font-size: 0.72rem;
+		letter-spacing: 0.2em;
+		text-transform: uppercase;
+	}
+	.vc-side-letter {
+		width: 1.5rem;
+		height: 1.5rem;
+		display: grid;
+		place-items: center;
+		background: var(--ink);
+		color: var(--paper);
+		font-size: 0.8rem;
+		letter-spacing: 0;
+	}
+	.vc-side-time {
+		margin-left: auto;
+		font-family: "IBM Plex Mono", monospace;
+		color: var(--soft);
+		letter-spacing: 0.06em;
+	}
+	.vc-tracks {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+	.vc-tracks li {
+		border-top: 1px solid var(--rule);
+	}
+	.vc-tracks a,
+	.vc-tk-static {
+		display: grid;
+		grid-template-columns: 1.75rem 1fr auto;
+		gap: 0.6rem;
+		padding: 0.55rem 0;
+		align-items: baseline;
+	}
+	.vc-tracks a:hover {
+		background: var(--ink);
+		color: var(--paper);
+		margin: 0 -0.5rem;
+		padding: 0.55rem 0.5rem;
+	}
+	.vc-tracks a:hover .vc-tk-sub,
+	.vc-tracks a:hover .vc-tk-time,
+	.vc-tracks a:hover .vc-tk-n {
+		color: inherit;
+	}
+	.vc-tk-n {
+		font-family: "IBM Plex Mono", monospace;
+		font-size: 0.66rem;
+		color: var(--soft);
+	}
+	.vc-tk-title {
+		display: block;
+		font-size: 1.05rem;
+		font-weight: 600;
+	}
+	.vc-tk-title em {
+		font-style: normal;
+		font-family: "IBM Plex Mono", monospace;
+		font-size: 0.55rem;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+		border: 1px solid currentColor;
+		padding: 0 0.3rem;
+		margin-left: 0.5rem;
+		vertical-align: 0.15em;
+		opacity: 0.75;
+	}
+	.vc-tk-sub {
+		display: block;
+		font-size: 0.85rem;
+		color: var(--soft);
+		line-height: 1.4;
+	}
+	.vc-tk-time {
+		font-family: "IBM Plex Mono", monospace;
+		font-size: 0.72rem;
+		color: var(--soft);
+	}
+
+	/* notes */
+	.vc-h {
+		margin: 0 0 0.9rem;
+		font-size: 0.72rem;
+		letter-spacing: 0.24em;
+		text-transform: uppercase;
+	}
+	.vc-notes {
+		margin-top: 2.5rem;
+		padding-top: 1.5rem;
+		border-top: 1px solid var(--rule);
+	}
+	.vc-notes-grid {
+		display: grid;
+		grid-template-columns: 1.3fr 1fr;
+		gap: 2.5rem;
+	}
+	.vc-notes-body p {
+		margin: 0 0 0.9rem;
+		font-size: 0.95rem;
+	}
+	.vc-runsheet {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		border-left: 3px solid var(--hot);
+		padding-left: 1rem;
+	}
+	.vc-runsheet li {
+		display: grid;
+		grid-template-columns: 1.25rem 1fr;
+		gap: 0.6rem;
+		margin-bottom: 0.65rem;
+	}
+	.vc-run-n {
+		font-family: "IBM Plex Mono", monospace;
+		font-size: 0.68rem;
+		color: var(--soft);
+		padding-top: 0.15rem;
+	}
+	.vc-runsheet strong {
+		display: block;
+		font-size: 0.92rem;
+	}
+	.vc-runsheet em {
+		font-style: normal;
+		font-size: 0.82rem;
+		color: var(--soft);
+	}
+
+	/* credits */
+	.vc-credits {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 2rem;
+		margin-top: 2.5rem;
+		padding-top: 1.5rem;
+		border-top: 1px solid var(--rule);
+		font-size: 0.78rem;
+		line-height: 1.5;
+	}
+	.vc-credits h3 {
+		margin: 0 0 0.5rem;
+		font-size: 0.62rem;
+		letter-spacing: 0.22em;
+		text-transform: uppercase;
+		color: var(--cool);
+	}
+	.vc-credits p {
+		margin: 0 0 0.5rem;
+		color: var(--soft);
+	}
+	.vc-credits b {
+		color: var(--ink);
+		font-weight: 600;
+	}
+	.vc-credit-note {
+		font-style: italic;
+	}
+
+	/* back */
+	.vc-back {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1.5rem;
+		margin-top: 2.5rem;
+		background: var(--ink);
+		color: var(--paper);
+		padding: 1.5rem 1.75rem;
+	}
+	.vc-back-h {
+		margin: 0;
+		font-size: 1.5rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: -0.01em;
+	}
+	.vc-back-b {
+		margin: 0.25rem 0 0.5rem;
+		font-size: 0.88rem;
+		color: #b6ada0;
+		max-width: 24rem;
+	}
+	.vc-back-mail a {
+		font-family: "IBM Plex Mono", monospace;
+		font-size: 0.8rem;
+		border-bottom: 1px solid var(--hot);
+	}
+	.vc-back-mail {
+		margin: 0;
+	}
+	.vc-play {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.75rem;
+		background: var(--hot);
+		color: var(--paper);
+		padding: 0.85rem 2rem;
+		font-size: 1.05rem;
+		font-weight: 700;
+		letter-spacing: 0.24em;
+		text-transform: uppercase;
+	}
+	.vc-play:hover {
+		background: var(--paper);
+		color: var(--ink);
+	}
+	.vc-play-tri {
+		width: 0;
+		height: 0;
+		border-left: 12px solid currentColor;
+		border-top: 8px solid transparent;
+		border-bottom: 8px solid transparent;
+	}
+
+	.vc-legal {
+		margin: 1.25rem 0 0;
+		font-family: "IBM Plex Mono", monospace;
+		font-size: 0.56rem;
+		letter-spacing: 0.08em;
+		color: var(--soft);
+		text-transform: uppercase;
+	}
+
+	@media (max-width: 760px) {
+		.vc-sides,
+		.vc-notes-grid,
+		.vc-credits {
+			grid-template-columns: 1fr;
+			gap: 2rem;
+		}
+	}
+	@media (max-width: 560px) {
+		.vc {
+			padding: 1rem 0.5rem 3rem;
+		}
+		.vc-jcard {
+			padding: 1.25rem 1rem 1.75rem 3.25rem;
+		}
+		.vc-spine {
+			width: 2rem;
+		}
+		.vc-spine-txt {
+			font-size: 0.6rem;
+			letter-spacing: 0.24em;
+		}
+	}
+</style>

@@ -1,0 +1,649 @@
+---
+/**
+ * Ticker — the studio as a market data terminal. Amber phosphor, a running
+ * tape, a quote board of products, a news wire of the process, and a function
+ * key bar. Density as the entire aesthetic argument.
+ */
+import { products, services, process, stats, traits, email } from "./data";
+
+const tickers = ["TSAI", "TSHR", "CLNQ"];
+const quotes = [
+	{ last: "FREE", chg: "+UNLIM", pct: "users", up: true },
+	{ last: "BETA", chg: "+RANK", pct: "teams", up: true },
+	{ last: "DEV", chg: "±BUILD", pct: "clinics", up: null },
+];
+const spark = ["▁▂▃▅▆▇██", "▁▁▂▃▅▆▇█", "▁▂▂▃▃▄▅▆"];
+
+const tape = [
+	"TAF.SH STUDIO OPEN FOR Q4 2026 ENGAGEMENTS",
+	"TSAI RESUME INTELLIGENCE · FREE · UNLIMITED",
+	"TSHR EVIDENCE-BACKED CANDIDATE SCORING · BETA",
+	"CLNQ CLINICAL WHATSAPP PLATFORM · IN DEVELOPMENT",
+	"HEADCOUNT 1 · HANDOFFS 0 · WEEKLY INCREMENTS 1",
+	"NO ACCOUNT LAYER · NO STATUS DECKS · CODE OWNED BY CLIENT",
+];
+
+const wire = [
+	{
+		t: "08:02",
+		src: "SCOPE",
+		head: "Intro call scheduled — 30 minutes, no deck required",
+	},
+	{
+		t: "09:41",
+		src: "SCOPE",
+		head: "Written scope issued: deliverables, timeline, fixed price",
+	},
+	{ t: "11:15", src: "BUILD", head: "Increment 01 deployed to staging" },
+	{ t: "14:30", src: "BUILD", head: "Eval harness green — scoring within tolerance" },
+	{ t: "16:07", src: "OPS", head: "Queue depth nominal; p95 latency unchanged" },
+	{ t: "17:52", src: "HAND", head: "Repo, infra definitions and docs transferred to client" },
+];
+---
+
+<div class="vk">
+	<!-- COMMAND LINE -->
+	<div class="vk-cmd">
+		<span class="vk-cmd-in">TAF</span>
+		<span class="vk-cmd-go">&lt;GO&gt;</span>
+		<span class="vk-cmd-cur" aria-hidden="true">█</span>
+		<span class="vk-cmd-right">STUDIO MONITOR · REAL-TIME · 1 OPERATOR</span>
+	</div>
+
+	<!-- TAPE -->
+	<div class="vk-tape" aria-hidden="true">
+		<div class="vk-tape-run">
+			{
+				[0, 1].map(() =>
+					tape.map((t) => (
+						<span class="vk-tape-item">
+							<i>◆</i>
+							{t}
+						</span>
+					)),
+				)
+			}
+		</div>
+	</div>
+
+	<div class="vk-grid">
+		<!-- MASTHEAD PANEL -->
+		<section class="vk-panel vk-span-12 vk-hero">
+			<h1 class="vk-hero-t">TAF.SH &lt;EQUITY&gt;</h1>
+			<p class="vk-hero-s">
+				INDEPENDENT SOFTWARE STUDIO · SOLE PROPRIETORSHIP · EST. 2023
+			</p>
+			<div class="vk-hero-row">
+				{
+					stats.map((s) => (
+						<div class="vk-hero-stat">
+							<span class="vk-hero-v">{s.value}</span>
+							<span class="vk-hero-l">{s.label.toUpperCase()}</span>
+						</div>
+					))
+				}
+				<div class="vk-hero-stat vk-hero-stat--wide">
+					<span class="vk-hero-v vk-green">OPEN</span>
+					<span class="vk-hero-l">ACCEPTING Q4 2026</span>
+				</div>
+			</div>
+		</section>
+
+		<!-- QUOTE BOARD -->
+		<section class="vk-panel vk-span-8" id="products">
+			<p class="vk-h">1) PRODUCT MONITOR</p>
+			<table class="vk-table">
+				<thead>
+					<tr>
+						<th>TKR</th>
+						<th>NAME</th>
+						<th>LAST</th>
+						<th>CHG</th>
+						<th>TREND</th>
+						<th>SECTOR</th>
+					</tr>
+				</thead>
+				<tbody>
+					{
+						products.map((p, i) => (
+							<>
+								<tr class="vk-quote">
+									<td class="vk-tkr">
+										<a href={p.href}>{tickers[i]}</a>
+									</td>
+									<td class="vk-nm">{p.name.toUpperCase()}</td>
+									<td class="vk-last">{quotes[i].last}</td>
+									<td
+										class:list={[
+											"vk-chg",
+											quotes[i].up === true ? "vk-green" : "vk-amber-dim",
+										]}
+									>
+										{quotes[i].chg}
+									</td>
+									<td class="vk-spark">{spark[i]}</td>
+									<td class="vk-sec">{p.tag.toUpperCase()}</td>
+								</tr>
+								<tr class="vk-quote-desc">
+									<td />
+									<td colspan="5">{p.desc}</td>
+								</tr>
+							</>
+						))
+					}
+				</tbody>
+			</table>
+			<p class="vk-foot">
+				LAST/CHG are qualitative. This desk does not quote in currency; it quotes
+				in shipped software.
+			</p>
+		</section>
+
+		<!-- POSITIONS -->
+		<section class="vk-panel vk-span-4">
+			<p class="vk-h">2) DESK CAPABILITIES</p>
+			{
+				services.map((s, i) => (
+					<div class="vk-pos">
+						<p class="vk-pos-top">
+							<span class="vk-amber-br">{`CAP${i + 1}`}</span>
+							<span>{s.title.toUpperCase()}</span>
+						</p>
+						<p class="vk-pos-b">{s.body}</p>
+					</div>
+				))
+			}
+		</section>
+
+		<!-- NEWS WIRE -->
+		<section class="vk-panel vk-span-7">
+			<p class="vk-h">3) ENGAGEMENT WIRE</p>
+			<ul class="vk-wire">
+				{
+					wire.map((w) => (
+						<li>
+							<span class="vk-wire-t">{w.t}</span>
+							<span class="vk-wire-s">{w.src}</span>
+							<span class="vk-wire-h">{w.head}</span>
+						</li>
+					))
+				}
+			</ul>
+		</section>
+
+		<!-- PROCESS LADDER -->
+		<section class="vk-panel vk-span-5">
+			<p class="vk-h">4) EXECUTION LADDER</p>
+			<table class="vk-table vk-table--tight">
+				<tbody>
+					{
+						process.map((p) => (
+							<tr>
+								<td class="vk-amber-br">{`L${p.step}`}</td>
+								<td class="vk-nm">{p.title.toUpperCase()}</td>
+								<td class="vk-sec">{p.body}</td>
+							</tr>
+						))
+					}
+				</tbody>
+			</table>
+		</section>
+
+		<!-- RISK / TRAITS -->
+		<section class="vk-panel vk-span-12">
+			<p class="vk-h">5) DESK CHARACTERISTICS</p>
+			<div class="vk-traits">
+				{
+					traits.map((t) => (
+						<div class="vk-trait">
+							<p class="vk-trait-t">
+								<span aria-hidden="true">▮</span> {t.title.toUpperCase()}
+							</p>
+							<p class="vk-trait-b">{t.body}</p>
+						</div>
+					))
+				}
+			</div>
+		</section>
+
+		<!-- CONTACT -->
+		<section class="vk-panel vk-span-12 vk-contact">
+			<p class="vk-h">6) OPEN A LINE</p>
+			<div class="vk-contact-row">
+				<div>
+					<p class="vk-contact-l">DIRECT</p>
+					<p class="vk-contact-v">
+						<a href={`mailto:${email}`}>{email}</a>
+					</p>
+				</div>
+				<div>
+					<p class="vk-contact-l">DESK</p>
+					<p class="vk-contact-v"><a href="/contact">TAF.SH/CONTACT</a></p>
+				</div>
+				<div>
+					<p class="vk-contact-l">RESPONSE</p>
+					<p class="vk-contact-v">&lt; 1 BUSINESS DAY</p>
+				</div>
+				<a class="vk-exec" href="/contact">
+					EXECUTE <span class="vk-cmd-cur" aria-hidden="true">█</span>
+				</a>
+			</div>
+		</section>
+	</div>
+
+	<!-- FUNCTION BAR -->
+	<nav class="vk-fkeys" aria-label="Function keys">
+		<a href="#products"><b>F1</b> PRODUCTS</a>
+		<a href="/services"><b>F2</b> SERVICES</a>
+		<a href="/about"><b>F3</b> STUDIO</a>
+		<a href="/contact"><b>F4</b> CONTACT</a>
+		<span><b>F5</b> REFRESH</span>
+		<span><b>F6</b> EXPORT</span>
+		<span class="vk-fk-clock" id="vk-clock">--:--:--</span>
+	</nav>
+</div>
+
+<script is:inline>
+	(function () {
+		var el = document.getElementById("vk-clock");
+		if (!el) return;
+		function tick() {
+			var d = new Date();
+			var p = function (n) {
+				return String(n).padStart(2, "0");
+			};
+			el.textContent =
+				p(d.getHours()) + ":" + p(d.getMinutes()) + ":" + p(d.getSeconds()) + " LOCAL";
+		}
+		tick();
+		setInterval(tick, 1000);
+	})();
+</script>
+
+<style>
+	.vk {
+		--bg: #080600;
+		--panel: #0f0b02;
+		--line: #4a3200;
+		--amber: #ffb000;
+		--amber-br: #ffd479;
+		--amber-dim: #a8760a;
+		--green: #4ce07a;
+		background: var(--bg);
+		color: var(--amber);
+		font-family: "IBM Plex Mono", ui-monospace, monospace;
+		font-size: 0.78rem;
+		line-height: 1.45;
+		min-height: 100vh;
+		padding-bottom: 3.5rem;
+	}
+	.vk a {
+		color: inherit;
+		text-decoration: none;
+	}
+	.vk a:hover {
+		background: var(--amber);
+		color: var(--bg);
+	}
+	.vk-green {
+		color: var(--green);
+	}
+	.vk-amber-br {
+		color: var(--amber-br);
+	}
+	.vk-amber-dim {
+		color: var(--amber-dim);
+	}
+
+	/* command line */
+	.vk-cmd {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		padding: 0.4rem 0.75rem;
+		background: #1a1200;
+		border-bottom: 1px solid var(--line);
+		font-size: 0.75rem;
+	}
+	.vk-cmd-in {
+		background: var(--amber);
+		color: var(--bg);
+		padding: 0 0.4rem;
+		font-weight: 500;
+	}
+	.vk-cmd-go {
+		color: var(--amber-br);
+	}
+	.vk-cmd-cur {
+		animation: vk-blink 1.06s step-end infinite;
+	}
+	@keyframes vk-blink {
+		0%,
+		49% {
+			opacity: 1;
+		}
+		50%,
+		100% {
+			opacity: 0;
+		}
+	}
+	.vk-cmd-right {
+		margin-left: auto;
+		color: var(--amber-dim);
+		font-size: 0.65rem;
+		letter-spacing: 0.12em;
+	}
+
+	/* tape */
+	.vk-tape {
+		overflow: hidden;
+		border-bottom: 1px solid var(--line);
+		background: #120c00;
+		padding: 0.3rem 0;
+	}
+	.vk-tape-run {
+		display: flex;
+		width: max-content;
+		animation: vk-scroll 48s linear infinite;
+	}
+	@keyframes vk-scroll {
+		from {
+			transform: translateX(0);
+		}
+		to {
+			transform: translateX(-50%);
+		}
+	}
+	.vk-tape-item {
+		white-space: nowrap;
+		padding-right: 2.5rem;
+		font-size: 0.7rem;
+		letter-spacing: 0.08em;
+	}
+	.vk-tape-item i {
+		font-style: normal;
+		color: var(--amber-dim);
+		padding-right: 0.6rem;
+	}
+
+	/* grid */
+	.vk-grid {
+		display: grid;
+		grid-template-columns: repeat(12, 1fr);
+		gap: 1px;
+		background: var(--line);
+		border-bottom: 1px solid var(--line);
+	}
+	.vk-panel {
+		background: var(--panel);
+		padding: 0.6rem 0.8rem 0.9rem;
+		scroll-margin-top: 2rem;
+	}
+	.vk-span-12 { grid-column: span 12; }
+	.vk-span-8 { grid-column: span 8; }
+	.vk-span-7 { grid-column: span 7; }
+	.vk-span-5 { grid-column: span 5; }
+	.vk-span-4 { grid-column: span 4; }
+
+	.vk-h {
+		margin: 0 0 0.6rem;
+		font-size: 0.68rem;
+		letter-spacing: 0.16em;
+		color: var(--bg);
+		background: var(--amber);
+		display: inline-block;
+		padding: 0.05rem 0.5rem;
+	}
+
+	/* hero */
+	.vk-hero {
+		background:
+			linear-gradient(180deg, #191100, #0f0b02);
+	}
+	.vk-hero-t {
+		margin: 0;
+		font-size: clamp(1.6rem, 5vw, 2.6rem);
+		font-weight: 500;
+		letter-spacing: 0.02em;
+		color: var(--amber-br);
+	}
+	.vk-hero-s {
+		margin: 0.15rem 0 0.9rem;
+		font-size: 0.7rem;
+		letter-spacing: 0.16em;
+		color: var(--amber-dim);
+	}
+	.vk-hero-row {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 1px;
+		background: var(--line);
+		border: 1px solid var(--line);
+	}
+	.vk-hero-stat {
+		flex: 1 1 8rem;
+		background: var(--panel);
+		padding: 0.5rem 0.75rem;
+	}
+	.vk-hero-stat--wide {
+		flex: 1 1 12rem;
+	}
+	.vk-hero-v {
+		display: block;
+		font-size: 1.6rem;
+		line-height: 1.1;
+		color: var(--amber-br);
+	}
+	.vk-hero-l {
+		display: block;
+		font-size: 0.62rem;
+		letter-spacing: 0.1em;
+		color: var(--amber-dim);
+	}
+
+	/* tables */
+	.vk-table {
+		width: 100%;
+		border-collapse: collapse;
+		font-size: 0.74rem;
+	}
+	.vk-table th {
+		text-align: left;
+		font-weight: 400;
+		font-size: 0.62rem;
+		letter-spacing: 0.12em;
+		color: var(--amber-dim);
+		border-bottom: 1px solid var(--line);
+		padding: 0.15rem 0.6rem 0.25rem 0;
+		white-space: nowrap;
+	}
+	.vk-table td {
+		padding: 0.2rem 0.6rem 0.2rem 0;
+		vertical-align: top;
+		white-space: nowrap;
+	}
+	.vk-quote td {
+		border-top: 1px dotted #33240a;
+		padding-top: 0.35rem;
+	}
+	.vk-tkr {
+		color: var(--amber-br);
+	}
+	.vk-nm {
+		color: var(--amber);
+	}
+	.vk-last {
+		color: var(--amber-br);
+	}
+	.vk-spark {
+		letter-spacing: -0.06em;
+		color: var(--green);
+	}
+	.vk-sec {
+		color: var(--amber-dim);
+		white-space: normal;
+	}
+	.vk-quote-desc td {
+		padding: 0 0 0.5rem;
+		white-space: normal;
+		color: var(--amber-dim);
+		font-size: 0.72rem;
+	}
+	.vk-table--tight td {
+		white-space: normal;
+		border-top: 1px dotted #33240a;
+		padding: 0.3rem 0.6rem 0.3rem 0;
+	}
+	.vk-table--tight td:first-child,
+	.vk-table--tight td:nth-child(2) {
+		white-space: nowrap;
+	}
+	.vk-foot {
+		margin: 0.75rem 0 0;
+		font-size: 0.65rem;
+		color: var(--amber-dim);
+	}
+
+	/* positions */
+	.vk-pos {
+		border-top: 1px dotted #33240a;
+		padding: 0.4rem 0;
+	}
+	.vk-pos-top {
+		display: flex;
+		gap: 0.6rem;
+		margin: 0;
+		font-size: 0.72rem;
+	}
+	.vk-pos-b {
+		margin: 0.1rem 0 0 2.6rem;
+		font-size: 0.7rem;
+		color: var(--amber-dim);
+	}
+
+	/* wire */
+	.vk-wire {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+	.vk-wire li {
+		display: grid;
+		grid-template-columns: 3.5rem 3.5rem 1fr;
+		gap: 0.6rem;
+		border-top: 1px dotted #33240a;
+		padding: 0.3rem 0;
+		font-size: 0.72rem;
+	}
+	.vk-wire-t {
+		color: var(--amber-dim);
+	}
+	.vk-wire-s {
+		color: var(--amber-br);
+	}
+
+	/* traits */
+	.vk-traits {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+		gap: 1px;
+		background: var(--line);
+		border: 1px solid var(--line);
+	}
+	.vk-trait {
+		background: var(--panel);
+		padding: 0.55rem 0.7rem;
+	}
+	.vk-trait-t {
+		margin: 0;
+		font-size: 0.7rem;
+		color: var(--amber-br);
+		letter-spacing: 0.06em;
+	}
+	.vk-trait-b {
+		margin: 0.2rem 0 0;
+		font-size: 0.7rem;
+		color: var(--amber-dim);
+	}
+
+	/* contact */
+	.vk-contact-row {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: flex-end;
+		gap: 1.5rem 2.5rem;
+	}
+	.vk-contact-l {
+		margin: 0;
+		font-size: 0.6rem;
+		letter-spacing: 0.16em;
+		color: var(--amber-dim);
+	}
+	.vk-contact-v {
+		margin: 0.1rem 0 0;
+		font-size: 0.95rem;
+		color: var(--amber-br);
+	}
+	.vk-exec {
+		margin-left: auto;
+		border: 1px solid var(--amber);
+		padding: 0.55rem 1.5rem;
+		font-size: 0.85rem;
+		letter-spacing: 0.14em;
+		color: var(--amber-br);
+	}
+	.vk-exec:hover {
+		background: var(--amber);
+		color: var(--bg);
+	}
+
+	/* function keys */
+	.vk-fkeys {
+		position: sticky;
+		bottom: 0;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 1px;
+		background: var(--line);
+		border-top: 1px solid var(--line);
+	}
+	.vk-fkeys a,
+	.vk-fkeys span {
+		flex: 1 1 auto;
+		background: #1a1200;
+		padding: 0.4rem 0.75rem;
+		font-size: 0.65rem;
+		letter-spacing: 0.1em;
+		text-align: center;
+		color: var(--amber-dim);
+		white-space: nowrap;
+	}
+	.vk-fkeys b {
+		color: var(--amber-br);
+		font-weight: 500;
+		padding-right: 0.4rem;
+	}
+	.vk-fk-clock {
+		color: var(--amber) !important;
+	}
+
+	@media (max-width: 900px) {
+		.vk-span-8,
+		.vk-span-7,
+		.vk-span-5,
+		.vk-span-4 {
+			grid-column: span 12;
+		}
+	}
+	@media (max-width: 560px) {
+		.vk-wire li {
+			grid-template-columns: 3rem 1fr;
+		}
+		.vk-wire-h {
+			grid-column: 2;
+		}
+		.vk-exec {
+			margin-left: 0;
+		}
+	}
+</style>

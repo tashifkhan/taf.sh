@@ -1,0 +1,721 @@
+---
+/**
+ * Gamebook — the site as a choose-your-own-path adventure. Numbered
+ * paragraphs, "turn to" choices that jump within the page, an adventure
+ * sheet in place of a stats band, and an ending that is the contact page.
+ */
+import "@fontsource/eb-garamond/400.css";
+import "@fontsource/eb-garamond/400-italic.css";
+import "@fontsource/eb-garamond/600.css";
+import "@fontsource/eb-garamond/700.css";
+import { products, services, process, stats, traits, email } from "./data";
+
+const productSections = ["220", "240", "260"];
+const rooms = [
+	{
+		enter: "You push open a door marked with a single résumé, curled at one corner.",
+		detail:
+			"Inside, a machine reads what recruiters' filters would read, and tells the applicant what it saw. It asks for nothing. There is no gate here, and no toll.",
+	},
+	{
+		enter: "Behind the second door, a long table is covered in stacked applications.",
+		detail:
+			"Each stack has been read, scored, and annotated with the evidence for its ranking. A recruiter could argue with any line of it — which is the point.",
+	},
+	{
+		enter: "The third door is not a door. It is a phone, buzzing on a clinic desk.",
+		detail:
+			"Appointments, reminders, follow-ups: all of it moves through a chat thread the patient already has open. The waiting room is quieter than it used to be.",
+	},
+];
+---
+
+<div class="vg">
+	<div class="vg-book">
+		<!-- COVER -->
+		<header class="vg-cover">
+			<div class="vg-rule vg-rule--orn" aria-hidden="true"></div>
+			<p class="vg-series">A Software Adventure &#183; Book 1 of 1</p>
+			<h1 class="vg-title">taf<span>.sh</span></h1>
+			<p class="vg-strap">
+				In which you commission a system, and the person you brief is the person
+				who builds it
+			</p>
+			<div class="vg-dice" aria-hidden="true">
+				<span class="vg-die"><i></i><i></i><i></i></span>
+				<span class="vg-die"><i></i></span>
+			</div>
+			<div class="vg-rule vg-rule--orn" aria-hidden="true"></div>
+		</header>
+
+		<!-- HOW TO PLAY -->
+		<section class="vg-howto">
+			<h2 class="vg-h">How to use this book</h2>
+			<p>
+				This is not read from front to back. Begin at <b>&#167;1</b> and follow
+				the instruction at the end of each paragraph. Choices are irreversible in
+				spirit and reversible in practice, which is the usual arrangement in
+				software.
+			</p>
+			<div class="vg-sheet">
+				<p class="vg-sheet-h">Adventure Sheet</p>
+				<div class="vg-sheet-grid">
+					<div class="vg-stat">
+						<span class="vg-stat-l">Scope</span>
+						<span class="vg-stat-b">
+							<i></i><i></i><i></i><i class="off"></i><i class="off"></i>
+						</span>
+						<span class="vg-stat-n">written</span>
+					</div>
+					<div class="vg-stat">
+						<span class="vg-stat-l">Cadence</span>
+						<span class="vg-stat-b">
+							<i></i><i></i><i></i><i></i><i></i>
+						</span>
+						<span class="vg-stat-n">weekly</span>
+					</div>
+					<div class="vg-stat">
+						<span class="vg-stat-l">Handoffs</span>
+						<span class="vg-stat-b">
+							<i class="off"></i><i class="off"></i><i class="off"></i><i
+								class="off"></i><i class="off"></i>
+						</span>
+						<span class="vg-stat-n">none</span>
+					</div>
+				</div>
+				<p class="vg-sheet-inv">
+					<b>Provisions:</b>{" "}
+					{traits.map((t) => t.title).join(" · ")}
+				</p>
+			</div>
+		</section>
+
+		<!-- §1 -->
+		<section class="vg-para" id="gb-1">
+			<p class="vg-n">1</p>
+			<div class="vg-body">
+				<p class="vg-drop">
+					You have a system that needs building. Perhaps it already half exists,
+					held together by a spreadsheet and someone's patience. You have been
+					told that building it properly requires a team, a discovery phase, and
+					a slide deck every second Thursday.
+				</p>
+				<p>
+					Instead you find yourself at a small door with a hand-painted sign:
+					<b>taf.sh &#8212; independent software studio</b>. Inside there is one
+					desk, one chair, and three systems running quietly in the corner. A
+					person looks up. They will be the one who scopes your work, writes it,
+					deploys it, and answers when it breaks. There is nobody else here to
+					pass you to.
+				</p>
+				<ul class="vg-choices">
+					<li>
+						If you want to see what has already been built here, turn to
+						<a href="#gb-200">&#167;200</a>.
+					</li>
+					<li>
+						If you want to know what the studio can make for you, turn to
+						<a href="#gb-300">&#167;300</a>.
+					</li>
+					<li>
+						If you would rather know how a commission actually proceeds, turn to
+						<a href="#gb-400">&#167;400</a>.
+					</li>
+					<li>
+						If you are impatient and simply wish to begin, turn to
+						<a href="#gb-999">&#167;999</a>.
+					</li>
+				</ul>
+			</div>
+		</section>
+
+		<!-- §200 -->
+		<section class="vg-para" id="gb-200">
+			<p class="vg-n">200</p>
+			<div class="vg-body">
+				<p>
+					The corner of the room is warmer than the rest. Three systems are
+					running there, each with its own door. They are not demonstrations.
+					Real people are using all three of them right now, which is why the
+					room hums.
+				</p>
+				<ul class="vg-choices">
+					{
+						products.map((p, i) => (
+							<li>
+								To open the door marked <b>{p.name}</b>, turn to{" "}
+								<a href={`#gb-${productSections[i]}`}>
+									&#167;{productSections[i]}
+								</a>
+								.
+							</li>
+						))
+					}
+					<li>To go back to the desk, turn to <a href="#gb-1">&#167;1</a>.</li>
+				</ul>
+			</div>
+		</section>
+
+		<!-- PRODUCT SECTIONS -->
+		{
+			products.map((p, i) => (
+				<section class="vg-para" id={`gb-${productSections[i]}`}>
+					<p class="vg-n">{productSections[i]}</p>
+					<div class="vg-body">
+						<p>{rooms[i].enter}</p>
+						<p>{rooms[i].detail}</p>
+						<p class="vg-item">
+							<span class="vg-item-h">You have found: {p.name}</span>
+							<span>{p.desc}</span>
+							<span class="vg-item-meta">
+								Condition: <b>{p.status}</b> &#183; Domain: <b>{p.tag}</b>
+							</span>
+						</p>
+						<ul class="vg-choices">
+							<li>
+								To examine it properly, <a href={p.href}>leave the book</a> and
+								visit it.
+							</li>
+							<li>
+								To return to the corner, turn to <a href="#gb-200">&#167;200</a>.
+							</li>
+							<li>
+								To ask what else the studio makes, turn to{" "}
+								<a href="#gb-300">&#167;300</a>.
+							</li>
+						</ul>
+					</div>
+				</section>
+			))
+		}
+
+		<!-- §300 -->
+		<section class="vg-para" id="gb-300">
+			<p class="vg-n">300</p>
+			<div class="vg-body">
+				<p>
+					A rack on the wall holds four tools. They are worn in the way that
+					only used tools are worn. You may take any of them on your journey;
+					you may take all four.
+				</p>
+				<dl class="vg-kit">
+					{
+						services.map((s, i) => (
+							<div>
+								<dt>
+									<span class="vg-kit-n">{i + 1}</span>
+									{s.title}
+								</dt>
+								<dd>{s.body}</dd>
+							</div>
+						))
+					}
+				</dl>
+				<ul class="vg-choices">
+					<li>
+						To learn how the work is actually run, turn to{" "}
+						<a href="#gb-400">&#167;400</a>.
+					</li>
+					<li>
+						To look again at what has been built, turn to{" "}
+						<a href="#gb-200">&#167;200</a>.
+					</li>
+					<li>To begin, turn to <a href="#gb-999">&#167;999</a>.</li>
+				</ul>
+			</div>
+		</section>
+
+		<!-- §400 -->
+		<section class="vg-para" id="gb-400">
+			<p class="vg-n">400</p>
+			<div class="vg-body">
+				<p>
+					The road out of here has four milestones. It is short, and it is the
+					same road every time, which is how you can tell it is a road and not a
+					maze.
+				</p>
+				<ol class="vg-road">
+					{
+						process.map((s) => (
+							<li>
+								<span class="vg-road-n">{s.step}</span>
+								<span>
+									<b>{s.title}.</b> {s.body}
+								</span>
+							</li>
+						))
+					}
+				</ol>
+				<p class="vg-test">
+					<b>Test your luck.</b> Roll two dice. On any result, you receive
+					running software this week &#8212; the dice were never load-bearing.
+					That is the entire trick.
+				</p>
+				<ul class="vg-choices">
+					<li>To set out, turn to <a href="#gb-999">&#167;999</a>.</li>
+					<li>
+						To return to the beginning, turn to <a href="#gb-1">&#167;1</a>.
+					</li>
+				</ul>
+			</div>
+		</section>
+
+		<!-- §999 -->
+		<section class="vg-para vg-para--end" id="gb-999">
+			<p class="vg-n">999</p>
+			<div class="vg-body">
+				<p class="vg-drop">
+					You write a short message describing what you are building and when
+					you need it. Within a day you have a reply from the person who will do
+					the work &#8212; not a form, not a scheduler, not a junior tasked with
+					qualifying you.
+				</p>
+				<p>
+					A written scope follows. Then a week passes and there is something
+					running that was not running before. Then another week. This continues
+					until the thing exists, at which point you are handed the code, the
+					infrastructure, the documentation, and the keys.
+				</p>
+				<div class="vg-scores">
+					{
+						stats.map((s) => (
+							<div>
+								<span class="vg-score-v">{s.value}</span>
+								<span class="vg-score-l">{s.label}</span>
+							</div>
+						))
+					}
+				</div>
+				<p class="vg-end">Your adventure ends here. The system does not.</p>
+				<div class="vg-actions">
+					<a class="vg-cta" href="/contact">Begin the adventure</a>
+					<a class="vg-alt" href={`mailto:${email}`}>{email}</a>
+				</div>
+				<p class="vg-restart">
+					To read the book again from the start, turn to{" "}
+					<a href="#gb-1">&#167;1</a>.
+				</p>
+			</div>
+		</section>
+
+		<div class="vg-rule vg-rule--orn" aria-hidden="true"></div>
+		<p class="vg-colophon">
+			Printed on the studio press &#183; taf.sh &#183; MMXXVI &#183; One
+			operator, no assistants
+		</p>
+	</div>
+</div>
+
+<style>
+	.vg {
+		--paper: #ece1c8;
+		--paper-2: #e4d7ba;
+		--ink: #2a1f12;
+		--soft: #6d5b41;
+		--rule: #b6a17c;
+		background: #cbb894;
+		background-image:
+			radial-gradient(circle at 20% 10%, rgba(255, 255, 255, 0.4), transparent 45%),
+			radial-gradient(circle at 80% 80%, rgba(90, 60, 20, 0.18), transparent 55%);
+		color: var(--ink);
+		font-family: "EB Garamond", Georgia, serif;
+		font-size: 1.06rem;
+		line-height: 1.68;
+		min-height: 100vh;
+		padding: 2rem 1rem 4rem;
+	}
+	.vg-book {
+		max-width: 44rem;
+		margin: 0 auto;
+		background: var(--paper);
+		background-image: radial-gradient(
+			circle at 50% 0%,
+			rgba(255, 250, 235, 0.75),
+			transparent 60%
+		);
+		border: 1px solid var(--rule);
+		box-shadow:
+			inset 0 0 60px rgba(120, 90, 45, 0.22),
+			0 14px 50px rgba(60, 40, 15, 0.3);
+		padding: 2.5rem 2.25rem 3rem;
+	}
+	.vg a {
+		color: var(--ink);
+		text-decoration: none;
+		border-bottom: 1px solid var(--rule);
+		font-weight: 600;
+	}
+	.vg a:hover {
+		background: var(--ink);
+		color: var(--paper);
+		border-bottom-color: var(--ink);
+	}
+
+	.vg-rule--orn {
+		height: 14px;
+		background:
+			radial-gradient(circle at center, var(--rule) 0 3px, transparent 3.5px) 0 0 /
+			18px 14px repeat-x;
+		opacity: 0.85;
+		margin: 0.5rem 0 1.25rem;
+	}
+
+	/* cover */
+	.vg-cover {
+		text-align: center;
+		padding-bottom: 0.5rem;
+	}
+	.vg-series {
+		margin: 0;
+		font-family: "IBM Plex Mono", monospace;
+		font-size: 0.6rem;
+		letter-spacing: 0.24em;
+		text-transform: uppercase;
+		color: var(--soft);
+	}
+	.vg-title {
+		margin: 0.75rem 0 0.5rem;
+		font-size: clamp(3rem, 12vw, 5.5rem);
+		font-weight: 700;
+		line-height: 0.9;
+		letter-spacing: -0.02em;
+	}
+	.vg-title span {
+		font-weight: 400;
+		font-style: italic;
+		color: var(--soft);
+	}
+	.vg-strap {
+		max-width: 26rem;
+		margin: 0 auto;
+		font-style: italic;
+		color: var(--soft);
+	}
+	.vg-dice {
+		display: flex;
+		justify-content: center;
+		gap: 0.6rem;
+		margin: 1.25rem 0 1rem;
+	}
+	.vg-die {
+		display: grid;
+		grid-template-columns: repeat(3, 6px);
+		grid-auto-rows: 6px;
+		gap: 3px;
+		width: 42px;
+		height: 42px;
+		padding: 6px;
+		border: 2px solid var(--ink);
+		border-radius: 7px;
+		align-content: center;
+		justify-content: center;
+		transform: rotate(-6deg);
+	}
+	.vg-die:last-child {
+		transform: rotate(9deg);
+		align-content: center;
+		justify-content: center;
+	}
+	.vg-die i {
+		width: 6px;
+		height: 6px;
+		background: var(--ink);
+		border-radius: 50%;
+	}
+
+	/* how to play */
+	.vg-h {
+		margin: 0 0 0.6rem;
+		font-size: 0.7rem;
+		font-weight: 700;
+		letter-spacing: 0.22em;
+		text-transform: uppercase;
+		font-family: "IBM Plex Mono", monospace;
+	}
+	.vg-howto {
+		border: 1px solid var(--rule);
+		background: var(--paper-2);
+		padding: 1.25rem 1.35rem;
+		margin-bottom: 2.5rem;
+	}
+	.vg-howto > p {
+		margin: 0 0 1.25rem;
+	}
+	.vg-sheet {
+		border-top: 1px solid var(--rule);
+		padding-top: 1rem;
+	}
+	.vg-sheet-h {
+		margin: 0 0 0.75rem;
+		font-family: "IBM Plex Mono", monospace;
+		font-size: 0.62rem;
+		letter-spacing: 0.2em;
+		text-transform: uppercase;
+		color: var(--soft);
+	}
+	.vg-sheet-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+		gap: 0.9rem;
+	}
+	.vg-stat {
+		display: flex;
+		flex-direction: column;
+		gap: 0.25rem;
+	}
+	.vg-stat-l {
+		font-weight: 600;
+		font-size: 0.95rem;
+	}
+	.vg-stat-b {
+		display: flex;
+		gap: 4px;
+	}
+	.vg-stat-b i {
+		width: 14px;
+		height: 14px;
+		border: 1.5px solid var(--ink);
+		background: var(--ink);
+	}
+	.vg-stat-b i.off {
+		background: transparent;
+	}
+	.vg-stat-n {
+		font-family: "IBM Plex Mono", monospace;
+		font-size: 0.62rem;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+		color: var(--soft);
+	}
+	.vg-sheet-inv {
+		margin: 1rem 0 0;
+		font-size: 0.92rem;
+		color: var(--soft);
+	}
+
+	/* paragraphs */
+	.vg-para {
+		display: grid;
+		grid-template-columns: 4.5rem 1fr;
+		gap: 1.25rem;
+		padding: 2rem 0;
+		border-top: 1px solid var(--rule);
+		scroll-margin-top: 1rem;
+	}
+	.vg-n {
+		margin: 0;
+		font-size: 2.1rem;
+		font-weight: 700;
+		line-height: 1;
+		text-align: right;
+		color: var(--soft);
+	}
+	.vg-body > p {
+		margin: 0 0 1rem;
+	}
+	.vg-drop::first-letter {
+		float: left;
+		font-size: 3.4rem;
+		line-height: 0.8;
+		padding: 0.15rem 0.55rem 0 0;
+		font-weight: 700;
+	}
+
+	.vg-choices {
+		list-style: none;
+		margin: 1.25rem 0 0;
+		padding: 0;
+	}
+	.vg-choices li {
+		position: relative;
+		padding-left: 1.5rem;
+		margin-bottom: 0.5rem;
+		font-size: 0.98rem;
+	}
+	.vg-choices li::before {
+		content: "\203A";
+		position: absolute;
+		left: 0.25rem;
+		color: var(--soft);
+		font-size: 1.2rem;
+		line-height: 1.35;
+	}
+
+	/* found item */
+	.vg-item {
+		display: block;
+		border: 1px solid var(--ink);
+		border-left-width: 5px;
+		padding: 0.8rem 1rem;
+		background: var(--paper-2);
+		margin: 1.25rem 0 0.5rem;
+	}
+	.vg-item span {
+		display: block;
+	}
+	.vg-item-h {
+		font-weight: 700;
+		font-variant: small-caps;
+		letter-spacing: 0.04em;
+		font-size: 1.1rem;
+		margin-bottom: 0.25rem;
+	}
+	.vg-item-meta {
+		margin-top: 0.4rem;
+		font-family: "IBM Plex Mono", monospace;
+		font-size: 0.68rem;
+		color: var(--soft);
+	}
+
+	/* kit */
+	.vg-kit {
+		margin: 1.25rem 0 0;
+	}
+	.vg-kit div {
+		border-top: 1px dotted var(--rule);
+		padding: 0.6rem 0;
+	}
+	.vg-kit dt {
+		font-weight: 600;
+		font-variant: small-caps;
+		font-size: 1.1rem;
+		letter-spacing: 0.03em;
+	}
+	.vg-kit-n {
+		display: inline-block;
+		width: 1.5rem;
+		font-family: "IBM Plex Mono", monospace;
+		font-size: 0.7rem;
+		font-variant: normal;
+		color: var(--soft);
+	}
+	.vg-kit dd {
+		margin: 0.1rem 0 0 1.5rem;
+		font-size: 0.96rem;
+		color: var(--soft);
+	}
+
+	/* road */
+	.vg-road {
+		list-style: none;
+		margin: 1.25rem 0;
+		padding: 0;
+	}
+	.vg-road li {
+		display: grid;
+		grid-template-columns: 2rem 1fr;
+		gap: 0.75rem;
+		padding: 0.5rem 0;
+	}
+	.vg-road-n {
+		width: 1.7rem;
+		height: 1.7rem;
+		border: 1.5px solid var(--ink);
+		border-radius: 50%;
+		display: grid;
+		place-items: center;
+		font-family: "IBM Plex Mono", monospace;
+		font-size: 0.75rem;
+	}
+	.vg-test {
+		border-top: 1px solid var(--rule);
+		border-bottom: 1px solid var(--rule);
+		padding: 0.75rem 0;
+		font-style: italic;
+	}
+
+	/* ending */
+	.vg-para--end .vg-n {
+		color: var(--ink);
+	}
+	.vg-scores {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 0.75rem;
+		margin: 1.5rem 0;
+		text-align: center;
+		border-top: 1px solid var(--rule);
+		border-bottom: 1px solid var(--rule);
+		padding: 1rem 0;
+	}
+	.vg-score-v {
+		display: block;
+		font-size: 2rem;
+		font-weight: 700;
+		line-height: 1;
+	}
+	.vg-score-l {
+		display: block;
+		font-size: 0.8rem;
+		color: var(--soft);
+		margin-top: 0.25rem;
+	}
+	.vg-end {
+		font-variant: small-caps;
+		letter-spacing: 0.06em;
+		font-size: 1.2rem;
+		font-weight: 600;
+		text-align: center;
+	}
+	.vg-actions {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: center;
+		gap: 1rem;
+		margin: 1.5rem 0 1rem;
+	}
+	.vg-cta {
+		display: inline-block;
+		padding: 0.7rem 1.75rem;
+		background: var(--ink);
+		color: var(--paper);
+		border: 1px solid var(--ink);
+		font-variant: small-caps;
+		letter-spacing: 0.08em;
+		font-size: 1.05rem;
+	}
+	.vg-cta:hover {
+		background: var(--paper);
+		color: var(--ink);
+	}
+	.vg-alt {
+		font-family: "IBM Plex Mono", monospace;
+		font-size: 0.78rem;
+		font-weight: 400;
+	}
+	.vg-restart {
+		margin: 0;
+		text-align: center;
+		font-size: 0.92rem;
+		color: var(--soft);
+	}
+
+	.vg-colophon {
+		margin: 0;
+		text-align: center;
+		font-family: "IBM Plex Mono", monospace;
+		font-size: 0.6rem;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+		color: var(--soft);
+	}
+
+	@media (max-width: 620px) {
+		.vg-book {
+			padding: 1.5rem 1.15rem 2rem;
+		}
+		.vg-para {
+			grid-template-columns: 1fr;
+			gap: 0.5rem;
+		}
+		.vg-n {
+			text-align: left;
+			font-size: 1.6rem;
+		}
+		.vg-scores {
+			grid-template-columns: 1fr;
+			gap: 1rem;
+		}
+	}
+</style>
