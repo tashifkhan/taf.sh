@@ -1,0 +1,625 @@
+---
+/**
+ * Deco — 1920s grand hotel. Black lacquer, gold leaf, sunbursts and
+ * symmetrical ornament. The studio as an engraved invitation.
+ */
+import "@fontsource/cinzel/400.css";
+import "@fontsource/cinzel/600.css";
+import "@fontsource/cinzel/700.css";
+import "@fontsource/jost/300.css";
+import "@fontsource/jost/400.css";
+import "@fontsource/jost/500.css";
+import { products, services, stats } from "./data";
+
+const decks = ["Deck A", "Deck B", "Deck C"];
+---
+
+<div class="vd">
+	<!-- frame -->
+	<div class="vd-frame">
+		<!-- header -->
+		<header class="vd-head">
+			<div class="vd-ornament" aria-hidden="true">
+				<i></i><b></b><i></i>
+			</div>
+			<p class="vd-over">Est. MMXXIV · India · Remote-first</p>
+			<h1 class="vd-name">TAF·SH</h1>
+			<p class="vd-under">A SOLE PROPRIETORSHIP OF DISTINCTION</p>
+			<nav class="vd-nav">
+				<a href="#vd-suites">Suites</a>
+				<span aria-hidden="true">◆</span>
+				<a href="/services">Services</a>
+				<span aria-hidden="true">◆</span>
+				<a href="/about">The Story</a>
+				<span aria-hidden="true">◆</span>
+				<a href="/contact">Correspondence</a>
+			</nav>
+		</header>
+
+		<!-- sunburst hero -->
+		<section class="vd-hero">
+			<div class="vd-sunburst" aria-hidden="true">
+				{
+					Array.from({ length: 24 }).map((_, i) => (
+						<i style={`--a: ${i * 15}deg`} />
+					))
+				}
+				<div class="vd-sun-core"></div>
+			</div>
+			<h2 class="vd-hero-title">
+				Software of rare craft,<br />
+				<em>wrought by a single hand</em>
+			</h2>
+			<p class="vd-hero-sub">
+				From schema to stylesheet, from queue to correspondence — one
+				engineer designs, builds, and keeps the whole establishment.
+			</p>
+			<div class="vd-ornament vd-ornament-sm" aria-hidden="true">
+				<i></i><b>◆</b><i></i>
+			</div>
+		</section>
+
+		<!-- figures -->
+		<section class="vd-figures">
+			{
+				stats.map((s) => (
+					<div class="vd-figure">
+						<span class="vd-figure-v">{s.value}</span>
+						<span class="vd-figure-l">{s.label}</span>
+					</div>
+				))
+			}
+		</section>
+
+		<!-- product suites -->
+		<section class="vd-suites" id="vd-suites">
+			<p class="vd-section-over">The Establishment Offers</p>
+			<h2 class="vd-section-title">Three Suites in Residence</h2>
+			<div class="vd-suite-grid">
+				{
+					products.map((p, i) => (
+						<a href={p.href} class="vd-suite">
+							<span class="vd-suite-deck">{decks[i]}</span>
+							<span class="vd-suite-fan" aria-hidden="true">
+								<i></i><i></i><i></i><i></i><i></i>
+							</span>
+							<strong>{p.name}</strong>
+							<span class="vd-suite-desc">{p.desc}</span>
+							<span class="vd-suite-status">{p.status}</span>
+						</a>
+					))
+				}
+			</div>
+		</section>
+
+		<!-- services -->
+		<section class="vd-services">
+			<p class="vd-section-over">By Appointment</p>
+			<h2 class="vd-section-title">The Consulting Salon</h2>
+			<div class="vd-svc-list">
+				{
+					services.map((s) => (
+						<div class="vd-svc">
+							<h3>{s.title}</h3>
+							<p>{s.body}</p>
+						</div>
+					))
+				}
+			</div>
+			<p class="vd-services-more">
+				<a href="/services">View the full carte →</a>
+			</p>
+		</section>
+
+		<!-- invitation CTA -->
+		<section class="vd-invite-wrap">
+			<div class="vd-invite">
+				<div class="vd-invite-corner vd-c-tl" aria-hidden="true"></div>
+				<div class="vd-invite-corner vd-c-tr" aria-hidden="true"></div>
+				<div class="vd-invite-corner vd-c-bl" aria-hidden="true"></div>
+				<div class="vd-invite-corner vd-c-br" aria-hidden="true"></div>
+				<p class="vd-invite-over">The honour of your correspondence</p>
+				<h2>is respectfully requested</h2>
+				<p class="vd-invite-body">
+					Kindly state what you are building, where you are stuck, and your
+					desired timeline. Replies are dispatched within a day or two.
+				</p>
+				<p class="vd-invite-links">
+					<a href="/contact">taf.sh/contact</a>
+					<span aria-hidden="true">·</span>
+					<a href="mailto:me@tashif.codes">me@tashif.codes</a>
+				</p>
+				<p class="vd-rsvp">R.S.V.P. — one inbox, one human</p>
+			</div>
+		</section>
+
+		<footer class="vd-foot">
+			<div class="vd-ornament vd-ornament-sm" aria-hidden="true">
+				<i></i><b>◆</b><i></i>
+			</div>
+			<p>© MMXXVI TAF·SH — ALL RIGHTS RESERVED</p>
+			<p>
+				<a href="https://github.com/tashifkhan" target="_blank" rel="noopener noreferrer">GitHub</a>
+				&nbsp;◆&nbsp;
+				<a href="https://tashif.codes" target="_blank" rel="noopener noreferrer">tashif.codes</a>
+			</p>
+		</footer>
+	</div>
+</div>
+
+<style>
+	.vd {
+		--black: #0d0b08;
+		--lacquer: #14100b;
+		--gold: #c9a45c;
+		--gold-dim: #8a744a;
+		--ivory: #ece3cf;
+		background: var(--black);
+		background-image:
+			radial-gradient(ellipse at 50% -10%, rgba(201, 164, 92, 0.09), transparent 55%),
+			repeating-linear-gradient(45deg, rgba(201, 164, 92, 0.015) 0 2px, transparent 2px 14px);
+		color: var(--ivory);
+		font-family: "Jost", "Century Gothic", sans-serif;
+		font-weight: 300;
+		font-size: 1rem;
+		line-height: 1.6;
+		min-height: 100vh;
+		padding: 1.25rem;
+	}
+	.vd a {
+		color: var(--gold);
+		text-decoration: none;
+	}
+	.vd a:hover {
+		color: var(--ivory);
+	}
+
+	/* outer frame */
+	.vd-frame {
+		border: 1px solid var(--gold-dim);
+		outline: 1px solid var(--gold-dim);
+		outline-offset: 5px;
+		min-height: calc(100vh - 2.5rem);
+		padding-bottom: 2rem;
+	}
+
+	/* ornaments */
+	.vd-ornament {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.9rem;
+		margin: 0 auto 1.25rem;
+		max-width: 22rem;
+	}
+	.vd-ornament i {
+		flex: 1;
+		height: 1px;
+		background: linear-gradient(90deg, transparent, var(--gold-dim));
+	}
+	.vd-ornament i:last-child {
+		background: linear-gradient(90deg, var(--gold-dim), transparent);
+	}
+	.vd-ornament b {
+		display: block;
+		width: 0.55rem;
+		height: 0.55rem;
+		background: var(--gold);
+		transform: rotate(45deg);
+		font-size: 0.5rem;
+		color: var(--gold);
+		line-height: 0.55rem;
+		text-align: center;
+	}
+	.vd-ornament-sm b {
+		background: none;
+		font-size: 0.6rem;
+	}
+
+	/* header */
+	.vd-head {
+		text-align: center;
+		padding: 2.75rem 1rem 0;
+	}
+	.vd-over {
+		margin: 0 0 0.75rem;
+		font-size: 0.68rem;
+		letter-spacing: 0.42em;
+		text-transform: uppercase;
+		color: var(--gold-dim);
+	}
+	.vd-name {
+		margin: 0;
+		font-family: "Cinzel", "Trajan Pro", serif;
+		font-weight: 700;
+		font-size: clamp(2.8rem, 9vw, 5.2rem);
+		letter-spacing: 0.16em;
+		line-height: 1;
+		color: var(--gold);
+		text-shadow: 0 0 32px rgba(201, 164, 92, 0.25);
+	}
+	.vd-under {
+		margin: 0.75rem 0 0;
+		font-size: 0.72rem;
+		letter-spacing: 0.38em;
+		color: var(--ivory);
+	}
+	.vd-nav {
+		margin: 1.75rem auto 0;
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 0.5rem 1.1rem;
+		font-size: 0.78rem;
+		letter-spacing: 0.22em;
+		text-transform: uppercase;
+	}
+	.vd-nav a {
+		color: var(--ivory);
+	}
+	.vd-nav a:hover {
+		color: var(--gold);
+	}
+	.vd-nav span {
+		color: var(--gold-dim);
+		font-size: 0.55rem;
+		padding-top: 0.25rem;
+	}
+
+	/* hero */
+	.vd-hero {
+		position: relative;
+		text-align: center;
+		padding: 4rem 1rem 3.5rem;
+		overflow: hidden;
+	}
+	.vd-sunburst {
+		position: absolute;
+		left: 50%;
+		top: 1.5rem;
+		width: 34rem;
+		height: 34rem;
+		transform: translateX(-50%);
+		opacity: 0.5;
+		pointer-events: none;
+	}
+	.vd-sunburst i {
+		position: absolute;
+		left: 50%;
+		bottom: 50%;
+		width: 1px;
+		height: 17rem;
+		background: linear-gradient(to top, rgba(201, 164, 92, 0.5), transparent);
+		transform-origin: bottom center;
+		transform: rotate(var(--a));
+	}
+	.vd-sun-core {
+		position: absolute;
+		left: 50%;
+		top: 50%;
+		width: 9rem;
+		height: 9rem;
+		transform: translate(-50%, -50%);
+		border: 1px solid var(--gold-dim);
+		border-radius: 50%;
+		box-shadow:
+			0 0 0 1.5rem rgba(201, 164, 92, 0.05),
+			inset 0 0 3rem rgba(201, 164, 92, 0.12);
+	}
+	.vd-hero-title {
+		position: relative;
+		margin: 0;
+		font-family: "Cinzel", serif;
+		font-weight: 400;
+		font-size: clamp(1.7rem, 5vw, 2.9rem);
+		line-height: 1.25;
+		letter-spacing: 0.06em;
+	}
+	.vd-hero-title em {
+		font-style: italic;
+		color: var(--gold);
+	}
+	.vd-hero-sub {
+		position: relative;
+		margin: 1.5rem auto 2.25rem;
+		max-width: 32rem;
+		font-size: 0.98rem;
+		color: rgba(236, 227, 207, 0.8);
+	}
+
+	/* figures */
+	.vd-figures {
+		display: grid;
+		gap: 1px;
+		max-width: 52rem;
+		margin: 0 1rem;
+		padding: 0;
+		background: var(--gold-dim);
+		border: 1px solid var(--gold-dim);
+	}
+	@media (min-width: 640px) {
+		.vd-figures {
+			grid-template-columns: repeat(3, 1fr);
+			margin: 0 auto;
+		}
+	}
+	.vd-figure {
+		background: var(--lacquer);
+		text-align: center;
+		padding: 1.75rem 1rem;
+	}
+	.vd-figure-v {
+		display: block;
+		font-family: "Cinzel", serif;
+		font-size: 2.6rem;
+		font-weight: 600;
+		color: var(--gold);
+		line-height: 1.1;
+	}
+	.vd-figure-l {
+		display: block;
+		margin-top: 0.5rem;
+		font-size: 0.68rem;
+		letter-spacing: 0.28em;
+		text-transform: uppercase;
+		color: rgba(236, 227, 207, 0.75);
+	}
+
+	/* suites */
+	.vd-suites {
+		max-width: 66rem;
+		margin: 0 auto;
+		padding: 4.5rem 1rem 2rem;
+		text-align: center;
+	}
+	.vd-section-over {
+		margin: 0 0 0.5rem;
+		font-size: 0.68rem;
+		letter-spacing: 0.42em;
+		text-transform: uppercase;
+		color: var(--gold-dim);
+	}
+	.vd-section-title {
+		margin: 0 0 2.75rem;
+		font-family: "Cinzel", serif;
+		font-weight: 600;
+		font-size: clamp(1.5rem, 4vw, 2.2rem);
+		letter-spacing: 0.08em;
+	}
+	.vd-suite-grid {
+		display: grid;
+		gap: 1.5rem;
+	}
+	@media (min-width: 820px) {
+		.vd-suite-grid {
+			grid-template-columns: repeat(3, 1fr);
+		}
+	}
+	.vd-suite {
+		display: block;
+		border: 1px solid var(--gold-dim);
+		background: var(--lacquer);
+		padding: 2rem 1.5rem 1.75rem;
+		color: var(--ivory);
+		transition:
+			border-color 0.2s ease,
+			transform 0.2s ease;
+	}
+	.vd-suite:hover {
+		border-color: var(--gold);
+		transform: translateY(-4px);
+	}
+	.vd-suite-deck {
+		display: block;
+		font-size: 0.65rem;
+		letter-spacing: 0.4em;
+		text-transform: uppercase;
+		color: var(--gold-dim);
+		margin-bottom: 1.25rem;
+	}
+	.vd-suite-fan {
+		display: flex;
+		justify-content: center;
+		align-items: flex-end;
+		gap: 0.3rem;
+		height: 2.2rem;
+		margin-bottom: 1.25rem;
+	}
+	.vd-suite-fan i {
+		display: block;
+		width: 1px;
+		background: var(--gold);
+		transform-origin: bottom center;
+		height: 2.2rem;
+	}
+	.vd-suite-fan i:nth-child(1) {
+		transform: rotate(-40deg);
+	}
+	.vd-suite-fan i:nth-child(2) {
+		transform: rotate(-20deg);
+	}
+	.vd-suite-fan i:nth-child(4) {
+		transform: rotate(20deg);
+	}
+	.vd-suite-fan i:nth-child(5) {
+		transform: rotate(40deg);
+	}
+	.vd-suite strong {
+		display: block;
+		font-family: "Cinzel", serif;
+		font-size: 1.25rem;
+		font-weight: 600;
+		letter-spacing: 0.06em;
+		color: var(--gold);
+	}
+	.vd-suite-desc {
+		display: block;
+		margin: 0.75rem 0 1.25rem;
+		font-size: 0.85rem;
+		line-height: 1.6;
+		color: rgba(236, 227, 207, 0.8);
+	}
+	.vd-suite-status {
+		display: inline-block;
+		border: 1px solid var(--gold-dim);
+		padding: 0.3rem 0.9rem;
+		font-size: 0.65rem;
+		letter-spacing: 0.3em;
+		text-transform: uppercase;
+		color: var(--gold);
+	}
+
+	/* services */
+	.vd-services {
+		max-width: 66rem;
+		margin: 0 auto;
+		padding: 4rem 1rem 2rem;
+		text-align: center;
+	}
+	.vd-svc-list {
+		display: grid;
+		gap: 2rem;
+		text-align: left;
+	}
+	@media (min-width: 720px) {
+		.vd-svc-list {
+			grid-template-columns: repeat(2, 1fr);
+			gap: 2.5rem 4rem;
+		}
+	}
+	.vd-svc {
+		border-top: 1px solid var(--gold-dim);
+		padding-top: 1.25rem;
+		position: relative;
+	}
+	.vd-svc::before {
+		content: "◆";
+		position: absolute;
+		top: -0.5rem;
+		left: 0;
+		font-size: 0.55rem;
+		color: var(--gold);
+		background: var(--black);
+		padding-right: 0.75rem;
+	}
+	.vd-svc h3 {
+		margin: 0 0 0.4rem;
+		font-family: "Cinzel", serif;
+		font-size: 1.05rem;
+		font-weight: 600;
+		letter-spacing: 0.05em;
+		color: var(--gold);
+	}
+	.vd-svc p {
+		margin: 0;
+		font-size: 0.88rem;
+		color: rgba(236, 227, 207, 0.8);
+	}
+	.vd-services-more {
+		margin: 2.5rem 0 0;
+		text-align: center;
+		font-size: 0.85rem;
+		letter-spacing: 0.15em;
+		text-transform: uppercase;
+	}
+
+	/* invitation */
+	.vd-invite-wrap {
+		max-width: 40rem;
+		margin: 0 auto;
+		padding: 4rem 1rem 3rem;
+	}
+	.vd-invite {
+		position: relative;
+		border: 1px solid var(--gold);
+		background: var(--lacquer);
+		text-align: center;
+		padding: 3rem 2rem 2.5rem;
+	}
+	.vd-invite-corner {
+		position: absolute;
+		width: 1.1rem;
+		height: 1.1rem;
+		border: 1px solid var(--gold);
+	}
+	.vd-c-tl {
+		top: 4px;
+		left: 4px;
+		border-right: none;
+		border-bottom: none;
+	}
+	.vd-c-tr {
+		top: 4px;
+		right: 4px;
+		border-left: none;
+		border-bottom: none;
+	}
+	.vd-c-bl {
+		bottom: 4px;
+		left: 4px;
+		border-right: none;
+		border-top: none;
+	}
+	.vd-c-br {
+		bottom: 4px;
+		right: 4px;
+		border-left: none;
+		border-top: none;
+	}
+	.vd-invite-over {
+		margin: 0 0 0.5rem;
+		font-size: 0.7rem;
+		letter-spacing: 0.35em;
+		text-transform: uppercase;
+		color: var(--gold-dim);
+	}
+	.vd-invite h2 {
+		margin: 0 0 1.25rem;
+		font-family: "Cinzel", serif;
+		font-weight: 600;
+		font-size: clamp(1.5rem, 4.5vw, 2.2rem);
+		letter-spacing: 0.04em;
+		color: var(--gold);
+	}
+	.vd-invite-body {
+		margin: 0 auto 1.5rem;
+		max-width: 26rem;
+		font-size: 0.9rem;
+		color: rgba(236, 227, 207, 0.85);
+	}
+	.vd-invite-links {
+		margin: 0 0 1.5rem;
+		display: flex;
+		justify-content: center;
+		gap: 0.9rem;
+		font-size: 0.9rem;
+		letter-spacing: 0.06em;
+	}
+	.vd-invite-links a {
+		border-bottom: 1px solid var(--gold-dim);
+		padding-bottom: 0.15rem;
+	}
+	.vd-rsvp {
+		margin: 0;
+		font-size: 0.68rem;
+		letter-spacing: 0.3em;
+		text-transform: uppercase;
+		color: var(--gold-dim);
+	}
+
+	/* footer */
+	.vd-foot {
+		text-align: center;
+		padding: 0 1rem;
+		font-size: 0.72rem;
+		letter-spacing: 0.22em;
+		text-transform: uppercase;
+		color: rgba(236, 227, 207, 0.6);
+	}
+	.vd-foot .vd-ornament {
+		margin-bottom: 1.5rem;
+	}
+	.vd-foot p {
+		margin: 0.4rem 0;
+	}
+</style>

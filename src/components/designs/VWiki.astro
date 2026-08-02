@@ -1,0 +1,498 @@
+---
+/**
+ * Wiki — the studio as an encyclopedia article. Infobox, TOC, blue links,
+ * superscript references. Deadpan, verifiable, oddly trustworthy.
+ */
+import { products, services, stats, process } from "./data";
+---
+
+<div class="vk">
+	<!-- site chrome -->
+	<header class="vk-chrome">
+		<span class="vk-globe" aria-hidden="true">
+			<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4">
+				<circle cx="12" cy="12" r="9"></circle>
+				<ellipse cx="12" cy="12" rx="4" ry="9"></ellipse>
+				<path d="M3.6 9h16.8M3.6 15h16.8"></path>
+			</svg>
+		</span>
+		<strong>Tafshpedia</strong>
+		<span class="vk-tagline">the free encyclopedia that anyone can email</span>
+		<nav>
+			<a href="/">Main page</a>
+			<a href="/about">About</a>
+			<a href="/contact">Talk</a>
+		</nav>
+	</header>
+
+	<article class="vk-article">
+		<h1 class="vk-title">taf.sh</h1>
+		<p class="vk-hatnote">
+		This article is about the software studio. For the proprietor, see{" "}
+		<a href="https://tashif.codes" target="_blank" rel="noopener noreferrer">Tashif (engineer)</a>.
+		</p>
+
+		<!-- infobox -->
+		<aside class="vk-infobox">
+			<p class="vk-ib-title">taf.sh</p>
+			<div class="vk-ib-logo">
+				<svg viewBox="0 0 30 42" aria-hidden="true">
+					<path d="M0 12V0H30V12H18V24H12V12H0Z" fill="currentColor"></path>
+					<path d="M12 24H18V42H12V24Z" fill="currentColor" opacity="0.4"></path>
+				</svg>
+				<span>Studio mark</span>
+			</div>
+			<table>
+				<tbody>
+					<tr><th>Type</th><td>Sole proprietorship</td></tr>
+					<tr><th>Industry</th><td>Software products &amp; consulting</td></tr>
+					<tr><th>Founded</th><td>India, remote-first</td></tr>
+					<tr><th>Key people</th><td>Tashif (all of them)</td></tr>
+					<tr><th>Products</th><td>TalentSync AI · TalentSync HR · CliniQ</td></tr>
+					<tr><th>Employees</th><td>1 (by design)</td></tr>
+					<tr>
+						<th>Website</th>
+						<td><a href="/">taf.sh</a></td>
+					</tr>
+				</tbody>
+			</table>
+		</aside>
+
+		<p class="vk-lede">
+			<b>taf.sh</b> is an independent software studio and consultancy
+			operated by a single engineer. It designs, builds, and operates its own
+			software products — principally in the hiring and healthcare domains —
+			and accepts a small number of external engineering engagements.
+			<sup><a href="#vk-notes">[1]</a></sup> The studio is noted for the
+			absence of account managers, handoffs, and status decks.
+			<sup><a href="#vk-notes">[2]</a></sup>
+		</p>
+
+		<!-- TOC -->
+		<nav class="vk-toc">
+			<p class="vk-toc-title">Contents <span class="vk-toc-hide">[hide]</span></p>
+			<ol>
+				<li><a href="#vk-products">Products</a></li>
+				<li><a href="#vk-consulting">Consulting practice</a></li>
+				<li><a href="#vk-process">Engagement process</a></li>
+				<li><a href="#vk-reception">Reception</a></li>
+				<li><a href="#vk-notes">Notes</a></li>
+				<li><a href="#vk-links">External links</a></li>
+			</ol>
+		</nav>
+
+		<section id="vk-products">
+			<h2>Products <span class="vk-edit">[<a href="/design">edit</a>]</span></h2>
+			<p>
+				The studio operates three systems in production, all designed,
+				written, deployed, and maintained by its proprietor:
+				<sup><a href="#vk-notes">[3]</a></sup>
+			</p>
+			{
+				products.map((p) => (
+					<div class="vk-product">
+						<h3>{p.name}</h3>
+						<p>
+							{p.desc} <em>({p.status}.)</em>{" "}
+							<a href={p.href}>Full article →</a>
+						</p>
+					</div>
+				))
+			}
+		</section>
+
+		<section id="vk-consulting">
+			<h2>Consulting practice <span class="vk-edit">[<a href="/services">edit</a>]</span></h2>
+			<p>
+				Between product work, the studio offers the same engineering to
+				external teams. Reported areas of practice include:
+			</p>
+			<ul>
+				{
+					services.map((s) => (
+						<li>
+							<b>{s.title}</b> — {s.body}
+						</li>
+					))
+				}
+			</ul>
+		</section>
+
+		<section id="vk-process">
+			<h2>Engagement process <span class="vk-edit">[<a href="/services">edit</a>]</span></h2>
+			<ol>
+				{
+					process.map((p) => (
+						<li>
+							<b>{p.title}.</b> {p.body}
+						</li>
+					))
+				}
+			</ol>
+		</section>
+
+		<section id="vk-reception">
+			<h2>Reception</h2>
+			<table class="vk-data">
+				<caption>Operating statistics, as of 2026</caption>
+				<thead>
+					<tr><th>Metric</th><th>Value</th></tr>
+				</thead>
+				<tbody>
+					{
+						stats.map((s) => (
+							<tr>
+								<td>{s.label}</td>
+								<td>{s.value}</td>
+							</tr>
+						))
+					}
+				</tbody>
+			</table>
+			<p>
+				Observers have described the model as "staying small on purpose":
+				few clients, deep focus, and no incentive to sell hours for the sake
+				of hours.<sup><a href="#vk-notes">[4]</a></sup>
+			</p>
+		</section>
+
+		<section id="vk-notes">
+			<h2>Notes</h2>
+			<ol class="vk-refs">
+				<li id="vk-n1">
+					^ <a href="/about">"About the studio."</a> taf.sh. Retrieved today.
+				</li>
+				<li id="vk-n2">
+					^ <a href="/services">"Services and engagement models."</a> taf.sh.
+				</li>
+				<li id="vk-n3">
+					^ <a href="/#products">"Products in production."</a> taf.sh.
+				</li>
+				<li id="vk-n4">
+				^ Proprietor, in correspondence with{" "}
+				<a href={`mailto:me@tashif.codes`}>me@tashif.codes</a>.
+				</li>
+			</ol>
+		</section>
+
+		<section id="vk-links">
+			<h2>External links</h2>
+			<ul class="vk-ext">
+				<li><a href="/contact">Contact page</a> — project inquiries</li>
+				<li>
+					<a href="https://github.com/tashifkhan" target="_blank" rel="noopener noreferrer">github.com/tashifkhan</a> — open source
+				</li>
+				<li>
+					<a href="https://tashif.codes" target="_blank" rel="noopener noreferrer">tashif.codes</a> — personal site
+				</li>
+				<li>
+					<a href="mailto:me@tashif.codes">me@tashif.codes</a> — direct correspondence
+				</li>
+			</ul>
+		</section>
+
+		<div class="vk-cta">
+			<p>
+				<b>Have something to build?</b> This article's subject is currently
+				accepting select engagements.
+			</p>
+			<a href="/contact" class="vk-cta-btn">Start a project inquiry →</a>
+		</div>
+
+		<footer class="vk-foot">
+			<p>
+				This page was last edited on 25 July 2026, by one human.
+			</p>
+			<p>
+				Text is available under the say-what-you-mean license; additional
+				terms (fixed scope, weekly increments) may apply.
+			</p>
+		</footer>
+	</article>
+</div>
+
+<style>
+	.vk {
+		--bg: #ffffff;
+		--panel: #f8f9fa;
+		--line: #a2a9b1;
+		--line-soft: #eaecf0;
+		--fg: #202122;
+		--dim: #54595d;
+		--link: #3366cc;
+		background: var(--bg);
+		color: var(--fg);
+		font-family: Georgia, "Linux Libertine", "Times New Roman", serif;
+		font-size: 0.95rem;
+		line-height: 1.6;
+		min-height: 100vh;
+		padding-bottom: 2rem;
+	}
+	.vk a {
+		color: var(--link);
+		text-decoration: none;
+	}
+	.vk a:hover {
+		text-decoration: underline;
+	}
+
+	/* chrome */
+	.vk-chrome {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: baseline;
+		gap: 0.25rem 0.75rem;
+		padding: 0.75rem 1.25rem;
+		border-bottom: 1px solid var(--line-soft);
+		font-size: 0.85rem;
+	}
+	.vk-globe {
+		display: inline-flex;
+		line-height: 1;
+	}
+	.vk-globe svg {
+		width: 1.35rem;
+		height: 1.35rem;
+	}
+	.vk-chrome strong {
+		font-size: 1.05rem;
+	}
+	.vk-tagline {
+		color: var(--dim);
+		font-style: italic;
+		font-size: 0.8rem;
+	}
+	.vk-chrome nav {
+		margin-left: auto;
+		display: flex;
+		gap: 1rem;
+		font-size: 0.8rem;
+	}
+
+	/* article */
+	.vk-article {
+		max-width: 58rem;
+		margin: 0 auto;
+		padding: 0.5rem 1.25rem 0;
+	}
+	.vk-title {
+		margin: 0.5rem 0 0;
+		font-size: 1.9rem;
+		font-weight: 400;
+		border-bottom: 1px solid var(--line);
+		padding-bottom: 0.35rem;
+	}
+	.vk-hatnote {
+		margin: 0.5rem 0 1rem;
+		font-size: 0.82rem;
+		font-style: italic;
+		color: var(--dim);
+		padding-left: 1.5rem;
+	}
+
+	/* infobox */
+	.vk-infobox {
+		float: right;
+		width: 17rem;
+		margin: 0 0 1rem 1.5rem;
+		background: var(--panel);
+		border: 1px solid var(--line);
+		font-size: 0.78rem;
+	}
+	.vk-ib-title {
+		margin: 0;
+		background: #eaecf0;
+		text-align: center;
+		font-weight: 700;
+		font-size: 0.95rem;
+		padding: 0.4rem;
+	}
+	.vk-ib-logo {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 0.3rem;
+		padding: 0.9rem 0.5rem 0.5rem;
+		color: var(--fg);
+	}
+	.vk-ib-logo svg {
+		width: 2.2rem;
+		height: 3.1rem;
+	}
+	.vk-ib-logo span {
+		font-size: 0.72rem;
+		color: var(--dim);
+	}
+	.vk-infobox table {
+		width: 100%;
+		border-collapse: collapse;
+	}
+	.vk-infobox th,
+	.vk-infobox td {
+		border-top: 1px solid var(--line-soft);
+		padding: 0.35rem 0.6rem;
+		text-align: left;
+		vertical-align: top;
+	}
+	.vk-infobox th {
+		width: 5.5rem;
+		font-weight: 700;
+	}
+	@media (max-width: 640px) {
+		.vk-infobox {
+			float: none;
+			width: 100%;
+			margin: 0 0 1rem;
+		}
+	}
+
+	.vk-lede {
+		margin: 0 0 1rem;
+	}
+	.vk sup {
+		font-size: 0.72rem;
+		line-height: 0;
+	}
+
+	/* toc */
+	.vk-toc {
+		display: inline-block;
+		background: var(--panel);
+		border: 1px solid var(--line);
+		padding: 0.6rem 1.5rem 0.8rem 0.9rem;
+		font-size: 0.85rem;
+		margin-bottom: 1rem;
+	}
+	.vk-toc-title {
+		margin: 0 0 0.4rem;
+		font-weight: 700;
+		text-align: center;
+	}
+	.vk-toc-hide {
+		font-weight: 400;
+		font-size: 0.75rem;
+		color: var(--link);
+	}
+	.vk-toc ol {
+		margin: 0;
+		padding-left: 1.4rem;
+	}
+	.vk-toc li {
+		margin: 0.15rem 0;
+	}
+
+	/* sections */
+	.vk h2 {
+		margin: 1.75rem 0 0.6rem;
+		font-size: 1.45rem;
+		font-weight: 400;
+		border-bottom: 1px solid var(--line);
+		padding-bottom: 0.2rem;
+	}
+	.vk-edit {
+		float: right;
+		font-size: 0.75rem;
+		font-weight: 400;
+		padding-top: 0.45rem;
+	}
+	.vk h3 {
+		margin: 1.25rem 0 0.3rem;
+		font-size: 1.1rem;
+		font-weight: 700;
+	}
+	.vk section p {
+		margin: 0.4rem 0;
+	}
+	.vk section ul,
+	.vk section ol {
+		margin: 0.4rem 0;
+		padding-left: 1.6rem;
+	}
+	.vk section li {
+		margin: 0.3rem 0;
+	}
+	.vk-product p {
+		font-size: 0.92rem;
+	}
+
+	/* data table */
+	.vk-data {
+		border-collapse: collapse;
+		margin: 0.75rem 0 1rem;
+		font-size: 0.85rem;
+		min-width: 18rem;
+	}
+	.vk-data caption {
+		text-align: left;
+		font-style: italic;
+		font-size: 0.8rem;
+		color: var(--dim);
+		padding-bottom: 0.3rem;
+	}
+	.vk-data th,
+	.vk-data td {
+		border: 1px solid var(--line);
+		padding: 0.35rem 0.9rem;
+		text-align: left;
+	}
+	.vk-data th {
+		background: var(--panel);
+	}
+	.vk-data td:last-child {
+		text-align: right;
+		font-weight: 700;
+	}
+
+	/* refs */
+	.vk-refs {
+		font-size: 0.8rem;
+		color: var(--dim);
+	}
+	.vk-ext {
+		font-size: 0.9rem;
+	}
+
+	/* cta */
+	.vk-cta {
+		clear: both;
+		margin: 2rem 0;
+		border: 1px solid var(--line);
+		background: var(--panel);
+		padding: 1rem 1.25rem;
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: space-between;
+		gap: 0.75rem 1.5rem;
+	}
+	.vk-cta p {
+		margin: 0;
+		font-size: 0.92rem;
+	}
+	.vk-cta-btn {
+		display: inline-block;
+		background: #3366cc;
+		color: #fff !important;
+		padding: 0.5rem 1.1rem;
+		border-radius: 3px;
+		font-size: 0.85rem;
+		font-family: "Helvetica Neue", sans-serif;
+		text-decoration: none !important;
+	}
+	.vk-cta-btn:hover {
+		background: #2a56a8;
+	}
+
+	/* footer */
+	.vk-foot {
+		margin-top: 2rem;
+		border-top: 1px solid var(--line);
+		padding-top: 0.75rem;
+		font-size: 0.75rem;
+		color: var(--dim);
+		font-style: italic;
+	}
+	.vk-foot p {
+		margin: 0.2rem 0;
+	}
+</style>

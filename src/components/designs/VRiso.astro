@@ -1,0 +1,740 @@
+---
+/**
+ * Riso — risograph print shop. Two ink drums (fluoro pink + teal), multiply
+ * overprints, misregistration, grain. Every page an edition of 01/03.
+ */
+import "@fontsource/bricolage-grotesque/400.css";
+import "@fontsource/bricolage-grotesque/600.css";
+import "@fontsource/bricolage-grotesque/700.css";
+import "@fontsource/bricolage-grotesque/800.css";
+import "@fontsource/ibm-plex-mono/400.css";
+import { products, services, traits } from "./data";
+
+const inks = ["pink", "teal", "purple"];
+---
+
+<div class="vr">
+	<div class="vr-grain" aria-hidden="true"></div>
+
+	<!-- header -->
+	<header class="vr-head">
+		<a href="/" class="vr-brand">
+			<span class="vr-brand-mark" aria-hidden="true">
+				<i></i><i></i>
+			</span>
+			taf.sh <em>press</em>
+		</a>
+		<nav>
+			<a href="#vr-prints">Prints</a>
+			<a href="/services">Services</a>
+			<a href="/about">About</a>
+			<a href="/contact">Contact</a>
+		</nav>
+	</header>
+
+	<!-- hero poster -->
+	<section class="vr-hero">
+		<div class="vr-hero-shapes" aria-hidden="true">
+			<i class="vr-s1"></i>
+			<i class="vr-s2"></i>
+			<i class="vr-s3"></i>
+		</div>
+		<p class="vr-edition">ed. 01/03 — web press run · July 2026</p>
+		<h1>
+			<span class="vr-h-line vr-h-pink" data-text="ONE HUMAN">ONE HUMAN</span>
+			<span class="vr-h-line vr-h-teal" data-text="TWO INKS.">TWO INKS.</span>
+			<span class="vr-h-line vr-h-mix" data-text="FULL STACK.">FULL STACK.</span>
+		</h1>
+		<p class="vr-hero-sub">
+			Software overprinted by a single pair of hands — slight
+			misregistration is how you know it's not a template.
+		</p>
+		<div class="vr-hero-actions">
+			<a href="/contact" class="vr-btn vr-btn-pink">Commission a print</a>
+			<a href="#vr-prints" class="vr-btn vr-btn-teal">See the editions ↓</a>
+		</div>
+	</section>
+
+	<!-- product prints -->
+	<section class="vr-prints" id="vr-prints">
+		<h2 class="vr-section">
+			<span class="vr-section-num">§1</span> The Editions
+		</h2>
+		<div class="vr-print-grid">
+			{
+				products.map((p, i) => (
+					<a href={p.href} class={`vr-print vr-print-${inks[i]}`}>
+						<span class="vr-print-head">
+							<span class="vr-print-no">{p.index}/03</span>
+							<span class="vr-print-status">{p.status}</span>
+						</span>
+						<span class="vr-print-art" aria-hidden="true">
+							{i === 0 && (
+								<>
+									<i class="vr-a-disc"></i>
+									<i class="vr-a-ring"></i>
+								</>
+							)}
+							{i === 1 && (
+								<>
+									<i class="vr-a-half"></i>
+									<i class="vr-a-bar"></i>
+								</>
+							)}
+							{i === 2 && (
+								<>
+									<i class="vr-a-blob"></i>
+									<i class="vr-a-dot"></i>
+								</>
+							)}
+						</span>
+						<strong>{p.name}</strong>
+						<span class="vr-print-desc">{p.desc}</span>
+					</a>
+				))
+			}
+		</div>
+	</section>
+
+	<!-- colophon traits -->
+	<section class="vr-traits">
+		<h2 class="vr-section vr-section-light">
+			<span class="vr-section-num">§2</span> Colophon
+		</h2>
+		<ul class="vr-trait-list">
+			{
+				traits.map((t, i) => (
+					<li>
+						<span class="vr-trait-no">{String(i + 1).padStart(2, "0")}</span>
+						<strong>{t.title}</strong>
+						<span>{t.body}</span>
+					</li>
+				))
+			}
+		</ul>
+	</section>
+
+	<!-- services -->
+	<section class="vr-services">
+		<h2 class="vr-section">
+			<span class="vr-section-num">§3</span> Press Services
+		</h2>
+		<div class="vr-svc-grid">
+			{
+				services.map((s, i) => (
+					<div class={`vr-svc vr-svc-${inks[i % 3]}`}>
+						<h3>{s.title}</h3>
+						<p>{s.body}</p>
+					</div>
+				))
+			}
+		</div>
+		<p class="vr-svc-more">
+			<a href="/services">Full service sheet →</a>
+		</p>
+	</section>
+
+	<!-- CTA -->
+	<section class="vr-cta">
+		<div class="vr-cta-card">
+			<p class="vr-edition vr-edition-light">limited run — a few engagements per season</p>
+			<h2>
+				<span class="vr-h-line vr-h-pink" data-text="YOURS NEXT?">YOURS NEXT?</span>
+			</h2>
+			<p>
+				Tell the press what you're building. Two honest paragraphs beat a
+				polished pitch.
+			</p>
+			<div class="vr-cta-actions">
+				<a href="/contact" class="vr-btn vr-btn-pink">taf.sh/contact</a>
+				<a href="mailto:me@tashif.codes" class="vr-btn vr-btn-ghost">me@tashif.codes</a>
+			</div>
+		</div>
+	</section>
+
+	<footer class="vr-foot">
+		<span>©2026 taf.sh press — set in Bricolage Grotesque</span>
+		<span class="vr-foot-inks" aria-hidden="true"><i></i><i></i></span>
+		<span>
+			<a href="https://github.com/tashifkhan" target="_blank" rel="noopener noreferrer">GitHub</a>
+			·
+			<a href="https://tashif.codes" target="_blank" rel="noopener noreferrer">tashif.codes</a>
+		</span>
+	</footer>
+</div>
+
+<style>
+	.vr {
+		--paper: #f4ecdd;
+		--ink: #23303a;
+		--pink: #ff48b0;
+		--teal: #0078bf;
+		--purple: #7656a8;
+		position: relative;
+		background: var(--paper);
+		color: var(--ink);
+		font-family: "Bricolage Grotesque", "Trebuchet MS", sans-serif;
+		font-size: 1rem;
+		line-height: 1.5;
+		min-height: 100vh;
+		overflow: hidden;
+	}
+	.vr a {
+		color: inherit;
+	}
+	.vr-grain {
+		position: absolute;
+		inset: 0;
+		pointer-events: none;
+		z-index: 5;
+		opacity: 0.55;
+		mix-blend-mode: multiply;
+		background-image: repeating-conic-gradient(
+			rgba(35, 48, 58, 0.05) 0% 0.00012%,
+			transparent 0.00024% 0.00048%
+		);
+		background-size: 160px 160px;
+	}
+
+	/* header */
+	.vr-head {
+		position: relative;
+		z-index: 6;
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1rem;
+		max-width: 74rem;
+		margin: 0 auto;
+		padding: 1.5rem;
+	}
+	.vr-brand {
+		display: flex;
+		align-items: center;
+		gap: 0.6rem;
+		font-weight: 800;
+		font-size: 1.2rem;
+		text-decoration: none;
+		letter-spacing: -0.01em;
+	}
+	.vr-brand em {
+		font-style: normal;
+		font-weight: 400;
+		color: var(--pink);
+	}
+	.vr-brand-mark {
+		position: relative;
+		width: 1.6rem;
+		height: 1.6rem;
+	}
+	.vr-brand-mark i {
+		position: absolute;
+		inset: 0;
+		border-radius: 50%;
+		mix-blend-mode: multiply;
+	}
+	.vr-brand-mark i:first-child {
+		background: var(--pink);
+		transform: translateX(-22%);
+	}
+	.vr-brand-mark i:last-child {
+		background: var(--teal);
+		transform: translateX(22%);
+	}
+	.vr-head nav {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.4rem 1.4rem;
+		font-weight: 600;
+		font-size: 0.92rem;
+	}
+	.vr-head nav a {
+		text-decoration: none;
+		border-bottom: 2px solid transparent;
+	}
+	.vr-head nav a:hover {
+		border-color: var(--pink);
+	}
+
+	/* hero */
+	.vr-hero {
+		position: relative;
+		max-width: 74rem;
+		margin: 0 auto;
+		padding: 3.5rem 1.5rem 5rem;
+	}
+	.vr-hero-shapes i {
+		position: absolute;
+		mix-blend-mode: multiply;
+		opacity: 0.9;
+	}
+	.vr-s1 {
+		width: 15rem;
+		height: 15rem;
+		border-radius: 50%;
+		background: var(--pink);
+		top: 2rem;
+		right: 8%;
+	}
+	.vr-s2 {
+		width: 15rem;
+		height: 15rem;
+		border-radius: 50%;
+		border: 2.2rem solid var(--teal);
+		top: 5.5rem;
+		right: 16%;
+	}
+	.vr-s3 {
+		width: 7rem;
+		height: 7rem;
+		background: var(--purple);
+		border-radius: 42% 58% 60% 40% / 50% 45% 55% 50%;
+		bottom: 2rem;
+		right: 28%;
+	}
+	@media (max-width: 800px) {
+		.vr-s1 {
+			width: 9rem;
+			height: 9rem;
+			right: 2%;
+		}
+		.vr-s2 {
+			width: 9rem;
+			height: 9rem;
+			border-width: 1.3rem;
+			right: 12%;
+		}
+		.vr-s3 {
+			display: none;
+		}
+	}
+	.vr-edition {
+		position: relative;
+		margin: 0 0 1.5rem;
+		font-family: "IBM Plex Mono", monospace;
+		font-size: 0.75rem;
+		letter-spacing: 0.06em;
+		color: var(--ink);
+		opacity: 0.75;
+	}
+	.vr-hero h1 {
+		position: relative;
+		margin: 0;
+		font-weight: 800;
+		font-size: clamp(3rem, 10vw, 7rem);
+		line-height: 0.95;
+		letter-spacing: -0.02em;
+		text-transform: uppercase;
+	}
+	.vr-h-line {
+		position: relative;
+		z-index: 0;
+		display: block;
+		width: fit-content;
+	}
+	/* misregistration ghosts */
+	.vr-h-line::before,
+	.vr-h-line::after {
+		content: attr(data-text);
+		position: absolute;
+		inset: 0;
+		z-index: -1;
+		mix-blend-mode: multiply;
+	}
+	.vr-h-pink {
+		color: var(--ink);
+	}
+	.vr-h-pink::before {
+		color: var(--pink);
+		transform: translate(4px, -4px);
+	}
+	.vr-h-teal {
+		color: var(--ink);
+	}
+	.vr-h-teal::before {
+		color: var(--teal);
+		transform: translate(-4px, 3px);
+	}
+	.vr-h-mix {
+		color: var(--pink);
+	}
+	.vr-h-mix::before {
+		color: var(--teal);
+		transform: translate(5px, 4px);
+	}
+	.vr-h-mix::after {
+		color: var(--ink);
+		transform: translate(1px, 1px);
+	}
+	.vr-hero-sub {
+		position: relative;
+		margin: 1.75rem 0 2rem;
+		max-width: 27rem;
+		font-size: 1.05rem;
+		font-weight: 600;
+	}
+	.vr-hero-actions {
+		position: relative;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.9rem;
+	}
+	.vr-btn {
+		display: inline-block;
+		padding: 0.85rem 1.5rem;
+		font-weight: 700;
+		font-size: 0.95rem;
+		text-decoration: none;
+		border-radius: 999px;
+		border: 2px solid var(--ink);
+		transition:
+			transform 0.12s ease,
+			box-shadow 0.12s ease;
+	}
+	.vr-btn:hover {
+		transform: translate(-2px, -2px);
+		box-shadow: 3px 3px 0 var(--ink);
+	}
+	.vr-btn-pink {
+		background: var(--pink);
+		color: var(--ink);
+	}
+	.vr-btn-teal {
+		background: var(--teal);
+	}
+	.vr .vr-btn-teal {
+		color: #fff;
+	}
+	.vr-btn-ghost {
+		background: transparent;
+		color: var(--ink);
+	}
+
+	/* sections */
+	.vr-section {
+		margin: 0 0 2rem;
+		font-size: clamp(1.6rem, 4vw, 2.4rem);
+		font-weight: 800;
+		text-transform: uppercase;
+		letter-spacing: -0.01em;
+		display: flex;
+		align-items: baseline;
+		gap: 0.75rem;
+	}
+	.vr-section-num {
+		font-family: "IBM Plex Mono", monospace;
+		font-size: 0.9rem;
+		font-weight: 400;
+		color: var(--pink);
+	}
+
+	/* prints */
+	.vr-prints {
+		max-width: 74rem;
+		margin: 0 auto;
+		padding: 2rem 1.5rem 4rem;
+	}
+	.vr-print-grid {
+		display: grid;
+		gap: 1.5rem;
+	}
+	@media (min-width: 820px) {
+		.vr-print-grid {
+			grid-template-columns: repeat(3, 1fr);
+		}
+	}
+	.vr-print {
+		display: block;
+		background: #fbf6ea;
+		border: 2px solid var(--ink);
+		padding: 1.25rem;
+		text-decoration: none;
+		box-shadow: 5px 5px 0 var(--ink);
+		transition:
+			transform 0.15s ease,
+			box-shadow 0.15s ease;
+	}
+	.vr-print:hover {
+		transform: translate(-3px, -3px);
+		box-shadow: 8px 8px 0 var(--ink);
+	}
+	.vr-print-head {
+		display: flex;
+		justify-content: space-between;
+		align-items: baseline;
+		font-family: "IBM Plex Mono", monospace;
+		font-size: 0.72rem;
+		margin-bottom: 1rem;
+	}
+	.vr-print-no {
+		font-weight: 700;
+	}
+	.vr-print-pink .vr-print-no {
+		color: var(--pink);
+	}
+	.vr-print-teal .vr-print-no {
+		color: var(--teal);
+	}
+	.vr-print-purple .vr-print-no {
+		color: var(--purple);
+	}
+	.vr-print-status {
+		border: 1.5px solid var(--ink);
+		border-radius: 999px;
+		padding: 0.15rem 0.6rem;
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+		font-size: 0.62rem;
+	}
+	.vr-print-art {
+		position: relative;
+		display: block;
+		height: 10rem;
+		border: 2px solid var(--ink);
+		margin-bottom: 1.1rem;
+		overflow: hidden;
+		background: var(--paper);
+	}
+	.vr-print-art i {
+		position: absolute;
+		mix-blend-mode: multiply;
+	}
+	.vr-a-disc {
+		width: 7.5rem;
+		height: 7.5rem;
+		border-radius: 50%;
+		background: var(--pink);
+		left: 18%;
+		top: 16%;
+	}
+	.vr-a-ring {
+		width: 7.5rem;
+		height: 7.5rem;
+		border-radius: 50%;
+		border: 1.6rem solid var(--teal);
+		left: 38%;
+		top: 22%;
+	}
+	.vr-a-half {
+		width: 9rem;
+		height: 4.5rem;
+		border-radius: 9rem 9rem 0 0;
+		background: var(--teal);
+		left: 22%;
+		top: 42%;
+	}
+	.vr-a-bar {
+		width: 12rem;
+		height: 1.8rem;
+		background: var(--pink);
+		left: 10%;
+		top: 30%;
+		transform: rotate(-8deg);
+	}
+	.vr-a-blob {
+		width: 8rem;
+		height: 7rem;
+		background: var(--purple);
+		border-radius: 45% 55% 60% 40% / 55% 45% 55% 45%;
+		left: 16%;
+		top: 18%;
+	}
+	.vr-a-dot {
+		width: 5rem;
+		height: 5rem;
+		border-radius: 50%;
+		background: var(--pink);
+		right: 14%;
+		top: 30%;
+	}
+	.vr-print strong {
+		display: block;
+		font-size: 1.35rem;
+		font-weight: 800;
+		text-transform: uppercase;
+		letter-spacing: -0.01em;
+	}
+	.vr-print-desc {
+		display: block;
+		margin-top: 0.4rem;
+		font-size: 0.88rem;
+		line-height: 1.5;
+	}
+
+	/* traits / colophon */
+	.vr-traits {
+		background: var(--ink);
+		color: var(--paper);
+		padding: 4rem 1.5rem;
+	}
+	.vr-traits .vr-section {
+		max-width: 71rem;
+		margin: 0 auto 2.5rem;
+	}
+	.vr-section-light .vr-section-num {
+		color: var(--teal);
+	}
+	.vr-trait-list {
+		list-style: none;
+		margin: 0 auto;
+		padding: 0;
+		max-width: 71rem;
+		display: grid;
+		gap: 1.5rem;
+	}
+	@media (min-width: 800px) {
+		.vr-trait-list {
+			grid-template-columns: repeat(2, 1fr);
+			gap: 2rem 3rem;
+		}
+	}
+	.vr-trait-list li {
+		display: grid;
+		grid-template-columns: auto 1fr;
+		gap: 0.15rem 1rem;
+		border-top: 2px solid var(--paper);
+		padding-top: 1rem;
+	}
+	.vr-trait-no {
+		grid-row: span 2;
+		font-family: "IBM Plex Mono", monospace;
+		font-size: 0.8rem;
+		color: var(--pink);
+		padding-top: 0.25rem;
+	}
+	.vr-trait-list strong {
+		font-size: 1.1rem;
+		font-weight: 800;
+		text-transform: uppercase;
+	}
+	.vr-trait-list li span:last-child {
+		font-size: 0.9rem;
+		opacity: 0.85;
+	}
+
+	/* services */
+	.vr-services {
+		max-width: 74rem;
+		margin: 0 auto;
+		padding: 4rem 1.5rem 3rem;
+	}
+	.vr-svc-grid {
+		display: grid;
+		gap: 1.25rem;
+	}
+	@media (min-width: 800px) {
+		.vr-svc-grid {
+			grid-template-columns: repeat(2, 1fr);
+		}
+	}
+	.vr-svc {
+		border: 2px solid var(--ink);
+		padding: 1.4rem 1.5rem;
+		background: #fbf6ea;
+	}
+	.vr-svc-pink {
+		box-shadow: 5px 5px 0 var(--pink);
+	}
+	.vr-svc-teal {
+		box-shadow: 5px 5px 0 var(--teal);
+	}
+	.vr-svc-purple {
+		box-shadow: 5px 5px 0 var(--purple);
+	}
+	.vr-svc h3 {
+		margin: 0 0 0.4rem;
+		font-size: 1.2rem;
+		font-weight: 800;
+		text-transform: uppercase;
+	}
+	.vr-svc p {
+		margin: 0;
+		font-size: 0.9rem;
+	}
+	.vr-svc-more {
+		margin: 2rem 0 0;
+		text-align: right;
+		font-weight: 700;
+	}
+	.vr-svc-more a {
+		text-decoration: none;
+		border-bottom: 3px solid var(--pink);
+	}
+
+	/* cta */
+	.vr-cta {
+		max-width: 74rem;
+		margin: 0 auto;
+		padding: 1rem 1.5rem 5rem;
+	}
+	.vr-cta-card {
+		border: 2px solid var(--ink);
+		background: #fbf6ea;
+		box-shadow: 8px 8px 0 var(--pink), 8px 8px 0 2px var(--ink);
+		padding: 3.5rem 1.5rem;
+		text-align: center;
+	}
+	.vr-edition-light {
+		margin-bottom: 1.25rem;
+	}
+	.vr-cta h2 {
+		margin: 0 auto 1rem;
+		font-weight: 800;
+		font-size: clamp(2.4rem, 7vw, 4.5rem);
+		line-height: 1;
+		text-transform: uppercase;
+	}
+	.vr-cta h2 .vr-h-line {
+		margin: 0 auto;
+	}
+	.vr-cta-card > p:not(.vr-edition) {
+		margin: 0 auto 2rem;
+		max-width: 26rem;
+		font-size: 1rem;
+		font-weight: 600;
+	}
+	.vr-cta-actions {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 0.9rem;
+	}
+
+	/* footer */
+	.vr-foot {
+		position: relative;
+		z-index: 6;
+		max-width: 74rem;
+		margin: 0 auto;
+		padding: 1.5rem;
+		border-top: 2px solid var(--ink);
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: space-between;
+		gap: 0.75rem 1.5rem;
+		font-size: 0.85rem;
+		font-weight: 600;
+	}
+	.vr-foot-inks {
+		display: inline-flex;
+	}
+	.vr-foot-inks i {
+		width: 1rem;
+		height: 1rem;
+		border-radius: 50%;
+		mix-blend-mode: multiply;
+	}
+	.vr-foot-inks i:first-child {
+		background: var(--pink);
+		margin-right: -0.35rem;
+	}
+	.vr-foot-inks i:last-child {
+		background: var(--teal);
+	}
+	.vr-foot a {
+		text-decoration: none;
+		border-bottom: 2px solid var(--teal);
+	}
+</style>

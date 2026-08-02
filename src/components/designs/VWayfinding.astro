@@ -1,0 +1,686 @@
+---
+/**
+ * Wayfinding — airport wayfinding & departures board. High-contrast signage,
+ * gate assignments, directional arrows. The site as a terminal building.
+ */
+import "@fontsource/overpass/400.css";
+import "@fontsource/overpass/600.css";
+import "@fontsource/overpass/700.css";
+import "@fontsource/overpass/800.css";
+import "@fontsource/overpass-mono/400.css";
+import "@fontsource/overpass-mono/600.css";
+import { products, services, process } from "./data";
+
+const gates = ["A1", "A2", "B1"];
+---
+
+<div class="vw">
+	<!-- concourse header -->
+	<header class="vw-head">
+		<div class="vw-sign vw-sign-brand">
+			<span class="vw-plane" aria-hidden="true">✈</span>
+			<span>taf.sh <em>INTERNATIONAL STUDIO</em></span>
+		</div>
+		<nav class="vw-head-nav">
+			<a href="#vw-departures">Departures</a>
+			<a href="/services">Services</a>
+			<a href="/about">About</a>
+			<a href="/contact" class="vw-info-btn">ⓘ Information</a>
+		</nav>
+	</header>
+
+	<!-- hero signage -->
+	<section class="vw-hero">
+		<div class="vw-hero-sign">
+			<p class="vw-hero-terminal">Terminal 1 — One Human</p>
+			<h1>
+				ALL GATES.<br />
+				<span class="vw-y">ONE PILOT.</span>
+			</h1>
+			<p class="vw-hero-sub">
+				Software designed, built, and operated by a single engineer. Follow
+				the signs — everything on this concourse is in production.
+			</p>
+		</div>
+		<div class="vw-directions">
+			<a href="#vw-departures" class="vw-dir vw-dir-y">
+				<span class="vw-dir-arrow" aria-hidden="true">↓</span>
+				<span>
+					<strong>Departures</strong>
+					<em>Products · Gates A1–B1</em>
+				</span>
+			</a>
+			<a href="/services" class="vw-dir">
+				<span class="vw-dir-arrow" aria-hidden="true">→</span>
+				<span>
+					<strong>Services</strong>
+					<em>Consulting desk</em>
+				</span>
+			</a>
+			<a href="/contact" class="vw-dir">
+				<span class="vw-dir-arrow" aria-hidden="true">→</span>
+				<span>
+					<strong>Information</strong>
+					<em>Speak to the human</em>
+				</span>
+			</a>
+		</div>
+	</section>
+
+	<!-- departures board -->
+	<section class="vw-board-wrap" id="vw-departures">
+		<div class="vw-board">
+			<div class="vw-board-head">
+				<span>DEPARTURES</span>
+				<span class="vw-board-clock" aria-hidden="true">● LIVE</span>
+			</div>
+			<div class="vw-board-cols" aria-hidden="true">
+				<span>Gate</span>
+				<span>Destination</span>
+				<span>Remarks</span>
+				<span>Status</span>
+			</div>
+			{
+				products.map((p, i) => (
+					<a href={p.href} class="vw-row">
+						<span class="vw-gate">{gates[i]}</span>
+						<span class="vw-dest">
+							<strong>{p.name}</strong>
+							<em>{p.desc}</em>
+						</span>
+						<span class="vw-remarks">{p.tag}</span>
+						<span class={`vw-status vw-status-${i}`}>{p.status}</span>
+					</a>
+				))
+			}
+			<p class="vw-board-foot">
+				All services operated by one crew member. Delays unlikely; replies
+				within a day or two.
+			</p>
+		</div>
+	</section>
+
+	<!-- services corridor -->
+	<section class="vw-corridor">
+		<h2 class="vw-corridor-title">
+			<span class="vw-y">→</span> SERVICES CORRIDOR
+		</h2>
+		<div class="vw-corridor-grid">
+			{
+				services.map((s, i) => (
+					<div class="vw-svc-sign">
+						<span class="vw-svc-no">S{i + 1}</span>
+						<h3>{s.title}</h3>
+						<p>{s.body}</p>
+						<span class="vw-svc-arrow" aria-hidden="true">→</span>
+					</div>
+				))
+			}
+		</div>
+	</section>
+
+	<!-- process as security steps -->
+	<section class="vw-steps">
+		<h2 class="vw-corridor-title">
+			<span class="vw-y">→</span> BOARDING PROCEDURE
+		</h2>
+		<ol class="vw-step-list">
+			{
+				process.map((p) => (
+					<li>
+						<span class="vw-step-no">{p.step}</span>
+						<div>
+							<strong>{p.title}</strong>
+							<p>{p.body}</p>
+						</div>
+					</li>
+				))
+			}
+		</ol>
+	</section>
+
+	<!-- information desk CTA -->
+	<section class="vw-cta">
+		<div class="vw-cta-sign">
+			<span class="vw-cta-i" aria-hidden="true">i</span>
+			<h2>INFORMATION DESK</h2>
+			<p>
+				One desk, one human, fast answers. State your destination — what
+				you're building and when you need it.
+			</p>
+			<div class="vw-cta-actions">
+				<a href="/contact" class="vw-btn-y">Speak to the human →</a>
+				<a href="mailto:me@tashif.codes" class="vw-btn-line">me@tashif.codes</a>
+			</div>
+		</div>
+	</section>
+
+	<footer class="vw-foot">
+		<span>©2026 taf.sh — Terminal 1</span>
+		<span class="vw-foot-marks" aria-hidden="true">✈ ——— ✈ ——— ✈</span>
+		<span>
+			<a href="https://github.com/tashifkhan" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+			·
+			<a href="https://tashif.codes" target="_blank" rel="noopener noreferrer">tashif.codes ↗</a>
+		</span>
+	</footer>
+</div>
+
+<style>
+	.vw {
+		--bg: #101418;
+		--panel: #171d23;
+		--line: #2a333c;
+		--fg: #f0f3f5;
+		--dim: #93a1ad;
+		--y: #f7c948;
+		background: var(--bg);
+		color: var(--fg);
+		font-family: "Overpass", "Helvetica Neue", sans-serif;
+		font-size: 1rem;
+		line-height: 1.5;
+		min-height: 100vh;
+	}
+	.vw a {
+		color: inherit;
+	}
+	.vw-y {
+		color: var(--y);
+	}
+
+	/* header */
+	.vw-head {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1rem;
+		padding: 1rem 1.5rem;
+		border-bottom: 1px solid var(--line);
+	}
+	.vw-sign-brand {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+		font-weight: 800;
+		font-size: 1.1rem;
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+		text-decoration: none;
+	}
+	.vw-sign-brand em {
+		font-style: normal;
+		font-weight: 600;
+		font-size: 0.7rem;
+		letter-spacing: 0.28em;
+		color: var(--dim);
+		margin-left: 0.25rem;
+	}
+	.vw-plane {
+		display: grid;
+		place-items: center;
+		width: 2.2rem;
+		height: 2.2rem;
+		background: var(--y);
+		color: #101418;
+		border-radius: 0.25rem;
+		font-size: 1.1rem;
+	}
+	.vw-head-nav {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.5rem 1.5rem;
+		font-size: 0.85rem;
+		font-weight: 600;
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+	}
+	.vw-head-nav a {
+		text-decoration: none;
+		color: var(--dim);
+	}
+	.vw-head-nav a:hover {
+		color: var(--fg);
+	}
+	.vw-info-btn {
+		background: var(--panel);
+		border: 1px solid var(--line);
+		padding: 0.45rem 0.9rem;
+		border-radius: 0.25rem;
+		color: var(--fg) !important;
+	}
+	.vw-info-btn:hover {
+		border-color: var(--y);
+	}
+
+	/* hero */
+	.vw-hero {
+		max-width: 72rem;
+		margin: 0 auto;
+		padding: 3.5rem 1.5rem 3rem;
+		display: grid;
+		gap: 2.5rem;
+	}
+	@media (min-width: 900px) {
+		.vw-hero {
+			grid-template-columns: 1.15fr 1fr;
+			align-items: start;
+			padding-top: 4.5rem;
+		}
+	}
+	.vw-hero-terminal {
+		display: inline-block;
+		margin: 0 0 1.25rem;
+		background: var(--panel);
+		border: 1px solid var(--line);
+		border-left: 4px solid var(--y);
+		padding: 0.45rem 0.9rem;
+		font-family: "Overpass Mono", monospace;
+		font-size: 0.78rem;
+		letter-spacing: 0.18em;
+		text-transform: uppercase;
+		color: var(--dim);
+	}
+	.vw-hero h1 {
+		margin: 0;
+		font-weight: 800;
+		font-size: clamp(2.8rem, 8vw, 5.5rem);
+		line-height: 0.95;
+		letter-spacing: -0.01em;
+		text-transform: uppercase;
+	}
+	.vw-hero-sub {
+		margin: 1.5rem 0 0;
+		max-width: 28rem;
+		font-size: 1.05rem;
+		color: var(--dim);
+		line-height: 1.55;
+	}
+	.vw-directions {
+		display: flex;
+		flex-direction: column;
+		gap: 0.75rem;
+	}
+	.vw-dir {
+		display: flex;
+		align-items: center;
+		gap: 1.1rem;
+		background: var(--panel);
+		border: 1px solid var(--line);
+		padding: 1rem 1.25rem;
+		text-decoration: none;
+		border-radius: 0.3rem;
+		transition: border-color 0.15s ease, transform 0.15s ease;
+	}
+	.vw-dir:hover {
+		border-color: var(--y);
+		transform: translateX(4px);
+	}
+	.vw-dir-arrow {
+		display: grid;
+		place-items: center;
+		width: 2.6rem;
+		height: 2.6rem;
+		background: var(--bg);
+		border: 1px solid var(--line);
+		border-radius: 0.25rem;
+		font-size: 1.3rem;
+		font-weight: 800;
+	}
+	.vw-dir-y .vw-dir-arrow {
+		background: var(--y);
+		border-color: var(--y);
+		color: #101418;
+	}
+	.vw-dir strong {
+		display: block;
+		font-size: 1.05rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.04em;
+	}
+	.vw-dir em {
+		font-style: normal;
+		font-size: 0.8rem;
+		color: var(--dim);
+	}
+
+	/* departures board */
+	.vw-board-wrap {
+		max-width: 72rem;
+		margin: 0 auto;
+		padding: 1rem 1.5rem 3.5rem;
+	}
+	.vw-board {
+		background: #0a0d10;
+		border: 1px solid var(--line);
+		border-radius: 0.4rem;
+		overflow: hidden;
+	}
+	.vw-board-head {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: 0.9rem 1.25rem;
+		background: var(--panel);
+		font-weight: 800;
+		letter-spacing: 0.22em;
+		font-size: 0.85rem;
+	}
+	.vw-board-clock {
+		font-family: "Overpass Mono", monospace;
+		font-size: 0.72rem;
+		color: #3ddc84;
+		letter-spacing: 0.1em;
+	}
+	.vw-board-cols,
+	.vw-row {
+		display: grid;
+		grid-template-columns: 3.2rem 1fr;
+		gap: 0.35rem 1rem;
+		align-items: baseline;
+		padding: 0.65rem 1.25rem;
+	}
+	@media (min-width: 760px) {
+		.vw-board-cols,
+		.vw-row {
+			grid-template-columns: 3.5rem 1fr 9rem 8.5rem;
+			gap: 1rem;
+		}
+	}
+	.vw-board-cols {
+		padding: 0.55rem 1.25rem;
+		font-family: "Overpass Mono", monospace;
+		font-size: 0.68rem;
+		letter-spacing: 0.18em;
+		text-transform: uppercase;
+		color: var(--dim);
+		border-bottom: 1px solid var(--line);
+	}
+	@media (max-width: 759px) {
+		.vw-board-cols span:nth-child(3),
+		.vw-board-cols span:nth-child(4) {
+			display: none;
+		}
+	}
+	.vw-row {
+		text-decoration: none;
+		border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+		font-family: "Overpass Mono", monospace;
+	}
+	.vw-row:hover {
+		background: rgba(247, 201, 72, 0.06);
+	}
+	.vw-row:hover .vw-dest strong {
+		color: var(--y);
+	}
+	.vw-gate {
+		font-size: 1.25rem;
+		font-weight: 600;
+		color: var(--y);
+	}
+	.vw-dest strong {
+		display: block;
+		font-size: 1.05rem;
+		font-weight: 600;
+		letter-spacing: 0.04em;
+		text-transform: uppercase;
+		transition: color 0.15s ease;
+	}
+	.vw-dest em {
+		display: block;
+		font-style: normal;
+		font-size: 0.75rem;
+		color: var(--dim);
+		margin-top: 0.15rem;
+		line-height: 1.45;
+	}
+	.vw-remarks {
+		font-size: 0.78rem;
+		color: var(--dim);
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+	}
+	.vw-status {
+		font-size: 0.75rem;
+		font-weight: 600;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		border: 1px solid var(--line);
+		padding: 0.25rem 0.6rem;
+		border-radius: 0.2rem;
+		text-align: center;
+	}
+	.vw-status-0 {
+		color: #3ddc84;
+		border-color: rgba(61, 220, 132, 0.4);
+	}
+	.vw-status-1 {
+		color: var(--y);
+		border-color: rgba(247, 201, 72, 0.4);
+	}
+	.vw-status-2 {
+		color: var(--dim);
+	}
+	@media (max-width: 759px) {
+		.vw-remarks,
+		.vw-status {
+			grid-column: 2;
+			justify-self: start;
+		}
+	}
+	.vw-board-foot {
+		margin: 0;
+		padding: 0.8rem 1.25rem;
+		font-family: "Overpass Mono", monospace;
+		font-size: 0.72rem;
+		color: var(--dim);
+	}
+
+	/* corridor */
+	.vw-corridor,
+	.vw-steps {
+		max-width: 72rem;
+		margin: 0 auto;
+		padding: 0 1.5rem 3.5rem;
+	}
+	.vw-corridor-title {
+		margin: 0 0 1.5rem;
+		font-size: 1.1rem;
+		font-weight: 800;
+		letter-spacing: 0.2em;
+	}
+	.vw-corridor-grid {
+		display: grid;
+		gap: 0.75rem;
+	}
+	@media (min-width: 800px) {
+		.vw-corridor-grid {
+			grid-template-columns: repeat(2, 1fr);
+		}
+	}
+	.vw-svc-sign {
+		position: relative;
+		background: var(--panel);
+		border: 1px solid var(--line);
+		border-left: 4px solid var(--y);
+		padding: 1.25rem 3.5rem 1.25rem 1.25rem;
+		border-radius: 0.3rem;
+	}
+	.vw-svc-no {
+		font-family: "Overpass Mono", monospace;
+		font-size: 0.7rem;
+		letter-spacing: 0.2em;
+		color: var(--dim);
+	}
+	.vw-svc-sign h3 {
+		margin: 0.35rem 0 0.4rem;
+		font-size: 1.2rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.03em;
+	}
+	.vw-svc-sign p {
+		margin: 0;
+		font-size: 0.88rem;
+		color: var(--dim);
+		line-height: 1.5;
+	}
+	.vw-svc-arrow {
+		position: absolute;
+		right: 1.1rem;
+		top: 50%;
+		transform: translateY(-50%);
+		font-size: 1.4rem;
+		font-weight: 800;
+		color: var(--y);
+	}
+
+	/* steps */
+	.vw-step-list {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: grid;
+		gap: 0.75rem;
+		counter-reset: step;
+	}
+	@media (min-width: 800px) {
+		.vw-step-list {
+			grid-template-columns: repeat(4, 1fr);
+		}
+	}
+	.vw-step-list li {
+		display: flex;
+		gap: 0.9rem;
+		background: var(--panel);
+		border: 1px solid var(--line);
+		border-radius: 0.3rem;
+		padding: 1.1rem;
+	}
+	.vw-step-no {
+		display: grid;
+		place-items: center;
+		flex: 0 0 auto;
+		width: 2rem;
+		height: 2rem;
+		background: var(--y);
+		color: #101418;
+		font-weight: 800;
+		border-radius: 50%;
+		font-size: 0.95rem;
+	}
+	.vw-step-list strong {
+		display: block;
+		font-size: 0.92rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.04em;
+		margin-bottom: 0.25rem;
+	}
+	.vw-step-list p {
+		margin: 0;
+		font-size: 0.8rem;
+		color: var(--dim);
+		line-height: 1.45;
+	}
+
+	/* CTA */
+	.vw-cta {
+		max-width: 72rem;
+		margin: 0 auto;
+		padding: 0 1.5rem 4.5rem;
+	}
+	.vw-cta-sign {
+		background: var(--y);
+		color: #101418;
+		border-radius: 0.4rem;
+		padding: 3rem 1.5rem;
+		text-align: center;
+	}
+	.vw-cta-i {
+		display: inline-grid;
+		place-items: center;
+		width: 3rem;
+		height: 3rem;
+		border: 3px solid #101418;
+		border-radius: 50%;
+		font-size: 1.6rem;
+		font-weight: 800;
+		font-style: italic;
+		margin-bottom: 1.25rem;
+	}
+	.vw-cta h2 {
+		margin: 0 0 0.75rem;
+		font-size: clamp(1.8rem, 5vw, 3rem);
+		font-weight: 800;
+		letter-spacing: 0.06em;
+	}
+	.vw-cta p {
+		margin: 0 auto 1.75rem;
+		max-width: 30rem;
+		font-size: 0.98rem;
+		font-weight: 600;
+	}
+	.vw-cta-actions {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 0.75rem;
+	}
+	.vw-btn-y,
+	.vw-btn-line {
+		display: inline-block;
+		padding: 0.85rem 1.6rem;
+		font-size: 0.9rem;
+		font-weight: 800;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		text-decoration: none;
+		border-radius: 0.25rem;
+		border: 2px solid #101418;
+	}
+	.vw-btn-y {
+		background: #101418;
+	}
+	.vw .vw-btn-y {
+		color: var(--y);
+	}
+	.vw-btn-y:hover {
+		opacity: 0.88;
+	}
+	.vw-btn-line {
+		color: #101418;
+	}
+	.vw-btn-line:hover {
+		background: rgba(16, 20, 24, 0.08);
+	}
+
+	/* footer */
+	.vw-foot {
+		max-width: 72rem;
+		margin: 0 auto;
+		padding: 1.5rem;
+		border-top: 1px solid var(--line);
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: space-between;
+		gap: 0.75rem 1.5rem;
+		font-size: 0.8rem;
+		color: var(--dim);
+		font-family: "Overpass Mono", monospace;
+	}
+	.vw-foot a {
+		text-decoration: none;
+	}
+	.vw-foot a:hover {
+		color: var(--fg);
+	}
+	@media (max-width: 700px) {
+		.vw-foot-marks {
+			display: none;
+		}
+	}
+</style>
