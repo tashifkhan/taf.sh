@@ -1,0 +1,762 @@
+---
+/**
+ * V3 — Elevated Terminal
+ * Keeps OpenCode monochrome DNA but adds liveliness: gradient edge glow,
+ * richer product cards, process timeline, animated cursor, layered surfaces.
+ */
+import { products, services, stats, traits } from "./data";
+---
+
+<div class="v3" data-variant="terminal">
+	<header class="v3-nav">
+		<a href="/" class="v3-brand">
+			<svg class="v3-mark" viewBox="0 0 30 42" aria-hidden="true">
+				<path d="M0 12V0H30V12H18V24H12V12H0Z" fill="currentColor"></path>
+				<path d="M12 24H18V42H12V24Z" fill="var(--color-accent)"></path>
+			</svg>
+			taf.sh
+		</a>
+		<nav class="v3-nav-r">
+			<a href="/#products">Products</a>
+			<a href="/services">Services</a>
+			<a href="/about">About</a>
+			<a href="/contact" class="v3-contact">Contact</a>
+		</nav>
+	</header>
+
+	<section class="v3-hero">
+		<div class="v3-hero-beam" aria-hidden="true"></div>
+		<p class="v3-mono-label">// independent software studio</p>
+		<h1>
+			Software, designed and<br />
+			shipped by <span class="v3-hl">one human</span>.
+		</h1>
+		<p class="v3-sub">
+			AI-native products like TalentSync and CliniQ — and the same engineering
+			for teams ready to ship.
+		</p>
+
+		<div class="v3-terminal">
+			<div class="v3-term-bar">
+				<span class="v3-dot"></span>
+				<span class="v3-dot"></span>
+				<span class="v3-dot"></span>
+				<span class="v3-term-title">tashif@taf.sh — zsh</span>
+			</div>
+			<div class="v3-term-body">
+				<p>
+					<span class="v3-prompt">$</span> whoami
+				</p>
+				<p class="v3-out">tashif — founder &amp; sole proprietor, taf.sh</p>
+				<p>
+					<span class="v3-prompt">$</span> cat focus.txt
+				</p>
+				<p class="v3-out">ai systems · full-stack products · messaging</p>
+				<p>
+					<span class="v3-prompt">$</span> ./contact --book
+				</p>
+				<p class="v3-out">
+					→ <a href="/contact">taf.sh/contact</a>
+					<span class="v3-cursor">▌</span>
+				</p>
+			</div>
+		</div>
+
+		<div class="v3-hero-actions">
+			<a href="/contact" class="v3-btn-fill">Get in touch</a>
+			<a href="/#products" class="v3-btn-ghost">See products</a>
+		</div>
+	</section>
+
+	<section class="v3-stats">
+		{
+			stats.map((s) => (
+				<div class="v3-stat">
+					<p class="v3-fig">{s.fig}</p>
+					<p class="v3-val">{s.value}</p>
+					<p class="v3-lbl">{s.label}</p>
+				</div>
+			))
+		}
+	</section>
+
+	<section class="v3-block">
+		<div class="v3-split">
+			<div>
+				<p class="v3-mono-label">[*] studio</p>
+				<h2>What is taf.sh?</h2>
+				<p class="v3-body">
+					A one-person software studio. Designs, builds, and operates its own
+					products — and takes on a small number of consulting engagements.
+				</p>
+				<a href="/about" class="v3-text-link">Read the story →</a>
+			</div>
+			<ul class="v3-traits">
+				{
+					traits.map((t) => (
+						<li>
+							<span class="v3-star">[*]</span>
+							<div>
+								<strong>{t.title}</strong>
+								<span> — {t.body}</span>
+							</div>
+						</li>
+					))
+				}
+			</ul>
+		</div>
+	</section>
+
+	<section class="v3-block" id="products">
+		<p class="v3-mono-label">[*] products</p>
+		<h2>Systems in the wild</h2>
+		<p class="v3-body v3-mb">
+			Three products across hiring and healthcare — end-to-end ownership.
+		</p>
+		<div class="v3-cards">
+			{
+				products.map((p) => (
+					<a href={p.href} class="v3-card">
+						<div class="v3-card-glow" aria-hidden="true" />
+						<div class="v3-card-head">
+							<span class="v3-idx">{p.index}</span>
+							<span class="v3-status">{p.status}</span>
+						</div>
+						<h3>{p.name}</h3>
+						<p>{p.desc}</p>
+						<span class="v3-card-go">open →</span>
+					</a>
+				))
+			}
+		</div>
+	</section>
+
+	<section class="v3-block">
+		<p class="v3-mono-label">[*] process</p>
+		<h2>How engagements run</h2>
+		<div class="v3-timeline">
+			{
+				[
+					{
+						n: "01",
+						t: "Scope",
+						d: "Tight problem definition. No floating RFPs.",
+					},
+					{
+						n: "02",
+						t: "Build",
+						d: "Weekly deploys. You own the code outright.",
+					},
+					{
+						n: "03",
+						t: "Operate",
+						d: "Production habits from day one — queues, logs, evals.",
+					},
+					{
+						n: "04",
+						t: "Hand off",
+						d: "Docs, runbooks, and a clean exit when you're ready.",
+					},
+				].map((step) => (
+					<div class="v3-step">
+						<span class="v3-step-n">{step.n}</span>
+						<strong>{step.t}</strong>
+						<p>{step.d}</p>
+					</div>
+				))
+			}
+		</div>
+	</section>
+
+	<section class="v3-block">
+		<div class="v3-split">
+			<div>
+				<p class="v3-mono-label">[*] consulting</p>
+				<h2>Available selectively</h2>
+				<p class="v3-body">
+					The same engineering that runs these products — for a few engagements
+					at a time.
+				</p>
+				<a href="/services" class="v3-text-link">All services →</a>
+			</div>
+			<ul class="v3-svc-list">
+				{
+					services.map((s) => (
+						<li>
+							<span class="v3-star">[*]</span>
+							<span>
+								<strong>{s.title}</strong> — {s.body}
+							</span>
+						</li>
+					))
+				}
+			</ul>
+		</div>
+	</section>
+
+	<section class="v3-cta">
+		<div class="v3-cta-box">
+			<h2>Have something to build?</h2>
+			<p>One inbox, one human, fast replies.</p>
+			<div class="v3-hero-actions">
+				<a href="/contact" class="v3-btn-fill">Get in touch</a>
+				<a href="mailto:me@tashif.codes" class="v3-btn-ghost">me@tashif.codes</a>
+			</div>
+		</div>
+	</section>
+
+	<footer class="v3-footer">
+		<span>©2026 taf.sh — a sole proprietorship</span>
+		<div>
+			<a href="https://github.com/tashifkhan" target="_blank" rel="noopener"
+				>GitHub ↗</a
+			>
+			<a href="https://tashif.codes" target="_blank" rel="noopener"
+				>tashif.codes ↗</a
+			>
+		</div>
+	</footer>
+</div>
+
+<style>
+	/* Palette comes from the global tokens, so this variant follows the
+	   site-wide light/dark/system theme instead of pinning its own colors. */
+	.v3 {
+		--bg: var(--color-background);
+		--surface: var(--color-surface);
+		--elevated: var(--color-elevated);
+		--border: var(--color-border);
+		--border-strong: var(--color-border-strong);
+		--fg: var(--color-foreground);
+		--sec: var(--color-secondary);
+		--muted: var(--color-muted);
+		--faint: var(--color-faint);
+		--accent: var(--color-accent);
+		--accent-strong: var(--color-accent-strong);
+		--accent-soft: var(--color-accent-soft);
+		--accent-contrast: var(--color-accent-contrast);
+		--glow: color-mix(in srgb, var(--accent) 22%, transparent);
+		background: var(--bg);
+		color: var(--fg);
+		font-family: "IBM Plex Sans", system-ui, sans-serif;
+		min-height: 100vh;
+	}
+
+	.v3-nav {
+		position: sticky;
+		top: 0;
+		z-index: 20;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		height: 4rem;
+		padding: 0 1.5rem;
+		max-width: 72rem;
+		margin: 0 auto;
+		background: color-mix(in srgb, var(--bg) 85%, transparent);
+		backdrop-filter: blur(12px);
+		border-bottom: 1px solid var(--border);
+	}
+	/* full-bleed sticky bar */
+	.v3-nav {
+		max-width: none;
+		width: 100%;
+		padding-left: max(1.5rem, calc((100% - 72rem) / 2 + 1.5rem));
+		padding-right: max(1.5rem, calc((100% - 72rem) / 2 + 1.5rem));
+	}
+	.v3-brand {
+		display: flex;
+		align-items: center;
+		gap: 0.65rem;
+		font-family: "IBM Plex Mono", monospace;
+		font-size: 0.875rem;
+		color: var(--fg);
+		text-decoration: none;
+	}
+	.v3-mark {
+		width: 1.15rem;
+		height: auto;
+		color: var(--fg);
+	}
+	.v3-nav-r {
+		display: flex;
+		align-items: center;
+		gap: 1.5rem;
+		font-family: "IBM Plex Mono", monospace;
+		font-size: 0.8rem;
+	}
+	.v3-nav-r a {
+		color: var(--sec);
+		text-decoration: none;
+	}
+	.v3-nav-r a:hover {
+		color: var(--accent);
+	}
+	.v3-contact {
+		padding: 0.4rem 0.85rem;
+		border: 1px solid var(--border-strong);
+		color: var(--fg) !important;
+		transition: border-color 0.15s;
+	}
+	.v3-contact:hover {
+		border-color: var(--accent);
+		color: var(--accent) !important;
+	}
+
+	.v3-hero {
+		position: relative;
+		max-width: 72rem;
+		margin: 0 auto;
+		padding: 4.5rem 1.5rem 3rem;
+		overflow: hidden;
+	}
+	.v3-hero-beam {
+		position: absolute;
+		top: -20%;
+		left: 40%;
+		width: 50%;
+		height: 60%;
+		background: radial-gradient(
+			ellipse,
+			color-mix(in srgb, var(--accent) 14%, transparent),
+			transparent 70%
+		);
+		pointer-events: none;
+	}
+	.v3-mono-label {
+		margin: 0;
+		font-family: "IBM Plex Mono", monospace;
+		font-size: 0.8rem;
+		color: var(--muted);
+	}
+	.v3-hero h1 {
+		margin: 1rem 0 0;
+		font-size: clamp(2.25rem, 5vw, 3.75rem);
+		font-weight: 600;
+		letter-spacing: -0.03em;
+		line-height: 1.1;
+		max-width: 18ch;
+	}
+	.v3-hl {
+		position: relative;
+		background: linear-gradient(
+			90deg,
+			var(--fg) 0%,
+			var(--accent) 50%,
+			var(--fg) 100%
+		);
+		background-size: 200% auto;
+		-webkit-background-clip: text;
+		background-clip: text;
+		color: transparent;
+		animation: v3-shimmer 4s linear infinite;
+	}
+	@keyframes v3-shimmer {
+		to {
+			background-position: 200% center;
+		}
+	}
+	.v3-sub {
+		margin: 1.25rem 0 0;
+		max-width: 32rem;
+		font-size: 1.1rem;
+		line-height: 1.7;
+		color: var(--sec);
+	}
+
+	.v3-terminal {
+		margin-top: 2.5rem;
+		max-width: 36rem;
+		border: 1px solid var(--border);
+		background: var(--surface);
+		position: relative;
+	}
+	.v3-terminal::before {
+		content: "";
+		position: absolute;
+		inset: -1px;
+		padding: 1px;
+		background: linear-gradient(
+			135deg,
+			var(--border-strong),
+			transparent 40%,
+			transparent 60%,
+			color-mix(in srgb, var(--accent) 45%, transparent)
+		);
+		-webkit-mask:
+			linear-gradient(#fff 0 0) content-box,
+			linear-gradient(#fff 0 0);
+		mask:
+			linear-gradient(#fff 0 0) content-box,
+			linear-gradient(#fff 0 0);
+		-webkit-mask-composite: xor;
+		mask-composite: exclude;
+		pointer-events: none;
+	}
+	.v3-term-bar {
+		display: flex;
+		align-items: center;
+		gap: 0.4rem;
+		padding: 0.65rem 1rem;
+		border-bottom: 1px solid var(--border);
+		font-family: "IBM Plex Mono", monospace;
+		font-size: 0.7rem;
+		color: var(--muted);
+	}
+	.v3-dot {
+		width: 0.55rem;
+		height: 0.55rem;
+		border-radius: 50%;
+		background: var(--border-strong);
+	}
+	.v3-term-title {
+		margin-left: 0.5rem;
+	}
+	.v3-term-body {
+		padding: 1.25rem;
+		font-family: "IBM Plex Mono", monospace;
+		font-size: 0.85rem;
+		line-height: 1.85;
+	}
+	.v3-term-body p {
+		margin: 0;
+	}
+	.v3-prompt {
+		color: var(--accent);
+	}
+	.v3-out {
+		color: var(--sec);
+	}
+	.v3-out a {
+		color: var(--fg);
+		text-decoration-color: var(--accent);
+		text-underline-offset: 3px;
+	}
+	.v3-out a:hover {
+		color: var(--accent);
+	}
+	.v3-cursor {
+		color: var(--accent);
+		animation: v3-blink 1.06s step-end infinite;
+	}
+	@keyframes v3-blink {
+		50% {
+			opacity: 0;
+		}
+	}
+
+	.v3-hero-actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.75rem;
+		margin-top: 1.75rem;
+	}
+	.v3-btn-fill {
+		display: inline-flex;
+		padding: 0.7rem 1.25rem;
+		background: var(--accent);
+		color: var(--accent-contrast);
+		font-family: "IBM Plex Mono", monospace;
+		font-size: 0.8rem;
+		text-decoration: none;
+		transition: opacity 0.15s;
+	}
+	.v3-btn-fill:hover {
+		opacity: 0.88;
+	}
+	.v3-btn-ghost {
+		display: inline-flex;
+		padding: 0.7rem 1.25rem;
+		border: 1px solid var(--border-strong);
+		color: var(--fg);
+		font-family: "IBM Plex Mono", monospace;
+		font-size: 0.8rem;
+		text-decoration: none;
+		transition: border-color 0.15s;
+	}
+	.v3-btn-ghost:hover {
+		border-color: var(--accent);
+		color: var(--accent);
+	}
+
+	.v3-stats {
+		max-width: 72rem;
+		margin: 0 auto;
+		padding: 0 1.5rem 3rem;
+		display: grid;
+		gap: 1px;
+		background: var(--border);
+		border: 1px solid var(--border);
+	}
+	@media (min-width: 640px) {
+		.v3-stats {
+			grid-template-columns: repeat(3, 1fr);
+		}
+	}
+	.v3-stat {
+		background: var(--bg);
+		padding: 1.75rem 1.5rem;
+	}
+	.v3-fig {
+		margin: 0;
+		font-family: "IBM Plex Mono", monospace;
+		font-size: 0.7rem;
+		color: var(--accent);
+	}
+	.v3-val {
+		margin: 0.65rem 0 0;
+		font-size: 3rem;
+		font-weight: 600;
+		letter-spacing: -0.03em;
+	}
+	.v3-lbl {
+		margin: 0.35rem 0 0;
+		font-size: 0.875rem;
+		color: var(--sec);
+	}
+
+	.v3-block {
+		max-width: 72rem;
+		margin: 0 auto;
+		padding: 4rem 1.5rem;
+		border-top: 1px solid var(--border);
+	}
+	.v3-block h2 {
+		margin: 0.5rem 0 0;
+		font-size: clamp(1.75rem, 3vw, 2.25rem);
+		font-weight: 600;
+		letter-spacing: -0.02em;
+	}
+	.v3-body {
+		margin: 1rem 0 0;
+		max-width: 32rem;
+		line-height: 1.7;
+		color: var(--sec);
+	}
+	.v3-mb {
+		margin-bottom: 2rem;
+	}
+	.v3-text-link {
+		display: inline-block;
+		margin-top: 1.25rem;
+		font-family: "IBM Plex Mono", monospace;
+		font-size: 0.85rem;
+		color: var(--fg);
+		text-decoration-color: var(--accent);
+		text-underline-offset: 4px;
+		transition: color 0.15s;
+	}
+	.v3-text-link:hover {
+		color: var(--accent);
+	}
+	.v3-split {
+		display: grid;
+		gap: 3rem;
+	}
+	@media (min-width: 800px) {
+		.v3-split {
+			grid-template-columns: 1fr 1.2fr;
+		}
+	}
+	.v3-traits,
+	.v3-svc-list {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 1.1rem;
+	}
+	.v3-traits li,
+	.v3-svc-list li {
+		display: flex;
+		gap: 0.75rem;
+		font-size: 0.9rem;
+		line-height: 1.55;
+		color: var(--sec);
+	}
+	.v3-star {
+		font-family: "IBM Plex Mono", monospace;
+		font-size: 0.8rem;
+		color: var(--accent);
+		flex-shrink: 0;
+	}
+	.v3-traits strong,
+	.v3-svc-list strong {
+		color: var(--fg);
+		font-weight: 600;
+	}
+
+	.v3-cards {
+		display: grid;
+		gap: 1rem;
+	}
+	@media (min-width: 700px) {
+		.v3-cards {
+			grid-template-columns: repeat(3, 1fr);
+		}
+	}
+	.v3-card {
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		padding: 1.5rem;
+		background: var(--surface);
+		border: 1px solid var(--border);
+		text-decoration: none;
+		color: inherit;
+		overflow: hidden;
+		transition:
+			border-color 0.2s,
+			transform 0.2s;
+	}
+	.v3-card:hover {
+		border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
+		transform: translateY(-3px);
+	}
+	.v3-card-glow {
+		position: absolute;
+		top: -40%;
+		right: -20%;
+		width: 60%;
+		height: 60%;
+		background: radial-gradient(circle, var(--glow), transparent 70%);
+		opacity: 0;
+		transition: opacity 0.3s;
+	}
+	.v3-card:hover .v3-card-glow {
+		opacity: 1;
+	}
+	.v3-card-head {
+		display: flex;
+		justify-content: space-between;
+		margin-bottom: 1.5rem;
+	}
+	.v3-idx {
+		font-family: "IBM Plex Mono", monospace;
+		font-size: 0.75rem;
+		color: var(--muted);
+	}
+	.v3-status {
+		font-family: "IBM Plex Mono", monospace;
+		font-size: 0.65rem;
+		padding: 0.15rem 0.45rem;
+		border: 1px solid var(--border);
+		color: var(--muted);
+	}
+	.v3-card h3 {
+		margin: 0;
+		font-size: 1.15rem;
+		font-weight: 600;
+	}
+	.v3-card > p {
+		margin: 0.5rem 0 0;
+		flex: 1;
+		font-size: 0.875rem;
+		line-height: 1.6;
+		color: var(--sec);
+	}
+	.v3-card-go {
+		margin-top: 1.25rem;
+		font-family: "IBM Plex Mono", monospace;
+		font-size: 0.8rem;
+		color: var(--muted);
+		transition: color 0.15s;
+	}
+	.v3-card:hover .v3-card-go {
+		color: var(--accent);
+	}
+
+	.v3-timeline {
+		display: grid;
+		gap: 1px;
+		margin-top: 2rem;
+		background: var(--border);
+		border: 1px solid var(--border);
+	}
+	@media (min-width: 700px) {
+		.v3-timeline {
+			grid-template-columns: repeat(4, 1fr);
+		}
+	}
+	.v3-step {
+		background: var(--bg);
+		padding: 1.5rem;
+	}
+	.v3-step-n {
+		font-family: "IBM Plex Mono", monospace;
+		font-size: 0.75rem;
+		color: var(--muted);
+	}
+	.v3-step strong {
+		display: block;
+		margin-top: 0.75rem;
+		font-size: 1.05rem;
+	}
+	.v3-step p {
+		margin: 0.4rem 0 0;
+		font-size: 0.85rem;
+		line-height: 1.55;
+		color: var(--sec);
+	}
+
+	.v3-cta {
+		border-top: 1px solid var(--border);
+		padding: 4rem 1.5rem;
+	}
+	.v3-cta-box {
+		max-width: 36rem;
+		margin: 0 auto;
+		text-align: center;
+		padding: 3rem 2rem;
+		border: 1px solid var(--border);
+		background:
+			radial-gradient(
+				ellipse at 50% 0%,
+				color-mix(in srgb, var(--accent) 12%, transparent),
+				transparent 60%
+			),
+			var(--surface);
+	}
+	.v3-cta-box h2 {
+		margin: 0;
+		font-size: 1.85rem;
+		font-weight: 600;
+		letter-spacing: -0.02em;
+	}
+	.v3-cta-box > p {
+		margin: 0.75rem 0 0;
+		color: var(--sec);
+	}
+	.v3-cta-box .v3-hero-actions {
+		justify-content: center;
+	}
+
+	.v3-footer {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		gap: 1rem;
+		max-width: 72rem;
+		margin: 0 auto;
+		padding: 1.5rem;
+		border-top: 1px solid var(--border);
+		font-family: "IBM Plex Mono", monospace;
+		font-size: 0.75rem;
+		color: var(--muted);
+	}
+	.v3-footer a {
+		color: var(--sec);
+		text-decoration: none;
+		margin-left: 1.25rem;
+	}
+	.v3-footer a:hover {
+		color: var(--accent);
+	}
+
+	@media (max-width: 640px) {
+		.v3-nav-r a:not(.v3-contact) {
+			display: none;
+		}
+	}
+</style>

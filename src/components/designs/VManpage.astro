@@ -1,0 +1,254 @@
+---
+/**
+ * Man page — structured like a Unix manual. Dry, specific, anti-landing-page.
+ */
+import { products, services, stats } from "./data";
+---
+
+<div class="vm">
+	<pre class="vm-head">TAF.SH(1)                    User Commands                    TAF.SH(1)</pre>
+
+	<section>
+		<h1>NAME</h1>
+		<p class="vm-block">
+			<strong>taf.sh</strong> — independent software studio and consultancy
+			(sole proprietorship)
+		</p>
+	</section>
+
+	<section>
+		<h1>SYNOPSIS</h1>
+		<pre class="vm-syn">taf.sh [--product TalentSync|CliniQ] [--consult] [--contact]</pre>
+	</section>
+
+	<section>
+		<h1>DESCRIPTION</h1>
+		<p class="vm-block">
+			<strong>taf.sh</strong> designs, builds, and operates software products,
+			and provides engineering for a small number of external engagements.
+			Work is performed by a single engineer (Tashif). There is no account
+			team and no handoff between sales and delivery.
+		</p>
+		<p class="vm-block">
+			The studio currently runs systems in hiring (TalentSync) and healthcare
+			messaging (CliniQ). Consulting uses the same stack and operational habits
+			as the studio's own products.
+		</p>
+	</section>
+
+	<section>
+		<h1>OPTIONS</h1>
+		{
+			services.map((s) => (
+				<div class="vm-opt">
+					<p class="vm-flag">{s.title}</p>
+					<p class="vm-block">{s.body}</p>
+				</div>
+			))
+		}
+	</section>
+
+	<section id="products">
+		<h1>PRODUCTS</h1>
+		<table class="vm-table">
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Status</th>
+					<th>Summary</th>
+				</tr>
+			</thead>
+			<tbody>
+				{
+					products.map((p) => (
+						<tr>
+							<td>
+								<a href={p.href}>{p.name}</a>
+							</td>
+							<td>{p.status}</td>
+							<td>{p.desc}</td>
+						</tr>
+					))
+				}
+			</tbody>
+		</table>
+	</section>
+
+	<section>
+		<h1>DIAGNOSTICS</h1>
+		<pre class="vm-diag">{
+			stats
+				.map((s) => `${s.value.padStart(4, " ")}  ${s.label}`)
+				.join("\n")
+		}</pre>
+	</section>
+
+	<section>
+		<h1>EXIT STATUS</h1>
+		<p class="vm-block">
+			Engagements end with code you own, documentation, and a clean handoff.
+			There is no lock-in clause in spirit or in practice.
+		</p>
+	</section>
+
+	<section>
+		<h1>BUGS</h1>
+		<p class="vm-block">
+			Capacity is finite. Response times vary with open work. The operator
+			sleeps.
+		</p>
+	</section>
+
+	<section>
+		<h1>AUTHOR</h1>
+		<p class="vm-block">
+			Written by Tashif &lt;<a href="mailto:me@tashif.codes">me@tashif.codes</a
+			>&gt;.
+		</p>
+	</section>
+
+	<section>
+		<h1>SEE ALSO</h1>
+		<p class="vm-block">
+			<a href="/about">about(7)</a>,
+			<a href="/services">services(1)</a>,
+			<a href="/contact">contact(1)</a>,
+			<a href="https://github.com/tashifkhan">github(1)</a>
+		</p>
+	</section>
+
+	<section>
+		<h1>REPORTING BUGS</h1>
+		<p class="vm-block">
+			Mail <a href="/contact">taf.sh/contact</a> or write directly to the
+			address above.
+		</p>
+	</section>
+
+	<pre class="vm-foot">taf.sh                            2026-07                            TAF.SH(1)</pre>
+</div>
+
+<style>
+	.vm {
+		--bg: #0c0c0c;
+		--fg: #d0d0d0;
+		--bright: #f0f0f0;
+		--dim: #777;
+		--link: #9ecbff;
+		background: var(--bg);
+		color: var(--fg);
+		font-family: "IBM Plex Mono", ui-monospace, monospace;
+		font-size: 0.875rem;
+		line-height: 1.55;
+		min-height: 100vh;
+		padding: 1.5rem 1.25rem 3rem;
+		max-width: 52rem;
+		margin: 0 auto;
+	}
+	.vm a {
+		color: var(--link);
+		text-decoration: underline;
+		text-underline-offset: 2px;
+	}
+	.vm a:hover {
+		color: #fff;
+	}
+	.vm-head,
+	.vm-foot {
+		margin: 0 0 2rem;
+		font-size: 0.75rem;
+		color: var(--dim);
+		white-space: pre-wrap;
+		overflow-x: auto;
+	}
+	.vm-foot {
+		margin: 2.5rem 0 0;
+	}
+	.vm section {
+		margin-bottom: 1.75rem;
+	}
+	.vm h1 {
+		margin: 0 0 0.65rem;
+		font-size: 0.875rem;
+		font-weight: 700;
+		color: var(--bright);
+		letter-spacing: 0.04em;
+	}
+	.vm-block {
+		margin: 0 0 0.75rem;
+		max-width: 72ch;
+	}
+	.vm-block strong {
+		color: var(--bright);
+		font-weight: 500;
+	}
+	.vm-syn {
+		margin: 0;
+		padding: 0.75rem 0;
+		color: var(--bright);
+		white-space: pre-wrap;
+		overflow-x: auto;
+	}
+	.vm-opt {
+		margin-bottom: 1rem;
+		padding-left: 0;
+	}
+	.vm-flag {
+		margin: 0 0 0.25rem;
+		color: var(--bright);
+		font-weight: 500;
+	}
+	.vm-opt .vm-block {
+		padding-left: 1.5rem;
+		color: var(--fg);
+	}
+	.vm-table {
+		width: 100%;
+		border-collapse: collapse;
+		font-size: 0.8rem;
+	}
+	.vm-table th {
+		text-align: left;
+		font-weight: 500;
+		color: var(--dim);
+		padding: 0.35rem 0.75rem 0.35rem 0;
+		border-bottom: 1px solid #333;
+	}
+	.vm-table td {
+		padding: 0.55rem 0.75rem 0.55rem 0;
+		vertical-align: top;
+		border-bottom: 1px solid #222;
+	}
+	.vm-table td:first-child {
+		white-space: nowrap;
+		padding-right: 1rem;
+	}
+	.vm-table td:nth-child(2) {
+		white-space: nowrap;
+		color: var(--dim);
+		padding-right: 1rem;
+	}
+	.vm-diag {
+		margin: 0;
+		color: var(--bright);
+		line-height: 1.7;
+	}
+	@media (max-width: 600px) {
+		.vm-table {
+			display: block;
+		}
+		.vm-table thead {
+			display: none;
+		}
+		.vm-table tr {
+			display: block;
+			padding: 0.75rem 0;
+			border-bottom: 1px solid #222;
+		}
+		.vm-table td {
+			display: block;
+			border: none;
+			padding: 0.15rem 0;
+		}
+	}
+</style>
