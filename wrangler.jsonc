@@ -11,8 +11,8 @@
     "binding": "ASSETS",
     // Static multipage site — serve 404.html for missing paths when present
     "not_found_handling": "404-page",
-    // PostHog reverse proxy must run before asset lookup
-    "run_worker_first": ["/ph", "/ph/*"]
+    // Worker first: host redirects (www/workers.dev → taf.sh) + /ph proxy
+    "run_worker_first": true
   },
   // Zone routes — intercepts proxied traffic for apex + www.
   // Prefer these over custom_domain when DNS records already exist in the zone.
