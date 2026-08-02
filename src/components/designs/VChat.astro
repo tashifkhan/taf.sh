@@ -1,0 +1,501 @@
+---
+/**
+ * Chat — the entire landing page as a messaging conversation with the studio.
+ * Bubbles, link previews, typing indicator, read receipts. Meta on purpose:
+ * CliniQ runs a clinic this way.
+ */
+import { products, services, process } from "./data";
+---
+
+<div class="vc">
+	<!-- app header -->
+	<header class="vc-head">
+		<a href="/" class="vc-back" aria-label="Back">‹</a>
+		<span class="vc-avatar" aria-hidden="true">
+			<svg viewBox="0 0 30 42" aria-hidden="true">
+				<path d="M0 12V0H30V12H18V24H12V12H0Z" fill="currentColor"></path>
+				<path d="M12 24H18V42H12V24Z" fill="currentColor" opacity="0.45"></path>
+			</svg>
+		</span>
+		<span class="vc-peer">
+			<strong>taf.sh</strong>
+			<span class="vc-presence">online · replies fast</span>
+		</span>
+		<span class="vc-head-icons" aria-hidden="true">
+			<a href="/about" title="About">ⓘ</a>
+		</span>
+	</header>
+
+	<!-- conversation -->
+	<div class="vc-thread">
+		<p class="vc-day"><span>Today</span></p>
+		<p class="vc-e2e">
+			<span>
+				This conversation is between you and one human. Messages are answered
+				personally, usually within a day.
+			</span>
+		</p>
+
+		<div class="vc-msg vc-out" style="--d: 0.2s">
+			<p>hey — what even is taf.sh?</p>
+			<span class="vc-meta">09:41 <i class="vc-ticks">✓✓</i></span>
+		</div>
+
+		<div class="vc-msg vc-in" style="--d: 0.7s">
+			<p>
+				an independent software studio. <strong>one engineer</strong> —
+				Tashif — designs, builds, and runs the whole thing. schema to css to
+				deploy. no account managers, no handoffs.
+			</p>
+			<span class="vc-meta">09:41</span>
+		</div>
+
+		<div class="vc-msg vc-in" style="--d: 1.1s">
+			<p>
+				it's also AI-native for real: LLM pipelines, eval-driven scoring,
+				agents in production — not in demos.
+			</p>
+			<span class="vc-meta">09:42</span>
+		</div>
+
+		<div class="vc-msg vc-out" style="--d: 1.6s">
+			<p>what have you shipped?</p>
+			<span class="vc-meta">09:43 <i class="vc-ticks">✓✓</i></span>
+		</div>
+
+		<div class="vc-msg vc-in vc-typing" style="--d: 2s" aria-hidden="true">
+			<span class="vc-dot"></span><span class="vc-dot"></span><span class="vc-dot"></span>
+		</div>
+
+		{
+			products.map((p, i) => (
+				<div class="vc-msg vc-in vc-card-wrap" style={`--d: ${2.5 + i * 0.55}s`}>
+					<a href={p.href} class="vc-card">
+						<span class="vc-card-bar">{p.tag} · {p.status}</span>
+						<strong>{p.name}</strong>
+						<span class="vc-card-desc">{p.desc}</span>
+						<span class="vc-card-url">taf.sh{p.href}</span>
+					</a>
+					<span class="vc-meta">{`09:4${4 + i}`}</span>
+				</div>
+			))
+		}
+
+		<div class="vc-msg vc-in" style="--d: 4.3s">
+			<p>
+				all three are running systems with real users. products, not slides —
+				the consulting offer is the same engineering, pointed at your problem.
+			</p>
+			<span class="vc-meta">09:47</span>
+		</div>
+
+		<div class="vc-msg vc-out" style="--d: 4.8s">
+			<p>ok. and if I want to hire you?</p>
+			<span class="vc-meta">09:48 <i class="vc-ticks">✓✓</i></span>
+		</div>
+
+		<div class="vc-msg vc-in" style="--d: 5.3s">
+			<p>four ways I can help:</p>
+			<ul class="vc-list">
+				{
+					services.map((s) => (
+						<li>
+							<strong>{s.title}</strong> — {s.body}
+						</li>
+					))
+				}
+			</ul>
+			<span class="vc-meta">09:48</span>
+		</div>
+
+		<div class="vc-msg vc-in" style="--d: 5.8s">
+			<p>how it goes:</p>
+			<ol class="vc-list vc-list-num">
+				{
+					process.map((p) => (
+						<li>
+							<strong>{p.title}</strong> — {p.body}
+						</li>
+					))
+				}
+			</ol>
+			<span class="vc-meta">09:49</span>
+		</div>
+
+		<div class="vc-msg vc-out" style="--d: 6.3s">
+			<p>sounds good. how do we start?</p>
+			<span class="vc-meta">09:50 <i class="vc-ticks">✓✓</i></span>
+		</div>
+
+		<div class="vc-msg vc-in" style="--d: 6.8s">
+			<p>
+				just write. what you're building, where you're stuck, timeline. two
+				honest paragraphs beat a polished pitch.
+			</p>
+			<p class="vc-mt">
+				→ <a href="mailto:me@tashif.codes">me@tashif.codes</a>
+				<br />→ <a href="/contact">taf.sh/contact</a>
+			</p>
+			<span class="vc-meta">09:50</span>
+		</div>
+
+		<p class="vc-day vc-end"><span>You've reached the end — say hi</span></p>
+	</div>
+
+	<!-- input bar -->
+	<div class="vc-composer">
+		<a href="/contact" class="vc-composer-field">
+			<span class="vc-composer-hint">Message taf.sh…</span>
+		</a>
+		<a href="mailto:me@tashif.codes" class="vc-send" aria-label="Send email">
+			<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+				<path d="M3.4 20.4l17.4-7.5c.8-.35.8-1.45 0-1.8L3.4 3.6c-.66-.29-1.39.2-1.39.91L2 9.12c0 .5.37.93.87.99L17 12 2.87 13.88c-.5.07-.87.5-.87 1l.01 4.61c0 .72.73 1.2 1.39.91z"></path>
+			</svg>
+		</a>
+	</div>
+</div>
+
+<style>
+	.vc {
+		--bg: #0b141a;
+		--panel: #1f2c34;
+		--in: #1f2c34;
+		--out: #005c4b;
+		--fg: #e9edef;
+		--dim: #8696a0;
+		--green: #00a884;
+		--tick: #53bdeb;
+		background: var(--bg);
+		background-image: radial-gradient(
+			rgba(255, 255, 255, 0.025) 1px,
+			transparent 1.6px
+		);
+		background-size: 26px 26px;
+		color: var(--fg);
+		font-family:
+			"IBM Plex Sans",
+			-apple-system,
+			"Segoe UI",
+			sans-serif;
+		font-size: 0.95rem;
+		line-height: 1.45;
+		min-height: 100vh;
+		display: flex;
+		flex-direction: column;
+	}
+	.vc a {
+		color: var(--tick);
+	}
+
+	/* header */
+	.vc-head {
+		position: sticky;
+		top: 0;
+		z-index: 10;
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+		padding: 0.6rem 1rem;
+		background: var(--panel);
+		border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+	}
+	.vc-back {
+		font-size: 1.6rem;
+		line-height: 1;
+		color: var(--dim);
+		text-decoration: none;
+		padding-right: 0.25rem;
+	}
+	.vc-back:hover {
+		color: var(--fg);
+	}
+	.vc-avatar {
+		display: grid;
+		place-items: center;
+		width: 2.4rem;
+		height: 2.4rem;
+		border-radius: 50%;
+		background: #2a3942;
+		color: var(--fg);
+	}
+	.vc-avatar svg {
+		width: 1.1rem;
+		height: 1.5rem;
+	}
+	.vc-peer {
+		display: flex;
+		flex-direction: column;
+		line-height: 1.25;
+	}
+	.vc-peer strong {
+		font-size: 1rem;
+	}
+	.vc-presence {
+		font-size: 0.75rem;
+		color: var(--green);
+	}
+	.vc-head-icons {
+		margin-left: auto;
+	}
+	.vc-head-icons a {
+		color: var(--dim);
+		text-decoration: none;
+		font-size: 1.1rem;
+	}
+	.vc-head-icons a:hover {
+		color: var(--fg);
+	}
+
+	/* thread */
+	.vc-thread {
+		flex: 1;
+		width: 100%;
+		max-width: 46rem;
+		margin: 0 auto;
+		padding: 1.25rem 0.9rem 2rem;
+		display: flex;
+		flex-direction: column;
+		gap: 0.45rem;
+	}
+	.vc-day {
+		text-align: center;
+		margin: 0.5rem 0 1rem;
+	}
+	.vc-day span {
+		background: #182229;
+		color: var(--dim);
+		font-size: 0.72rem;
+		padding: 0.35rem 0.9rem;
+		border-radius: 0.5rem;
+	}
+	.vc-e2e {
+		text-align: center;
+		margin: 0 0 1.25rem;
+	}
+	.vc-e2e span {
+		display: inline-block;
+		background: #182229;
+		color: #ffd279;
+		font-size: 0.72rem;
+		line-height: 1.5;
+		padding: 0.5rem 0.9rem;
+		border-radius: 0.5rem;
+		max-width: 26rem;
+	}
+
+	/* messages */
+	.vc-msg {
+		position: relative;
+		max-width: 82%;
+		padding: 0.5rem 0.65rem 0.45rem;
+		border-radius: 0.55rem;
+		box-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+		opacity: 0;
+		animation: vc-pop 0.35s ease forwards;
+		animation-delay: var(--d, 0s);
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.vc-msg {
+			opacity: 1;
+			animation: none;
+		}
+	}
+	@keyframes vc-pop {
+		from {
+			opacity: 0;
+			transform: translateY(8px) scale(0.98);
+		}
+		to {
+			opacity: 1;
+			transform: none;
+		}
+	}
+	.vc-in {
+		align-self: flex-start;
+		background: var(--in);
+		border-top-left-radius: 0;
+	}
+	.vc-out {
+		align-self: flex-end;
+		background: var(--out);
+		border-top-right-radius: 0;
+	}
+	.vc-msg p {
+		margin: 0;
+	}
+	.vc-msg .vc-mt {
+		margin-top: 0.5rem;
+	}
+	.vc-meta {
+		display: block;
+		text-align: right;
+		font-size: 0.66rem;
+		color: var(--dim);
+		margin-top: 0.2rem;
+		margin-left: 3rem;
+	}
+	.vc-ticks {
+		font-style: normal;
+		color: var(--tick);
+		letter-spacing: -0.15em;
+	}
+
+	/* typing indicator */
+	.vc-typing {
+		display: flex;
+		gap: 0.3rem;
+		align-items: center;
+		padding: 0.8rem 0.9rem;
+		animation: vc-typing 3.2s ease forwards;
+		animation-delay: var(--d, 0s);
+	}
+	@keyframes vc-typing {
+		0% {
+			opacity: 0;
+		}
+		8% {
+			opacity: 1;
+		}
+		75% {
+			opacity: 1;
+		}
+		100% {
+			opacity: 0;
+			visibility: hidden;
+		}
+	}
+	.vc-dot {
+		width: 0.45rem;
+		height: 0.45rem;
+		border-radius: 50%;
+		background: var(--dim);
+		animation: vc-bounce 1.2s infinite;
+	}
+	.vc-dot:nth-child(2) {
+		animation-delay: 0.15s;
+	}
+	.vc-dot:nth-child(3) {
+		animation-delay: 0.3s;
+	}
+	@keyframes vc-bounce {
+		0%,
+		60%,
+		100% {
+			transform: none;
+			opacity: 0.5;
+		}
+		30% {
+			transform: translateY(-3px);
+			opacity: 1;
+		}
+	}
+
+	/* link preview card */
+	.vc-card-wrap {
+		padding: 0.4rem;
+	}
+	.vc-card {
+		display: block;
+		text-decoration: none;
+		background: #182229;
+		border-left: 3px solid var(--green);
+		border-radius: 0.35rem;
+		overflow: hidden;
+	}
+	.vc-card:hover {
+		background: #1f2c34;
+	}
+	.vc-card-bar {
+		display: block;
+		padding: 0.45rem 0.7rem 0;
+		font-size: 0.68rem;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: var(--green);
+	}
+	.vc-card strong {
+		display: block;
+		padding: 0.15rem 0.7rem 0;
+		color: var(--fg);
+		font-size: 0.98rem;
+	}
+	.vc-card-desc {
+		display: block;
+		padding: 0.25rem 0.7rem 0.45rem;
+		font-size: 0.82rem;
+		color: var(--dim);
+		line-height: 1.45;
+	}
+	.vc-card-url {
+		display: block;
+		padding: 0 0.7rem 0.55rem;
+		font-size: 0.72rem;
+		color: var(--tick);
+	}
+
+	/* lists inside bubbles */
+	.vc-list {
+		margin: 0.4rem 0 0;
+		padding-left: 1.1rem;
+		font-size: 0.88rem;
+	}
+	.vc-list li {
+		margin-bottom: 0.45rem;
+	}
+	.vc-list li::marker {
+		color: var(--green);
+	}
+	.vc-list-num li::marker {
+		font-weight: 700;
+	}
+	.vc-end {
+		margin-top: 1.5rem;
+	}
+
+	/* composer */
+	.vc-composer {
+		position: sticky;
+		bottom: 0;
+		display: flex;
+		align-items: center;
+		gap: 0.6rem;
+		padding: 0.6rem 0.9rem calc(0.6rem + env(safe-area-inset-bottom, 0px));
+		background: #0b141a;
+	}
+	.vc-composer-field {
+		flex: 1;
+		display: block;
+		background: var(--panel);
+		border-radius: 1.4rem;
+		padding: 0.7rem 1.1rem;
+		text-decoration: none;
+	}
+	.vc-composer-hint {
+		color: var(--dim);
+		font-size: 0.95rem;
+	}
+	.vc-composer-field:hover .vc-composer-hint {
+		color: var(--fg);
+	}
+	.vc-send {
+		display: grid;
+		place-items: center;
+		width: 2.8rem;
+		height: 2.8rem;
+		border-radius: 50%;
+		background: var(--green);
+	}
+	.vc .vc-send {
+		color: #0b141a;
+	}
+	.vc .vc-back {
+		color: var(--dim);
+	}
+	.vc-send:hover {
+		filter: brightness(1.1);
+	}
+	.vc-send svg {
+		width: 1.3rem;
+		height: 1.3rem;
+	}
+</style>

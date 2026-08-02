@@ -1,0 +1,784 @@
+---
+/**
+ * Bauhaus — geometric modernism. Primary shapes, diagonals, strict modules.
+ * Cream / black / red / blue. Form follows function, loudly.
+ */
+import "@fontsource/jost/400.css";
+import "@fontsource/jost/500.css";
+import "@fontsource/jost/600.css";
+import "@fontsource/jost/700.css";
+import { products, services, stats, traits } from "./data";
+
+const shapes = ["circle", "triangle", "square"] as const;
+---
+
+<div class="vh">
+	<!-- Nav bar -->
+	<header class="vh-nav">
+		<a href="/" class="vh-brand">
+			<span class="vh-brand-mark" aria-hidden="true">
+				<i class="vh-sq"></i><i class="vh-ci"></i><i class="vh-tr"></i>
+			</span>
+			taf.sh
+		</a>
+		<nav>
+			<a href="#vh-products">Products</a>
+			<a href="/services">Services</a>
+			<a href="/about">About</a>
+			<a href="/contact" class="vh-nav-cta">Contact</a>
+		</nav>
+	</header>
+
+	<!-- Hero composition -->
+	<section class="vh-hero">
+		<div class="vh-hero-art" aria-hidden="true">
+			<div class="vh-hero-circle"></div>
+			<div class="vh-hero-bar"></div>
+			<div class="vh-hero-semi"></div>
+			<div class="vh-hero-arc"></div>
+		</div>
+		<div class="vh-hero-copy">
+			<p class="vh-kicker">Independent software studio · est. by one engineer</p>
+			<h1>
+				<span class="vh-l1">FORM</span>
+				<span class="vh-l2">FOLLOWS</span>
+				<span class="vh-l3">FUNCTION<span class="vh-dot">.</span></span>
+			</h1>
+			<p class="vh-hero-sub">
+				Software designed and shipped by one human. AI-native products —
+				TalentSync, CliniQ — and the same engineering for your team.
+			</p>
+			<div class="vh-hero-actions">
+				<a href="/contact" class="vh-btn vh-btn-red">Start a project</a>
+				<a href="#vh-products" class="vh-btn vh-btn-line">The products ↓</a>
+			</div>
+		</div>
+	</section>
+
+	<!-- Stats strip -->
+	<section class="vh-stats">
+		{
+			stats.map((s, i) => (
+				<div class={`vh-stat vh-stat-${i}`}>
+					<span class="vh-stat-v">{s.value}</span>
+					<span class="vh-stat-l">{s.label}</span>
+				</div>
+			))
+		}
+	</section>
+
+	<!-- Products as geometric plates -->
+	<section class="vh-products" id="vh-products">
+		<div class="vh-section-head">
+			<h2>THREE SYSTEMS IN PRODUCTION</h2>
+			<p>Hiring ×2, healthcare ×1. End-to-end ownership, no exceptions.</p>
+		</div>
+		<div class="vh-plates">
+			{
+				products.map((p, i) => (
+					<a href={p.href} class={`vh-plate vh-plate-${shapes[i]}`}>
+						<div class="vh-plate-art" aria-hidden="true">
+							{shapes[i] === "circle" && <i class="vh-art-circle" />}
+							{shapes[i] === "triangle" && <i class="vh-art-triangle" />}
+							{shapes[i] === "square" && <i class="vh-art-square" />}
+						</div>
+						<div class="vh-plate-copy">
+							<span class="vh-plate-no">{p.index}</span>
+							<h3>{p.name}</h3>
+							<p>{p.desc}</p>
+							<span class="vh-plate-status">{p.status}</span>
+						</div>
+					</a>
+				))
+			}
+		</div>
+	</section>
+
+	<!-- Traits as strict modules -->
+	<section class="vh-modules">
+		<div class="vh-section-head">
+			<h2>PRINCIPLES OF THE WORKSHOP</h2>
+		</div>
+		<div class="vh-module-grid">
+			{
+				traits.map((t, i) => (
+					<div class="vh-module">
+						<span class="vh-module-no">{String(i + 1).padStart(2, "0")}</span>
+						<h3>{t.title}</h3>
+						<p>{t.body}</p>
+					</div>
+				))
+			}
+		</div>
+	</section>
+
+	<!-- Services diagonal -->
+	<section class="vh-services">
+		<div class="vh-services-inner">
+			<h2>SERVICES</h2>
+			<ul>
+				{
+					services.map((s, i) => (
+						<li>
+							<span class={`vh-svc-glyph vh-svc-glyph-${i}`} aria-hidden="true"></span>
+							<div>
+								<strong>{s.title}</strong>
+								<p>{s.body}</p>
+							</div>
+						</li>
+					))
+				}
+			</ul>
+			<a href="/services" class="vh-btn vh-btn-line vh-btn-inv">
+				Full catalogue →
+			</a>
+		</div>
+	</section>
+
+	<!-- CTA -->
+	<section class="vh-cta">
+		<div class="vh-cta-art" aria-hidden="true">
+			<div class="vh-cta-semi-l"></div>
+			<div class="vh-cta-semi-r"></div>
+		</div>
+		<h2>BUILD WITH<br />ONE HUMAN</h2>
+		<a href="/contact" class="vh-btn vh-btn-red vh-btn-big">taf.sh/contact →</a>
+	</section>
+
+	<footer class="vh-footer">
+		<span>©2026 taf.sh</span>
+		<span class="vh-footer-marks" aria-hidden="true">
+			<i class="vh-sq"></i><i class="vh-ci"></i><i class="vh-tr"></i>
+		</span>
+		<span>
+			<a href="https://github.com/tashifkhan" target="_blank" rel="noopener noreferrer">GitHub</a>
+			·
+			<a href="https://tashif.codes" target="_blank" rel="noopener noreferrer">tashif.codes</a>
+		</span>
+	</footer>
+</div>
+
+<style>
+	.vh {
+		--cream: #efe9db;
+		--ink: #16130e;
+		--red: #c8452c;
+		--blue: #274c9c;
+		--yellow: #e0a924;
+		background: var(--cream);
+		color: var(--ink);
+		font-family: "Jost", "Futura", "Century Gothic", sans-serif;
+		font-size: 1rem;
+		line-height: 1.5;
+		min-height: 100vh;
+		overflow: hidden;
+	}
+	.vh a {
+		color: inherit;
+	}
+
+	/* basic shapes */
+	.vh-sq,
+	.vh-ci,
+	.vh-tr {
+		display: inline-block;
+		width: 0.8em;
+		height: 0.8em;
+	}
+	.vh-sq {
+		background: var(--red);
+	}
+	.vh-ci {
+		background: var(--blue);
+		border-radius: 50%;
+	}
+	.vh-tr {
+		background: var(--ink);
+		clip-path: polygon(50% 0, 100% 100%, 0 100%);
+	}
+
+	/* Nav */
+	.vh-nav {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1rem;
+		max-width: 76rem;
+		margin: 0 auto;
+		padding: 1.25rem 1.5rem;
+	}
+	.vh-brand {
+		display: flex;
+		align-items: center;
+		gap: 0.6rem;
+		font-weight: 700;
+		font-size: 1.15rem;
+		letter-spacing: 0.04em;
+		text-decoration: none;
+		text-transform: uppercase;
+	}
+	.vh-brand-mark {
+		display: inline-flex;
+		gap: 0.22rem;
+		font-size: 1rem;
+	}
+	.vh-nav nav {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 1.5rem;
+		font-size: 0.85rem;
+		font-weight: 600;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+	}
+	.vh-nav nav a {
+		text-decoration: none;
+		border-bottom: 3px solid transparent;
+		padding-bottom: 0.15rem;
+	}
+	.vh-nav nav a:hover {
+		border-color: var(--red);
+	}
+	.vh-nav-cta {
+		background: var(--ink);
+		color: var(--cream);
+		padding: 0.4rem 0.9rem !important;
+	}
+	.vh-nav-cta:hover {
+		background: var(--red);
+		border-color: transparent !important;
+	}
+
+	/* Hero */
+	.vh-hero {
+		position: relative;
+		max-width: 76rem;
+		margin: 0 auto;
+		padding: 3rem 1.5rem 4.5rem;
+		display: grid;
+		gap: 2rem;
+	}
+	@media (min-width: 900px) {
+		.vh-hero {
+			grid-template-columns: 1.1fr 1fr;
+			align-items: center;
+			padding-top: 4rem;
+		}
+		.vh-hero-art {
+			order: 2;
+		}
+	}
+	.vh-hero-art {
+		position: relative;
+		height: 14rem;
+	}
+	@media (min-width: 900px) {
+		.vh-hero-art {
+			height: 21rem;
+		}
+	}
+	.vh-hero-circle {
+		position: absolute;
+		width: 11rem;
+		height: 11rem;
+		border-radius: 50%;
+		background: var(--red);
+		top: 0.5rem;
+		left: 12%;
+	}
+	@media (min-width: 900px) {
+		.vh-hero-circle {
+			width: 15rem;
+			height: 15rem;
+			top: 1rem;
+		}
+	}
+	.vh-hero-bar {
+		position: absolute;
+		width: 130%;
+		height: 2.4rem;
+		background: var(--ink);
+		top: 47%;
+		left: -20%;
+		transform: rotate(-14deg);
+	}
+	.vh-hero-semi {
+		position: absolute;
+		width: 9rem;
+		height: 4.5rem;
+		background: var(--blue);
+		border-radius: 9rem 9rem 0 0;
+		bottom: 0.5rem;
+		right: 10%;
+	}
+	.vh-hero-arc {
+		position: absolute;
+		width: 6.5rem;
+		height: 6.5rem;
+		border: 1.4rem solid var(--yellow);
+		border-radius: 50%;
+		border-bottom-color: transparent;
+		border-left-color: transparent;
+		top: 0;
+		right: 22%;
+		transform: rotate(20deg);
+	}
+	.vh-kicker {
+		margin: 0 0 1.1rem;
+		font-size: 0.75rem;
+		font-weight: 600;
+		letter-spacing: 0.22em;
+		text-transform: uppercase;
+	}
+	.vh-hero h1 {
+		margin: 0;
+		font-weight: 700;
+		line-height: 0.92;
+		letter-spacing: -0.01em;
+		text-transform: uppercase;
+		font-size: clamp(3rem, 8.5vw, 6rem);
+	}
+	.vh-hero h1 > span {
+		display: block;
+	}
+	.vh-l2 {
+		color: var(--red);
+	}
+	.vh-dot {
+		color: var(--blue);
+	}
+	.vh-hero-sub {
+		margin: 1.4rem 0 1.8rem;
+		max-width: 26rem;
+		font-size: 1.05rem;
+		line-height: 1.55;
+	}
+	.vh-hero-actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.9rem;
+	}
+	.vh-btn {
+		display: inline-block;
+		padding: 0.8rem 1.5rem;
+		font-size: 0.85rem;
+		font-weight: 700;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+		text-decoration: none;
+		border: 2px solid var(--ink);
+		transition:
+			transform 0.15s ease,
+			background 0.15s ease,
+			color 0.15s ease;
+	}
+	.vh-btn:hover {
+		transform: translate(-2px, -2px);
+		box-shadow: 4px 4px 0 var(--ink);
+	}
+	.vh-btn-red {
+		background: var(--red);
+		border-color: var(--red);
+	}
+	.vh .vh-btn-red,
+	.vh .vh-nav-cta,
+	.vh .vh-btn-inv {
+		color: var(--cream);
+	}
+	.vh-btn-red:hover {
+		box-shadow: 4px 4px 0 var(--red);
+	}
+	.vh-btn-line {
+		background: transparent;
+		color: var(--ink);
+	}
+	.vh-btn-inv {
+		border-color: var(--cream);
+		color: var(--cream);
+	}
+	.vh-btn-inv:hover {
+		box-shadow: 4px 4px 0 var(--yellow);
+	}
+
+	/* Stats */
+	.vh-stats {
+		display: grid;
+		grid-template-columns: 1fr;
+		border-top: 3px solid var(--ink);
+		border-bottom: 3px solid var(--ink);
+	}
+	@media (min-width: 700px) {
+		.vh-stats {
+			grid-template-columns: repeat(3, 1fr);
+		}
+	}
+	.vh-stat {
+		display: flex;
+		align-items: baseline;
+		gap: 1rem;
+		padding: 1.5rem 1.5rem;
+	}
+	@media (min-width: 700px) {
+		.vh-stat:not(:last-child) {
+			border-right: 3px solid var(--ink);
+		}
+	}
+	@media (max-width: 699px) {
+		.vh-stat:not(:last-child) {
+			border-bottom: 3px solid var(--ink);
+		}
+	}
+	.vh-stat-0 {
+		background: var(--yellow);
+	}
+	.vh-stat-1 {
+		background: var(--cream);
+	}
+	.vh-stat-2 {
+		background: var(--blue);
+		color: var(--cream);
+	}
+	.vh-stat-v {
+		font-size: 3.2rem;
+		font-weight: 700;
+		line-height: 1;
+	}
+	.vh-stat-l {
+		font-size: 0.85rem;
+		font-weight: 600;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		max-width: 10rem;
+	}
+
+	/* Section heads */
+	.vh-section-head {
+		max-width: 76rem;
+		margin: 0 auto;
+		padding: 3.5rem 1.5rem 2rem;
+	}
+	.vh-section-head h2 {
+		margin: 0;
+		font-size: clamp(1.7rem, 4vw, 2.6rem);
+		font-weight: 700;
+		letter-spacing: 0.02em;
+	}
+	.vh-section-head p {
+		margin: 0.5rem 0 0;
+		font-size: 1rem;
+	}
+
+	/* Product plates */
+	.vh-products {
+		background: var(--cream);
+	}
+	.vh-plates {
+		max-width: 76rem;
+		margin: 0 auto;
+		padding: 0 1.5rem 4rem;
+		display: grid;
+		gap: 1.5rem;
+	}
+	@media (min-width: 800px) {
+		.vh-plates {
+			grid-template-columns: repeat(3, 1fr);
+		}
+		.vh-plate:nth-child(2) {
+			transform: translateY(1.75rem);
+		}
+		.vh-plate:nth-child(3) {
+			transform: translateY(3.5rem);
+		}
+	}
+	.vh-plate {
+		display: block;
+		background: #fff;
+		border: 3px solid var(--ink);
+		text-decoration: none;
+		transition:
+			box-shadow 0.15s ease,
+			translate 0.15s ease;
+	}
+	.vh-plate:hover {
+		box-shadow: 8px 8px 0 var(--ink);
+	}
+	.vh-plate-art {
+		height: 11rem;
+		border-bottom: 3px solid var(--ink);
+		position: relative;
+		overflow: hidden;
+	}
+	.vh-plate-circle .vh-plate-art {
+		background: var(--red);
+	}
+	.vh-plate-triangle .vh-plate-art {
+		background: var(--yellow);
+	}
+	.vh-plate-square .vh-plate-art {
+		background: var(--blue);
+	}
+	.vh-art-circle {
+		position: absolute;
+		width: 8rem;
+		height: 8rem;
+		border-radius: 50%;
+		background: var(--cream);
+		left: 50%;
+		top: 50%;
+		transform: translate(-50%, -42%);
+		box-shadow: inset -1.6rem -1.2rem 0 var(--ink);
+	}
+	.vh-art-triangle {
+		position: absolute;
+		width: 9rem;
+		height: 8rem;
+		background: var(--ink);
+		clip-path: polygon(50% 0, 100% 100%, 0 100%);
+		left: 50%;
+		top: 55%;
+		transform: translate(-50%, -42%);
+	}
+	.vh-art-square {
+		position: absolute;
+		width: 7rem;
+		height: 7rem;
+		background: var(--cream);
+		left: 50%;
+		top: 50%;
+		transform: translate(-50%, -50%) rotate(45deg);
+		box-shadow: 0 0 0 1.2rem rgba(22, 19, 14, 0.25);
+	}
+	.vh-plate-copy {
+		padding: 1.4rem 1.4rem 1.6rem;
+		position: relative;
+	}
+	.vh-plate-no {
+		position: absolute;
+		top: -1.6rem;
+		right: 1rem;
+		background: var(--ink);
+		color: var(--cream);
+		font-weight: 700;
+		font-size: 0.8rem;
+		padding: 0.35rem 0.6rem;
+		letter-spacing: 0.1em;
+	}
+	.vh-plate-copy h3 {
+		margin: 0 0 0.5rem;
+		font-size: 1.4rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.02em;
+	}
+	.vh-plate-copy p {
+		margin: 0 0 1rem;
+		font-size: 0.92rem;
+		line-height: 1.5;
+	}
+	.vh-plate-status {
+		font-size: 0.72rem;
+		font-weight: 700;
+		letter-spacing: 0.16em;
+		text-transform: uppercase;
+		border-bottom: 3px solid var(--red);
+		padding-bottom: 0.2rem;
+	}
+
+	/* Modules */
+	.vh-modules {
+		border-top: 3px solid var(--ink);
+		margin-top: 2rem;
+	}
+	.vh-module-grid {
+		max-width: 76rem;
+		margin: 0 auto;
+		padding: 0 1.5rem 4rem;
+		display: grid;
+		gap: 0;
+		border: 3px solid var(--ink);
+	}
+	@media (min-width: 700px) {
+		.vh-module-grid {
+			grid-template-columns: repeat(2, 1fr);
+		}
+	}
+	@media (min-width: 1000px) {
+		.vh-module-grid {
+			grid-template-columns: repeat(4, 1fr);
+		}
+	}
+	.vh-module {
+		padding: 1.6rem 1.4rem;
+		border: 1.5px solid var(--ink);
+		background: #fff;
+	}
+	.vh-module:nth-child(2) {
+		background: var(--red);
+		color: var(--cream);
+	}
+	.vh-module:nth-child(4) {
+		background: var(--yellow);
+	}
+	.vh-module-no {
+		display: block;
+		font-size: 0.75rem;
+		font-weight: 700;
+		letter-spacing: 0.2em;
+		margin-bottom: 0.9rem;
+	}
+	.vh-module h3 {
+		margin: 0 0 0.5rem;
+		font-size: 1.15rem;
+		font-weight: 700;
+		text-transform: uppercase;
+	}
+	.vh-module p {
+		margin: 0;
+		font-size: 0.88rem;
+		line-height: 1.5;
+	}
+
+	/* Services */
+	.vh-services {
+		background: var(--ink);
+		color: var(--cream);
+		clip-path: polygon(0 3.5rem, 100% 0, 100% 100%, 0 100%);
+		padding-top: 3.5rem;
+	}
+	.vh-services-inner {
+		max-width: 76rem;
+		margin: 0 auto;
+		padding: 4rem 1.5rem 5rem;
+	}
+	.vh-services h2 {
+		margin: 0 0 2rem;
+		font-size: clamp(2rem, 5vw, 3.2rem);
+		font-weight: 700;
+	}
+	.vh-services ul {
+		list-style: none;
+		margin: 0 0 2.5rem;
+		padding: 0;
+		display: grid;
+		gap: 1.75rem;
+	}
+	@media (min-width: 800px) {
+		.vh-services ul {
+			grid-template-columns: repeat(2, 1fr);
+			gap: 2rem 3rem;
+		}
+	}
+	.vh-services li {
+		display: flex;
+		gap: 1.1rem;
+		align-items: flex-start;
+	}
+	.vh-svc-glyph {
+		flex: 0 0 auto;
+		width: 1.6rem;
+		height: 1.6rem;
+		margin-top: 0.15rem;
+	}
+	.vh-svc-glyph-0 {
+		background: var(--red);
+	}
+	.vh-svc-glyph-1 {
+		background: var(--blue);
+		border-radius: 50%;
+	}
+	.vh-svc-glyph-2 {
+		background: var(--yellow);
+		clip-path: polygon(50% 0, 100% 100%, 0 100%);
+	}
+	.vh-svc-glyph-3 {
+		background: var(--cream);
+		border-radius: 50% 50% 0 0;
+		height: 0.8rem;
+		margin-top: 0.55rem;
+	}
+	.vh-services strong {
+		display: block;
+		font-size: 1.05rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.04em;
+		margin-bottom: 0.3rem;
+	}
+	.vh-services li p {
+		margin: 0;
+		font-size: 0.9rem;
+		line-height: 1.55;
+		opacity: 0.85;
+	}
+
+	/* CTA */
+	.vh-cta {
+		position: relative;
+		text-align: center;
+		padding: 5rem 1.5rem 5.5rem;
+		overflow: hidden;
+	}
+	.vh-cta h2 {
+		position: relative;
+		margin: 0 0 2rem;
+		font-size: clamp(2.6rem, 7vw, 5rem);
+		font-weight: 700;
+		line-height: 0.95;
+		text-transform: uppercase;
+	}
+	.vh-cta-art {
+		position: absolute;
+		inset: 0;
+		pointer-events: none;
+	}
+	.vh-cta-semi-l {
+		position: absolute;
+		width: 12rem;
+		height: 6rem;
+		background: var(--blue);
+		border-radius: 0 0 12rem 12rem;
+		left: -3rem;
+		top: 20%;
+	}
+	.vh-cta-semi-r {
+		position: absolute;
+		width: 12rem;
+		height: 6rem;
+		background: var(--red);
+		border-radius: 12rem 12rem 0 0;
+		right: -3rem;
+		bottom: 15%;
+	}
+	.vh-btn-big {
+		position: relative;
+		font-size: 1rem;
+		padding: 1rem 2.2rem;
+	}
+
+	/* Footer */
+	.vh-footer {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: space-between;
+		gap: 0.75rem 2rem;
+		max-width: 76rem;
+		margin: 0 auto;
+		padding: 1.5rem;
+		border-top: 3px solid var(--ink);
+		font-size: 0.85rem;
+		font-weight: 600;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+	}
+	.vh-footer-marks {
+		display: inline-flex;
+		gap: 0.3rem;
+		font-size: 0.9rem;
+	}
+	.vh-footer a {
+		text-decoration: none;
+		border-bottom: 2px solid var(--red);
+	}
+</style>

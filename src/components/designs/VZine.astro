@@ -1,0 +1,669 @@
+---
+/**
+ * Zine — punk cut-and-paste collage. Photocopied paper, marker highlights,
+ * tape strips, rotated flyers, and a clip-and-save coupon.
+ */
+import "@fontsource/anton/400.css";
+import "@fontsource/caveat/400.css";
+import "@fontsource/caveat/600.css";
+import "@fontsource/caveat/700.css";
+import { products, services, traits, email } from "./data";
+
+const rotations = ["-1.6deg", "1.2deg", "-0.8deg"];
+const notes = ["free & unlimited!", "actually shows receipts", "no phone tag!!"];
+---
+
+<div class="vz">
+	<!-- photocopy noise -->
+	<div class="vz-grain" aria-hidden="true"></div>
+
+	<header class="vz-top">
+		<p class="vz-hand vz-hand-top">issue #001 — the "one human" issue</p>
+		<h1 class="vz-logo">
+			<span class="vz-logo-line">TAF</span><span class="vz-logo-dot">.</span><span class="vz-logo-line vz-logo-inv">SH</span>
+		</h1>
+		<p class="vz-tag">
+			a xeroxed manifesto about <mark>software that ships</mark> — products,
+			not decks — made by <u>one person</u>
+		</p>
+		<nav class="vz-nav">
+			<a href="#vz-products">the goods</a>
+			<a href="/services">services</a>
+			<a href="/about">lore</a>
+			<a href="/contact">write in</a>
+		</nav>
+	</header>
+
+	<!-- Hero collage -->
+	<section class="vz-hero">
+		<div class="vz-hero-inner">
+			<h2 class="vz-shout">
+				<span class="vz-shout-row">ONE HUMAN.</span>
+				<span class="vz-shout-row vz-shout-hl">WHOLE STACK.</span>
+				<span class="vz-shout-row">NO HANDOFFS.</span>
+			</h2>
+			<p class="vz-hand vz-hero-note">
+				the person who writes the schema also answers your email ← this is
+				the whole business model
+			</p>
+			<div class="vz-hero-cta">
+				<a href="/contact" class="vz-btn">start something →</a>
+				<span class="vz-hand">or keep reading, it's free</span>
+			</div>
+		</div>
+		<div class="vz-sticker vz-sticker-1" aria-hidden="true">
+			<span>100%<br />HUMAN<br />MADE</span>
+		</div>
+		<div class="vz-sticker vz-sticker-2" aria-hidden="true">
+			<span>AI-NATIVE<br />(the real kind)</span>
+		</div>
+		<svg class="vz-arrow" viewBox="0 0 120 60" aria-hidden="true">
+			<path
+				d="M6 6 C 40 40, 70 44, 104 30 M 96 20 L 106 31 L 92 38"
+				fill="none"
+				stroke="currentColor"
+				stroke-width="3"
+				stroke-linecap="round"
+				stroke-linejoin="round"></path>
+		</svg>
+	</section>
+
+	<!-- Products as flyers -->
+	<section class="vz-products" id="vz-products">
+		<div class="vz-tape-strip" aria-hidden="true"></div>
+		<h2 class="vz-section-title">
+			<mark>THE GOODS</mark>
+			<span class="vz-hand">— three systems, all in the wild ↓</span>
+		</h2>
+		<div class="vz-flyers">
+			{
+				products.map((p, i) => (
+					<a href={p.href} class="vz-flyer" style={`--rot: ${rotations[i]}`}>
+						<i class="vz-flyer-tape" aria-hidden="true"></i>
+						<p class="vz-flyer-status">{p.status}</p>
+						<h3>{p.name}</h3>
+						<p class="vz-flyer-desc">{p.desc}</p>
+						<p class="vz-flyer-more">read more → {p.href}</p>
+						<p class="vz-hand vz-flyer-note">{notes[i]}</p>
+					</a>
+				))
+			}
+		</div>
+	</section>
+
+	<!-- Traits as cut-out strips -->
+	<section class="vz-manifesto">
+		<h2 class="vz-section-title vz-section-inv">
+			<mark>HOUSE RULES</mark>
+		</h2>
+		<ul class="vz-strips">
+			{
+				traits.map((t, i) => (
+					<li style={`--rot: ${i % 2 === 0 ? "-0.7deg" : "0.9deg"}`}>
+						<strong>{t.title}</strong>
+						<span> — {t.body}</span>
+					</li>
+				))
+			}
+		</ul>
+	</section>
+
+	<!-- Services -->
+	<section class="vz-services">
+		<div class="vz-tape-strip vz-tape-2" aria-hidden="true"></div>
+		<h2 class="vz-section-title">
+			<mark>HIRE THE HUMAN</mark>
+			<span class="vz-hand">rates on request, decks never</span>
+		</h2>
+		<div class="vz-svc-grid">
+			{
+				services.map((s) => (
+					<div class="vz-svc">
+						<h3>{s.title}</h3>
+						<p>{s.body}</p>
+					</div>
+				))
+			}
+		</div>
+		<p class="vz-svc-more">
+			<a href="/services">full menu over here →</a>
+		</p>
+	</section>
+
+	<!-- Coupon CTA -->
+	<section class="vz-coupon-wrap">
+		<div class="vz-coupon">
+			<div class="vz-coupon-left">
+				<p class="vz-coupon-kicker">CLIP &amp; SAVE</p>
+				<p class="vz-coupon-big">ONE FREE<br />INTRO CALL</p>
+				<p class="vz-coupon-fine">
+					redeemable at <a href="/contact">taf.sh/contact</a> or{" "}
+					<a href={`mailto:${email}`}>{email}</a> — no expiry, no fine print,
+					no punch card
+				</p>
+			</div>
+			<div class="vz-coupon-right">
+				<p class="vz-hand vz-coupon-hand">actually<br />free!!</p>
+				<svg viewBox="0 0 60 60" class="vz-scissors" aria-hidden="true">
+					<circle cx="18" cy="18" r="7" fill="none" stroke="currentColor" stroke-width="3"></circle>
+					<circle cx="18" cy="42" r="7" fill="none" stroke="currentColor" stroke-width="3"></circle>
+					<path d="M23 23 L52 45 M23 37 L52 15" stroke="currentColor" stroke-width="3" stroke-linecap="round"></path>
+				</svg>
+			</div>
+		</div>
+	</section>
+
+	<footer class="vz-footer">
+		<p>
+			©2026 taf.sh — printed on the cheapest pixels available ·{" "}
+			<a href="https://github.com/tashifkhan" target="_blank" rel="noopener noreferrer">github</a>{" "}
+			·{" "}
+			<a href="https://tashif.codes" target="_blank" rel="noopener noreferrer">tashif.codes</a>
+		</p>
+		<p class="vz-hand">steal this layout (don't)</p>
+	</footer>
+</div>
+
+<style>
+	.vz {
+		--paper: #f6f3ea;
+		--ink: #191713;
+		--hl: #f2e14c;
+		--pink: #ff5d8f;
+		--tape: rgba(224, 210, 160, 0.75);
+		position: relative;
+		background: var(--paper);
+		color: var(--ink);
+		font-family: "IBM Plex Sans", "Helvetica Neue", sans-serif;
+		font-size: 1rem;
+		line-height: 1.5;
+		min-height: 100vh;
+		padding-bottom: 3rem;
+		overflow: hidden;
+	}
+	.vz-grain {
+		position: absolute;
+		inset: 0;
+		pointer-events: none;
+		opacity: 0.5;
+		background-image: repeating-conic-gradient(
+			rgba(0, 0, 0, 0.035) 0% 0.0001%,
+			transparent 0.0002% 0.0004%
+		);
+		background-size: 180px 180px;
+		mix-blend-mode: multiply;
+	}
+	.vz a {
+		color: inherit;
+	}
+	.vz mark {
+		background: var(--hl);
+		color: inherit;
+		padding: 0 0.25em;
+		box-decoration-break: clone;
+		-webkit-box-decoration-break: clone;
+	}
+	.vz .vz-hand {
+		font-family: "Caveat", cursive;
+		font-size: 1.25rem;
+		line-height: 1.2;
+	}
+
+	/* Header */
+	.vz-top {
+		position: relative;
+		max-width: 62rem;
+		margin: 0 auto;
+		padding: 2.5rem 1.25rem 1.5rem;
+		text-align: center;
+	}
+	.vz-hand-top {
+		margin: 0 0 0.5rem;
+		transform: rotate(-1.5deg);
+		display: inline-block;
+	}
+	.vz-logo {
+		margin: 0;
+		font-family: "Anton", "Arial Black", sans-serif;
+		font-size: clamp(4.5rem, 16vw, 11rem);
+		line-height: 0.95;
+		letter-spacing: 0.01em;
+		display: flex;
+		justify-content: center;
+		align-items: baseline;
+		gap: 0.06em;
+	}
+	.vz-logo-line {
+		display: inline-block;
+	}
+	.vz-logo-line:first-child {
+		transform: rotate(-2deg) translateY(0.02em);
+	}
+	.vz-logo-dot {
+		color: var(--pink);
+	}
+	.vz-logo-inv {
+		background: var(--ink);
+		color: var(--paper);
+		padding: 0 0.12em;
+		transform: rotate(1.5deg);
+	}
+	.vz-tag {
+		margin: 1rem auto 0;
+		max-width: 34rem;
+		font-size: 1.02rem;
+	}
+	.vz-nav {
+		margin-top: 1.25rem;
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 0.6rem 1.4rem;
+		font-family: "Caveat", cursive;
+		font-size: 1.35rem;
+		font-weight: 600;
+	}
+	.vz-nav a {
+		text-decoration: underline;
+		text-decoration-style: wavy;
+		text-decoration-color: var(--pink);
+		text-underline-offset: 4px;
+	}
+	.vz-nav a:hover {
+		background: var(--hl);
+		text-decoration: none;
+	}
+
+	/* Hero */
+	.vz-hero {
+		position: relative;
+		max-width: 62rem;
+		margin: 1.5rem auto 0;
+		padding: 0 1.25rem 3rem;
+	}
+	.vz-hero-inner {
+		position: relative;
+		border: 3px solid var(--ink);
+		background: #fff;
+		padding: 2.5rem 1.5rem 2rem;
+		box-shadow: 6px 6px 0 var(--ink);
+		transform: rotate(-0.6deg);
+	}
+	.vz-shout {
+		margin: 0;
+		font-family: "Anton", "Arial Black", sans-serif;
+		font-size: clamp(2.4rem, 8vw, 5.2rem);
+		line-height: 1.02;
+		text-transform: uppercase;
+	}
+	.vz-shout-row {
+		display: block;
+	}
+	.vz-shout-hl {
+		background: var(--hl);
+		box-shadow: 0.08em 0 0 var(--hl), -0.08em 0 0 var(--hl);
+		display: inline-block;
+		transform: rotate(-0.5deg);
+	}
+	.vz-hero-note {
+		margin: 1.25rem 0 0;
+		max-width: 26rem;
+		transform: rotate(-0.8deg);
+	}
+	.vz-hero-cta {
+		margin-top: 1.75rem;
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.9rem 1.25rem;
+	}
+	.vz-btn {
+		display: inline-block;
+		font-family: "Anton", "Arial Black", sans-serif;
+		font-size: 1.15rem;
+		text-transform: uppercase;
+		letter-spacing: 0.04em;
+		text-decoration: none;
+		background: var(--ink);
+		color: var(--paper);
+		padding: 0.7rem 1.4rem;
+		border: 3px solid var(--ink);
+		transition: all 0.12s ease;
+	}
+	.vz .vz-btn {
+		color: var(--paper);
+	}
+	.vz-btn:hover {
+		background: var(--pink);
+		border-color: var(--pink);
+		color: var(--ink) !important;
+		transform: rotate(-1deg);
+	}
+	.vz-sticker {
+		position: absolute;
+		display: grid;
+		place-items: center;
+		text-align: center;
+		font-family: "Anton", sans-serif;
+		line-height: 1.1;
+		text-transform: uppercase;
+		z-index: 2;
+	}
+	.vz-sticker-1 {
+		width: 7.5rem;
+		height: 7.5rem;
+		border-radius: 50%;
+		background: var(--pink);
+		border: 3px solid var(--ink);
+		font-size: 0.95rem;
+		top: -1.5rem;
+		right: 6%;
+		transform: rotate(10deg);
+	}
+	.vz-sticker-2 {
+		width: 8.5rem;
+		height: 3.6rem;
+		background: var(--hl);
+		border: 2px dashed var(--ink);
+		font-size: 0.8rem;
+		top: -1.2rem;
+		left: 1.25rem;
+		transform: rotate(-6deg);
+	}
+	.vz-arrow {
+		position: absolute;
+		width: 7rem;
+		color: var(--ink);
+		bottom: 1.5rem;
+		right: 12%;
+		transform: rotate(12deg);
+	}
+	@media (max-width: 640px) {
+		.vz-sticker-1 {
+			right: 2%;
+			width: 6rem;
+			height: 6rem;
+			font-size: 0.8rem;
+		}
+		.vz-arrow {
+			display: none;
+		}
+	}
+
+	/* Section titles */
+	.vz-section-title {
+		margin: 0 0 2rem;
+		font-family: "Anton", sans-serif;
+		font-size: clamp(1.8rem, 5vw, 2.8rem);
+		text-transform: uppercase;
+		display: flex;
+		flex-wrap: wrap;
+		align-items: baseline;
+		gap: 0.5rem 1rem;
+	}
+	.vz-section-title .vz-hand {
+		font-size: 1.3rem;
+		text-transform: none;
+	}
+
+	/* Flyers */
+	.vz-products {
+		position: relative;
+		max-width: 66rem;
+		margin: 0 auto;
+		padding: 3.5rem 1.25rem 3rem;
+	}
+	.vz-tape-strip {
+		position: absolute;
+		top: 1rem;
+		left: 8%;
+		width: 9rem;
+		height: 2rem;
+		background: var(--tape);
+		transform: rotate(-3deg);
+		box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+	}
+	.vz-tape-2 {
+		left: auto;
+		right: 10%;
+		transform: rotate(2.5deg);
+	}
+	.vz-flyers {
+		display: grid;
+		gap: 1.75rem;
+	}
+	@media (min-width: 800px) {
+		.vz-flyers {
+			grid-template-columns: repeat(3, 1fr);
+		}
+	}
+	.vz-flyer {
+		position: relative;
+		display: block;
+		background: #fff;
+		border: 2px solid var(--ink);
+		padding: 1.6rem 1.3rem 1.4rem;
+		text-decoration: none;
+		transform: rotate(var(--rot, 0deg));
+		transition:
+			transform 0.15s ease,
+			box-shadow 0.15s ease;
+	}
+	.vz-flyer:hover {
+		transform: rotate(0deg) translateY(-4px);
+		box-shadow: 5px 5px 0 var(--pink);
+	}
+	.vz-flyer-tape {
+		position: absolute;
+		top: -0.8rem;
+		left: 50%;
+		transform: translateX(-50%) rotate(-2deg);
+		width: 5.5rem;
+		height: 1.5rem;
+		background: var(--tape);
+		box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+	}
+	.vz-flyer-status {
+		display: inline-block;
+		margin: 0 0 0.6rem;
+		font-size: 0.7rem;
+		font-weight: 700;
+		letter-spacing: 0.16em;
+		text-transform: uppercase;
+		border: 2px solid var(--ink);
+		padding: 0.15rem 0.5rem;
+	}
+	.vz-flyer h3 {
+		margin: 0 0 0.5rem;
+		font-family: "Anton", sans-serif;
+		font-size: 1.7rem;
+		text-transform: uppercase;
+		line-height: 1.05;
+	}
+	.vz-flyer-desc {
+		margin: 0 0 0.9rem;
+		font-size: 0.9rem;
+		line-height: 1.5;
+	}
+	.vz-flyer-more {
+		margin: 0;
+		font-size: 0.8rem;
+		font-weight: 700;
+		text-decoration: underline;
+		text-decoration-style: wavy;
+		text-decoration-color: var(--pink);
+		text-underline-offset: 3px;
+	}
+	.vz-flyer-note {
+		position: absolute;
+		bottom: -1.1rem;
+		right: -0.4rem;
+		margin: 0;
+		color: var(--pink);
+		font-weight: 600;
+		transform: rotate(-4deg);
+	}
+
+	/* Manifesto strips */
+	.vz-manifesto {
+		background: var(--ink);
+		color: var(--paper);
+		padding: 3.5rem 1.25rem;
+		transform: rotate(-0.4deg);
+		margin: 2rem -0.5rem 0;
+	}
+	.vz-section-inv {
+		justify-content: center;
+	}
+	.vz-section-inv mark {
+		background: var(--pink);
+		color: var(--ink);
+	}
+	.vz-strips {
+		list-style: none;
+		margin: 0 auto;
+		padding: 0;
+		max-width: 44rem;
+		display: flex;
+		flex-direction: column;
+		gap: 0.9rem;
+	}
+	.vz-strips li {
+		background: var(--paper);
+		color: var(--ink);
+		padding: 0.85rem 1.2rem;
+		transform: rotate(var(--rot, 0deg));
+		font-size: 0.98rem;
+		box-shadow: 3px 3px 0 rgba(255, 255, 255, 0.18);
+	}
+	.vz-strips strong {
+		font-family: "Anton", sans-serif;
+		text-transform: uppercase;
+		letter-spacing: 0.03em;
+		font-weight: 400;
+	}
+
+	/* Services */
+	.vz-services {
+		position: relative;
+		max-width: 66rem;
+		margin: 0 auto;
+		padding: 3.5rem 1.25rem 2rem;
+	}
+	.vz-svc-grid {
+		display: grid;
+		gap: 1.25rem;
+	}
+	@media (min-width: 750px) {
+		.vz-svc-grid {
+			grid-template-columns: repeat(2, 1fr);
+		}
+	}
+	.vz-svc {
+		border: 2px dashed var(--ink);
+		padding: 1.2rem 1.3rem;
+		background: #fff;
+	}
+	.vz-svc h3 {
+		margin: 0 0 0.4rem;
+		font-family: "Anton", sans-serif;
+		font-size: 1.25rem;
+		text-transform: uppercase;
+		font-weight: 400;
+	}
+	.vz-svc p {
+		margin: 0;
+		font-size: 0.9rem;
+		line-height: 1.5;
+	}
+	.vz-svc-more {
+		margin: 1.75rem 0 0;
+		text-align: right;
+		font-family: "Caveat", cursive;
+		font-size: 1.5rem;
+		font-weight: 600;
+	}
+	.vz-svc-more a {
+		text-decoration: underline;
+		text-decoration-style: wavy;
+		text-underline-offset: 4px;
+	}
+	.vz-svc-more a:hover {
+		background: var(--hl);
+	}
+
+	/* Coupon */
+	.vz-coupon-wrap {
+		max-width: 44rem;
+		margin: 2.5rem auto 0;
+		padding: 0 1.25rem;
+	}
+	.vz-coupon {
+		display: grid;
+		grid-template-columns: 1fr auto;
+		border: 3px solid var(--ink);
+		background: var(--hl);
+		outline: 2px dashed var(--ink);
+		outline-offset: -8px;
+		transform: rotate(0.8deg);
+	}
+	.vz-coupon-left {
+		padding: 1.6rem 1.5rem;
+	}
+	.vz-coupon-kicker {
+		margin: 0 0 0.35rem;
+		font-size: 0.72rem;
+		font-weight: 700;
+		letter-spacing: 0.3em;
+	}
+	.vz-coupon-big {
+		margin: 0 0 0.6rem;
+		font-family: "Anton", sans-serif;
+		font-size: clamp(1.8rem, 6vw, 2.6rem);
+		line-height: 1;
+	}
+	.vz-coupon-fine {
+		margin: 0;
+		font-size: 0.8rem;
+		line-height: 1.45;
+	}
+	.vz-coupon-fine a {
+		font-weight: 700;
+	}
+	.vz-coupon-right {
+		display: grid;
+		place-items: center;
+		gap: 0.25rem;
+		border-left: 2px dashed var(--ink);
+		padding: 1rem 1.25rem;
+	}
+	.vz-coupon-hand {
+		margin: 0;
+		text-align: center;
+		font-weight: 700;
+		transform: rotate(-5deg);
+	}
+	.vz-scissors {
+		width: 2.5rem;
+		height: 2.5rem;
+	}
+
+	/* Footer */
+	.vz-footer {
+		max-width: 62rem;
+		margin: 3rem auto 0;
+		padding: 1.5rem 1.25rem 0;
+		border-top: 3px solid var(--ink);
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		gap: 0.5rem 2rem;
+		font-size: 0.85rem;
+	}
+	.vz-footer a {
+		text-decoration: underline;
+		text-decoration-style: wavy;
+		text-decoration-color: var(--pink);
+		text-underline-offset: 3px;
+	}
+</style>

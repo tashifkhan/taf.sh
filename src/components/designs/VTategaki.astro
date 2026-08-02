@@ -1,0 +1,546 @@
+---
+/**
+ * Tategaki — Japanese minimalism. Vertical text, sumi ink, vermilion hanko,
+ * vast negative space. Quiet precision over persuasion.
+ */
+import "@fontsource/shippori-mincho/400.css";
+import "@fontsource/shippori-mincho/500.css";
+import "@fontsource/shippori-mincho/700.css";
+import { products, services, stats } from "./data";
+
+const jp = ["味方", "証拠", "診療所"];
+---
+
+<div class="vt">
+	<!-- vertical decorative columns -->
+	<div class="vt-col vt-col-l" aria-hidden="true">
+		<span>一人で、全部。</span>
+	</div>
+	<div class="vt-col vt-col-r" aria-hidden="true">
+		<span>設計　実装　運用</span>
+	</div>
+
+	<header class="vt-head">
+		<div class="vt-brand">
+			<span class="vt-hanko" aria-hidden="true">田</span>
+			<span class="vt-wordmark">taf.sh</span>
+		</div>
+		<nav class="vt-nav">
+			<a href="#vt-works">仕事</a>
+			<a href="/services">Services</a>
+			<a href="/about">About</a>
+			<a href="/contact">Contact</a>
+		</nav>
+	</header>
+
+	<!-- Hero -->
+	<section class="vt-hero">
+		<div class="vt-hero-vertical" aria-hidden="true">
+			<span>ソフトウェアを、ひとりで作る。</span>
+		</div>
+		<div class="vt-hero-main">
+			<p class="vt-kicker">独立したソフトウェア・スタジオ</p>
+			<h1>
+				One person,<br />
+				the whole stack.
+			</h1>
+			<p class="vt-hero-sub">
+				taf.sh is the independent studio of Tashif. Products designed,
+				built, and operated end to end — and a small number of consulting
+				engagements each season.
+			</p>
+			<p class="vt-hero-cta">
+				<a href="/contact">Correspondence →</a>
+			</p>
+		</div>
+	</section>
+
+	<!-- ink stroke divider -->
+	<div class="vt-stroke" aria-hidden="true">
+		<svg viewBox="0 0 600 24" preserveAspectRatio="none">
+			<path
+				d="M4 14 C 120 6, 260 20, 380 10 S 560 14, 596 12"
+				fill="none"
+				stroke="currentColor"
+				stroke-width="2.5"
+				stroke-linecap="round"
+				opacity="0.55"></path>
+		</svg>
+	</div>
+
+	<!-- Products -->
+	<section class="vt-works" id="vt-works">
+		<h2 class="vt-section-title">
+			<span class="vt-section-jp" aria-hidden="true">作品</span>
+			Works
+		</h2>
+		<div class="vt-work-list">
+			{
+				products.map((p, i) => (
+					<a href={p.href} class="vt-work">
+						<span class="vt-work-jp" aria-hidden="true">{jp[i]}</span>
+						<span class="vt-work-no">{p.index}</span>
+						<span class="vt-work-body">
+							<span class="vt-work-name">{p.name}</span>
+							<span class="vt-work-desc">{p.desc}</span>
+						</span>
+						<span class="vt-work-status">{p.status}</span>
+					</a>
+				))
+			}
+		</div>
+	</section>
+
+	<!-- Quiet stats -->
+	<section class="vt-stats">
+		{
+			stats.map((s) => (
+				<div class="vt-stat">
+					<span class="vt-stat-v">{s.value}</span>
+					<span class="vt-stat-l">{s.label}</span>
+				</div>
+			))
+		}
+	</section>
+
+	<!-- Services -->
+	<section class="vt-services">
+		<h2 class="vt-section-title">
+			<span class="vt-section-jp" aria-hidden="true">奉仕</span>
+			Services
+		</h2>
+		<div class="vt-svc-list">
+			{
+				services.map((s, i) => (
+					<div class="vt-svc">
+						<span class="vt-svc-no">{["一", "二", "三", "四"][i]}</span>
+						<div>
+							<h3>{s.title}</h3>
+							<p>{s.body}</p>
+						</div>
+					</div>
+				))
+			}
+		</div>
+		<p class="vt-svc-more">
+			<a href="/services">All services →</a>
+		</p>
+	</section>
+
+	<!-- CTA -->
+	<section class="vt-cta">
+		<span class="vt-hanko vt-hanko-big" aria-hidden="true">田</span>
+		<h2>Correspondence</h2>
+		<p>
+			One inbox, one human. Write about what you are building; expect a reply
+			within a day or two.
+		</p>
+		<p class="vt-cta-links">
+			<a href="/contact">taf.sh/contact</a>
+			<span aria-hidden="true">·</span>
+			<a href="mailto:me@tashif.codes">me@tashif.codes</a>
+		</p>
+	</section>
+
+	<footer class="vt-foot">
+		<span>©2026 taf.sh</span>
+		<span class="vt-foot-jp" aria-hidden="true">盛夏</span>
+		<span>
+			<a href="https://github.com/tashifkhan" target="_blank" rel="noopener noreferrer">GitHub</a>
+			·
+			<a href="https://tashif.codes" target="_blank" rel="noopener noreferrer">tashif.codes</a>
+		</span>
+	</footer>
+</div>
+
+<style>
+	.vt {
+		--paper: #f6f4ee;
+		--ink: #2a2721;
+		--ink-soft: #6d675b;
+		--ink-faint: #a9a294;
+		--vermilion: #b5452c;
+		--hairline: #d8d2c4;
+		position: relative;
+		background: var(--paper);
+		color: var(--ink);
+		font-family: "Shippori Mincho", "Hiragino Mincho ProN", "Yu Mincho", serif;
+		font-size: 1rem;
+		line-height: 1.7;
+		min-height: 100vh;
+	}
+	.vt a {
+		color: inherit;
+		text-decoration-color: var(--ink-faint);
+		text-underline-offset: 3px;
+		transition: color 0.2s ease;
+	}
+	.vt a:hover {
+		color: var(--vermilion);
+	}
+
+	/* decorative vertical columns */
+	.vt-col {
+		position: absolute;
+		top: 6rem;
+		writing-mode: vertical-rl;
+		font-size: 0.78rem;
+		letter-spacing: 0.5em;
+		color: var(--ink-faint);
+		user-select: none;
+	}
+	.vt-col-l {
+		left: max(1rem, calc(50% - 44rem));
+	}
+	.vt-col-r {
+		right: max(1rem, calc(50% - 44rem));
+	}
+	@media (max-width: 1100px) {
+		.vt-col {
+			display: none;
+		}
+	}
+
+	/* Header */
+	.vt-head {
+		max-width: 56rem;
+		margin: 0 auto;
+		padding: 2rem 1.5rem 0;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1rem;
+	}
+	.vt-brand {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+	}
+	.vt-hanko {
+		display: inline-grid;
+		place-items: center;
+		width: 2rem;
+		height: 2rem;
+		background: var(--vermilion);
+		color: var(--paper);
+		font-size: 1.05rem;
+		line-height: 1;
+		border-radius: 2px;
+		box-shadow: 1px 1px 0 rgba(42, 39, 33, 0.25);
+	}
+	.vt-wordmark {
+		font-size: 1.05rem;
+		letter-spacing: 0.08em;
+	}
+	.vt-nav {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.4rem 1.5rem;
+		font-size: 0.85rem;
+	}
+	.vt-nav a {
+		text-decoration: none;
+		border-bottom: 1px solid transparent;
+		padding-bottom: 0.15rem;
+	}
+	.vt-nav a:hover {
+		border-color: var(--vermilion);
+	}
+
+	/* Hero */
+	.vt-hero {
+		max-width: 56rem;
+		margin: 0 auto;
+		padding: 6rem 1.5rem 5rem;
+		display: grid;
+		gap: 2.5rem;
+	}
+	@media (min-width: 760px) {
+		.vt-hero {
+			grid-template-columns: auto 1fr;
+			gap: 4.5rem;
+		}
+	}
+	.vt-hero-vertical {
+		writing-mode: vertical-rl;
+		font-size: 1rem;
+		letter-spacing: 0.45em;
+		color: var(--ink-soft);
+		border-left: 1px solid var(--hairline);
+		padding-left: 1.5rem;
+		user-select: none;
+	}
+	@media (max-width: 759px) {
+		.vt-hero-vertical {
+			writing-mode: horizontal-tb;
+			border-left: none;
+			border-bottom: 1px solid var(--hairline);
+			padding: 0 0 1rem;
+			letter-spacing: 0.3em;
+		}
+	}
+	.vt-kicker {
+		margin: 0 0 1.5rem;
+		font-size: 0.78rem;
+		letter-spacing: 0.3em;
+		color: var(--vermilion);
+	}
+	.vt-hero h1 {
+		margin: 0;
+		font-weight: 500;
+		font-size: clamp(2.4rem, 6vw, 4rem);
+		line-height: 1.18;
+		letter-spacing: 0.02em;
+	}
+	.vt-hero-sub {
+		margin: 1.75rem 0 0;
+		max-width: 30rem;
+		color: var(--ink-soft);
+		font-size: 0.98rem;
+	}
+	.vt-hero-cta {
+		margin: 2.25rem 0 0;
+		font-size: 0.95rem;
+	}
+	.vt-hero-cta a {
+		text-decoration: none;
+		border-bottom: 1px solid var(--ink);
+		padding-bottom: 0.2rem;
+	}
+
+	/* ink stroke */
+	.vt-stroke {
+		max-width: 40rem;
+		margin: 0 auto;
+		padding: 0 1.5rem;
+		color: var(--ink);
+	}
+	.vt-stroke svg {
+		display: block;
+		width: 100%;
+		height: 1.5rem;
+	}
+
+	/* Sections */
+	.vt-section-title {
+		display: flex;
+		align-items: baseline;
+		gap: 1rem;
+		margin: 0 0 2.75rem;
+		font-size: 1.05rem;
+		font-weight: 500;
+		letter-spacing: 0.25em;
+		text-transform: uppercase;
+	}
+	.vt-section-jp {
+		font-size: 0.85rem;
+		color: var(--vermilion);
+		letter-spacing: 0.35em;
+	}
+
+	/* Works */
+	.vt-works {
+		max-width: 56rem;
+		margin: 0 auto;
+		padding: 4.5rem 1.5rem 1rem;
+	}
+	.vt-work-list {
+		border-top: 1px solid var(--hairline);
+	}
+	.vt-work {
+		position: relative;
+		display: grid;
+		grid-template-columns: 2.5rem 1fr;
+		gap: 0.5rem 1.75rem;
+		padding: 1.9rem 0.25rem;
+		border-bottom: 1px solid var(--hairline);
+		text-decoration: none;
+	}
+	@media (min-width: 700px) {
+		.vt-work {
+			grid-template-columns: 2.5rem 1fr auto;
+			align-items: baseline;
+		}
+	}
+	.vt-work:hover .vt-work-name {
+		color: var(--vermilion);
+	}
+	.vt-work-jp {
+		position: absolute;
+		right: 0.25rem;
+		top: 50%;
+		transform: translateY(-50%);
+		writing-mode: vertical-rl;
+		font-size: 0.7rem;
+		letter-spacing: 0.18em;
+		line-height: 1;
+		color: var(--ink-faint);
+		user-select: none;
+	}
+	@media (max-width: 900px) {
+		.vt-work-jp {
+			display: none;
+		}
+	}
+	.vt-work-no {
+		font-size: 0.8rem;
+		color: var(--ink-faint);
+		padding-top: 0.3rem;
+	}
+	.vt-work-name {
+		display: block;
+		font-size: 1.35rem;
+		font-weight: 500;
+		transition: color 0.2s ease;
+	}
+	.vt-work-desc {
+		display: block;
+		margin-top: 0.4rem;
+		max-width: 32rem;
+		font-size: 0.88rem;
+		color: var(--ink-soft);
+	}
+	.vt-work-status {
+		font-size: 0.75rem;
+		letter-spacing: 0.2em;
+		text-transform: uppercase;
+		color: var(--ink-faint);
+		padding-right: 4.5rem;
+		white-space: nowrap;
+	}
+
+	/* Stats */
+	.vt-stats {
+		max-width: 56rem;
+		margin: 0 auto;
+		padding: 4rem 1.5rem 1rem;
+		display: grid;
+		gap: 2.5rem;
+	}
+	@media (min-width: 640px) {
+		.vt-stats {
+			grid-template-columns: repeat(3, 1fr);
+		}
+	}
+	.vt-stat {
+		border-left: 1px solid var(--hairline);
+		padding-left: 1.5rem;
+	}
+	.vt-stat-v {
+		display: block;
+		font-size: 2.6rem;
+		font-weight: 400;
+		line-height: 1.1;
+	}
+	.vt-stat-l {
+		display: block;
+		margin-top: 0.4rem;
+		font-size: 0.8rem;
+		letter-spacing: 0.12em;
+		color: var(--ink-soft);
+	}
+
+	/* Services */
+	.vt-services {
+		max-width: 56rem;
+		margin: 0 auto;
+		padding: 4.5rem 1.5rem 1rem;
+	}
+	.vt-svc-list {
+		display: grid;
+		gap: 2.25rem;
+	}
+	@media (min-width: 700px) {
+		.vt-svc-list {
+			grid-template-columns: repeat(2, 1fr);
+			gap: 2.5rem 3.5rem;
+		}
+	}
+	.vt-svc {
+		display: flex;
+		gap: 1.25rem;
+	}
+	.vt-svc-no {
+		flex: 0 0 auto;
+		display: grid;
+		place-items: center;
+		width: 2.1rem;
+		height: 2.1rem;
+		border: 1px solid var(--ink-faint);
+		border-radius: 50%;
+		font-size: 0.85rem;
+		color: var(--ink-soft);
+	}
+	.vt-svc h3 {
+		margin: 0 0 0.35rem;
+		font-size: 1.05rem;
+		font-weight: 500;
+	}
+	.vt-svc p {
+		margin: 0;
+		font-size: 0.88rem;
+		color: var(--ink-soft);
+	}
+	.vt-svc-more {
+		margin: 2.75rem 0 0;
+		font-size: 0.9rem;
+	}
+	.vt-svc-more a {
+		text-decoration: none;
+		border-bottom: 1px solid var(--ink);
+		padding-bottom: 0.2rem;
+	}
+
+	/* CTA */
+	.vt-cta {
+		max-width: 56rem;
+		margin: 0 auto;
+		padding: 7rem 1.5rem 6rem;
+		text-align: center;
+	}
+	.vt-hanko-big {
+		width: 3rem;
+		height: 3rem;
+		font-size: 1.6rem;
+		margin: 0 auto 1.75rem;
+	}
+	.vt-cta h2 {
+		margin: 0 0 1rem;
+		font-size: 1.6rem;
+		font-weight: 500;
+		letter-spacing: 0.2em;
+		text-transform: uppercase;
+	}
+	.vt-cta p {
+		margin: 0 auto;
+		max-width: 26rem;
+		font-size: 0.92rem;
+		color: var(--ink-soft);
+	}
+	.vt-cta-links {
+		margin-top: 1.5rem !important;
+		display: flex;
+		justify-content: center;
+		gap: 0.9rem;
+		font-size: 0.95rem !important;
+	}
+
+	/* Footer */
+	.vt-foot {
+		max-width: 56rem;
+		margin: 0 auto;
+		padding: 1.75rem 1.5rem 2.5rem;
+		border-top: 1px solid var(--hairline);
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: space-between;
+		gap: 0.5rem 1.5rem;
+		font-size: 0.78rem;
+		color: var(--ink-soft);
+	}
+	.vt-foot-jp {
+		letter-spacing: 0.4em;
+		color: var(--ink-faint);
+	}
+</style>

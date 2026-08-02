@@ -1,0 +1,545 @@
+---
+/**
+ * Broadsheet — a printed newspaper front page. Blackletter masthead,
+ * multi-column lead story, products as articles, services as classifieds.
+ */
+import "@fontsource/newsreader/400.css";
+import "@fontsource/newsreader/400-italic.css";
+import "@fontsource/newsreader/500.css";
+import "@fontsource/newsreader/600.css";
+import "@fontsource/newsreader/700.css";
+import "@fontsource/newsreader/700-italic.css";
+import "@fontsource/unifrakturmaguntia/400.css";
+import { products, services, stats, process, email } from "./data";
+
+const headlines: Record<string, { kicker: string; head: string }> = {
+	"TalentSync AI": {
+		kicker: "Hiring desk",
+		head: "Resume black box beaten at its own game",
+	},
+	"TalentSync HR": {
+		kicker: "Recruiting desk",
+		head: "Candidate scoring that shows its evidence",
+	},
+	CliniQ: {
+		kicker: "Health desk",
+		head: "Clinic drops the telephone, moves into WhatsApp",
+	},
+};
+---
+
+<div class="vb">
+	<!-- Masthead -->
+	<header class="vb-masthead">
+		<div class="vb-mast-top">
+			<span>Vol. I — No. 1</span>
+			<span>Saturday, July 25, 2026</span>
+			<span>Price: one email</span>
+		</div>
+		<h1 class="vb-nameplate">The taf.sh Gazette</h1>
+		<div class="vb-mast-sub">
+			<span>SOFTWARE · PRODUCTS · CONSULTING</span>
+			<span>Published by one engineer, somewhere remote-first in India</span>
+			<span>
+				<a href="/about">About</a> · <a href="/services">Services</a> ·
+				<a href="/contact">Contact</a>
+			</span>
+		</div>
+	</header>
+
+	<!-- Lead story -->
+	<section class="vb-lead">
+		<div class="vb-lead-main">
+			<p class="vb-kicker">Front page · Studio notes</p>
+			<h2 class="vb-lead-head">
+				Software, Designed And Shipped By One Human
+			</h2>
+			<p class="vb-byline">
+				By <strong>TASHIF</strong>, Proprietor — taf.sh wire service
+			</p>
+			<div class="vb-columns">
+				<p>
+					<span class="vb-dropcap">t</span>af.sh is the independent software
+					studio of a single engineer — a sole proprietorship that designs,
+					builds, and operates its own products, and takes on a small number
+					of consulting engagements for teams that want the same end-to-end
+					ownership. There is no account team. There is no handoff between
+					sales and delivery. The person who writes the schema also writes
+					the CSS and answers the email.
+				</p>
+				<p>
+					The studio's catalogue runs from AI-native hiring tools to a
+					clinical practice conducted entirely over WhatsApp. Each system is
+					in production, with real users, on infrastructure the proprietor
+					maintains personally. "Products, not slides," the house style
+					insists — the consulting offer is the same engineering, pointed at
+					your problem.
+				</p>
+				<p>
+					Between product work, the studio accepts select engagements:
+					zero-to-one builds, LLM pipelines with evaluation harnesses,
+					messaging automation, and fast content-driven sites — including,
+					readers may note, this very newspaper.
+				</p>
+			</div>
+		</div>
+
+		<aside class="vb-lead-side">
+			<div class="vb-box">
+				<p class="vb-box-title">By the numbers</p>
+				{
+					stats.map((s) => (
+						<div class="vb-figure">
+							<span class="vb-figure-v">{s.value}</span>
+							<span class="vb-figure-l">{s.label}</span>
+						</div>
+					))
+				}
+			</div>
+			<div class="vb-box vb-weather">
+				<p class="vb-box-title">The outlook</p>
+				<p class="vb-weather-body">
+					Availability: <em>open for select engagements</em>. Replies within a
+					day or two. No decks required; two honest paragraphs beat a polished
+					pitch.
+				</p>
+			</div>
+		</aside>
+	</section>
+
+	<!-- Products as articles -->
+	<section class="vb-articles">
+		<p class="vb-section-title">— The Product Pages —</p>
+		<div class="vb-article-grid">
+			{
+				products.map((p) => (
+					<article class="vb-article">
+						<p class="vb-kicker">
+							{headlines[p.name].kicker} · {p.status}
+						</p>
+						<h3 class="vb-article-head">{headlines[p.name].head}</h3>
+						<p class="vb-article-body">{p.desc}</p>
+						<p class="vb-continued">
+							Continued on <a href={p.href}>{p.name} →</a>
+						</p>
+					</article>
+				))
+			}
+		</div>
+	</section>
+
+	<!-- Services as classifieds -->
+	<section class="vb-classifieds">
+		<p class="vb-section-title">— Classified Advertisements —</p>
+		<div class="vb-ads">
+			{
+				services.map((s, i) => (
+					<div class="vb-ad">
+						<p class="vb-ad-no">Ad. No. {100 + i}</p>
+						<p class="vb-ad-title">{s.title.toUpperCase()}</p>
+						<p class="vb-ad-body">{s.body}</p>
+						<p class="vb-ad-reply">
+							Reply to box <a href="/contact">taf.sh/contact</a>
+						</p>
+					</div>
+				))
+			}
+		</div>
+		<div class="vb-process">
+			<p class="vb-box-title">How engagements proceed</p>
+			<ol>
+				{
+					process.map((p) => (
+						<li>
+							<strong>{p.title}.</strong> {p.body}
+						</li>
+					))
+				}
+			</ol>
+		</div>
+	</section>
+
+	<!-- CTA -->
+	<section class="vb-cta">
+		<div class="vb-cta-inner">
+			<p class="vb-kicker">Letters to the editor</p>
+			<h2 class="vb-cta-head">Have Something To Build?</h2>
+			<p class="vb-cta-body">
+				Correspondence is welcomed at{" "}
+				<a href={`mailto:${email}`}>{email}</a>. State what you're building,
+				where you're stuck, and your timeline. Replies within a day or two.
+			</p>
+			<a href="/contact" class="vb-cta-link">Write to the editor →</a>
+		</div>
+	</section>
+
+	<footer class="vb-footer">
+		<p>
+			©2026 taf.sh — a sole proprietorship · Printed on the web · Set in
+			Newsreader &amp; UnifrakturMaguntia
+		</p>
+		<p>
+			<a href="https://github.com/tashifkhan" target="_blank" rel="noopener noreferrer">GitHub</a>
+			·
+			<a href="https://tashif.codes" target="_blank" rel="noopener noreferrer">tashif.codes</a>
+		</p>
+	</footer>
+</div>
+
+<style>
+	.vb {
+		--paper: #f3efe3;
+		--paper-dim: #eae5d5;
+		--ink: #1c1913;
+		--ink-soft: #4a453a;
+		--ink-faint: #8b8474;
+		--rule: #b6ad97;
+		background: var(--paper);
+		background-image: radial-gradient(
+				ellipse at 20% 10%,
+				rgba(0, 0, 0, 0.02),
+				transparent 50%
+			),
+			radial-gradient(ellipse at 80% 90%, rgba(0, 0, 0, 0.025), transparent 50%);
+		color: var(--ink);
+		font-family: "Newsreader", Georgia, "Times New Roman", serif;
+		font-size: 1rem;
+		line-height: 1.5;
+		min-height: 100vh;
+		padding: 0 1.25rem 3rem;
+	}
+	.vb a {
+		color: var(--ink);
+		text-decoration: underline;
+		text-decoration-thickness: 1px;
+		text-underline-offset: 2px;
+	}
+	.vb a:hover {
+		background: var(--ink);
+		color: var(--paper);
+		text-decoration: none;
+	}
+
+	/* Masthead */
+	.vb-masthead {
+		max-width: 72rem;
+		margin: 0 auto;
+		padding-top: 1.5rem;
+		text-align: center;
+	}
+	.vb-mast-top {
+		display: flex;
+		justify-content: space-between;
+		gap: 1rem;
+		padding: 0.4rem 0.25rem;
+		border-top: 2px solid var(--ink);
+		border-bottom: 1px solid var(--ink);
+		font-size: 0.72rem;
+		font-style: italic;
+		color: var(--ink-soft);
+	}
+	.vb-nameplate {
+		margin: 0.6rem 0 0.5rem;
+		font-family: "UnifrakturMaguntia", "Newsreader", serif;
+		font-weight: 400;
+		font-size: clamp(2.6rem, 8vw, 5.5rem);
+		line-height: 1.05;
+		letter-spacing: 0.01em;
+	}
+	.vb-mast-sub {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		gap: 0.5rem 1.5rem;
+		padding: 0.45rem 0.25rem;
+		border-top: 1px solid var(--ink);
+		border-bottom: 3px double var(--ink);
+		font-size: 0.72rem;
+		letter-spacing: 0.06em;
+		color: var(--ink-soft);
+	}
+	.vb-mast-sub span:first-child {
+		letter-spacing: 0.18em;
+	}
+
+	/* Lead story */
+	.vb-lead {
+		max-width: 72rem;
+		margin: 0 auto;
+		display: grid;
+		gap: 2rem;
+		padding: 1.75rem 0;
+		border-bottom: 1px solid var(--rule);
+	}
+	@media (min-width: 900px) {
+		.vb-lead {
+			grid-template-columns: 1fr 16rem;
+		}
+	}
+	.vb-kicker {
+		margin: 0 0 0.5rem;
+		font-size: 0.7rem;
+		font-style: italic;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+		color: var(--ink-faint);
+	}
+	.vb-lead-head {
+		margin: 0;
+		font-size: clamp(2.1rem, 5.5vw, 3.9rem);
+		font-weight: 700;
+		line-height: 1.02;
+		letter-spacing: -0.015em;
+		font-variation-settings: "opsz" 72;
+	}
+	.vb-byline {
+		margin: 0.85rem 0 1.25rem;
+		font-size: 0.8rem;
+		font-style: italic;
+		color: var(--ink-soft);
+		border-top: 1px solid var(--rule);
+		border-bottom: 1px solid var(--rule);
+		padding: 0.4rem 0;
+	}
+	.vb-columns {
+		column-gap: 2rem;
+		font-size: 0.94rem;
+		line-height: 1.62;
+		text-align: justify;
+		hyphens: auto;
+	}
+	@media (min-width: 700px) {
+		.vb-columns {
+			columns: 3;
+		}
+	}
+	.vb-columns p {
+		margin: 0 0 0.75rem;
+	}
+	.vb-dropcap {
+		float: left;
+		font-size: 3.4rem;
+		line-height: 0.85;
+		padding: 0.25rem 0.5rem 0 0;
+		font-weight: 700;
+	}
+	.vb-lead-side {
+		display: flex;
+		flex-direction: column;
+		gap: 1.25rem;
+	}
+	.vb-box {
+		border: 1px solid var(--ink);
+		padding: 0.9rem 1rem;
+		background: var(--paper-dim);
+	}
+	.vb-box-title {
+		margin: 0 0 0.75rem;
+		font-size: 0.68rem;
+		font-weight: 700;
+		letter-spacing: 0.16em;
+		text-transform: uppercase;
+		text-align: center;
+		border-bottom: 1px solid var(--rule);
+		padding-bottom: 0.5rem;
+	}
+	.vb-figure {
+		display: flex;
+		align-items: baseline;
+		gap: 0.75rem;
+		padding: 0.4rem 0;
+		border-bottom: 1px dotted var(--rule);
+	}
+	.vb-figure:last-child {
+		border-bottom: none;
+	}
+	.vb-figure-v {
+		font-size: 1.9rem;
+		font-weight: 700;
+		font-variation-settings: "opsz" 72;
+	}
+	.vb-figure-l {
+		font-size: 0.78rem;
+		font-style: italic;
+		color: var(--ink-soft);
+	}
+	.vb-weather-body {
+		margin: 0;
+		font-size: 0.85rem;
+		line-height: 1.55;
+	}
+
+	/* Articles */
+	.vb-articles {
+		max-width: 72rem;
+		margin: 0 auto;
+		padding: 1.75rem 0;
+		border-bottom: 1px solid var(--rule);
+	}
+	.vb-section-title {
+		margin: 0 0 1.5rem;
+		text-align: center;
+		font-size: 0.85rem;
+		font-weight: 700;
+		letter-spacing: 0.28em;
+		text-transform: uppercase;
+	}
+	.vb-article-grid {
+		display: grid;
+		gap: 1.75rem;
+	}
+	@media (min-width: 800px) {
+		.vb-article-grid {
+			grid-template-columns: repeat(3, 1fr);
+		}
+		.vb-article:not(:last-child) {
+			border-right: 1px solid var(--rule);
+			padding-right: 1.75rem;
+		}
+	}
+	.vb-article-head {
+		margin: 0 0 0.6rem;
+		font-size: 1.45rem;
+		font-weight: 700;
+		line-height: 1.12;
+		font-variation-settings: "opsz" 36;
+	}
+	.vb-article-body {
+		margin: 0 0 0.75rem;
+		font-size: 0.9rem;
+		line-height: 1.6;
+		color: var(--ink-soft);
+		text-align: justify;
+		hyphens: auto;
+	}
+	.vb-continued {
+		margin: 0;
+		font-size: 0.8rem;
+		font-style: italic;
+	}
+
+	/* Classifieds */
+	.vb-classifieds {
+		max-width: 72rem;
+		margin: 0 auto;
+		padding: 1.75rem 0;
+		border-bottom: 1px solid var(--rule);
+	}
+	.vb-ads {
+		display: grid;
+		gap: 1rem;
+		margin-bottom: 1.75rem;
+	}
+	@media (min-width: 700px) {
+		.vb-ads {
+			grid-template-columns: repeat(2, 1fr);
+		}
+	}
+	@media (min-width: 1000px) {
+		.vb-ads {
+			grid-template-columns: repeat(4, 1fr);
+		}
+	}
+	.vb-ad {
+		border: 1px solid var(--ink-soft);
+		padding: 0.85rem 0.95rem;
+		background: var(--paper-dim);
+	}
+	.vb-ad-no {
+		margin: 0 0 0.4rem;
+		font-size: 0.65rem;
+		font-style: italic;
+		color: var(--ink-faint);
+	}
+	.vb-ad-title {
+		margin: 0 0 0.45rem;
+		font-size: 0.85rem;
+		font-weight: 700;
+		letter-spacing: 0.06em;
+	}
+	.vb-ad-body {
+		margin: 0 0 0.6rem;
+		font-size: 0.8rem;
+		line-height: 1.5;
+		color: var(--ink-soft);
+	}
+	.vb-ad-reply {
+		margin: 0;
+		font-size: 0.75rem;
+		font-style: italic;
+	}
+	.vb-process {
+		max-width: 44rem;
+		margin: 0 auto;
+		border: 3px double var(--ink);
+		padding: 1rem 1.5rem;
+	}
+	.vb-process ol {
+		margin: 0;
+		padding-left: 1.25rem;
+		font-size: 0.88rem;
+		line-height: 1.7;
+	}
+
+	/* CTA */
+	.vb-cta {
+		max-width: 72rem;
+		margin: 0 auto;
+		padding: 2.5rem 0;
+		border-bottom: 2px solid var(--ink);
+		text-align: center;
+	}
+	.vb-cta-inner {
+		max-width: 36rem;
+		margin: 0 auto;
+	}
+	.vb-cta-head {
+		margin: 0 0 0.85rem;
+		font-size: clamp(1.9rem, 4.5vw, 3rem);
+		font-weight: 700;
+		line-height: 1.05;
+		font-variation-settings: "opsz" 72;
+	}
+	.vb-cta-body {
+		margin: 0 0 1.25rem;
+		font-size: 0.95rem;
+		line-height: 1.65;
+		color: var(--ink-soft);
+	}
+	.vb-cta-link {
+		display: inline-block;
+		border: 1px solid var(--ink);
+		padding: 0.7rem 1.6rem;
+		font-size: 0.85rem;
+		font-weight: 700;
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+		text-decoration: none;
+	}
+	.vb-cta-link:hover {
+		background: var(--ink);
+		color: var(--paper);
+	}
+
+	/* Footer */
+	.vb-footer {
+		max-width: 72rem;
+		margin: 0 auto;
+		padding-top: 1rem;
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		gap: 0.5rem 2rem;
+		font-size: 0.72rem;
+		font-style: italic;
+		color: var(--ink-faint);
+	}
+	@media (max-width: 640px) {
+		.vb-mast-top span:last-child {
+			display: none;
+		}
+		.vb-columns {
+			text-align: left;
+		}
+	}
+</style>
