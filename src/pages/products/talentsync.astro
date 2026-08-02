@@ -1,0 +1,45 @@
+---
+import ProductPage from "../../components/ProductPage.astro";
+---
+
+<ProductPage
+	name="TalentSync AI"
+	tagline="Resume intelligence for job seekers. Connecting talent to opportunity, intelligently."
+	description="Recruiters see an average of 49 applications per job, and 93% of employers run ATS software that rejects qualified candidates over formatting. TalentSync AI gives job seekers the tools to beat that black box — instant, actionable resume feedback and ML-driven career guidance, free and unlimited."
+	status="Live"
+	url="talentsync.tashif.codes"
+	features={[
+		{
+			title: "AI-powered resume analysis",
+			body: "Instant, actionable feedback on your resume, optimized for both Applicant Tracking Systems and the human recruiters behind them.",
+		},
+		{
+			title: "Career-path prediction",
+			body: "Machine-learning models analyze your skills and experience to predict the job fields where you will be most successful.",
+		},
+		{
+			title: "Multi-format & bulk upload",
+			body: "Upload a single PDF or TXT — or a ZIP of every resume version you have. The system unpacks, parses, and analyzes them all.",
+		},
+		{
+			title: "Free & unlimited",
+			body: "The core analysis tools are free with no usage caps, so every job seeker can iterate until the resume works.",
+		},
+	]}
+	specs={[
+		{ label: "Status", value: "Live, in production" },
+		{
+			label: "URL",
+			value: "talentsync.tashif.codes",
+			href: "https://talentsync.tashif.codes",
+		},
+		{ label: "Audience", value: "Job seekers" },
+		{ label: "Pricing", value: "Free, unlimited core tools" },
+		{
+			label: "Companion",
+			value: "TalentSync HR — the recruiter side",
+			href: "/products/talentsync-hr",
+		},
+	]}
+	next={{ name: "TalentSync HR", href: "/products/talentsync-hr" }}
+/>

@@ -1,0 +1,57 @@
+---
+import ProductPage from "../../components/ProductPage.astro";
+---
+
+<ProductPage
+	name="TalentSync HR"
+	tagline="Recruiting intelligence for teams — evidence-backed hiring decisions at scale."
+	description="TalentSync HR replaces gut-feel screening with an automated intelligence pipeline: it parses job descriptions and resumes with LLMs, validates candidate claims against live external profiles, ranks applicants with multi-factor scoring, and generates per-candidate recruiter reports — all inside a multi-tenant, organization-scoped platform."
+	status="Beta"
+	url="hr.talentsync.tashif.codes"
+	features={[
+		{
+			title: "JD & resume parsing",
+			body: "Large language models extract structured requirements from raw job descriptions and structured profiles from raw resumes.",
+		},
+		{
+			title: "Evidence-backed scoring",
+			body: "Multi-factor match scoring where every point is tied to verifiable data — what the role demands vs. what the candidate has actually done.",
+		},
+		{
+			title: "External validation",
+			body: "Candidate claims are cross-referenced against live GitHub, LeetCode, Codeforces, and LinkedIn data — ground truth, not self-reports.",
+		},
+		{
+			title: "Ranked shortlists & reports",
+			body: "Per-candidate recruiter reports covering strengths, risks, gaps, and interview focus areas — a prioritized shortlist, not a pile of PDFs.",
+		},
+		{
+			title: "Multi-tenant by design",
+			body: "Organizations, role-based access control, and campaign/drive management for teams running multiple hiring loops at once.",
+		},
+		{
+			title: "Bias-resistant shortlisting",
+			body: "Scoring is requirement-driven, not name-driven — candidates are evaluated on evidence against the role.",
+		},
+	]}
+	specs={[
+		{ label: "Status", value: "Beta" },
+		{
+			label: "URL",
+			value: "hr.talentsync.tashif.codes",
+			href: "https://hr.talentsync.tashif.codes",
+		},
+		{ label: "Audience", value: "Recruiters & hiring teams" },
+		{
+			label: "Validates against",
+			value: "GitHub · LeetCode · Codeforces · LinkedIn",
+		},
+		{ label: "Model", value: "Multi-tenant, org-scoped, RBAC" },
+		{
+			label: "Companion",
+			value: "TalentSync AI — the candidate side",
+			href: "/products/talentsync",
+		},
+	]}
+	next={{ name: "CliniQ", href: "/products/cliniq" }}
+/>

@@ -1,0 +1,47 @@
+---
+import ProductPage from "../../components/ProductPage.astro";
+---
+
+<ProductPage
+	name="CliniQ"
+	tagline="A clinical practice that runs on WhatsApp — no app installs, no portals, just chat."
+	description="CliniQ brings clinic operations to the one app every patient already has. Appointments, reminders, broadcasts, and follow-ups run over WhatsApp, backed by an event-driven platform built for reliability — so doctors focus on patients, not on phone tag."
+	status="In development"
+	features={[
+		{
+			title: "WhatsApp-native patient flow",
+			body: "Patients book, reschedule, and get care instructions over WhatsApp. Nothing to install, nothing new to learn.",
+		},
+		{
+			title: "Appointments & reminders",
+			body: "A scheduler polls every 30 seconds for due reminders and broadcasts, so no-shows drop and follow-ups never slip.",
+		},
+		{
+			title: "Event-driven backbone",
+			body: "FastStream consumers over 15 Kafka topics keep chat, tasks, and notifications durable, retriable, and observable.",
+		},
+		{
+			title: "Custom WhatsApp gateway",
+			body: "A Go FFI shared library around whatsmeow owns the WhatsApp Web connection — inbound and outbound messages stream through Kafka.",
+		},
+		{
+			title: "Web & mobile clients",
+			body: "A Bun workspace serves shared TypeScript across the clinic web app and the mobile app, backed by a FastAPI + SQLModel API.",
+		},
+		{
+			title: "Operational tooling",
+			body: "A Typer CLI manages admins and the platform sender identity — built for running a real practice, not a demo.",
+		},
+	]}
+	specs={[
+		{ label: "Status", value: "In development" },
+		{ label: "API", value: "api.cliniq.tashif.codes" },
+		{ label: "Audience", value: "Clinics & private practices" },
+		{
+			label: "Stack",
+			value: "FastAPI · Kafka · PostgreSQL · Redis · Go (whatsmeow) · Bun",
+		},
+		{ label: "Channel", value: "WhatsApp (WhatsApp Web protocol)" },
+	]}
+	next={{ name: "TalentSync AI", href: "/products/talentsync" }}
+/>
