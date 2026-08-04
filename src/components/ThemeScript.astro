@@ -1,24 +1,50 @@
 ---
 /**
- * Blocking, inline: applies the stored theme override before first paint so the
- * page never flashes the wrong palette. Absent an override, CSS `color-scheme:
- * light dark` already follows the OS, so nothing is set here.
+ * Everything here is inline and sits above the stylesheet links on purpose: it
+ * is the only styling the browser has between first byte and `global.css`
+ * landing. Without it the UA paints its own defaults for that window — white
+ * canvas, blue/purple link colours — which reads as a flash of unstyled content
+ * on every navigation.
+ *
+ * The hex values duplicate `--color-background` / `--color-foreground` from
+ * `global.css`. They have to: a token defined in the stylesheet cannot colour
+ * the page before the stylesheet exists. Keep the two in sync.
  */
 ---
 
+<!-- Canvas follows the OS before any CSS parses; the script below pins it when
+     the visitor has chosen an override. -->
+<meta name="color-scheme" content="light dark" />
 <meta name="theme-color" content="#0e0d0d" data-theme-color />
+
+<style is:inline>
+	html {
+		background-color: light-dark(#f4f2f0, #0e0d0d);
+		color: light-dark(#171615, #f2f1f0);
+	}
+
+	/* Unstyled links are the purple/blue in the flash — inherit instead. */
+	a {
+		color: inherit;
+	}
+</style>
+
 <script is:inline>
 	(() => {
 		const stored = localStorage.getItem("taf-theme");
-		if (stored === "light" || stored === "dark") {
+		const override = stored === "light" || stored === "dark";
+		if (override) {
 			document.documentElement.dataset.theme = stored;
+			// `data-theme` is only wired up in global.css, so set the used value
+			// directly too — otherwise an override flashes the system palette
+			// until the stylesheet arrives.
+			document.documentElement.style.colorScheme = stored;
 		}
-		const resolved =
-			stored === "light" || stored === "dark"
-				? stored
-				: matchMedia("(prefers-color-scheme: light)").matches
-					? "light"
-					: "dark";
+		const resolved = override
+			? stored
+			: matchMedia("(prefers-color-scheme: light)").matches
+				? "light"
+				: "dark";
 		document
 			.querySelector("meta[data-theme-color]")
 			?.setAttribute("content", resolved === "light" ? "#f4f2f0" : "#0e0d0d");

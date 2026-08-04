@@ -86,6 +86,11 @@ const modes = [
 			localStorage.setItem(KEY, mode);
 		}
 
+		// ThemeScript pins `color-scheme` inline so an override is live before the
+		// stylesheet loads; that inline value outranks global.css, so it has to be
+		// kept in step here rather than left behind on the previous mode.
+		root.style.colorScheme = mode === "system" ? "" : mode;
+
 		const resolved = mode === "system" ? (media.matches ? "light" : "dark") : mode;
 		document
 			.querySelector("meta[data-theme-color]")
