@@ -37,6 +37,13 @@
 	html {
 		/* system preference by default; the toggle pins one via data-theme */
 		color-scheme: light dark;
+		/*
+		 * The root carries the background, not just the body. During a view
+		 * transition the snapshots are translated and semi-transparent, so a
+		 * transparent root would let the UA's white canvas show through the gap.
+		 * ThemeScript sets the same value inline, ahead of this file.
+		 */
+		@apply bg-background;
 		scroll-behavior: smooth;
 		/* lets height/width animate to and from `auto` */
 		interpolate-size: allow-keywords;
