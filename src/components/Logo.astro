@@ -7,8 +7,16 @@ const { class: className = "h-7 w-auto" } = Astro.props;
 ---
 
 <!-- Shell-prompt mark: pixel chevron ">" + blinking block cursor -->
+<!--
+	The width/height attributes are the CSS-less fallback, not the render size —
+	`class` overrides them the moment styles land. Without them an SVG with only a
+	viewBox lays out at 100% of its container, so the mark fills the viewport for
+	as long as the stylesheet is in flight.
+-->
 <svg
 	class={className}
+	width="42"
+	height="30"
 	viewBox="0 0 42 30"
 	fill="none"
 	xmlns="http://www.w3.org/2000/svg"

@@ -36,6 +36,7 @@ All of it is CSS — no animation library, no client router.
 
 - `src/layouts/Layout.astro` — base HTML shell (fonts, meta, Nav + Footer)
 - `src/components/` — `Nav.astro`, `Footer.astro`, `Logo.astro` (shell-prompt mark: pixel `>` chevron + blinking accent block cursor), `ProductPage.astro` (shared layout for product pages)
+- Inline `<svg>` needs `width`/`height` attributes alongside its sizing class. An SVG with only a `viewBox` lays out at 100% of its container, so while the stylesheet is in flight the mark fills the viewport; the attributes are the CSS-less fallback and the class still wins once styles land
 - `src/pages/` — `index`, `services`, `about`, `contact`, `products/{talentsync,talentsync-hr,cliniq}`, `design/` (design lab)
 - New product pages should use the `ProductPage` component to stay consistent
 
