@@ -1,5 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import CanvasEffect from "../components/canvas/CanvasEffect.astro";
 
 const traits = [
 	{
@@ -66,11 +67,31 @@ const services = [
 <Layout title="Independent software studio">
 	<!-- Hero -->
 	<section class="mx-auto max-w-6xl px-6 pt-20 pb-16 md:pt-28">
-		<h1
-			class="max-w-3xl text-4xl leading-tight font-semibold tracking-tight text-foreground md:text-6xl"
+		<!--
+			`scramble` settles the headline into place on load, then the cells only
+			react to deliberate cursor movement. The h1 stays legible throughout,
+			which is why Displacement sits here and the cipher effect does not.
+		-->
+		<CanvasEffect
+			effect="displacement"
+			class="max-w-3xl"
+			options={{
+				grid: 44,
+				radius: 0.12,
+				strength: 0.12,
+				threshold: 220,
+				shift: 0.7,
+				aberration: 0.6,
+				grain: 0.04,
+				scramble: 1.2,
+			}}
 		>
-			Software, designed and shipped by one human.
-		</h1>
+			<h1
+				class="text-4xl leading-tight font-semibold tracking-tight text-foreground md:text-6xl"
+			>
+				Software, designed and shipped by one human.
+			</h1>
+		</CanvasEffect>
 		<p class="mt-6 max-w-xl text-lg leading-8 text-secondary">
 			taf.sh is the independent studio and consultancy of Tashif — building
 			AI-native products like TalentSync and CliniQ, and helping teams ship
@@ -78,7 +99,30 @@ const services = [
 		</p>
 
 		<!-- Terminal card, opencode install-box style -->
-		<div class="mt-12 max-w-2xl border border-border bg-surface">
+		<!--
+			`passthrough` is pushed well above the 0.15 default so the card reads as
+			itself with a cipher laid over it, rather than as unreadable glyphs until
+			hovered. The decrypt circle is the accent color, resolved from the theme
+			token at runtime.
+		-->
+		<CanvasEffect
+			effect="decrypt"
+			class="mt-12 max-w-2xl"
+			options={{
+				radius: 200,
+				cell: 9,
+				aspect: 0.6,
+				colored: 0.9,
+				passthrough: 0.55,
+				scramble: 0.05,
+				scrambleSpeed: 4,
+				edgeGlow: 1.4,
+				edgeTint: 0.5,
+				aberration: 4,
+				smoothing: 0.16,
+			}}
+		>
+			<div class="border border-border bg-surface">
 			<div
 				class="flex items-center gap-2 border-b border-border px-4 py-2.5 font-mono text-xs text-muted"
 			>
@@ -119,7 +163,8 @@ const services = [
 					<span class="cursor-blink ml-1 text-accent">▌</span>
 				</p>
 			</div>
-		</div>
+			</div>
+		</CanvasEffect>
 	</section>
 
 	<!-- What is taf.sh -->
