@@ -9,6 +9,16 @@ const CANONICAL_HOST = "taf.sh";
 const API_HOST = "eu.i.posthog.com";
 const ASSET_HOST = "eu-assets.i.posthog.com";
 
+/*
+ * Versioned preview deploys (`wrangler versions upload`) are served at
+ * `<version-prefix>-taf-sh.<subdomain>.workers.dev`. Those have to answer for
+ * themselves, otherwise the canonical redirect below sends every reviewer
+ * straight to production and the preview is unreviewable. The stable
+ * `taf-sh.<subdomain>.workers.dev` alias still redirects, and previews are
+ * noindexed instead so nothing here costs us a duplicate-content hit.
+ */
+const PREVIEW_HOST = /^[0-9a-z]+-taf-sh\.[^.]+\.workers\.dev$/;
+
 interface Env {
 	ASSETS: Fetcher;
 }
@@ -24,6 +34,7 @@ function canonicalRedirect(url: URL): Response | null {
 	// Apex taf.sh is the only host that serves content.
 	// www.taf.sh and *.workers.dev (plus any other alias) 301 here.
 	if (url.hostname === CANONICAL_HOST) return null;
+	if (PREVIEW_HOST.test(url.hostname)) return null;
 
 	const target = new URL(url.toString());
 	target.protocol = "https:";
@@ -97,6 +108,18 @@ export default {
 			return proxyPostHog(request, ctx);
 		}
 
-		return env.ASSETS.fetch(request);
+		const response = await env.ASSETS.fetch(request);
+
+		if (PREVIEW_HOST.test(url.hostname)) {
+			const headers = new Headers(response.headers);
+			headers.set("X-Robots-Tag", "noindex, nofollow");
+			return new Response(response.body, {
+				status: response.status,
+				statusText: response.statusText,
+				headers,
+			});
+		}
+
+		return response;
 	},
 };
