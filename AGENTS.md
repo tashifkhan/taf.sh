@@ -24,7 +24,7 @@ taf.sh is the company/consultancy site (sole proprietorship) — multi-page, sta
 
 ## Motion
 
-All of it is CSS — no animation library, no client router.
+Every motion the site depends on is CSS — no animation library, no client router. The two Canvas UI effects on the homepage hero are the one exception, and they are decoration that most visitors never download (see below).
 
 - Navigation uses native **cross-document view transitions** (`@view-transition { navigation: auto }` in `global.css`). The page body sinks out and rises in; the sticky nav is pulled out of the root snapshot with `view-transition-name: site-nav` so it holds still
 - Product names morph between the index list and the product `<h1>`: both ends set `view-transition-name: product-<id>` plus `view-transition-class: product-title`. New product pages must pass a matching `id` to `ProductPage` and add the same `id` to the `products` array in `index.astro`
@@ -32,6 +32,17 @@ All of it is CSS — no animation library, no client router.
 - Section entrances use the `.reveal` utility — a scroll-driven animation (`animation-timeline: view()`), no IntersectionObserver. Note the `--reveal-timeline` indirection in `global.css`: without it Lightning CSS folds the timeline into the `animation` shorthand, a form browsers reject
 - Transition defaults (`180ms`, `--ease-site`) come from `@theme`, so bare `transition-colors` utilities are already on-brand
 - Everything above is disabled under `prefers-reduced-motion: reduce`, in CSS and in the theme-toggle script
+
+## Canvas UI effects
+
+Two WebGL effects run on the homepage hero: Displacement on the `<h1>`, DecryptReveal on the terminal card. Both come from [Canvas UI](https://canvasui.dev), vendored into `src/lib/canvas-ui/` because the library ships shadcn-style rather than as an npm package. `src/lib/canvas-ui/README.md` records what was changed and why. Do not reformat those files.
+
+- Both need the experimental html-in-canvas API, so they run only in Chrome with `chrome://flags/#canvas-draw-element` or an origin trial token. Every other browser gets the plain HTML, untouched. That is the intended fallback, not a degraded one
+- `src/components/canvas/CanvasEffect.astro` is the only entry point. It probes for support with a local copy of the check so the effect modules stay behind a dynamic import — an unsupported browser downloads ~3.8kB and stops, never the ~27kB of shader chunks
+- The wrapper pins its own height and syncs it with a `ResizeObserver`, because content moves into an absolutely positioned canvas. Upstream instead stretches to `height: 100%` and assumes a fixed-size caller
+- DecryptReveal's `color` and `background` options are resolved from `--color-accent` and `--color-background` at runtime through a throwaway probe span, since reading a `light-dark()` custom property returns the unresolved function. They are re-pushed when `data-theme` changes. Do not hardcode hex here either
+- Never wrap an element that carries a `view-transition-name` — the product `<h1>` morph breaks if its element moves into a canvas
+- Reduced motion skips the upgrade entirely
 
 ## Structure
 
