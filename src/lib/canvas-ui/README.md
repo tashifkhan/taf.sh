@@ -15,9 +15,13 @@ Using them inside this site is explicitly allowed.
 | `rect-cache.ts` | `src/lib/rect-cache.ts` |
 | `DecryptRevealVanilla.ts` | `src/lib/DecryptReveal/DecryptRevealVanilla.ts` |
 | `DisplacementVanilla.ts` | `src/lib/Displacement/DisplacementVanilla.ts` |
+| `GlyphRainVanilla.ts` | `src/lib/GlyphRain/GlyphRainVanilla.ts` |
+| `GridVanilla.ts` | `src/lib/Grid/GridVanilla.ts` |
+| `RetroDitherVanilla.ts` | `src/lib/RetroDither/RetroDitherVanilla.ts` |
 
 Only the `rect-cache` import path changed, from `../rect-cache` to
 `./rect-cache`, since the flat layout here drops the per-component folders.
+`GlyphRainVanilla.ts` has no imports at all and is byte-identical to upstream.
 Do not reformat these files. Keeping them byte-identical to upstream apart from
 that one line is what makes re-pulling a fix from upstream a diff instead of a
 merge.
