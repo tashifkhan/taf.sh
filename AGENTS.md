@@ -35,12 +35,14 @@ Every motion the site depends on is CSS — no animation library, no client rout
 
 ## Canvas UI effects
 
-Two WebGL effects run on the homepage hero: Displacement on the `<h1>`, DecryptReveal on the terminal card. Both come from [Canvas UI](https://canvasui.dev), vendored into `src/lib/canvas-ui/` because the library ships shadcn-style rather than as an npm package. `src/lib/canvas-ui/README.md` records what was changed and why. Do not reformat those files.
+Five WebGL effects run on the site: Displacement on the homepage `<h1>`, DecryptReveal on the homepage terminal card, and one ambient effect per product page body — RetroDither on TalentSync AI, Grid on TalentSync HR, GlyphRain on CliniQ. All come from [Canvas UI](https://canvasui.dev), vendored into `src/lib/canvas-ui/` because the library ships shadcn-style rather than as an npm package. `src/lib/canvas-ui/README.md` records what was changed and why. Do not reformat those files.
 
-- Both need the experimental html-in-canvas API, so they run only in Chrome with `chrome://flags/#canvas-draw-element` or an origin trial token. Every other browser gets the plain HTML, untouched. That is the intended fallback, not a degraded one
-- `src/components/canvas/CanvasEffect.astro` is the only entry point. It probes for support with a local copy of the check so the effect modules stay behind a dynamic import — an unsupported browser downloads ~3.8kB and stops, never the ~27kB of shader chunks
+- Product pages pick theirs with `ProductPage`'s `bodyEffect` prop; the tuning lives in `BODY_OPTIONS` in that file. All three sit over running text, so they run well below their upstream defaults — `baseStrength: 0`, `idleRipples: 0` and `dim: 0.12` respectively, each chosen so the page is legible at rest and only reacts under the pointer
+- All of them need the experimental html-in-canvas API, so they run only in Chrome with `chrome://flags/#canvas-draw-element` or an origin trial token. Every other browser gets the plain HTML, untouched. That is the intended fallback, not a degraded one
+- `src/components/canvas/CanvasEffect.astro` is the only entry point. It probes for support with a local copy of the check so the effect modules stay behind a dynamic import — an unsupported browser downloads ~2kB and stops, never the ~5kB shader chunk for that page
 - The wrapper pins its own height and syncs it with a `ResizeObserver`, because content moves into an absolutely positioned canvas. Upstream instead stretches to `height: 100%` and assumes a fixed-size caller
-- DecryptReveal's `color` and `background` options are resolved from `--color-accent` and `--color-background` at runtime through a throwaway probe span, since reading a `light-dark()` custom property returns the unresolved function. They are re-pushed when `data-theme` changes. Do not hardcode hex here either
+- Colors are resolved from the CSS tokens at runtime through a throwaway probe span, since reading a `light-dark()` custom property returns the unresolved function. They are re-pushed when `data-theme` changes. Do not hardcode hex here either. GlyphRain, Grid and RetroDither want `[r, g, b]` floats rather than CSS strings, which is what `resolveTriplet` is for
+- The six `*Object` components in Canvas UI are the only ones that work without the flag, and every one of them imports three.js. That is roughly 170kB gzipped against a 3.6kB page, so they stay out
 - Never wrap an element that carries a `view-transition-name` — the product `<h1>` morph breaks if its element moves into a canvas
 - Reduced motion skips the upgrade entirely
 
