@@ -1,5 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import CanvasEffect from "./canvas/CanvasEffect.astro";
 
 interface Feature {
 	title: string;
@@ -12,6 +13,69 @@ interface Spec {
 	href?: string;
 }
 
+/**
+ * Effect for the page body. Each product gets one that reads as its own
+ * subject: dither for the document-decoding product, a coordinate grid for the
+ * ranking one, a falling glyph stream for the messaging one.
+ */
+type BodyEffect = "retro-dither" | "grid" | "glyph-rain";
+
+const BODY_OPTIONS: Record<BodyEffect, Record<string, number | string>> = {
+	/*
+	 * baseStrength stays at 0 so the page is only dithered under the cursor.
+	 * Raising it would halftone every paragraph at rest and cost readability
+	 * across a body this text-heavy.
+	 */
+	"retro-dither": {
+		radius: 0.34,
+		softness: 1,
+		pixelSize: 2,
+		levels: 4,
+		strength: 0.55,
+		baseStrength: 0,
+		contrast: 0.5,
+		colorize: 0,
+		trail: 0.35,
+		followSpeed: 3,
+	},
+	/*
+	 * idleRipples stays at 0, so tiles are flat until the pointer moves over
+	 * them. amplitude and liftHeight are well under the defaults because the
+	 * tiles here carry running text rather than a poster.
+	 */
+	grid: {
+		tileSize: 190,
+		amplitude: 1.1,
+		waveSpeed: 0.4,
+		frequency: 9,
+		waveWidth: 0.05,
+		maxLift: 0.6,
+		liftHeight: 26,
+		tilt: 0.6,
+		shading: 0.04,
+		tintStrength: 0.12,
+		idleRipples: 0,
+	},
+	/*
+	 * dim is far below the 0.5 default: the glyph stream is an overlay and the
+	 * text underneath has to stay the brightest thing on the page.
+	 */
+	"glyph-rain": {
+		cell: 13,
+		speed: 0.16,
+		density: 0.07,
+		trail: 0.6,
+		glow: 1.2,
+		layers: 2,
+		dim: 0.12,
+		light: 1.6,
+		lightRadius: 260,
+		relief: 0.03,
+		stir: 0.5,
+		settle: 0.92,
+	},
+};
+
 interface Props {
 	/** Slug shared with the index list — drives the shared-element morph. */
 	id: string;
@@ -23,10 +87,22 @@ interface Props {
 	features: Feature[];
 	specs: Spec[];
 	next: { name: string; href: string };
+	/** Ambient effect for the body sections below the header. */
+	bodyEffect: BodyEffect;
 }
 
-const { id, name, tagline, description, status, url, features, specs, next } =
-	Astro.props;
+const {
+	id,
+	name,
+	tagline,
+	description,
+	status,
+	url,
+	features,
+	specs,
+	next,
+	bodyEffect,
+} = Astro.props;
 ---
 
 <Layout title={name} description={tagline}>
@@ -83,6 +159,12 @@ const { id, name, tagline, description, status, url, features, specs, next } =
 			}
 		</header>
 
+		<!--
+			The wrapper starts below the header on purpose. The <h1> above carries
+			view-transition-name, and moving it into a canvas would break the morph
+			from the index list.
+		-->
+		<CanvasEffect effect={bodyEffect} options={BODY_OPTIONS[bodyEffect]}>
 		<!-- Features -->
 		<section class="reveal mt-20 border-t border-border pt-16">
 			<h2 class="text-2xl font-semibold tracking-tight text-foreground">
@@ -154,5 +236,6 @@ const { id, name, tagline, description, status, url, features, specs, next } =
 				>
 			</a>
 		</footer>
+		</CanvasEffect>
 	</article>
 </Layout>
