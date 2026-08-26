@@ -14,7 +14,7 @@
  */
 interface Props {
 	/** Which vendored effect to run. */
-	effect: "decrypt" | "displacement";
+	effect: "decrypt" | "displacement" | "glyph-rain" | "grid" | "retro-dither";
 	/** Passed through to the effect's own options object. */
 	options?: Record<string, number | string>;
 	class?: string;
@@ -92,12 +92,38 @@ const { effect, options = {}, class: className } = Astro.props;
 		return value;
 	}
 
+	/*
+	 * GlyphRain, Grid and RetroDither take colors as [r, g, b] floats rather than
+	 * CSS strings, so the resolved `rgb(...)` has to be pulled apart and scaled.
+	 */
+	function resolveTriplet(host: HTMLElement, token: string): [number, number, number] {
+		const parts = resolveToken(host, token).match(/[\d.]+/g) ?? [];
+		const [r = 0, g = 0, b = 0] = parts.slice(0, 3).map(Number);
+		return [r / 255, g / 255, b / 255];
+	}
+
 	function themedOptions(root: HTMLElement, effect: string) {
-		if (effect !== "decrypt") return {};
-		return {
-			color: resolveToken(root, "--color-accent"),
-			background: resolveToken(root, "--color-background"),
-		};
+		const accent = () => resolveToken(root, "--color-accent");
+		const accentTriplet = () => resolveTriplet(root, "--color-accent");
+
+		switch (effect) {
+			case "decrypt":
+				return {
+					color: accent(),
+					background: resolveToken(root, "--color-background"),
+				};
+			case "glyph-rain":
+				return { color: accentTriplet(), headColor: accentTriplet() };
+			case "grid":
+				return { tint: accentTriplet() };
+			case "retro-dither":
+				return {
+					darkColor: resolveTriplet(root, "--color-background"),
+					lightColor: resolveTriplet(root, "--color-foreground"),
+				};
+			default:
+				return {};
+		}
 	}
 
 	async function loadEffect(effect: string) {
@@ -108,6 +134,14 @@ const { effect, options = {}, class: className } = Astro.props;
 			case "displacement":
 				return (await import("../../lib/canvas-ui/DisplacementVanilla"))
 					.createDisplacement;
+			case "glyph-rain":
+				return (await import("../../lib/canvas-ui/GlyphRainVanilla"))
+					.createGlyphRain;
+			case "grid":
+				return (await import("../../lib/canvas-ui/GridVanilla")).createGrid;
+			case "retro-dither":
+				return (await import("../../lib/canvas-ui/RetroDitherVanilla"))
+					.createRetroDither;
 			default:
 				return null;
 		}
