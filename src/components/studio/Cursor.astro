@@ -1,0 +1,11 @@
+---
+---
+
+<!-- Pointer follower. Only fine pointers with motion allowed ever see it. -->
+<div
+	class="pointer-events-none fixed top-0 left-0 z-90 -mt-1.5 -ml-1.5 hidden size-3 translate-x-(--cx,-100px) translate-y-(--cy,-100px) place-items-center rounded-full border border-foreground mix-blend-difference transition-[width,height,margin,background-color,border-color,opacity] duration-350 ease-expo pointer-fine:motion-safe:grid [&.is-hidden]:opacity-0 [&.is-hover]:-mt-4.5 [&.is-hover]:-ml-4.5 [&.is-hover]:size-9 [&.is-hover]:border-accent [&.is-hover]:mix-blend-normal [&.is-label]:-mt-8 [&.is-label]:-ml-8 [&.is-label]:size-16 [&.is-label]:border-accent [&.is-label]:bg-accent [&.is-label]:mix-blend-normal"
+	data-cursor-dot
+	aria-hidden="true"
+>
+	<span class="font-mono text-[0.6875rem] text-accent-contrast opacity-0 transition-opacity in-[.is-label]:opacity-100" data-cursor-label></span>
+</div>

@@ -1,0 +1,130 @@
+---
+import Logo from "../Logo.astro";
+import { email } from "./data";
+import { wrap, kicker, btn, btnLg, btnAccent, btnArrow, card, dot, live } from "./ui";
+
+interface Props { cta?: boolean; }
+const { cta = true } = Astro.props;
+
+const columns = [
+	{
+		title: "Selected work",
+		links: [
+			{ href: "/products/talentsync", label: "TalentSync AI" },
+			{ href: "/products/talentsync-hr", label: "TalentSync HR" },
+			{ href: "/products/rah-clinic", label: "rah.clinic" },
+			{ href: "/products/systematic-reasoning", label: "Systematic Reasoning" },
+		],
+	},
+	{
+		title: "Studio",
+		links: [
+			{ href: "/services", label: "Services" },
+			{ href: "/about", label: "About" },
+			{ href: "/contact", label: "Contact" },
+			{ href: "/#work", label: "Work" },
+		],
+	},
+	{
+		title: "Elsewhere",
+		links: [
+			{ href: "https://github.com/tashifkhan", label: "GitHub ↗" },
+			{ href: "https://linkedin.com/in/tashifkhan", label: "LinkedIn ↗" },
+			{ href: "https://tashif.codes", label: "tashif.codes ↗" },
+			{ href: "https://tashif.codes/blog", label: "tashif.codes/blog ↗" },
+		],
+	},
+];
+const external = (href: string) => (href.startsWith("http") ? { target: "_blank", rel: "noopener noreferrer" } : {});
+---
+
+<footer class="relative overflow-hidden pt-16 sm:pt-24">
+	<div class={wrap}>
+		<!-- The last call to action: the address itself is the button. -->
+		{cta && <div class:list={[card, "grid gap-8 p-7 sm:p-10 lg:grid-cols-[1fr_auto] lg:items-end"]}>
+			<div>
+				<span class={kicker}>Have something to build?</span>
+				<a
+					href={`mailto:${email}`}
+					class="group mt-4 flex w-fit items-baseline gap-3 font-display text-[clamp(2.25rem,6.5vw,4.75rem)] leading-none font-semibold tracking-[-0.045em] text-foreground transition-colors hover:text-accent"
+					data-magnetic
+				>
+					{email}
+					<span class="text-[0.55em] text-accent transition-transform duration-500 ease-expo group-hover:translate-x-2 group-hover:-translate-y-1">↗</span>
+				</a>
+				<p class="mt-4 max-w-md text-[0.9375rem] leading-relaxed text-secondary">
+					Replies come from me, usually within a day or two. A sentence about what
+					you're building is enough to start.
+				</p>
+			</div>
+			<div class="flex flex-col gap-4 lg:items-end">
+				<p class={live}><span class={dot}></span> accepting work</p>
+				<a href="/contact" class:list={[btn, btnLg, btnAccent]}>
+					Start a project <span class={btnArrow} aria-hidden="true">→</span>
+				</a>
+			</div>
+		</div>}
+
+		<div class="mt-14 grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
+			<div>
+				<a href="/" class="inline-flex items-center gap-3 font-mono text-sm text-foreground">
+					<Logo class="h-5 w-auto" /> taf.sh
+				</a>
+				<p class="mt-4 max-w-xs text-sm leading-relaxed text-secondary">
+					The independent software studio of Tashif Ahmad Khan. Based in Delhi,
+					working with teams anywhere.
+				</p>
+				<p class="mt-4 font-mono text-xs text-muted">
+					Delhi · <span class="text-foreground tabular-nums" data-clock>--:--:--</span> IST
+				</p>
+			</div>
+			{
+				columns.map((col) => (
+					<nav aria-label={col.title}>
+						<p class="text-sm font-medium text-foreground">{col.title}</p>
+						<ul class="mt-4 space-y-2.5 text-sm">
+							{col.links.map((l) => (
+								<li>
+									<a href={l.href} {...external(l.href)} class="text-secondary transition-colors hover:text-accent">
+										{l.label}
+									</a>
+								</li>
+							))}
+						</ul>
+					</nav>
+				))
+			}
+		</div>
+
+		<div class="mt-14 flex flex-wrap items-center justify-between gap-4 border-t border-border pt-6 text-xs text-muted">
+			<span>© {new Date().getFullYear()} taf.sh · sole proprietorship of Tashif Ahmad Khan</span>
+			<a href="#top" class="transition-colors hover:text-accent">Back to top ↑</a>
+		</div>
+	</div>
+
+	<!--
+		The wordmark sits under everything as one tight word, cropped by the page
+		edge so it reads as a signature rather than a headline. Letters rise in
+		once it scrolls into view (studio.ts adds is-in) and get heavier near the
+		cursor (data-proximity).
+	-->
+	<div class:list={[wrap, "mt-6 -mb-[0.22em] select-none"]} aria-hidden="true">
+		<p
+			class="group/wm font-display text-[clamp(5rem,22vw,18rem)] leading-[0.8] tracking-[-0.07em] whitespace-nowrap text-border"
+			data-wordmark
+			data-proximity
+		>
+			{
+				"taf.sh".split("").map((c, i) => (
+					<span
+						data-l
+						class="inline-block font-bold transition-[translate,color] duration-1000 ease-expo [transition-delay:calc(var(--i)*60ms)] nth-4:text-accent hover:text-foreground in-[.js]:group-[:not(.is-in)]/wm:translate-y-[45%] motion-reduce:translate-y-0!"
+						style={`--i:${i}`}
+					>
+						{c}
+					</span>
+				))
+			}
+		</p>
+	</div>
+</footer>
