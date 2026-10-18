@@ -1,0 +1,99 @@
+---
+/*
+ * A screenshot carousel: native horizontal scroll-snap (so touch swipes just
+ * work), round arrow buttons, an `01 / 03` counter and an optional "live
+ * site" badge. studio.ts wires the arrows and counter, and wipes the frame in
+ * when it first scrolls into view.
+ */
+interface Props {
+	name: string;
+	shots: string[];
+	/** A walkthrough video with sound, shown as the first slide with native controls. */
+	video?: { src: string; poster: string };
+	live?: string;
+	class?: string;
+	/** Load the first screen eagerly (above-the-fold use). */
+	eager?: boolean;
+}
+const { name, shots, live, video, class: className, eager = false } = Astro.props;
+const slides = (video ? 1 : 0) + shots.length;
+const pad = (n: number) => String(n).padStart(2, "0");
+const arrow =
+	"absolute top-1/2 grid size-11 -translate-y-1/2 place-items-center rounded-full bg-white text-neutral-900 shadow-lg transition-[opacity,scale] hover:scale-105 disabled:pointer-events-none disabled:opacity-0 max-sm:size-9";
+---
+
+<div
+	class:list={[
+		"group/gal relative overflow-hidden rounded-2xl border border-border bg-surface shadow-[0_24px_60px_-30px_rgb(0_0_0/0.35)]",
+		className,
+	]}
+	data-gallery
+>
+	<!--
+		The wipe is on the track, not on the frame studio.ts observes: an
+		IntersectionObserver applies the target's own clip-path, so a fully
+		clipped frame would never count as visible.
+	-->
+	<div
+		class="flex snap-x snap-mandatory overflow-x-auto overscroll-x-contain [scrollbar-width:none] in-[.js]:[clip-path:inset(100%_0_0_0)] in-[.in]:animate-clip-up in-[[data-reel]]:[clip-path:none]! in-[[data-reel]]:animate-none! motion-reduce:[clip-path:none]!"
+		data-gallery-track
+	>
+		{
+			video && (
+				<video
+					src={video.src}
+					poster={video.poster}
+					controls
+					playsinline
+					preload="none"
+					width="1280"
+					height="800"
+					class="aspect-16/10 w-full shrink-0 snap-start bg-black object-contain"
+					aria-label={`${name} demo recording`}
+				/>
+			)
+		}
+		{
+			shots.map((src, k) => (
+				<img
+					src={src}
+					alt={`${name}, screen ${k + 1} of ${shots.length}`}
+					width="1200"
+					height="750"
+					loading={eager && k === 0 ? "eager" : "lazy"}
+					decoding="async"
+					class="aspect-16/10 w-full shrink-0 snap-start object-cover object-top"
+				/>
+			))
+		}
+	</div>
+
+	{
+		live && (
+			<a
+				href={live}
+				target="_blank"
+				rel="noopener noreferrer"
+				class="absolute top-3 right-3 inline-flex h-8 items-center gap-2 rounded-full bg-neutral-900/85 px-3 ring-1 ring-white/25 text-xs leading-none font-medium text-white backdrop-blur transition-colors hover:bg-accent hover:text-accent-contrast"
+			>
+				<span class="size-1.5 rounded-full bg-accent" /> live site ↗
+			</a>
+		)
+	}
+
+	{
+		slides > 1 && (
+			<>
+				<button type="button" class:list={[arrow, "left-3"]} aria-label={`Previous ${name} screen`} data-gallery-prev disabled>
+					←
+				</button>
+				<button type="button" class:list={[arrow, "right-3"]} aria-label={`Next ${name} screen`} data-gallery-next>
+					→
+				</button>
+				<span class="absolute top-3 left-3 inline-flex h-8 items-center rounded-full bg-neutral-900/85 px-3 font-mono text-xs leading-none text-white ring-1 ring-white/15 tabular-nums backdrop-blur">
+					<span data-gallery-index>01</span>&nbsp;/ {pad(slides)}
+				</span>
+			</>
+		)
+	}
+</div>
