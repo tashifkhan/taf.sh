@@ -5,7 +5,7 @@
  * - Reverse-proxies /ph/* to PostHog EU (same-origin analytics)
  */
 
-const CANONICAL_HOST = "taf.sh";
+const DEFAULT_CANONICAL_HOST = "taf.sh";
 const API_HOST = "eu.i.posthog.com";
 const ASSET_HOST = "eu-assets.i.posthog.com";
 
@@ -19,10 +19,6 @@ const ASSET_HOST = "eu-assets.i.posthog.com";
  */
 const PREVIEW_HOST = /^[0-9a-z]+-taf-sh\.[^.]+\.workers\.dev$/;
 
-interface Env {
-	ASSETS: Fetcher;
-}
-
 function stripPhPrefix(pathname: string): string {
 	// /ph -> /  |  /ph/static/x -> /static/x  |  /ph/e/ -> /e/
 	if (pathname === "/ph") return "/";
@@ -30,15 +26,14 @@ function stripPhPrefix(pathname: string): string {
 	return pathname;
 }
 
-function canonicalRedirect(url: URL): Response | null {
-	// Apex taf.sh is the only host that serves content.
-	// www.taf.sh and *.workers.dev (plus any other alias) 301 here.
-	if (url.hostname === CANONICAL_HOST) return null;
+function canonicalRedirect(url: URL, canonicalHost: string): Response | null {
+	// Each deployment serves its configured host and redirects other aliases.
+	if (url.hostname === canonicalHost) return null;
 	if (PREVIEW_HOST.test(url.hostname)) return null;
 
 	const target = new URL(url.toString());
 	target.protocol = "https:";
-	target.hostname = CANONICAL_HOST;
+	target.hostname = canonicalHost;
 	target.port = "";
 
 	return Response.redirect(target.toString(), 301);
@@ -100,7 +95,10 @@ export default {
 	): Promise<Response> {
 		const url = new URL(request.url);
 
-		const redirect = canonicalRedirect(url);
+		const redirect = canonicalRedirect(
+			url,
+			env.CANONICAL_HOST ?? DEFAULT_CANONICAL_HOST,
+		);
 		if (redirect) return redirect;
 
 		// PostHog reverse proxy
@@ -110,7 +108,7 @@ export default {
 
 		const response = await env.ASSETS.fetch(request);
 
-		if (PREVIEW_HOST.test(url.hostname)) {
+		if (env.NOINDEX || PREVIEW_HOST.test(url.hostname)) {
 			const headers = new Headers(response.headers);
 			headers.set("X-Robots-Tag", "noindex, nofollow");
 			return new Response(response.body, {
