@@ -1,0 +1,103 @@
+---
+import Logo from "../Logo.astro";
+import ThemeToggle from "../ThemeToggle.astro";
+import { nav, email } from "./data";
+import { wrap, btn, btnAccent, btnArrow } from "./ui";
+
+interface Props {
+	/** Prefix for section links: "" on the homepage, "/" everywhere else. */
+	base?: string;
+}
+const { base = "" } = Astro.props;
+const links = nav.map((item) => ({ ...item, href: item.href.startsWith("#") ? `${base}${item.href}` : item.href }));
+const current = Astro.url.pathname.replace(/\/$/, "") || "/";
+
+const menuBtn =
+	"inline-flex h-10 items-center gap-2.5 rounded-full border border-border-strong px-4 leading-none text-foreground transition-colors hover:border-accent";
+---
+
+<header
+	class="fixed inset-x-0 top-0 z-50 border-b border-transparent bg-background/80 backdrop-blur-md transition-[translate,border-color,opacity] duration-500 ease-expo [view-transition-name:site-nav] [&.is-hidden]:-translate-y-full [&.is-scrolled]:border-border in-[.reel-open]:-translate-y-full in-[.reel-open]:opacity-0"
+	data-header
+>
+	<div class:list={[wrap, "flex h-16 items-center justify-between gap-6"]}>
+		<a href="/" class="flex items-center gap-3 font-mono text-sm text-foreground">
+			<Logo class="h-5 w-auto" />
+			taf.sh
+		</a>
+
+		<nav class="hidden items-center gap-7 font-mono text-xs lg:flex" aria-label="Sections">
+			{
+				links.map((item) => (
+					<a
+						href={item.href}
+						aria-current={item.href === current ? "page" : undefined}
+						class="relative text-secondary transition-colors after:absolute after:inset-x-0 after:-bottom-1.5 after:h-px after:origin-right after:scale-x-0 after:bg-accent after:transition-transform after:duration-400 after:ease-expo hover:text-foreground hover:after:origin-left hover:after:scale-x-100 [&.is-active]:text-foreground [&.is-active]:after:origin-left [&.is-active]:after:scale-x-100 aria-[current=page]:text-foreground aria-[current=page]:after:scale-x-100"
+						data-nav-link
+						data-scramble
+					>
+						{item.label}
+					</a>
+				))
+			}
+		</nav>
+
+		<div class="flex items-center gap-3">
+			<div class="hidden sm:block"><ThemeToggle /></div>
+			<a href={base ? "/contact" : "#contact"} class:list={[btn, btnAccent, "h-10 max-sm:hidden"]} data-magnetic>
+				Start a project <span class={btnArrow} aria-hidden="true">→</span>
+			</a>
+			<button type="button" class:list={[menuBtn, "lg:hidden"]} aria-expanded="false" aria-controls="s-menu" data-menu-open>
+				<span class="grid w-3.5 gap-1" aria-hidden="true"><i class="h-[1.5px] bg-current"></i><i class="h-[1.5px] bg-current"></i></span>
+				<span class="font-mono text-xs">Menu</span>
+			</button>
+		</div>
+	</div>
+	<div class="absolute inset-x-0 -bottom-px h-px" aria-hidden="true">
+		<span class="block h-full origin-left scale-x-(--p) bg-accent" data-progress></span>
+	</div>
+</header>
+
+<!-- `inert` keeps the closed menu out of the tab order; studio.ts flips it. -->
+<div
+	id="s-menu"
+	role="dialog"
+	aria-modal="true"
+	aria-label="Studio navigation"
+	class="invisible fixed inset-0 z-60 bg-background [clip-path:inset(0_0_100%_0)] transition-[clip-path,visibility] duration-700 ease-expo [&.is-open]:visible [&.is-open]:transition-[clip-path] [&.is-open]:[clip-path:inset(0)]"
+	data-menu
+	data-lenis-prevent
+	inert
+>
+	<div class:list={[wrap, "flex h-full flex-col"]}>
+		<div class="flex h-16 items-center justify-between">
+			<span class="font-mono text-xs text-muted">Index</span>
+			<button type="button" class={menuBtn} data-menu-close>
+				<span class="font-mono text-xs">Close</span>
+				<span aria-hidden="true">×</span>
+			</button>
+		</div>
+		<ol class="mt-6 flex-1">
+			{
+				links.map((item, i) => (
+					<li style={`--i:${i}`}>
+						<a
+							href={item.href}
+							aria-current={item.href === current ? "page" : undefined}
+							class="flex translate-y-[40%] items-baseline gap-5 border-b border-border py-2.5 font-display text-[clamp(2rem,8vw,3.5rem)] leading-[1.1] font-semibold tracking-[-0.035em] text-foreground opacity-0 transition-[color,opacity,translate] duration-600 ease-expo hover:text-accent in-[.is-open]:translate-y-0 in-[.is-open]:opacity-100 in-[.is-open]:[transition-delay:0s,calc(var(--i)*60ms+200ms),calc(var(--i)*60ms+200ms)]"
+							data-menu-link
+						>
+							<span class="font-mono text-xs text-accent">0{i + 1}</span>
+							<span>{item.label}</span>
+						</a>
+					</li>
+				))
+			}
+		</ol>
+		<div class="grid gap-4 border-t border-border py-6 font-mono text-xs text-muted sm:grid-cols-3">
+			<a href={`mailto:${email}`} class="text-foreground hover:text-accent">{email}</a>
+			<span>Delhi, IST <span class="text-foreground tabular-nums" data-clock>--:--:--</span></span>
+			<div class="sm:justify-self-end"><ThemeToggle /></div>
+		</div>
+	</div>
+</div>
