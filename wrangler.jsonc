@@ -24,5 +24,29 @@
   ],
   "observability": {
     "enabled": true
+  },
+  "env": {
+    "v2": {
+      "name": "taf-sh-v2",
+      "workers_dev": false,
+      "preview_urls": false,
+      "routes": [
+        { "pattern": "v2.taf.sh", "custom_domain": true }
+      ],
+      "assets": {
+        "directory": "./dist",
+        "binding": "ASSETS",
+        "not_found_handling": "404-page",
+        "run_worker_first": true
+      },
+      "vars": {
+        "CANONICAL_HOST": "v2.taf.sh",
+        "NOINDEX": true
+      },
+      "observability": {
+        "enabled": true,
+        "traces": { "enabled": true, "head_sampling_rate": 0.1 }
+      }
+    }
   }
 }
