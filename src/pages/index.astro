@@ -1,363 +1,45 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import CanvasEffect from "../components/canvas/CanvasEffect.astro";
-
-const traits = [
-	{
-		title: "Solo by design",
-		body: "You work directly with the person writing every line of code. No handoffs, no account managers.",
-	},
-	{
-		title: "AI-native",
-		body: "LLM pipelines, eval-driven scoring, and agents in production — not in demos.",
-	},
-	{
-		title: "Full-stack, literally",
-		body: "Schema to CSS. APIs, queues, mobile apps, and the landing page that sells them.",
-	},
-	{
-		title: "Products, not just slides",
-		body: "The studio runs its own products — TalentSync and CliniQ — on the same stack it sells.",
-	},
-	{
-		title: "Event-driven backends",
-		body: "Kafka, workers, schedulers, and queues wired for reliability from day one.",
-	},
-	{
-		title: "Ship fast, keep shipping",
-		body: "Small scopes, weekly deploys, and code you own outright.",
-	},
-];
-
-const products = [
-	{
-		index: "01",
-		id: "talentsync",
-		name: "TalentSync AI",
-		desc: "Resume intelligence for job seekers — ATS feedback, career-path prediction, free and unlimited.",
-		href: "/products/talentsync",
-		status: "Live",
-	},
-	{
-		index: "02",
-		id: "talentsync-hr",
-		name: "TalentSync HR",
-		desc: "Recruiting intelligence for teams — evidence-backed candidate scoring, external validation, ranked shortlists.",
-		href: "/products/talentsync-hr",
-		status: "Beta",
-	},
-	{
-		index: "03",
-		id: "cliniq",
-		name: "CliniQ",
-		desc: "A clinical practice that runs on WhatsApp — appointments, reminders, and follow-ups over chat.",
-		href: "/products/cliniq",
-		status: "In development",
-	},
-];
-
-const services = [
-	"Product engineering — 0 → 1 web and mobile apps",
-	"AI systems — LLM pipelines, RAG, scoring, agents",
-	"Messaging platforms — WhatsApp automation at scale",
-	"Sites like this one — fast, Astro-powered web presence",
-];
+import StudioLayout from "../layouts/StudioLayout.astro";
+import Header from "../components/studio/Header.astro";
+import Hero from "../components/studio/Hero.astro";
+import Services from "../components/studio/Services.astro";
+import Manifesto from "../components/studio/Manifesto.astro";
+import Band from "../components/studio/Band.astro";
+import Process from "../components/studio/Process.astro";
+import Work from "../components/studio/Work.astro";
+import Notes from "../components/studio/Notes.astro";
+import Contact from "../components/studio/Contact.astro";
+import StudioFooter from "../components/studio/StudioFooter.astro";
+import Cursor from "../components/studio/Cursor.astro";
+import Reel from "../components/studio/Reel.astro";
 ---
 
-<Layout title="Independent software studio">
-	<!-- Hero -->
-	<section class="mx-auto max-w-6xl px-6 pt-20 pb-16 md:pt-28">
-		<!--
-			`scramble` settles the headline into place on load, then the cells only
-			react to deliberate cursor movement. The h1 stays legible throughout,
-			which is why Displacement sits here and the cipher effect does not.
-		-->
-		<CanvasEffect
-			effect="displacement"
-			class="max-w-3xl"
-			options={{
-				grid: 44,
-				radius: 0.12,
-				strength: 0.12,
-				threshold: 220,
-				shift: 0.7,
-				aberration: 0.6,
-				grain: 0.04,
-				scramble: 1.2,
-			}}
-		>
-			<h1
-				class="text-4xl leading-tight font-semibold tracking-tight text-foreground md:text-6xl"
-			>
-				Software, designed and shipped by one human.
-			</h1>
-		</CanvasEffect>
-		<p class="mt-6 max-w-xl text-lg leading-8 text-secondary">
-			taf.sh is the independent studio and consultancy of Tashif — building
-			AI-native products like TalentSync and CliniQ, and helping teams ship
-			theirs.
-		</p>
+<StudioLayout title="Independent software studio">
+	<div id="top"></div>
+	<Header />
+	<!--
+		When the work view opens, studio.ts clips this wrapper to the current
+		viewport slice and shrinks it into a rounded card inside the left 42%
+		column, then cross-fades it into the reel's dark summary panel.
+	-->
+	<div data-page data-page-content>
+		<main>
+			<Hero />
+			<Services />
+			<Manifesto />
+			<Process />
+			<Band words={["Products", "tools", "Apps", "APIs"]} direction={-1} />
+			<Work />
+			<Notes />
+			<Contact />
+		</main>
+		<StudioFooter cta={false} />
+	</div>
+	<Reel />
+	<Cursor />
+</StudioLayout>
 
-		<!-- Terminal card, opencode install-box style -->
-		<!--
-			`passthrough` is pushed well above the 0.15 default so the card reads as
-			itself with a cipher laid over it, rather than as unreadable glyphs until
-			hovered. The decrypt circle is the accent color, resolved from the theme
-			token at runtime.
-		-->
-		<CanvasEffect
-			effect="decrypt"
-			class="mt-12 max-w-2xl"
-			options={{
-				radius: 200,
-				cell: 9,
-				aspect: 0.6,
-				colored: 0.9,
-				passthrough: 0.55,
-				scramble: 0.05,
-				scrambleSpeed: 4,
-				edgeGlow: 1.4,
-				edgeTint: 0.5,
-				aberration: 4,
-				smoothing: 0.16,
-			}}
-		>
-			<div class="border border-border bg-surface">
-			<div
-				class="flex items-center gap-2 border-b border-border px-4 py-2.5 font-mono text-xs text-muted"
-			>
-				<span class="inline-block size-2.5 rounded-full bg-border-strong"
-				></span>
-				<span class="inline-block size-2.5 rounded-full bg-border-strong"
-				></span>
-				<span class="inline-block size-2.5 rounded-full bg-border-strong"
-				></span>
-				<span class="ml-2">tashif@taf.sh — zsh</span>
-			</div>
-			<div class="p-5 font-mono text-sm leading-7">
-				<p>
-					<span class="mr-1.5 text-accent">$</span>
-					<span class="text-foreground">whoami</span>
-				</p>
-				<p class="text-secondary">
-					tashif — founder &amp; sole proprietor, taf.sh
-				</p>
-				<p class="mt-3">
-					<span class="mr-1.5 text-accent">$</span>
-					<span class="text-foreground">cat focus.txt</span>
-				</p>
-				<p class="text-secondary">
-					ai systems · full-stack products · messaging platforms
-				</p>
-				<p class="mt-3">
-					<span class="mr-1.5 text-accent">$</span>
-					<span class="text-foreground">./contact --book</span>
-				</p>
-				<p>
-					<span class="mr-1.5 text-secondary">→</span>
-					<a
-						href="/contact"
-						class="text-foreground underline decoration-accent underline-offset-4 hover:text-accent"
-						>taf.sh/contact</a
-					>
-					<span class="cursor-blink ml-1 text-accent">▌</span>
-				</p>
-			</div>
-			</div>
-		</CanvasEffect>
-	</section>
-
-	<!-- What is taf.sh -->
-	<section class="border-t border-border">
-		<div
-			class="reveal mx-auto grid max-w-6xl gap-12 px-6 py-20 md:grid-cols-[1fr_1.2fr]"
-		>
-			<div>
-				<h2 class="text-3xl font-semibold tracking-tight text-foreground">
-					What is taf.sh?
-				</h2>
-				<p class="mt-4 leading-7 text-secondary">
-					A one-person software studio. taf.sh designs, builds, and operates
-					its own products — and takes on a small number of consulting
-					engagements for teams that want the same end-to-end ownership.
-				</p>
-				<a
-					href="/about"
-					class="mt-6 inline-block font-mono text-sm text-foreground underline underline-offset-4 hover:text-accent"
-				>
-					Read the story →
-				</a>
-			</div>
-			<ul class="space-y-5">
-				{
-					traits.map((trait) => (
-						<li class="flex gap-3">
-							<span class="font-mono text-sm text-accent">[*]</span>
-							<p class="text-sm leading-6 text-secondary">
-								<strong class="font-semibold text-foreground">
-									{trait.title}
-								</strong>{" "}
-								— {trait.body}
-							</p>
-						</li>
-					))
-				}
-			</ul>
-		</div>
-	</section>
-
-	<!-- Products -->
-	<section id="products" class="scroll-mt-16 border-t border-border">
-		<div class="reveal mx-auto max-w-6xl px-6 py-20">
-			<p class="font-mono text-sm text-accent">[*]</p>
-			<h2 class="mt-2 text-3xl font-semibold tracking-tight text-foreground">
-				Products
-			</h2>
-			<p class="mt-3 max-w-xl leading-7 text-secondary">
-				Three systems in production across hiring and healthcare — designed,
-				built, deployed, and operated end-to-end.
-			</p>
-
-			<div class="mt-12 divide-y divide-border border-y border-border">
-				{
-					products.map((product) => (
-						<a
-							href={product.href}
-							class="group grid items-baseline gap-2 py-7 transition-colors sm:grid-cols-[3rem_1fr_auto] sm:gap-6"
-						>
-							<span class="font-mono text-sm text-muted">{product.index}</span>
-							<span>
-								<span class="flex flex-wrap items-center gap-3">
-									<span
-										class="text-xl font-semibold text-foreground group-hover:underline group-hover:underline-offset-4"
-										style={`view-transition-name: product-${product.id}; view-transition-class: product-title`}
-									>
-										{product.name}
-									</span>
-									<span
-										class:list={[
-											"border px-2 py-0.5 font-mono text-xs",
-											product.status === "Live"
-												? "border-accent/40 bg-accent-soft text-accent"
-												: "border-border text-muted",
-										]}
-									>
-										{product.status}
-									</span>
-								</span>
-								<span class="mt-1.5 block max-w-xl text-sm leading-6 text-secondary">
-									{product.desc}
-								</span>
-							</span>
-							<span class="hidden font-mono text-sm text-muted transition-colors group-hover:text-accent sm:block">
-								→
-							</span>
-						</a>
-					))
-				}
-			</div>
-		</div>
-	</section>
-
-	<!-- Stats, opencode "Fig." style -->
-	<section class="border-t border-border">
-		<div class="reveal mx-auto max-w-6xl px-6 py-20">
-			<p class="max-w-2xl leading-7 text-secondary">
-				<span class="mr-2 font-mono text-sm text-accent">[*]</span>
-				Every product above is a running system with real users — architected,
-				written, deployed, and maintained by{" "}
-				<strong class="font-semibold text-foreground">one engineer</strong>.
-			</p>
-
-			<div
-				class="mt-10 grid gap-px border border-border bg-border sm:grid-cols-3"
-			>
-				<div class="bg-background p-8">
-					<p class="font-mono text-xs text-accent">Fig 1.</p>
-					<p class="mt-3 text-5xl font-semibold tracking-tight text-foreground">
-						03
-					</p>
-					<p class="mt-2 text-sm text-secondary">Products in production</p>
-				</div>
-				<div class="bg-background p-8">
-					<p class="font-mono text-xs text-accent">Fig 2.</p>
-					<p class="mt-3 text-5xl font-semibold tracking-tight text-foreground">
-						02
-					</p>
-					<p class="mt-2 text-sm text-secondary">
-						Problem spaces — hiring &amp; healthcare
-					</p>
-				</div>
-				<div class="bg-background p-8">
-					<p class="font-mono text-xs text-accent">Fig 3.</p>
-					<p class="mt-3 text-5xl font-semibold tracking-tight text-foreground">
-						01
-					</p>
-					<p class="mt-2 text-sm text-secondary">Human behind all of it</p>
-				</div>
-			</div>
-		</div>
-	</section>
-
-	<!-- Services teaser -->
-	<section class="border-t border-border">
-		<div
-			class="reveal mx-auto grid max-w-6xl gap-12 px-6 py-20 md:grid-cols-[1fr_1.2fr]"
-		>
-			<div>
-				<h2 class="text-3xl font-semibold tracking-tight text-foreground">
-					Consulting
-				</h2>
-				<p class="mt-4 leading-7 text-secondary">
-					The same engineering that runs these products is available for a few
-					select engagements at a time.
-				</p>
-				<a
-					href="/services"
-					class="mt-6 inline-block font-mono text-sm text-foreground underline underline-offset-4 hover:text-accent"
-				>
-					All services →
-				</a>
-			</div>
-			<ul class="space-y-5">
-				{
-					services.map((service) => (
-						<li class="flex gap-3">
-							<span class="font-mono text-sm text-accent">[*]</span>
-							<p class="text-sm leading-6 text-secondary">{service}</p>
-						</li>
-					))
-				}
-			</ul>
-		</div>
-	</section>
-
-	<!-- CTA -->
-	<section class="border-t border-border">
-		<div class="reveal mx-auto max-w-6xl px-6 py-24 text-center">
-			<h2 class="text-3xl font-semibold tracking-tight text-foreground">
-				Have something to build?
-			</h2>
-			<p class="mx-auto mt-4 max-w-md leading-7 text-secondary">
-				Currently available for select engagements. One inbox, one human, fast
-				replies.
-			</p>
-			<div
-				class="mt-8 flex flex-wrap items-center justify-center gap-4 font-mono text-sm"
-			>
-				<a
-					href="/contact"
-					class="bg-accent px-5 py-2.5 text-accent-contrast transition-opacity hover:opacity-85"
-				>
-					Get in touch
-				</a>
-				<a
-					href="mailto:me@tashif.codes"
-					class="border border-border-strong px-5 py-2.5 text-foreground transition-colors hover:border-foreground"
-				>
-					me@tashif.codes
-				</a>
-			</div>
-		</div>
-	</section>
-</Layout>
+<script>
+	import { boot } from "../scripts/studio";
+	boot();
+</script>
