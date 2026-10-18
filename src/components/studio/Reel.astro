@@ -1,0 +1,214 @@
+---
+import Logo from "../Logo.astro";
+import Gallery from "./Gallery.astro";
+import { reel, reelGroups, stats } from "./data";
+import { pill, btn, btnSm, btnLg, btnAccent, btnGhost, btnArrow, kicker } from "./ui";
+
+const counts = Object.fromEntries(
+	reelGroups.map((g) => [g.id, g.id === "all" ? reel.length : reel.filter((r) => r.group === g.id).length]),
+);
+const sections = reelGroups
+	.filter((g) => g.id !== "all")
+	.map((g) => ({ ...g, items: reel.filter((r) => r.group === g.id) }));
+const pad = (n: number) => String(n).padStart(2, "0");
+const slug = (name: string) => name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+const external = (href: string) => (href.startsWith("http") ? { target: "_blank", rel: "noopener noreferrer" } : {});
+---
+
+<!--
+	The work view, adapted from thebuildco.studio's split-screen choreography:
+	1. On desktop (42% / 58% split), <div data-page> clips to the current
+	   viewport slice and shrinks into a framed rounded card centered inside
+	   the left 42% column while the right 58% project panel glides in.
+	2. Once the page card lands, [data-wlbg] (clipped to that same card rect)
+	   cross-fades in, then expands its clip-path to fill the left 42% column
+	   while the [data-wl] summary blocks stagger up.
+	3. Closing runs the exact sequence in reverse.
+-->
+<dialog
+	class="m-0 h-dvh max-h-none w-screen max-w-none overflow-hidden bg-transparent p-0 text-foreground backdrop:bg-transparent"
+	data-reel
+	aria-label="Work"
+>
+	<div class="grid h-full lg:grid-cols-[42%_58%]">
+		<aside
+			class="t-dark relative hidden flex-col justify-between overflow-hidden px-[clamp(1.75rem,3.4vw,3.5rem)] py-8 text-foreground [color-scheme:dark] lg:flex"
+			data-wleft
+		>
+			<div
+				class="pointer-events-none absolute inset-0 bg-background bg-[linear-gradient(to_right,var(--color-border)_1px,transparent_1px),linear-gradient(to_bottom,var(--color-border)_1px,transparent_1px)] bg-size-[64px_64px] opacity-0"
+				data-wlbg
+				aria-hidden="true"
+			>
+			</div>
+			<div class="relative flex items-center justify-between opacity-0" data-wl>
+				<span class="flex items-center gap-3 font-mono text-sm">
+					<Logo class="h-5 w-auto" />
+					taf.sh
+				</span>
+				<button type="button" class="font-mono text-xs text-muted transition-colors hover:text-foreground" data-reel-close>
+					← back to site
+				</button>
+			</div>
+
+			<div class="relative" data-wl-group>
+				<p class="opacity-0" data-wl>
+					<span class={kicker}>est. delhi → worldwide · products &amp; builds</span>
+				</p>
+				<p
+					class="mt-5 font-display text-[clamp(2.25rem,3.8vw,3.75rem)] leading-[0.96] font-semibold tracking-[-0.045em] text-balance opacity-0"
+					data-wl
+				>
+					Built end to end, <span class="text-accent">then kept running.</span>
+				</p>
+				<p class="mt-5 max-w-md text-[0.9375rem] leading-relaxed text-secondary opacity-0" data-wl>
+					Studio products, team work at Systematic Reasoning, and the tools built along the way. Every
+					screen on the right is the real thing in use.
+				</p>
+				<div class="mt-8 opacity-0" data-wl>
+					<button type="button" class:list={[btn, btnLg, btnAccent]} data-reel-contact>
+						Let's talk <span class={btnArrow} aria-hidden="true">→</span>
+					</button>
+				</div>
+			</div>
+
+			<dl class="relative grid grid-cols-2 gap-x-6 gap-y-5 opacity-0" data-wl>
+				{
+					stats.map((s) => (
+						<div class="border-t border-border pt-3.5">
+							<dd class="font-display text-[clamp(1.75rem,2.4vw,2.35rem)] leading-none font-semibold tracking-[-0.04em]">
+								{pad(s.value)}
+								<span class="text-accent">{s.suffix}</span>
+							</dd>
+							<dt class="mt-2 font-mono text-xs text-muted">{s.label.toLowerCase()}</dt>
+						</div>
+					))
+				}
+			</dl>
+		</aside>
+
+		<section
+			class="t-light relative flex h-full translate-x-[105%] flex-col overflow-hidden bg-background text-foreground shadow-[-40px_0_80px_-30px_rgb(0_0_0/0.7)] transition-transform duration-850 ease-[cubic-bezier(0.7,0,0.2,1)] [color-scheme:light] max-lg:translate-x-0 max-lg:translate-y-[105%] in-[.is-open]:translate-x-0 in-[.is-open]:translate-y-0 motion-reduce:transition-none"
+			data-reel-panel
+		>
+			<header class="sticky top-0 z-10 flex shrink-0 items-center gap-3 border-b border-border bg-background/88 px-[clamp(1.25rem,3vw,2.5rem)] py-3.5 backdrop-blur-md">
+				<div class="-mx-1 flex min-w-0 flex-1 gap-2 overflow-x-auto px-1 [scrollbar-width:none]" role="group" aria-label="Filter">
+					{
+						reelGroups.map((g, i) => (
+							<button
+								type="button"
+								class:list={[pill, "shrink-0 aria-pressed:border-foreground aria-pressed:bg-foreground aria-pressed:text-background"]}
+								aria-pressed={i === 0 ? "true" : "false"}
+								data-reel-filter={g.id}
+							>
+								{g.label.toLowerCase()}
+								<span class="font-mono text-xs opacity-60">{pad(counts[g.id])}</span>
+							</button>
+						))
+					}
+				</div>
+				<button
+					type="button"
+					class="group/close flex shrink-0 items-center gap-3 font-mono text-xs text-muted transition-colors hover:text-foreground"
+					data-reel-close
+					aria-label="Close work"
+				>
+					<span class="hidden sm:inline">close · esc</span>
+					<span class="grid size-11 place-items-center rounded-full bg-foreground text-background shadow-md transition-[background-color,color,rotate] duration-500 ease-expo group-hover/close:rotate-90 group-hover/close:bg-accent group-hover/close:text-accent-contrast">
+						✕
+					</span>
+				</button>
+			</header>
+
+			<div class="flex-1 overflow-y-auto overscroll-contain outline-none" tabindex="-1" data-reel-list>
+				<div class="px-[clamp(1.25rem,3vw,2.5rem)] pt-[clamp(1.75rem,3.5vw,3.25rem)]">
+					<h2 class="font-display text-[clamp(2.75rem,5.5vw,4.75rem)] leading-[0.9] font-bold tracking-[-0.055em] text-foreground">
+						Selected work<span class="text-accent">.</span>
+					</h2>
+					<p class="mt-4 max-w-md text-[0.9375rem] leading-relaxed text-secondary">
+					Studio products and developer tools in daily use.
+					</p>
+				</div>
+				{
+					sections.map((section) => (
+						<section class="px-[clamp(1rem,3vw,2.5rem)] pt-8 pb-16" data-reel-section={section.id}>
+							<h2 class="flex items-baseline justify-between border-b border-border pb-3 font-display text-lg font-semibold tracking-[-0.02em]">
+								{section.label}
+								<span class="font-mono text-xs font-normal text-muted">{pad(section.items.length)}</span>
+							</h2>
+							<ol class="mt-8 grid gap-[clamp(3.5rem,7vw,5.5rem)]">
+								{section.items.map((item, i) => (
+									<li
+										id={`r-${slug(item.name)}`}
+										class="translate-y-6 opacity-0 transition-[translate,opacity] duration-600 ease-expo in-[.is-open]:translate-y-0 in-[.is-open]:opacity-100 in-[.is-open]:[transition-delay:calc(min(var(--n,0),5)*60ms+140ms)] motion-reduce:transition-none"
+										data-group={item.group}
+										data-reel-project
+										style={`--n:${i}`}
+									>
+										<Gallery name={item.name} shots={item.shots} video={item.video} live={item.live} />
+
+										<div class="mt-6 grid gap-x-8 gap-y-4 sm:grid-cols-[1fr_auto] sm:items-end">
+											<div>
+												<p class="font-mono text-xs text-accent">
+													{pad(i + 1)} · {item.sector} · {item.year}
+												</p>
+												<a
+													href={item.href}
+													{...external(item.href)}
+													class="mt-2 block font-display text-[clamp(1.75rem,3.2vw,2.6rem)] leading-[1.05] font-semibold tracking-[-0.035em] text-foreground transition-colors hover:text-accent"
+												>
+													{item.name}
+												</a>
+												<p class="mt-3 max-w-xl text-[0.9375rem] leading-relaxed text-secondary">{item.line}</p>
+											</div>
+											<div class="flex flex-col gap-1 text-sm sm:items-end sm:text-right">
+												<span class="text-accent">{item.tags.join(" · ")}</span>
+												<span class="text-muted">{item.stack.join(" · ")}</span>
+												{item.metric && <span class="mt-1 font-mono text-xs text-foreground">{item.metric}</span>}
+											</div>
+										</div>
+									</li>
+								))}
+							</ol>
+						</section>
+					))
+				}
+
+				<div class="mx-[clamp(1rem,3vw,2.5rem)] mb-16 flex flex-wrap items-center justify-between gap-4 border-t border-border pt-8">
+					<div>
+						<p class="font-display text-lg font-semibold tracking-[-0.02em] text-foreground">
+							Want the rest of the shenanigans?
+						</p>
+						<p class="mt-1 text-sm text-secondary">
+							Visit <a href="https://tashif.codes" target="_blank" rel="noopener noreferrer" class="underline decoration-border-strong underline-offset-4 hover:text-accent">tashif.codes</a> for all 51 builds, and <a href="https://tashif.codes/blog" target="_blank" rel="noopener noreferrer" class="underline decoration-border-strong underline-offset-4 hover:text-accent">tashif.codes/blog</a> for the engineering writeups.
+						</p>
+					</div>
+					<div class="flex flex-wrap gap-2.5">
+						<a href="https://tashif.codes" target="_blank" rel="noopener noreferrer" class:list={[btn, btnSm, btnGhost]}>
+							View more shenanigans <span class={btnArrow} aria-hidden="true">↗</span>
+						</a>
+						<a href="https://tashif.codes/blog" target="_blank" rel="noopener noreferrer" class:list={[btn, btnSm, btnGhost]}>
+							Read the blog <span class={btnArrow} aria-hidden="true">↗</span>
+						</a>
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
+</dialog>
+
+<div
+	class="fixed right-4 bottom-4 z-45 w-[min(20rem,calc(100vw-2rem))] rounded-2xl border border-border-strong bg-elevated p-4 shadow-2xl transition-[opacity,translate,display] transition-discrete duration-600 ease-expo starting:translate-y-5 starting:opacity-0"
+	data-toast
+	role="status"
+	hidden
+>
+	<p class="flex items-center gap-2 text-sm font-medium text-foreground"><span class="size-1.5 rounded-full bg-accent"></span> new here?</p>
+	<p class="mt-1 text-sm text-secondary">Products and digital shenanigans, real screens. Take a look.</p>
+	<div class="mt-4 flex items-center justify-between gap-2">
+		<button type="button" class="text-sm text-muted hover:text-foreground" data-toast-close>not now</button>
+		<button type="button" class:list={[btn, btnSm, btnAccent]} data-reel-open data-toast-close>
+			show me <span class={btnArrow} aria-hidden="true">→</span>
+		</button>
+	</div>
+</div>
