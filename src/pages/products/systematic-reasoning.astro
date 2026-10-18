@@ -1,0 +1,49 @@
+---
+import ProductPage from "../../components/ProductPage.astro";
+---
+
+<ProductPage
+	id="systematic-reasoning"
+	bodyEffect="grid"
+	name="Systematic Reasoning"
+	tagline="Founding engineer. We built ForgeIQX, a compliance workspace that connects requirements, policies and evidence."
+	description="Regulatory requirements change. So do policy documents, code and the systems those policies describe. At Systematic Reasoning, we built ForgeIQX to help teams track those changes together. I'm the founding engineer, working with the team on the application and the services behind it. This walkthrough follows the DigiCert project through its policy documents, control mappings, findings and monitoring."
+	status="Live"
+	url="app.systematicreasoning.com"
+	features={[
+		{
+			title: "Policy documents and requirements",
+			body: "Read policy documents alongside the governing standards. Keep document versions and their extracted requirements connected.",
+		},
+		{
+			title: "Control mappings",
+			body: "Inspect how policy statements map to requirements, then follow the mapping back to the document and section behind it.",
+		},
+		{
+			title: "Findings with evidence",
+			body: "Review findings in context, with the relevant policy text and requirement available for inspection.",
+		},
+		{
+			title: "Change monitoring",
+			body: "Track changes across policy sources, Bugzilla, mailing lists and CCADB. Bring the updates into the same workspace as the documents they affect.",
+		},
+		{
+			title: "Reviews",
+			body: "Inspect document and pull request reviews, with findings grouped by the sections and changes they concern.",
+		},
+		{
+			title: "Answers in context",
+			body: "Ask questions against a project's policy documents and requirements, and inspect the source context alongside the answer.",
+		},
+	]}
+	specs={[
+		{ label: "My role", value: "Founding engineer" },
+		{ label: "Company", value: "Systematic Reasoning", href: "https://systematicreasoning.com/" },
+		{ label: "Product", value: "ForgeIQX" },
+		{ label: "App", value: "app.systematicreasoning.com", href: "https://app.systematicreasoning.com/" },
+		{ label: "Walkthrough", value: "DigiCert project" },
+		{ label: "Frontend", value: "React, TypeScript, TanStack Router" },
+		{ label: "Backend", value: "Django, PostgreSQL, Kafka, OpenSearch" },
+	]}
+	next={{ name: "TalentSync AI", href: "/products/talentsync" }}
+/>
