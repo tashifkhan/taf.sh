@@ -1,182 +1,57 @@
 ---
-import Layout from "../layouts/Layout.astro";
+import PageLayout from "../layouts/PageLayout.astro";
+import PageIntro from "../components/studio/PageIntro.astro";
+import Process from "../components/studio/Process.astro";
+import { services, reel } from "../components/studio/data";
+import { wrap, kicker, h2, btn, btnLg, btnAccent, btnGhost, btnArrow } from "../components/studio/ui";
 
-const services = [
-	{
-		index: "01",
-		title: "Product engineering (0 → 1)",
-		body: "From a rough idea to a running system: architecture, backend, frontend, deployment, and observability. You get production code and the infra it runs on, not a prototype.",
-		items: [
-			"Web apps — Astro, React, modern TypeScript",
-			"APIs & backends — FastAPI, SQLModel, PostgreSQL",
-			"Mobile — React Native / Expo, shared TypeScript",
-			"Infra — Docker, queues, CI, deploy pipelines",
-		],
-	},
-	{
-		index: "02",
-		title: "AI systems & LLM integration",
-		body: "LLM features that survive contact with production: structured extraction, eval-driven scoring, RAG, and agents — with the same rigor as the TalentSync matching pipeline.",
-		items: [
-			"Structured parsing & extraction pipelines",
-			"Multi-factor scoring with evidence trails",
-			"RAG over your documents and data",
-			"Evaluation harnesses so quality is measurable",
-		],
-	},
-	{
-		index: "03",
-		title: "Messaging & automation platforms",
-		body: "Business workflows over the chat apps people already use. Built on the same event-driven architecture that powers CliniQ's WhatsApp platform.",
-		items: [
-			"WhatsApp automation — inbound, outbound, broadcasts",
-			"Schedulers & reminders that never slip",
-			"Event-driven backends — Kafka, workers, retries",
-			"Admin tooling & operational CLIs",
-		],
-	},
-	{
-		index: "04",
-		title: "Web presence",
-		body: "Fast, content-driven sites that score well and read well — like this one. Astro, Tailwind, zero bloat.",
-		items: [
-			"Company & product sites",
-			"Docs and marketing pages",
-			"Design systems in code",
-			"Performance & SEO passes",
-		],
-	},
-];
-
-const engagements = [
-	{
-		title: "Fixed-scope project",
-		body: "A defined build with a defined price and deadline. Best for 0 → 1 products and well-understood features.",
-	},
-	{
-		title: "Embedded retainer",
-		body: "A block of engineering time each month inside your team. Best for ongoing product work and iteration.",
-	},
-	{
-		title: "Advisory",
-		body: "Architecture reviews, AI feasibility, and second opinions before you commit budget. Best early, or when stuck.",
-	},
-];
-
-const process = [
-	{ step: "1", title: "Intro call", body: "30 minutes. What you are building, why, and when you need it." },
-	{ step: "2", title: "Written scope", body: "A short document: deliverables, timeline, fixed price or weekly rate. No surprises." },
-	{ step: "3", title: "Weekly shipped increments", body: "You see running software every week, not status decks." },
-	{ step: "4", title: "Handover", body: "Code, infra, docs, and a walkthrough. You own everything, outright." },
+const examples = [
+	{ label: "See TalentSync AI", href: "/products/talentsync" },
+	{ label: "See Systematic Reasoning", href: "/products/systematic-reasoning" },
+	{ label: "See rah.clinic", href: "/products/rah-clinic" },
+	{ label: "You're looking at it", href: "/" },
 ];
 ---
 
-<Layout
-	title="Services"
-	description="Consulting services from taf.sh — product engineering, AI systems, messaging platforms, and web presence."
->
-	<div class="mx-auto max-w-6xl px-6 py-16 md:py-20">
-		<!-- Header -->
-		<header class="max-w-2xl">
-			<p class="font-mono text-sm text-accent">[*]</p>
-			<h1
-				class="mt-2 text-4xl font-semibold tracking-tight text-foreground md:text-6xl"
-			>
-				Services
-			</h1>
-			<p class="mt-5 text-lg leading-8 text-secondary">
-				The engineering behind TalentSync and CliniQ, available for your
-				product. One engineer, full-stack, accountable for the whole thing.
-			</p>
-		</header>
+<PageLayout title="Services" description="Product engineering, AI systems, messaging platforms and websites. Work directly with Tashif from the first call to production.">
+	<PageIntro label="Studio / Services" summary="Architecture, backend, interface and deployment. I take on the whole build, or work alongside your team on the part that needs attention.">
+		<Fragment slot="title">Your idea.<br /> Built to <em>run.</em></Fragment>
+		<a href="/contact" class:list={[btn, btnLg, btnAccent]}>Talk through your project <span class={btnArrow} aria-hidden="true">→</span></a>
+		<a href="/#work" class:list={[btn, btnLg, btnGhost]}>See the work <span class={btnArrow} aria-hidden="true">↗</span></a>
+	</PageIntro>
 
-		<!-- Services -->
-		<section class="reveal mt-16 divide-y divide-border border-y border-border">
-			{
-				services.map((service) => (
-					<div class="grid gap-6 py-12 md:grid-cols-[4rem_1fr_1fr] md:gap-10">
-						<span class="font-mono text-sm text-muted">{service.index}</span>
-						<div>
-							<h2 class="text-2xl font-semibold tracking-tight text-foreground">
-								{service.title}
-							</h2>
-							<p class="mt-3 text-sm leading-7 text-secondary">
-								{service.body}
-							</p>
-						</div>
-						<ul class="space-y-3.5">
-							{service.items.map((item) => (
-								<li class="flex gap-3">
-									<span class="font-mono text-sm text-accent">[*]</span>
-									<span class="text-sm leading-6 text-secondary">{item}</span>
-								</li>
-							))}
+	<div class:list={[wrap, "pb-20"]}>
+		<nav class="flex flex-wrap gap-x-7 gap-y-3 border-y border-border py-5 font-mono text-xs text-secondary" aria-label="Services">
+			{services.map(s => <a href={`#${s.id}`} class="transition-colors hover:text-accent"><span class="mr-2 text-muted">{s.index}</span>{s.title}</a>)}
+		</nav>
+		<div>
+			{services.map((service, i) => (
+				<section id={service.id} class="grid scroll-mt-24 gap-7 border-b border-border py-10 sm:py-14 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20" aria-labelledby={`service-${service.id}`}>
+					<div>
+						<p class={kicker}>{service.index} / {service.tag}</p>
+						<h2 id={`service-${service.id}`} class="mt-4 max-w-[16ch] font-display text-[clamp(1.875rem,3.2vw,2.75rem)] leading-[1.08] font-medium tracking-[-0.035em]">{service.title}</h2>
+						<a href={examples[i].href} class="mt-6 inline-flex items-center gap-3 text-sm text-secondary transition-colors hover:text-accent">{examples[i].label} <span aria-hidden="true">↗</span></a>
+					</div>
+					<div>
+						<p class="max-w-[50ch] text-lg leading-8 text-secondary">{service.body}</p>
+						<ul class="mt-7 grid gap-x-8 sm:grid-cols-2">
+							{service.items.map(item => <li class="flex items-baseline gap-3 border-t border-border py-3 text-sm leading-6 text-secondary"><span class="text-accent" aria-hidden="true">↳</span>{item}</li>)}
 						</ul>
 					</div>
-				))
-			}
-		</section>
-
-		<!-- Engagement models -->
-		<section class="reveal mt-20">
-			<h2 class="text-2xl font-semibold tracking-tight text-foreground">
-				Ways to work together
-			</h2>
-			<div
-				class="mt-8 grid gap-px border border-border bg-border md:grid-cols-3"
-			>
-				{
-					engagements.map((engagement) => (
-						<div class="bg-background p-8">
-							<h3 class="font-semibold text-foreground">{engagement.title}</h3>
-							<p class="mt-3 text-sm leading-6 text-secondary">
-								{engagement.body}
-							</p>
-						</div>
-					))
-					}
-			</div>
-		</section>
-
-		<!-- Process -->
-		<section class="reveal mt-20">
-			<h2 class="text-2xl font-semibold tracking-tight text-foreground">
-				How it goes
-			</h2>
-			<ol class="mt-8 space-y-0 divide-y divide-border border-y border-border">
-				{
-					process.map((item) => (
-						<li class="grid items-baseline gap-2 py-5 sm:grid-cols-[3rem_12rem_1fr] sm:gap-6">
-							<span class="font-mono text-sm text-muted">{item.step}.</span>
-							<strong class="font-semibold text-foreground">{item.title}</strong>
-							<span class="text-sm leading-6 text-secondary">{item.body}</span>
-						</li>
-					))
-				}
-			</ol>
-		</section>
-
-		<!-- CTA -->
-		<section class="reveal mt-20 border-t border-border pt-16 text-center">
-			<h2 class="text-3xl font-semibold tracking-tight text-foreground">
-				Tell me what you're building.
-			</h2>
-			<div
-				class="mt-8 flex flex-wrap items-center justify-center gap-4 font-mono text-sm"
-			>
-				<a
-					href="/contact"
-					class="bg-accent px-5 py-2.5 text-accent-contrast transition-opacity hover:opacity-85"
-				>
-					Get in touch
-				</a>
-				<a
-					href="/#products"
-					class="border border-border-strong px-5 py-2.5 text-foreground transition-colors hover:border-foreground"
-				>
-					See the products first
-				</a>
-			</div>
-		</section>
+				</section>
+			))}
+		</div>
 	</div>
-</Layout>
+
+	<Process />
+	<section class:list={[wrap, "py-16 sm:py-24"]}>
+		<div class="grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
+			<div><p class={kicker}>Selected work</p><h2 class={h2}>See it <em>in use.</em></h2></div>
+			<div class="divide-y divide-border border-y border-border">
+				{reel.filter(r => r.group !== "shenanigan").map(r => <a href={r.href} class="group flex items-center justify-between gap-5 py-5"><div><h3 class="font-display text-xl font-medium tracking-[-0.02em] transition-colors group-hover:text-accent">{r.name}</h3><p class="mt-1 text-sm leading-6 text-secondary">{r.sector} · {r.metric}</p></div><span class="text-accent transition-transform group-hover:translate-x-1" aria-hidden="true">↗</span></a>)}
+				<a href="https://tashif.codes" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-between gap-5 py-5"><div><h3 class="font-display text-xl font-medium tracking-[-0.02em] transition-colors group-hover:text-accent">More shenanigans on tashif.codes</h3><p class="mt-1 text-sm leading-6 text-secondary">all 51 open-source builds, apps, tools and experiments</p></div><span class="text-accent transition-transform group-hover:translate-x-1" aria-hidden="true">↗</span></a>
+				<a href="https://tashif.codes/blog" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-between gap-5 py-5"><div><h3 class="font-display text-xl font-medium tracking-[-0.02em] transition-colors group-hover:text-accent">Engineering blog on tashif.codes/blog</h3><p class="mt-1 text-sm leading-6 text-secondary">architecture notes, deep dives and post-mortems</p></div><span class="text-accent transition-transform group-hover:translate-x-1" aria-hidden="true">↗</span></a>
+			</div>
+		</div>
+	</section>
+</PageLayout>
