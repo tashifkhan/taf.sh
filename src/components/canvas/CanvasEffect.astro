@@ -78,10 +78,11 @@ const { effect, options = {}, class: className } = Astro.props;
 	}
 
 	/*
-	 * Every token in global.css is a `light-dark()` pair, and reading the custom
-	 * property directly hands back that unresolved function. Painting it onto a
-	 * throwaway span and reading the computed color resolves it to the value the
-	 * current color-scheme actually uses.
+	 * Tokens in global.css are plain values scoped by media query, data-theme
+	 * and .t-dark/.t-light, so reading them off a probe in the right subtree
+	 * resolves to the value that subtree actually uses. Painting onto a
+	 * throwaway span and reading the computed color keeps this correct even
+	 * inside the reel's pinned panels.
 	 */
 	function resolveToken(host: HTMLElement, token: string): string {
 		const probe = document.createElement("span");
