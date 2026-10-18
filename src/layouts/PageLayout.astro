@@ -1,0 +1,30 @@
+---
+import StudioLayout from "./StudioLayout.astro";
+import Header from "../components/studio/Header.astro";
+import StudioFooter from "../components/studio/StudioFooter.astro";
+import Cursor from "../components/studio/Cursor.astro";
+
+interface Props {
+	title: string;
+	description?: string;
+	footerCta?: boolean;
+}
+const { title, description, footerCta = true } = Astro.props;
+---
+
+<StudioLayout title={title} description={description}>
+	<div id="top"></div>
+	<Header base="/" />
+	<div data-page-content>
+		<main class="pt-28 sm:pt-36">
+			<slot />
+		</main>
+		<StudioFooter cta={footerCta} />
+	</div>
+	<Cursor />
+</StudioLayout>
+
+<script>
+	import { bootPage } from "../scripts/studio";
+	bootPage();
+</script>
