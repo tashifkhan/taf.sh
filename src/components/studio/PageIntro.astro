@@ -1,0 +1,20 @@
+---
+import { wrap, kicker, h1 } from "./ui";
+
+interface Props {
+	label: string;
+	summary: string;
+}
+const { label, summary } = Astro.props;
+---
+
+<header class:list={[wrap, "pb-[clamp(3rem,6vw,5rem)]"]}>
+	<p class={kicker}>{label}</p>
+	<div class="mt-7 grid items-end gap-8 lg:grid-cols-[1.2fr_0.8fr] lg:gap-20">
+		<div>
+			<h1 class:list={[h1, "max-w-[15ch]"]}><slot name="title" /></h1>
+			{Astro.slots.has("default") && <div class="mt-8 flex flex-wrap gap-3"><slot /></div>}
+		</div>
+		<p class="max-w-[42ch] text-lg leading-8 text-secondary">{summary}</p>
+	</div>
+</header>
