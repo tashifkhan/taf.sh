@@ -1,0 +1,305 @@
+---
+import { wrap, section, head, headRow, kicker, h2, lede, btn, btnGhost, btnArrow } from "./ui";
+
+/*
+ * Asymmetric 6-column bento grid adapted from thebuildco.studio:
+ * - Tile 1 (01 / product engineering) spans 2 cols × 2 rows on the left.
+ * - Tiles 2–5 sit in a 2×2 grid across the remaining 4 columns on the right.
+ * - Each tile runs a continuous phase-driven diagram in studio.ts that speeds
+ *   up smoothly under the cursor, with 4 perimeter border lines and a radial
+ *   spotlight on hover.
+ */
+const tileBase =
+	"group relative isolate flex flex-col justify-between gap-5 overflow-hidden rounded-2xl border border-border bg-surface p-6 shadow-[inset_0_1px_0_rgb(255_255_255/0.05)] transition-colors duration-300 hover:border-accent/60 sm:p-7 before:pointer-events-none before:absolute before:inset-0 before:-z-1 before:bg-[radial-gradient(460px_circle_at_var(--sx,50%)_var(--sy,50%),var(--color-accent-soft),transparent_65%)] before:opacity-0 before:transition-opacity before:duration-400 hover:before:opacity-100";
+
+const aiTokens = "Matched 6 linked GitHub commits and 2 shipped FastAPI services; 1 claim unverified — shortlist #2 (91/100)."
+	.split(" ")
+	.map((s) => `${s} `);
+---
+
+<section id="build" class={section}>
+	<div class={wrap}>
+		<header class:list={[head, headRow]}>
+			<div>
+				<span class={kicker} data-scramble>01 / Build</span>
+				<h2 class={h2} data-split>What I <em>build.</em></h2>
+			</div>
+			<p class:list={[lede, "mt-0 max-w-sm"]}>
+				One engineer for the whole stack, from the database schema to the last
+				pixel. Hover any tile to push its loop.
+			</p>
+		</header>
+
+		<div class="grid gap-3.5 md:grid-cols-2 lg:grid-cols-6">
+			<!-- 01 / Product engineering (tall left bento tile: 2 cols × 2 rows) -->
+			<article
+				class:list={[tileBase, "md:col-span-2 lg:col-span-2 lg:row-span-2"]}
+				data-spotlight
+				data-tile="web"
+			>
+				<div class="flex items-center justify-between gap-2 font-mono text-xs text-muted">
+					<span>01 / product engineering</span>
+					<span class="text-accent tabular-nums" data-ws>wireframe 0/7</span>
+				</div>
+
+				<div
+					aria-hidden="true"
+					class="flex min-h-56 flex-1 flex-col overflow-hidden rounded-xl border border-border bg-background/75"
+				>
+					<div class="flex h-7 shrink-0 items-center gap-1.5 border-b border-border px-3">
+						<i class="size-2 rounded-full bg-border-strong" />
+						<i class="size-2 rounded-full bg-border-strong" />
+						<i class="size-2 rounded-full bg-border-strong" />
+						<span class="ml-auto font-mono text-[0.6875rem] text-muted">app.talentsync.ai</span>
+					</div>
+					<div class="grid flex-1 grid-cols-3 grid-rows-[0.85rem_2fr_0.65rem_1.2rem_2.1fr] gap-2 p-3.5">
+						<div class="relative col-span-3 rounded border border-dashed border-accent/40" data-wb>
+							<div class="absolute -inset-px scale-95 rounded bg-foreground/20 opacity-0 transition-[opacity,transform] duration-450 ease-[cubic-bezier(0.3,1.6,0.5,1)]" data-wf />
+						</div>
+						<div class="relative col-span-2 rounded border border-dashed border-accent/40" data-wb>
+							<div class="absolute -inset-px scale-95 rounded bg-foreground/85 opacity-0 transition-[opacity,transform] duration-450 ease-[cubic-bezier(0.3,1.6,0.5,1)]" data-wf />
+						</div>
+						<div class="relative col-span-1 row-span-3 rounded border border-dashed border-accent/40" data-wb>
+							<div
+								class="absolute -inset-px scale-95 rounded bg-[repeating-linear-gradient(135deg,var(--color-border-strong)_0_2px,var(--color-surface)_2px_8px)] opacity-0 transition-[opacity,transform] duration-450 ease-[cubic-bezier(0.3,1.6,0.5,1)]"
+								data-wf
+							/>
+						</div>
+						<div class="relative col-span-2 w-3/4 rounded border border-dashed border-accent/40" data-wb>
+							<div class="absolute -inset-px scale-95 rounded bg-muted/65 opacity-0 transition-[opacity,transform] duration-450 ease-[cubic-bezier(0.3,1.6,0.5,1)]" data-wf />
+						</div>
+						<div class="relative col-span-1 rounded-full border border-dashed border-accent/40" data-wb>
+							<div class="absolute -inset-px scale-95 rounded-full bg-accent opacity-0 transition-[opacity,transform] duration-450 ease-[cubic-bezier(0.3,1.6,0.5,1)]" data-wf />
+						</div>
+						<div class="relative rounded border border-dashed border-accent/40" data-wb>
+							<div class="absolute -inset-px scale-95 rounded border border-border-strong bg-elevated opacity-0 transition-[opacity,transform] duration-450 ease-[cubic-bezier(0.3,1.6,0.5,1)]" data-wf />
+						</div>
+						<div class="relative col-span-2 rounded border border-dashed border-accent/40" data-wb>
+							<div class="absolute -inset-px scale-95 rounded border border-border-strong bg-elevated opacity-0 transition-[opacity,transform] duration-450 ease-[cubic-bezier(0.3,1.6,0.5,1)]" data-wf />
+						</div>
+					</div>
+				</div>
+
+				<div>
+					<h3 class="font-display text-[clamp(1.4rem,2.2vw,1.85rem)] leading-[1.06] font-semibold tracking-[-0.03em] text-foreground">
+						0 → 1 product builds
+					</h3>
+					<p class="mt-2 text-[0.9375rem] leading-relaxed text-secondary">
+						Architecture, backend, web and mobile interfaces, shipped as running software you own outright.
+					</p>
+				</div>
+			</article>
+
+			<!-- 02 / Backends & APIs -->
+			<article class:list={[tileBase, "lg:col-span-2"]} data-spotlight data-tile="api">
+				<div class="flex items-center justify-between gap-2 font-mono text-xs text-muted">
+					<span>02 / backends &amp; queues</span>
+					<span class="text-accent tabular-nums" data-apir>p95 38ms · 2,140 req/m</span>
+				</div>
+
+				<div aria-hidden="true" class="relative h-26 shrink-0">
+					<div
+						data-route
+						class="absolute top-13 right-7 left-7 h-px bg-[repeating-linear-gradient(90deg,color-mix(in_oklab,var(--color-accent)_55%,transparent)_0_4px,transparent_4px_8px)]"
+					/>
+					<div class="absolute inset-x-0 top-9 flex justify-between">
+						{
+							["client", "edge", "api", "db"].map((node) => (
+								<span class="grid h-8 w-13 place-items-center rounded border border-border-strong bg-background font-mono text-xs text-foreground">
+									{node}
+								</span>
+							))
+						}
+					</div>
+					<span data-pk class=" absolute top-[3.05rem] left-6.5 size-2 rounded-[1px] bg-accent shadow-[0_0_10px_var(--color-accent)] will-change-transform" />
+					<span data-pk class="absolute top-[3.05rem] left-6.5 size-2 rounded-[1px] bg-accent shadow-[0_0_10px_var(--color-accent)] will-change-transform" />
+					<span data-pk class="absolute top-[3.05rem] left-6.5 size-2 rounded-[1px] bg-accent shadow-[0_0_10px_var(--color-accent)] will-change-transform" />
+					<span data-lat class="absolute top-2 left-[calc(1.75rem+(100%-3.5rem)*0.1667)] -translate-x-1/2 font-mono text-xs text-accent tabular-nums">11ms</span>
+					<span data-lat class="absolute top-2 left-[calc(1.75rem+(100%-3.5rem)*0.5)] -translate-x-1/2 font-mono text-xs text-accent tabular-nums">24ms</span>
+					<span data-lat class="absolute top-2 left-[calc(1.75rem+(100%-3.5rem)*0.8333)] -translate-x-1/2 font-mono text-xs text-accent tabular-nums">3ms</span>
+				</div>
+
+				<div class="mt-auto">
+					<h3 class="font-display text-[clamp(1.3rem,1.9vw,1.65rem)] leading-[1.06] font-semibold tracking-[-0.03em] text-foreground">
+						APIs, workers &amp; Kafka
+					</h3>
+					<p class="mt-1.5 text-[0.9375rem] leading-relaxed text-secondary">
+						FastAPI, PostgreSQL, event streams and retries that stay quiet under load.
+					</p>
+				</div>
+			</article>
+
+			<!-- 03 / AI systems -->
+			<article class:list={[tileBase, "lg:col-span-2"]} data-spotlight data-tile="ai">
+				<div class="flex items-center justify-between gap-2 font-mono text-xs text-muted">
+					<span>03 / ai pipelines</span>
+					<span class="text-accent tabular-nums" data-as>0 tok · 52 tok/s</span>
+				</div>
+
+				<div
+					aria-hidden="true"
+					class="flex flex-col gap-2.5 rounded-xl border border-border bg-background/75 p-3.5"
+				>
+					<span class="font-mono text-xs text-muted">&gt; evaluate candidate --role="backend"</span>
+					<p class="min-h-[3.2em] text-sm leading-relaxed text-foreground">
+						{
+							aiTokens.map((t) => (
+								<span
+									data-tok
+									class="rounded-[2px] opacity-0 transition-[opacity,background-color] duration-150"
+								>
+									{t}
+								</span>
+							))
+						}
+					</p>
+				</div>
+
+				<div class="mt-auto">
+					<h3 class="font-display text-[clamp(1.3rem,1.9vw,1.65rem)] leading-[1.06] font-semibold tracking-[-0.03em] text-foreground">
+						AI systems &amp; evals
+					</h3>
+					<p class="mt-1.5 text-[0.9375rem] leading-relaxed text-secondary">
+						Structured extraction, RAG and evidence-backed scoring on your own data.
+					</p>
+				</div>
+			</article>
+
+			<!-- 04 / Messaging & automation -->
+			<article class:list={[tileBase, "lg:col-span-2"]} data-spotlight data-tile="int">
+				<div class="flex items-center justify-between gap-2 font-mono text-xs text-muted">
+					<span>04 / messaging &amp; workflows</span>
+					<span class="text-accent tabular-nums" data-is>linked 4/4</span>
+				</div>
+
+				<div aria-hidden="true" class="grid grid-cols-2 gap-2">
+					{
+						["whatsapp", "kafka", "schedulers", "webhooks"].map((name) => (
+							<div class="relative h-11.5 rounded-lg border border-dashed border-accent/40">
+								<div
+									data-plug
+									class="absolute inset-1 flex items-center justify-between rounded-md border border-border-strong bg-elevated px-3 font-mono text-xs text-foreground shadow-sm will-change-transform"
+								>
+									<span>{name}</span>
+									<span class="size-2 rounded-full bg-accent" />
+								</div>
+							</div>
+						))
+					}
+				</div>
+
+				<div class="mt-auto">
+					<h3 class="font-display text-[clamp(1.3rem,1.9vw,1.65rem)] leading-[1.06] font-semibold tracking-[-0.03em] text-foreground">
+						WhatsApp &amp; automation
+					</h3>
+					<p class="mt-1.5 text-[0.9375rem] leading-relaxed text-secondary">
+						Reminders, broadcasts, bookings and bots on the architecture behind rah.clinic.
+					</p>
+				</div>
+			</article>
+
+			<!-- 05 / Speed & web presence -->
+			<article class:list={[tileBase, "lg:col-span-2"]} data-spotlight data-tile="gauge">
+				<div class="flex items-center justify-between gap-2 font-mono text-xs text-muted">
+					<span>05 / web &amp; speed</span>
+					<span class="text-accent tabular-nums" data-gl>lcp 0.6s · cls 0.00</span>
+				</div>
+
+				<div aria-hidden="true" class="flex items-end gap-5 pt-1">
+					<svg viewBox="0 0 200 112" width="150" height="84" class="h-auto w-[min(148px,48%)] shrink-0 overflow-visible">
+						<circle
+							cx="100"
+							cy="100"
+							r="80"
+							fill="none"
+							stroke="var(--color-border-strong)"
+							stroke-width="10"
+							stroke-dasharray="251.33 600"
+							transform="rotate(180 100 100)"
+						/>
+						<circle
+							data-ga
+							cx="100"
+							cy="100"
+							r="80"
+							fill="none"
+							stroke="var(--color-accent)"
+							stroke-width="10"
+							stroke-dasharray="0 600"
+							transform="rotate(180 100 100)"
+						/>
+						<line
+							data-gn
+							x1="100"
+							y1="100"
+							x2="100"
+							y2="34"
+							stroke="var(--color-foreground)"
+							stroke-width="2.5"
+							transform="rotate(-90 100 100)"
+						/>
+						<circle cx="100" cy="100" r="6" fill="var(--color-foreground)" />
+					</svg>
+					<div class="flex flex-col gap-1 pb-1">
+						<span class="font-display text-4xl leading-none font-bold tracking-[-0.04em] text-foreground tabular-nums" data-gv>
+							41
+						</span>
+						<span class="font-mono text-[0.6875rem] text-muted">lighthouse perf</span>
+					</div>
+				</div>
+
+				<div class="mt-auto">
+					<h3 class="font-display text-[clamp(1.3rem,1.9vw,1.65rem)] leading-[1.06] font-semibold tracking-[-0.03em] text-foreground">
+						Websites &amp; performance
+					</h3>
+					<p class="mt-1.5 text-[0.9375rem] leading-relaxed text-secondary">
+						Inline-CSS Astro builds, design systems and performance passes that score 100.
+					</p>
+				</div>
+			</article>
+		</div>
+
+		<div class="mt-6 flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-border bg-surface px-6 py-4 sm:px-7">
+			<p class="text-sm text-secondary">
+				Want to see more shenanigans or read how these systems are built? Visit{" "}
+				<a
+					href="https://tashif.codes"
+					target="_blank"
+					rel="noopener noreferrer"
+					class="font-mono text-xs text-foreground underline decoration-border-strong underline-offset-4 transition-colors hover:text-accent hover:decoration-accent"
+				>
+					tashif.codes ↗
+				</a>{" "}
+				and{" "}
+				<a
+					href="https://tashif.codes/blog"
+					target="_blank"
+					rel="noopener noreferrer"
+					class="font-mono text-xs text-foreground underline decoration-border-strong underline-offset-4 transition-colors hover:text-accent hover:decoration-accent"
+				>
+					tashif.codes/blog ↗
+				</a>
+			</p>
+			<div class="flex flex-wrap items-center gap-2.5">
+				<a
+					href="https://tashif.codes"
+					target="_blank"
+					rel="noopener noreferrer"
+					class:list={[btn, btnGhost, "h-9 pl-4 text-xs"]}
+					data-magnetic
+				>
+					More shenanigans · tashif.codes <span class={btnArrow} aria-hidden="true">↗</span>
+				</a>
+				<a
+					href="https://tashif.codes/blog"
+					target="_blank"
+					rel="noopener noreferrer"
+					class:list={[btn, btnGhost, "h-9 pl-4 text-xs"]}
+					data-magnetic
+				>
+					Read the blog · tashif.codes/blog <span class={btnArrow} aria-hidden="true">↗</span>
+				</a>
+			</div>
+		</div>
+	</div>
+</section>
