@@ -4,6 +4,18 @@ import tailwindcss from '@tailwindcss/vite';
 
 // https://astro.build/config
 export default defineConfig({
+	// CliniQ was renamed to rah.clinic; keep the old product URL working.
+	redirects: {
+		'/products/cliniq': '/products/rah-clinic',
+	},
+	server: {
+		// Dev only: lets the server answer when reached through `tailscale serve`
+		// (https://<machine>.<tailnet>.ts.net). Production is the Worker build.
+		allowedHosts: ['.ts.net'],
+		// IPv4 loopback, which is where `tailscale serve` proxies to. Node
+		// otherwise binds `localhost` to ::1 only and the proxy gets a 502.
+		host: '127.0.0.1',
+	},
 	build: {
 		/*
 		 * Inline every stylesheet rather than linking it (Astro's default only
