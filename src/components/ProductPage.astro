@@ -1,6 +1,9 @@
 ---
-import Layout from "../layouts/Layout.astro";
+import PageLayout from "../layouts/PageLayout.astro";
+import Gallery from "./studio/Gallery.astro";
 import CanvasEffect from "./canvas/CanvasEffect.astro";
+import { reel } from "./studio/data";
+import { wrap, kicker, h2, btn, btnLg, btnAccent, btnGhost, btnArrow, chip, chipOn, card } from "./studio/ui";
 
 interface Feature {
 	title: string;
@@ -103,139 +106,162 @@ const {
 	next,
 	bodyEffect,
 } = Astro.props;
+
+// Screens and tags come from the same entries as the homepage work view.
+const entry = reel.find((r) => r.href === `/products/${id}`);
+const nextEntry = reel.find((r) => r.href === next.href);
+const live = url ? `https://${url}` : entry?.live;
+const pad = (n: number) => String(n).padStart(2, "0");
 ---
 
-<Layout title={name} description={tagline}>
-	<article class="mx-auto max-w-6xl px-6 py-16 md:py-20">
-		<a
-			href="/#products"
-			class="font-mono text-sm text-muted transition-colors hover:text-foreground"
-		>
-			← all products
-		</a>
-
-		<!-- Header -->
-		<header class="mt-10">
-			<div class="flex flex-wrap items-center gap-3 font-mono text-xs">
-				<span class="text-accent">[*]</span>
-				<span class="border border-border px-2 py-0.5 text-secondary"
-					>{status}</span
-				>
-				{
-					url && (
-						<a
-							href={`https://${url}`}
-							target="_blank"
-							rel="noopener noreferrer"
-							class="text-muted transition-colors hover:text-foreground"
-						>
-							{url} ↗
-						</a>
-					)
-				}
-			</div>
-			<h1
-				class="mt-6 text-4xl font-semibold tracking-tight text-foreground md:text-6xl"
-				style={`view-transition-name: product-${id}; view-transition-class: product-title`}
-			>
-				{name}
-			</h1>
-			<p class="mt-5 max-w-2xl text-lg leading-8 text-secondary">{tagline}</p>
-			<p class="mt-4 max-w-2xl leading-7 text-secondary">{description}</p>
+<PageLayout title={name} description={tagline}>
+		<article>
+			<header class:list={[wrap, "grid gap-10 lg:grid-cols-[1fr_auto] lg:items-end"]}>
+				<div>
+					<a href="/#work" class="text-sm text-muted transition-colors hover:text-foreground">← all work</a>
+					<div class="mt-8 flex flex-wrap items-center gap-3">
+						<span class:list={[chip, status === "Live" && chipOn]}>{status}</span>
+						{entry && <span class={kicker}>{entry.sector} · {entry.year}</span>}
+					</div>
+					<h1
+						class="mt-5 font-display text-[clamp(2.5rem,6vw,5rem)] leading-[0.98] font-[650] tracking-[-0.045em] text-foreground"
+						style={`view-transition-name: product-${id}; view-transition-class: product-title`}
+					>
+						{name}
+					</h1>
+					<p class="mt-5 max-w-2xl text-lg leading-8 text-secondary sm:text-xl">{tagline}</p>
+				</div>
+				<div class="flex flex-wrap gap-3">
+					{
+						live && (
+							<a href={live} target="_blank" rel="noopener noreferrer" class:list={[btn, btnLg, btnAccent]} data-magnetic>
+								Visit {name} <span class={btnArrow} aria-hidden="true">↗</span>
+							</a>
+						)
+					}
+					<a href="/contact" class:list={[btn, btnLg, btnGhost]} data-magnetic>
+						Build one like it <span class={btnArrow} aria-hidden="true">→</span>
+					</a>
+				</div>
+			</header>
 
 			{
-				url && (
-					<div class="mt-8 flex flex-wrap gap-4 font-mono text-sm">
-						<a
-							href={`https://${url}`}
-							target="_blank"
-							rel="noopener noreferrer"
-							class="bg-accent px-5 py-2.5 text-accent-contrast transition-opacity hover:opacity-85"
-						>
-							Visit {name} ↗
-						</a>
+				entry && (
+					<div class:list={[wrap, "mt-12 sm:mt-16"]}>
+						<Gallery name={name} shots={entry.shots} video={entry.video} live={live} eager />
 					</div>
 				)
 			}
-		</header>
 
-		<!--
-			The wrapper starts below the header on purpose. The <h1> above carries
-			view-transition-name, and moving it into a canvas would break the morph
-			from the index list.
-		-->
-		<CanvasEffect effect={bodyEffect} options={BODY_OPTIONS[bodyEffect]}>
-		<!-- Features -->
-		<section class="reveal mt-20 border-t border-border pt-16">
-			<h2 class="text-2xl font-semibold tracking-tight text-foreground">
-				What it does
-			</h2>
-			<ul class="mt-10 grid gap-x-12 gap-y-10 md:grid-cols-2">
-				{
-					features.map((feature) => (
-						<li>
-							<p class="flex gap-3">
-								<span class="font-mono text-sm text-accent">[*]</span>
-								<strong class="font-semibold text-foreground">
-									{feature.title}
-								</strong>
-							</p>
-							<p class="mt-2 pl-8 text-sm leading-6 text-secondary">
-								{feature.body}
-							</p>
-						</li>
-					))
-				}
-			</ul>
-		</section>
-
-		<!-- Specs -->
-		<section class="reveal mt-20 border-t border-border pt-16">
-			<h2 class="text-2xl font-semibold tracking-tight text-foreground">
-				Details
-			</h2>
-			<dl
-				class="mt-8 max-w-3xl divide-y divide-border border-y border-border font-mono text-sm"
-			>
-				{
-					specs.map((spec) => (
-						<div class="grid gap-1 py-4 sm:grid-cols-[12rem_1fr] sm:gap-6">
-							<dt class="text-muted">{spec.label}</dt>
-							<dd class="text-secondary">
-								{spec.href ? (
-									<a
-										href={spec.href}
-										target="_blank"
-										rel="noopener noreferrer"
-										class="text-foreground underline underline-offset-4 hover:text-accent"
-									>
-										{spec.value} ↗
-									</a>
-								) : (
-									spec.value
+			<section class:list={[wrap, "mt-16 grid gap-10 sm:mt-24 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20"]}>
+				<div>
+					<span class={kicker}>Overview</span>
+					<h2 class={h2}>
+						Why it <em>exists.</em>
+					</h2>
+				</div>
+				<div>
+					<p class="text-lg leading-8 text-secondary">{description}</p>
+					{
+						entry && (
+							<dl class="mt-8 grid grid-cols-2 gap-6 border-t border-border pt-6 sm:grid-cols-3">
+								<div>
+									<dt class="text-sm text-muted">Built with</dt>
+									<dd class="mt-1 text-[0.9375rem] text-foreground">{entry.stack.join(", ")}</dd>
+								</div>
+								<div>
+									<dt class="text-sm text-muted">Area</dt>
+									<dd class="mt-1 text-[0.9375rem] text-foreground">{entry.tags.join(", ")}</dd>
+								</div>
+								{entry.metric && (
+									<div>
+										<dt class="text-sm text-muted">{entry.group === "team" ? "My role" : "Status"}</dt>
+										<dd class="mt-1 text-[0.9375rem] text-accent">{entry.metric}</dd>
+									</div>
 								)}
-							</dd>
-						</div>
-					))
-				}
-			</dl>
-		</section>
+							</dl>
+						)
+					}
+				</div>
+			</section>
 
-		<!-- Next product -->
-		<footer class="mt-20 border-t border-border pt-10">
-			<a href={next.href} class="group inline-flex items-baseline gap-4">
-				<span class="font-mono text-sm text-muted">Next</span>
-				<span
-					class="text-2xl font-semibold text-foreground group-hover:underline group-hover:underline-offset-4"
+			<!--
+				The effect wrapper starts below the header on purpose. The <h1>
+				carries view-transition-name, and moving it into a canvas would
+				break the morph from the homepage list.
+			-->
+			<CanvasEffect effect={bodyEffect} options={BODY_OPTIONS[bodyEffect]}>
+				<section class:list={[wrap, "mt-20 sm:mt-28"]} aria-labelledby="product-features">
+					<h2 id="product-features" class={kicker}>What it does</h2>
+					<ul class:list={["mt-6 grid gap-px overflow-hidden rounded-lg border border-border bg-border md:grid-cols-2", features.length % 3 === 0 && "xl:grid-cols-3"]}>
+						{
+							features.map((feature, i) => (
+								<li class="bg-surface p-6 sm:p-7 lg:p-8">
+									<div class="flex items-center gap-3" aria-hidden="true">
+										<span class="font-mono text-xs text-accent">{pad(i + 1)} /</span>
+										<span class="h-px w-6 bg-border-strong" />
+									</div>
+									<h3 class="mt-5 font-display text-[1.375rem] leading-[1.12] font-medium tracking-[-0.025em] text-foreground">{feature.title}</h3>
+									<p class="mt-3 max-w-[52ch] text-[0.9375rem] leading-7 text-secondary">{feature.body}</p>
+								</li>
+							))
+						}
+					</ul>
+				</section>
+
+				<section class:list={[wrap, "mt-20 sm:mt-28"]}>
+					<span class={kicker}>Details</span>
+					<dl class="mt-6 divide-y divide-border border-y border-border">
+						{
+							specs.map((spec) => (
+								<div class="grid gap-1 py-4 sm:grid-cols-[12rem_1fr] sm:gap-6">
+									<dt class="text-sm text-muted">{spec.label}</dt>
+									<dd class="min-w-0 break-words text-[0.9375rem] text-foreground">
+										{spec.href ? (
+											<a
+												href={spec.href}
+												{...(spec.href.startsWith("http") ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+												class="underline decoration-border-strong underline-offset-4 transition-colors hover:text-accent hover:decoration-accent"
+											>
+												{spec.value}
+												{spec.href.startsWith("http") && " ↗"}
+											</a>
+										) : (
+											spec.value
+										)}
+									</dd>
+								</div>
+							))
+						}
+					</dl>
+				</section>
+			</CanvasEffect>
+
+			<nav class:list={[wrap, "mt-20 mb-8 sm:mt-28"]} aria-label="Next product">
+				<a
+					href={next.href}
+					class:list={[card, "group grid items-center gap-6 overflow-hidden p-3 transition-colors hover:border-border-strong sm:grid-cols-[1fr_auto] sm:p-4"]}
 				>
-					{next.name}
-				</span>
-				<span
-					class="font-mono text-sm text-muted transition-colors group-hover:text-accent"
-					>→</span
-				>
-			</a>
-		</footer>
-		</CanvasEffect>
-	</article>
-</Layout>
+					<div class="px-3 py-2 sm:px-4">
+						<span class="font-mono text-xs text-muted">Next product</span>
+						<p class="mt-2 font-display text-[clamp(1.75rem,4vw,3rem)] leading-none font-semibold tracking-[-0.04em] text-foreground transition-colors group-hover:text-accent">
+							{next.name} <span class="inline-block transition-transform duration-500 ease-expo group-hover:translate-x-2">→</span>
+						</p>
+						{nextEntry && <p class="mt-3 max-w-md text-[0.9375rem] text-secondary">{nextEntry.line}</p>}
+					</div>
+					{
+						nextEntry && (
+							<img
+								src={nextEntry.shots[0]}
+								alt=""
+								width="1200"
+								height="750"
+								loading="lazy"
+								class="aspect-16/10 w-full rounded-2xl border border-border object-cover object-top transition-transform duration-700 ease-expo group-hover:scale-[1.02] sm:w-80"
+							/>
+						)
+					}
+				</a>
+			</nav>
+		</article>
+</PageLayout>
