@@ -1,0 +1,217 @@
+---
+import { stats, stack } from "./data";
+import { wrap, btn, btnLg, btnAccent, btnGhost, btnArrow } from "./ui";
+
+/*
+ * Each letter is its own span so studio.ts can push Inter Tight's weight axis
+ * around under the cursor. The last word is the teal accent.
+ */
+const lines: { text: string; accent?: string }[] = [
+	{ text: "Products built end to end," },
+	{ text: "then ", accent: "kept running." },
+];
+
+const fadeIn =
+	"in-[.js:not(.is-ready)]:opacity-0 in-[.is-ready]:animate-fade-up [animation-delay:calc(var(--d)*90ms+320ms)] motion-reduce:animate-none! motion-reduce:opacity-100!";
+
+/*
+ * Words, each a no-wrap group of letter spans. Letters are inline-blocks, so
+ * without the group a line could break in the middle of a word.
+ */
+let n = 0;
+const words = (text: string) =>
+	text
+		.split(" ")
+		.filter(Boolean)
+		.map((w) => [...w].map((ch) => ({ ch, d: n++ })));
+const builtLines = lines.map((line) => [
+	...words(line.text).map((w) => ({ w, accent: false })),
+	...(line.accent ? words(line.accent).map((w) => ({ w, accent: true })) : []),
+]);
+---
+
+<section class="relative overflow-hidden pt-28 sm:pt-36" data-hero>
+	<!-- Faint layout grid, fading out towards the bottom. -->
+	<div
+		class="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,var(--color-border)_1px,transparent_1px),linear-gradient(to_bottom,var(--color-border)_1px,transparent_1px)] bg-size-[72px_72px] opacity-45 [mask-image:radial-gradient(ellipse_90%_80%_at_50%_45%,black_40%,transparent_100%)]"
+		aria-hidden="true"
+	>
+	</div>
+
+	<!-- Architectural construction geometry: strokes draw in on load and parallax with pointer/scroll. -->
+	<div class="pointer-events-none absolute -inset-x-[5%] -inset-y-[10%] will-change-transform" data-geo aria-hidden="true">
+		<div class="absolute inset-0 transition-transform duration-1200 ease-expo" data-geom>
+			<svg viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" class="absolute inset-0 size-full overflow-visible">
+				<circle data-geo-d cx="1090" cy="300" r="250" fill="none" stroke="var(--color-border-strong)" stroke-width="1" opacity="0.7" />
+				<circle data-geo-d cx="1090" cy="300" r="145" fill="none" stroke="var(--color-accent)" stroke-width="1" stroke-dasharray="3 6" opacity="0.45" />
+				<circle data-geo-d cx="280" cy="680" r="360" fill="none" stroke="var(--color-border-strong)" stroke-width="1" opacity="0.55" />
+				<line data-geo-d x1="0" y1="300" x2="1440" y2="300" stroke="var(--color-border)" stroke-width="1" opacity="0.75" />
+				<line data-geo-d x1="1090" y1="0" x2="1090" y2="900" stroke="var(--color-border)" stroke-width="1" opacity="0.75" />
+				<line data-geo-d x1="280" y1="680" x2="1090" y2="300" stroke="var(--color-accent)" stroke-width="1" opacity="0.28" />
+				<circle cx="1090" cy="300" r="3.5" fill="none" stroke="var(--color-accent)" stroke-width="1" opacity="0.8" />
+				<circle cx="280" cy="680" r="3.5" fill="none" stroke="var(--color-muted)" stroke-width="1" opacity="0.6" />
+				<circle data-geo-d cx="720" cy="450" r="540" fill="none" stroke="var(--color-border)" stroke-width="1" stroke-dasharray="900 2600" class="max-lg:hidden" />
+				<circle data-geo-d cx="1090" cy="300" r="400" fill="none" stroke="var(--color-border)" stroke-width="1" opacity="0.5" class="max-lg:hidden" />
+			</svg>
+		</div>
+	</div>
+
+	<canvas
+		class="pointer-events-none absolute inset-0 size-full [mask-image:radial-gradient(ellipse_at_70%_30%,black_20%,transparent_70%)]"
+		data-field
+		aria-hidden="true"></canvas>
+
+	<!-- Blueprint sheet telemetry on desktop. -->
+	<div class="pointer-events-none absolute inset-0 hidden font-mono text-xs text-muted lg:block" aria-hidden="true">
+		<span class="absolute top-22 left-(--gutter)">sheet 01/05 · rev a</span>
+		<span class="absolute top-22 right-(--gutter) tabular-nums" data-coords>x 0000 · y 0000</span>
+		<span class="absolute top-36 right-7 bottom-44 w-px bg-border-strong"></span>
+		<span class="absolute top-36 right-5.5 h-px w-3 bg-accent"></span>
+		<span class="absolute right-5.5 bottom-44 h-px w-3 bg-accent"></span>
+		<span class=" absolute top-1/2 right-4 -translate-y-1/2 bg-background py-2 text-[0.6875rem] text-muted tabular-nums [writing-mode:vertical-rl]" data-vh>h 0000 px</span>
+	</div>
+
+	<div class:list={[wrap, "relative"]}>
+		<p
+			class="min-h-[1.5em] font-mono text-xs text-accent"
+			data-hero-kicker="est. delhi → worldwide · solo software studio"
+		>
+			est. delhi → worldwide · solo software studio
+		</p>
+
+		<h1
+			class="relative mt-5 w-fit max-w-[16ch] font-display text-[clamp(2.6rem,6.6vw,5.75rem)] leading-[0.98] tracking-[-0.045em] text-balance text-foreground sm:mt-7"
+			aria-label="Products built end to end, then kept running."
+			data-proximity
+			data-hero-h1
+		>
+			<!-- Outlined blueprint layer: visible immediately, fades as the solid fill wipes up. -->
+			<span
+				class="pointer-events-none block font-[650] text-transparent transition-opacity duration-700 [-webkit-text-stroke:1.25px_var(--color-accent)] select-none"
+				data-ho
+				aria-hidden="true"
+			>
+				{
+					builtLines.map((lineWords) => (
+						<span class="block pb-[0.06em]">
+							{lineWords.map(({ w }, i) => (
+								<>
+									{i > 0 && " "}
+									<span class="inline-block whitespace-nowrap">
+										{w.map((l) => (
+											<span class="inline-block">{l.ch}</span>
+										))}
+									</span>
+								</>
+							))}
+						</span>
+					))
+				}
+			</span>
+
+			<!-- Solid filled layer: wipes up over the outline on open, then responds to cursor proximity. -->
+			<span
+				class="absolute inset-0 block in-[.js]:[clip-path:inset(100%_0_-0.15em_0)] motion-reduce:[clip-path:none]!"
+				data-hf
+				aria-hidden="true"
+			>
+				{
+					builtLines.map((lineWords) => (
+						<span class="block pb-[0.06em]">
+							{lineWords.map(({ w, accent }, i) => (
+								<>
+									{i > 0 && " "}
+									<span class:list={["inline-block whitespace-nowrap", accent && "text-accent"]}>
+										{w.map((l) => (
+											<span class="inline-block font-[650]" style={`--d:${l.d}`} data-l>
+												{l.ch}
+											</span>
+										))}
+									</span>
+								</>
+							))}
+						</span>
+					))
+				}
+			</span>
+
+			<!-- Dimension callouts: measure the headline during the intro, then fade away. -->
+			<span class="pointer-events-none absolute inset-x-0 -top-[0.34em] h-px" aria-hidden="true">
+				<span data-hd class="absolute inset-x-0 top-0 h-px origin-center scale-x-0 bg-accent/75"></span>
+				<span data-hd class="absolute -top-1.5 left-0 h-3 w-px origin-center scale-y-0 bg-accent"></span>
+				<span data-hd class="absolute -top-1.5 right-0 h-3 w-px origin-center scale-y-0 bg-accent"></span>
+				<span data-hl class="absolute -top-2 left-1/2 -translate-x-1/2 bg-background px-2.5 font-mono text-[0.6875rem] leading-4 font-normal tracking-normal whitespace-nowrap text-accent tabular-nums"></span>
+			</span>
+			<span class="pointer-events-none absolute top-[0.12em] -left-[0.38em] hidden h-[0.76em] w-px sm:block" aria-hidden="true">
+				<span data-hd class="absolute inset-y-0 left-0 w-px origin-center scale-y-0 bg-accent/75"></span>
+				<span data-hd class="absolute top-0 -left-1.5 h-px w-3 origin-center scale-x-0 bg-accent"></span>
+				<span data-hd class="absolute bottom-0 -left-1.5 h-px w-3 origin-center scale-x-0 bg-accent"></span>
+				<span data-hl class="absolute top-1/2 right-3 -translate-y-1/2 text-right font-mono text-[0.6875rem] leading-3.5 font-normal tracking-normal whitespace-pre text-accent tabular-nums"></span>
+			</span>
+			<span
+				data-hd
+				aria-hidden="true"
+				class="pointer-events-none absolute top-[0.12em] -right-[10vw] -left-[10vw] h-px origin-center scale-x-0 bg-[repeating-linear-gradient(90deg,color-mix(in_oklab,var(--color-accent)_40%,transparent)_0_6px,transparent_6px_12px)]"
+			></span>
+			<span
+				data-hd
+				aria-hidden="true"
+				class="pointer-events-none absolute top-[0.88em] -right-[10vw] -left-[10vw] h-px origin-center scale-x-0 bg-[repeating-linear-gradient(90deg,color-mix(in_oklab,var(--color-accent)_40%,transparent)_0_6px,transparent_6px_12px)]"
+			></span>
+		</h1>
+
+		<div class="mt-8 grid gap-8 lg:mt-10 lg:grid-cols-[1fr_auto] lg:items-end">
+			<p class:list={[fadeIn, "max-w-lg text-base leading-7 text-secondary sm:text-lg sm:leading-8"]} style="--d:2">
+				I'm Tashif. I build and operate TalentSync and rah.clinic through taf.sh,
+				and take on a few client builds a year.
+			</p>
+			<div class:list={[fadeIn, "flex flex-wrap gap-3"]} style="--d:3">
+				<a href="#contact" class:list={[btn, btnLg, btnAccent]} data-magnetic>
+					Start a project <span class={btnArrow} aria-hidden="true">→</span>
+				</a>
+				<button type="button" class:list={[btn, btnLg, btnGhost]} data-reel-open data-magnetic>
+					See the work <span class={btnArrow} aria-hidden="true">↗</span>
+				</button>
+			</div>
+		</div>
+
+		<dl class="mt-14 grid grid-cols-2 gap-y-8 border-t border-border pt-8 md:grid-cols-4 lg:mt-20" data-stats>
+			{
+				stats.map((stat, i) => (
+					<div class:list={[fadeIn, "pr-4"]} style={`--d:${4 + i * 0.5}`}>
+						<dd class="flex items-baseline font-display text-[clamp(2rem,4vw,3rem)] leading-none font-semibold tracking-[-0.04em]">
+							<span class="text-foreground tabular-nums" data-slot={String(stat.value).padStart(2, "0")}>
+								{String(stat.value).padStart(2, "0")}
+							</span>
+							<span class="text-accent">{stat.suffix}</span>
+						</dd>
+						<dt class="mt-2 text-sm text-muted">{stat.label}</dt>
+					</div>
+				))
+			}
+		</dl>
+	</div>
+
+	<!-- Driven by studio.ts: drifts, speeds up and leans with scroll velocity. -->
+	<div
+		class="relative mt-14 overflow-hidden border-y border-border [mask-image:linear-gradient(90deg,transparent,black_8%,black_92%,transparent)] lg:mt-20"
+		aria-label="Stack"
+	>
+		<div class="flex w-max skew-x-(--skew,0deg) will-change-transform" data-marquee="1">
+			{
+				[0, 1].map((copy) => (
+					<ul
+						class="flex gap-10 px-5 py-4 font-mono text-[0.8125rem] whitespace-nowrap text-secondary"
+						aria-hidden={copy === 1 ? "true" : undefined}
+					>
+						{stack.map((item) => (
+							<li>
+								{item}
+							</li>
+						))}
+					</ul>
+				))
+			}
+		</div>
+	</div>
+</section>
