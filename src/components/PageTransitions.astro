@@ -1,0 +1,47 @@
+<!-- Browsers with cross-document transitions use global.css directly. -->
+<script is:inline>
+	(() => {
+		if ("onpageswap" in window && "onpagereveal" in window) return;
+
+		const root = document.documentElement;
+		const reduced = matchMedia("(prefers-reduced-motion: reduce)");
+		const key = "taf-page-arrival";
+		let leaving = false;
+
+		// Mark the destination before its first paint, without animating a fresh visit.
+		try {
+			const arrival = JSON.parse(sessionStorage.getItem(key) || "null");
+			sessionStorage.removeItem(key);
+			if (!reduced.matches && arrival?.href === location.href && Date.now() - arrival.at < 10000) {
+				root.dataset.pageMotion = "arrive";
+			}
+		} catch {}
+
+		document.addEventListener("click", (event) => {
+			if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || reduced.matches) return;
+			const link = event.target instanceof Element ? event.target.closest("a[href]") : null;
+			if (!link || link.hasAttribute("download") || (link.target && link.target !== "_self")) return;
+			const url = new URL(link.href);
+			if (url.origin !== location.origin || (url.pathname === location.pathname && url.search === location.search)) return;
+			if (!document.querySelector("[data-page-content]")) return;
+
+			event.preventDefault();
+			if (leaving) return;
+			leaving = true;
+			root.dataset.pageMotion = "leave";
+			try {
+				sessionStorage.setItem(key, JSON.stringify({ href: url.href, at: Date.now() }));
+			} catch {}
+			// Keep full-document navigation and the browser's normal history behavior.
+			setTimeout(() => location.assign(url.href), 160);
+		});
+
+		document.addEventListener("animationend", (event) => {
+			if (event.animationName === "page-arrive") delete root.dataset.pageMotion;
+		});
+		addEventListener("pageshow", (event) => {
+			leaving = false;
+			if (event.persisted || root.dataset.pageMotion === "leave") delete root.dataset.pageMotion;
+		});
+	})();
+</script>
