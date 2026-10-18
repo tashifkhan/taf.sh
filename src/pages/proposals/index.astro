@@ -1,341 +1,138 @@
 ---
-/**
- * Interior proposal comparison — Mr. Tamjeed Khan
- * Zine aesthetic (from design lab), mobile-first.
- * Full-bleed page (no dark site chrome — paper UI).
- */
-import "@fontsource/anton/400.css";
-import "@fontsource/caveat/400.css";
-import "@fontsource/caveat/600.css";
-import "@fontsource/caveat/700.css";
-import "@fontsource/ibm-plex-sans/400.css";
-import "@fontsource/ibm-plex-sans/500.css";
-import "@fontsource/ibm-plex-sans/600.css";
-import "@fontsource/ibm-plex-sans/700.css";
+import PageLayout from "../../layouts/PageLayout.astro";
+import PageIntro from "../../components/studio/PageIntro.astro";
+import { wrap, btn, btnLg, btnAccent, btnArrow } from "../../components/studio/ui";
 import data from "../../data/tamjeed-proposals.json";
-import "../../styles/proposal-zine.css";
+import "../../styles/proposal-studio.css";
 
-const title = "Interior Proposals · Tamjeed Khan";
-const description =
-	"Itemized comparison of Ugra Creation, High Creation, and Homebell — normalized for 6 rooms / 2 flats.";
+const title = "Interior proposals · Tamjeed Khan";
+const description = "Compare Ugra Creation, High Creation and Homebell, normalized for 6 rooms across 2 flats.";
 const excelHref = "/proposals/Tamjeed_Khan_Proposal_Comparison.xlsx";
+const views = [
+  ["dashboard", "Overview"], ["itemized", "Itemized BOQ"], ["rooms", "By room"],
+  ["gaps", "Inclusions & gaps"], ["proposals", "Original quotes"],
+];
 ---
 
-<!doctype html>
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="generator" content={Astro.generator} />
-		<meta name="description" content={description} />
-		<meta name="theme-color" content="#f6f3ea" />
-		<meta property="og:title" content={`${title} · taf.sh`} />
-		<meta property="og:description" content={description} />
-		<meta property="og:type" content="website" />
-		<title>{title} · taf.sh</title>
-	</head>
-	<body>
-		<div class="prop" id="prop-app">
-			<div class="prop-grain" aria-hidden="true"></div>
+<PageLayout title={title} description={description} footerCta={false}>
+  <PageIntro label="Client tools / Interior comparison" summary="Three interior proposals for Mr. Tamjeed Khan. Compare their costs and scope on the same basis, with six rooms across two flats.">
+    <Fragment slot="title">Three quotes.<br />A clearer <em>picture.</em></Fragment>
+    <a href={excelHref} class:list={[btn, btnLg, btnAccent]} download>
+      Download Excel <span class={btnArrow} aria-hidden="true">↓</span>
+    </a>
+  </PageIntro>
 
-			<header class="prop-topbar">
-				<div class="prop-topbar-inner">
-					<a class="prop-brand" href="/">
-						<span>PROP</span><span class="dot">.</span><span class="inv">LAB</span>
-					</a>
-					<nav class="prop-nav" aria-label="Sections">
-						<button type="button" class="active" data-page="dashboard">home</button>
-						<button type="button" data-page="itemized">boq</button>
-						<button type="button" data-page="rooms">rooms</button>
-						<button type="button" data-page="gaps">gaps</button>
-						<button type="button" data-page="proposals">originals</button>
-						<a class="dl" href={excelHref}>↓ excel</a>
-					</nav>
-				</div>
-			</header>
+  <div class:list={[wrap, "prop"]} id="prop-app">
+    <nav class="prop-nav" aria-label="Comparison views">
+      {views.map(([id, label], i) => <button type="button" class:list={[i === 0 && "active"]} data-page={id} aria-pressed={i === 0} aria-controls={`page-${id}`}>{label}</button>)}
+    </nav>
 
-			<div class="prop-wrap">
-				<!-- DASHBOARD -->
-				<section class="prop-page active" id="page-dashboard" aria-label="Dashboard">
-					<header class="prop-mast">
-						<p class="hand prop-issue">issue #001 — the “three quotes” issue</p>
-						<h1 class="prop-logo">
-							<span class="a">COMPARE</span><span class="pink">.</span><span class="b">IT</span>
-						</h1>
-						<p class="prop-tagline">
-							a xeroxed BOQ about <mark>Mr. Tamjeed Khan</mark> interiors —
-							Ugra · High Creation · Homebell — normalized for
-							<u>6 rooms / 2 flats</u>
-						</p>
-					</header>
+    <div class="prop-wrap">
+      <section class="prop-page active" id="page-dashboard" aria-label="Overview">
+        <div class="prop-intro">
+          <div>
+            <p class="prop-eyebrow">01 / Overview</p>
+            <h2>Compare the whole scope.</h2>
+          </div>
+          <div>
+            <p>Ugra's single-flat quote is doubled. High Creation and Homebell already cover multiple units. A dash means an item is absent from a proposal, never a zero cost.</p>
+            <button type="button" class="prop-text-link" data-page="itemized">Explore the itemized comparison <span aria-hidden="true">↗</span></button>
+          </div>
+        </div>
+        <div class="prop-flyers" id="kpi-cards"></div>
 
-					<!-- In-flow badges (no absolute stickers that collide on mobile) -->
-					<div class="prop-intro">
-						<div class="prop-intro-badges">
-							<span class="prop-badge hl">6-room max furniture</span>
-							<span class="prop-badge pink">read the dashes</span>
-						</div>
-						<h2>
-							Three vendors. <span class="hl-line">One fair fight.</span>
-							No hand-wavy totals.
-						</h2>
-						<p class="hand note">
-							single-flat quotes get doubled · missing lines show as — not ₹0 ←
-							tiles & most CP fittings are still your budget
-						</p>
-						<div class="prop-intro-actions">
-							<button type="button" class="prop-btn" data-page="itemized">open the boq →</button>
-							<a class="prop-btn ghost" href={excelHref}>steal the excel</a>
-						</div>
-					</div>
+        <section class="prop-section" aria-labelledby="ranking-title">
+          <div class="prop-section-heading"><h2 id="ranking-title">Normalized costs</h2><p>Itemized totals, lowest first</p></div>
+          <div class="prop-panel" id="rank-bars"></div>
+          <p class="prop-legend"><span>Ugra ×2 for two flats</span><span>High Creation and Homebell ×1</span></p>
+        </section>
 
-					<div class="prop-section">
-						<h2 class="prop-section-title">
-							<mark>THE GOODS</mark>
-							<span class="hand">— three proposals ↓</span>
-						</h2>
-						<div class="prop-flyers" id="kpi-cards"></div>
-					</div>
+        <div class="prop-section prop-grid-2">
+          <section aria-labelledby="packages-title">
+            <h2 class="prop-section-title" id="packages-title">Package comparison</h2>
+            <p class="prop-scroll-hint">Scroll the table to compare all vendors →</p>
+            <div class="prop-table-wrap" id="package-table" tabindex="0" role="region" aria-label="Package comparison table"></div>
+          </section>
+          <section aria-labelledby="reading-title">
+            <h2 class="prop-section-title" id="reading-title">Before you compare</h2>
+            <div class="prop-dashed">
+              <ul class="prop-list">
+                <li>Original totals follow the figures printed in each PDF.</li>
+                <li>Normalized totals use Ugra ×2, High Creation ×1 and Homebell ×1.</li>
+                <li>Dashes mean absent, so allow extra budget for missing items.</li>
+                <li>The spreadsheet includes rates, quantities and room subtotals.</li>
+              </ul>
+              <div class="prop-callout">All three exclude bathroom and kitchen tile material. Ugra and High Creation also exclude stone supply and most sanitary CP fittings.</div>
+            </div>
+          </section>
+        </div>
+      </section>
 
-					<div class="prop-section">
-						<h2 class="prop-section-title">
-							<mark>RANKING</mark>
-							<span class="hand">normalized itemized total</span>
-						</h2>
-						<div class="prop-panel" id="rank-bars"></div>
-						<p class="prop-legend">
-							<span><b>—</b> = not in that proposal</span>
-							<span><b>Ugra ×2</b> for 2-flat max</span>
-							<span><b>HC / Homebell</b> already multi-unit</span>
-						</p>
-					</div>
+      <section class="prop-page" id="page-itemized" aria-label="Itemized BOQ">
+        <header class="prop-mast"><p class="prop-eyebrow">02 / Itemized BOQ</p><h2>Every line, side by side.</h2><p class="prop-tagline">Filter by room or search the mapped items. Switch between original and normalized amounts.</p></header>
+        <div class="prop-filters">
+          <div class="mode-row" role="group" aria-label="Comparison amounts">
+            <button type="button" class="prop-btn active" data-mode="normalized" aria-pressed="true">Normalized</button>
+            <button type="button" class="prop-btn ghost" data-mode="original" aria-pressed="false">Original</button>
+          </div>
+          <label class="prop-filter-label">Room<select id="room-filter"></select></label>
+          <label class="prop-filter-label">Search<input id="search" type="search" placeholder="Item, room or note" autocomplete="off" /></label>
+        </div>
+        <p class="prop-scroll-hint">Scroll the table to see all columns →</p>
+        <div class="prop-table-wrap" id="itemized-table" tabindex="0" role="region" aria-label="Itemized comparison table"></div>
+      </section>
 
-					<div class="prop-section prop-grid-2">
-						<div>
-							<h2 class="prop-section-title"><mark>PACKAGES</mark></h2>
-							<p class="hand prop-scroll-hint">swipe table →</p>
-							<div class="prop-table-wrap" id="package-table"></div>
-						</div>
-						<div>
-							<h2 class="prop-section-title"><mark>HOW TO READ</mark></h2>
-							<div class="prop-dashed">
-								<ul class="prop-list">
-									<li><strong>Original</strong> = as printed in each PDF</li>
-									<li><strong>Normalized</strong> = Ugra ×2; HC & Homebell ×1</li>
-									<li><strong>Red dashes</strong> = absent (not free)</li>
-									<li>Excel has every rate, qty, room subtotal</li>
-								</ul>
-								<div class="prop-callout">
-									<strong>Budget extra:</strong> bathroom & kitchen tile material is out
-									for all three. Ugra/HC also exclude stone supply & most sanitary CP.
-								</div>
-							</div>
-						</div>
-					</div>
-				</section>
+      <section class="prop-page" id="page-rooms" aria-label="By room">
+        <header class="prop-mast"><p class="prop-eyebrow">03 / By room</p><h2>See where the costs sit.</h2><p class="prop-tagline">Room and zone subtotals across all three proposals.</p></header>
+        <p class="prop-scroll-hint">Scroll the table to compare all vendors →</p>
+        <div class="prop-table-wrap" id="room-table" tabindex="0" role="region" aria-label="Room comparison table"></div>
+        <div class="prop-section prop-grid-2">
+          <div class="prop-dashed"><h3>Where the scope differs</h3><ul class="prop-list">
+            <li>Ugra alone prices a dining set and chairs.</li><li>Homebell includes granite and a kitchen sink.</li><li>Ugra includes multiple beds. Homebell includes almost none.</li><li>High Creation has a broader toilet EPC scope.</li><li>High Creation and Ugra supply light fixtures.</li>
+          </ul></div>
+          <div class="prop-dashed"><h3>The six-room map</h3><ul class="prop-list">
+            <li>Living, lounge and dining</li><li>Kitchen</li><li>Master, BR2, BR3 and parents or extra bedroom</li><li>Toilets, false ceiling, paint, electrical and civil work</li>
+          </ul></div>
+        </div>
+      </section>
 
-				<!-- ITEMIZED -->
-				<section class="prop-page" id="page-itemized" aria-label="Itemized BOQ">
-					<header class="prop-mast">
-						<p class="hand prop-issue">the fine print, itemized</p>
-						<h1 class="prop-logo" style="font-size: clamp(2rem, 10vw, 4.2rem)">
-							<span class="a">FULL</span><span class="pink">.</span><span class="b">BOQ</span>
-						</h1>
-						<p class="prop-tagline">every mapped line · filter by room · original vs normalized</p>
-					</header>
+      <section class="prop-page" id="page-gaps" aria-label="Inclusions and gaps">
+        <header class="prop-mast"><p class="prop-eyebrow">04 / Inclusions & gaps</p><h2>What the quote leaves out.</h2><p class="prop-tagline">Check fittings, tiles, stone, lights, GST and warranty before deciding.</p></header>
+        <p class="prop-scroll-hint">Scroll the table to compare all vendors →</p>
+        <div class="prop-table-wrap" id="inclusion-table" tabindex="0" role="region" aria-label="Inclusions and gaps table"></div>
+        <section class="prop-section" aria-labelledby="scope-notes"><h2 class="prop-section-title" id="scope-notes">Scope notes</h2><ul class="prop-strips">
+          <li><strong>Tile material</strong><span>All three exclude it.</span></li>
+          <li><strong>Stone supply</strong><span>Homebell supplies Z black granite. Ugra and High Creation cover fixing only.</span></li>
+          <li><strong>GST</strong><span>Ugra quotes exclusive of GST. High Creation says 18% is included.</span></li>
+          <li><strong>Light fixtures</strong><span>Homebell focuses on provisions. Allow a separate fixture budget.</span></li>
+          <li><strong>Beds and dining</strong><span>Ugra includes more standalone furniture. The others focus on modular work.</span></li>
+        </ul></section>
+        <div class="prop-section prop-grid-2">
+          <div class="prop-dashed"><h3>Allow extra budget</h3><ul class="prop-list"><li>Bathroom and kitchen tile material</li><li>Sanitaryware and most CP fittings</li><li>Chimney, hob, RO and geyser</li><li>AC wiring and full MCB-DB</li><li>Site measurement variance of 5 to 10%</li></ul></div>
+          <div class="prop-dashed"><h3>Vendor notes</h3><ul class="prop-list"><li>Ugra excludes GST. Doubling assumes an identical second flat.</li><li>High Creation has the highest PDF total. A washbasin costs extra with its vanity.</li><li>Homebell includes design and execution. Budget separately for lights and beds.</li></ul></div>
+        </div>
+      </section>
 
-					<div class="prop-filters">
-						<div class="mode-row">
-							<button type="button" class="prop-btn active" data-mode="normalized">Normalized</button>
-							<button type="button" class="prop-btn ghost" data-mode="original">Original</button>
-						</div>
-						<select id="room-filter" aria-label="Filter by room"></select>
-						<input id="search" type="search" placeholder="Search item, room, note…" autocomplete="off" />
-					</div>
-					<p class="hand prop-scroll-hint">swipe table sideways for all columns →</p>
-					<div class="prop-table-wrap" id="itemized-table"></div>
-				</section>
-
-				<!-- ROOMS -->
-				<section class="prop-page" id="page-rooms" aria-label="By room">
-					<header class="prop-mast">
-						<p class="hand prop-issue">grouped by zone</p>
-						<h1 class="prop-logo" style="font-size: clamp(2rem, 10vw, 4.2rem)">
-							<span class="a">BY</span><span class="pink">.</span><span class="b">ROOM</span>
-						</h1>
-					</header>
-					<p class="hand prop-scroll-hint">swipe table →</p>
-					<div class="prop-table-wrap" id="room-table"></div>
-
-					<div class="prop-section prop-grid-2">
-						<div class="prop-dashed">
-							<h3>Where they diverge</h3>
-							<ul class="prop-list">
-								<li><strong>Living:</strong> Ugra alone prices dining + chairs</li>
-								<li><strong>Kitchen:</strong> Homebell includes granite + sink</li>
-								<li><strong>Beds:</strong> Ugra multi-bed · Homebell almost none</li>
-								<li><strong>Toilets:</strong> HC deeper EPC</li>
-								<li><strong>Lights:</strong> HC & Ugra supply fixtures</li>
-							</ul>
-						</div>
-						<div class="prop-dashed">
-							<h3>6-room map</h3>
-							<ul class="prop-list">
-								<li>Living / Lounge / Dining</li>
-								<li>Kitchen</li>
-								<li>Master · BR2 · BR3 · Parents/extra</li>
-								<li>Toilets + false ceiling + paint + electrical + civil</li>
-							</ul>
-						</div>
-					</div>
-				</section>
-
-				<!-- GAPS -->
-				<section class="prop-page" id="page-gaps" aria-label="Inclusions and gaps">
-					<header class="prop-mast">
-						<p class="hand prop-issue">what’s in · what’s not</p>
-						<h1 class="prop-logo" style="font-size: clamp(2rem, 10vw, 4.2rem)">
-							<span class="a">GAPS</span><span class="pink">.</span><span class="b">CHK</span>
-						</h1>
-						<p class="prop-tagline">fittings · tiles · stone · lights · GST · warranty</p>
-					</header>
-					<p class="hand prop-scroll-hint">swipe table →</p>
-					<div class="prop-table-wrap" id="inclusion-table"></div>
-
-					<div class="prop-ink-band">
-						<div class="prop-wrap" style="padding: 0">
-							<h2 class="prop-section-title">
-								<mark>HOUSE RULES</mark>
-								<span class="hand">— before you pick</span>
-							</h2>
-							<ul class="prop-strips">
-								<li style="--rot: -0.7deg">
-									<strong>Tiles out</strong>
-									<span> — all three exclude tile material.</span>
-								</li>
-								<li style="--rot: 0.9deg">
-									<strong>Stone split</strong>
-									<span> — Homebell supplies Z black; Ugra/HC fix only.</span>
-								</li>
-								<li style="--rot: -0.5deg">
-									<strong>GST trap</strong>
-									<span> — Ugra exclusive · HC says 18% included.</span>
-								</li>
-								<li style="--rot: 0.7deg">
-									<strong>Lights</strong>
-									<span> — Homebell is provision-heavy.</span>
-								</li>
-								<li style="--rot: -0.8deg">
-									<strong>Beds & dining</strong>
-									<span> — Ugra ships lifestyle pieces; others modular-first.</span>
-								</li>
-							</ul>
-						</div>
-					</div>
-
-					<div class="prop-section prop-grid-2">
-						<div class="prop-dashed">
-							<h3>Add-ons (everyone)</h3>
-							<ul class="prop-list">
-								<li>Bathroom + kitchen tiles material</li>
-								<li>Sanitaryware & most CP brands</li>
-								<li>Chimney, hob, RO, geyser</li>
-								<li>AC wiring / full MCB-DB</li>
-								<li>Site measure variance 5–10%</li>
-							</ul>
-						</div>
-						<div class="prop-dashed">
-							<h3>Vendor-specific</h3>
-							<ul class="prop-list">
-								<li><strong>Ugra:</strong> add GST if exclusive; ×2 assumes twin flat</li>
-								<li><strong>HC:</strong> highest PDF cash; washbasin extra on vanity</li>
-								<li><strong>Homebell:</strong> design + execution in; buy lights & beds</li>
-							</ul>
-						</div>
-					</div>
-				</section>
-
-				<!-- ORIGINALS -->
-				<section class="prop-page" id="page-proposals" aria-label="Original proposals">
-					<header class="prop-mast">
-						<p class="hand prop-issue">original posture vs normalized view</p>
-						<h1 class="prop-logo" style="font-size: clamp(1.9rem, 9vw, 3.8rem)">
-							<span class="a">ORIG</span><span class="pink">.</span><span class="b">INALS</span>
-						</h1>
-					</header>
-					<div class="prop-tabs" role="tablist">
-						<button type="button" class="active" data-prop="ugra" role="tab">Ugra</button>
-						<button type="button" data-prop="hc" role="tab">High Creation</button>
-						<button type="button" data-prop="homebell" role="tab">Homebell</button>
-					</div>
-					<div id="proposal-ugra" class="prop-detail active" role="tabpanel"></div>
-					<div id="proposal-hc" class="prop-detail" role="tabpanel"></div>
-					<div id="proposal-homebell" class="prop-detail" role="tabpanel"></div>
-
-					<div class="prop-section">
-						<h2 class="prop-section-title"><mark>NORM RULES</mark></h2>
-						<p class="hand prop-scroll-hint">swipe table →</p>
-						<div class="prop-table-wrap">
-							<table>
-								<thead>
-									<tr>
-										<th>Vendor</th>
-										<th>Original scope</th>
-										<th>Factor</th>
-										<th>Intent</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<td><strong>Ugra Creation</strong></td>
-										<td>One house BOQ (~4 BR zones)</td>
-										<td><mark>×2</mark></td>
-										<td>Max furniture for 2 flats / 6 rooms</td>
-									</tr>
-									<tr>
-										<td><strong>High Creation</strong></td>
-										<td>Ground + Floor 1 + site handling</td>
-										<td>×1</td>
-										<td>Already multi-unit (~6 BR)</td>
-									</tr>
-									<tr>
-										<td><strong>Homebell</strong></td>
-										<td>Flat 1 + Flat 2 BOQs</td>
-										<td>×1</td>
-										<td>Already 2 × 3BHK</td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-					</div>
-
-					<div class="prop-coupon">
-						<div class="prop-coupon-left">
-							<p class="prop-coupon-kicker">CLIP &amp; SAVE</p>
-							<p class="prop-coupon-big">DOWNLOAD<br />THE EXCEL</p>
-							<p class="prop-coupon-fine">
-								full itemized matrix · room subtotals · inclusion gaps —
-								<a href={excelHref}><strong>Tamjeed_Khan_Proposal_Comparison.xlsx</strong></a>
-							</p>
-						</div>
-						<div class="prop-coupon-right">
-							<p class="hand" style="margin: 0; font-weight: 700">every<br />line!!</p>
-						</div>
-					</div>
-				</section>
-			</div>
-
-			<footer class="prop-footer">
-				<p>
-					©{new Date().getFullYear()}
-					<a href="/">taf.sh</a> · proposal lab · Mr. Tamjeed Khan · Rajouri Garden
-				</p>
-				<p class="hand">zine layout · mobile-first</p>
-			</footer>
-		</div>
-
+      <section class="prop-page" id="page-proposals" aria-label="Original quotes">
+        <header class="prop-mast"><p class="prop-eyebrow">05 / Original quotes</p><h2>Back to the source.</h2><p class="prop-tagline">Vendor details, quoted scope and the assumptions behind this comparison.</p></header>
+        <div class="prop-tabs" role="tablist" aria-label="Vendor quotes">
+          {[["ugra", "Ugra"], ["hc", "High Creation"], ["homebell", "Homebell"]].map(([key, name], i) => <button type="button" class:list={[i === 0 && "active"]} id={`tab-${key}`} data-prop={key} role="tab" aria-controls={`proposal-${key}`} aria-selected={i === 0} tabindex={i === 0 ? 0 : -1}>{name}</button>)}
+        </div>
+        {[["ugra", true], ["hc", false], ["homebell", false]].map(([key, active]) => <div id={`proposal-${key}`} class:list={["prop-detail", active && "active"]} role="tabpanel" aria-labelledby={`tab-${key}`} tabindex="0"></div>)}
+        <section class="prop-section" aria-labelledby="normalization-title">
+          <h2 class="prop-section-title" id="normalization-title">Normalization rules</h2>
+          <p class="prop-scroll-hint">Scroll the table to see the full scope →</p>
+          <div class="prop-table-wrap" tabindex="0" role="region" aria-label="Normalization rules"><table><thead><tr><th>Vendor</th><th>Original scope</th><th>Factor</th><th>Comparison basis</th></tr></thead><tbody>
+            <tr><td>Ugra Creation</td><td>One house BOQ, roughly four bedroom zones</td><td>×2</td><td>Maximum furniture for two flats and six rooms</td></tr>
+            <tr><td>High Creation</td><td>Ground floor, first floor and site handling</td><td>×1</td><td>Already covers roughly six bedrooms</td></tr>
+            <tr><td>Homebell</td><td>Flat 1 and Flat 2 BOQs</td><td>×1</td><td>Already covers two 3BHK flats</td></tr>
+          </tbody></table></div>
+        </section>
+        <div class="prop-download"><div><p class="prop-eyebrow">Take the details with you</p><h2>The full comparison.</h2><p>Itemized amounts, room subtotals and inclusion gaps in one spreadsheet.</p></div><a class="prop-btn" href={excelHref} download>Download Excel <span aria-hidden="true">↓</span></a></div>
+      </section>
+    </div>
+    <footer class="prop-footer"><p>Prepared for Mr. Tamjeed Khan · Rajouri Garden</p><p>6 rooms / 2 flats</p></footer>
+  </div>
 		<script is:inline define:vars={{ data, excelHref }}>
 			window.PROPOSAL_DATA = data;
 			window.EXCEL_HREF = excelHref;
@@ -389,15 +186,17 @@ const excelHref = "/proposals/Tamjeed_Khan_Proposal_Comparison.xlsx";
 				if (page) page.classList.add("active");
 				document.querySelectorAll(".prop-nav [data-page]").forEach((b) => {
 					b.classList.toggle("active", b.getAttribute("data-page") === id);
+					b.setAttribute("aria-pressed", String(b.getAttribute("data-page") === id));
 				});
-				window.scrollTo({ top: 0, behavior: "smooth" });
+				page?.querySelector<HTMLElement>("h2")?.focus({ preventScroll: true });
+				document.getElementById("prop-app")?.scrollIntoView({ behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth", block: "start" });
 			}
 
 			function renderDashboard() {
 				const d = window.PROPOSAL_DATA as ProposalData;
 				const s = d.stats;
 				const notes = ["richest furniture", "deepest EPC + lights", "granite + sink in"];
-				const rots = ["-1.2deg", "1deg", "-0.6deg"];
+
 				const cards = [
 					{
 						status: "×2 NORM",
@@ -430,7 +229,7 @@ const excelHref = "/proposals/Tamjeed_Khan_Proposal_Comparison.xlsx";
 						name: "Homebell",
 						meta: "Flat 1 + Flat 2 · 01-08-2026",
 						metric: s.hb_norm,
-						metricNote: "Post-discount PDF combined",
+						metricNote: "Normalized itemized total",
 						rows: [
 							["PDF combined", inr(s.pdf_totals.homebell)],
 							["Itemized map", inr(s.hb_orig)],
@@ -444,9 +243,8 @@ const excelHref = "/proposals/Tamjeed_Khan_Proposal_Comparison.xlsx";
 				if (kpi) {
 					kpi.innerHTML = cards
 						.map(
-							(c, i) => `
-            <article class="prop-flyer" style="--rot:${rots[i]}">
-              <i class="prop-flyer-tape" aria-hidden="true"></i>
+							(c) => `
+            <article class="prop-flyer">
               <p class="prop-flyer-status">${c.status}</p>
               <h3>${c.name}</h3>
               <p class="meta">${c.meta}</p>
@@ -457,7 +255,7 @@ const excelHref = "/proposals/Tamjeed_Khan_Proposal_Comparison.xlsx";
 										`<div class="prop-kpi-row"><span>${k}</span><strong>${v}</strong></div>`,
 								)
 								.join("")}
-              <p class="hand prop-flyer-note">${c.note}</p>
+              <p class="prop-flyer-note">${c.note}</p>
             </article>`,
 						)
 						.join("");
@@ -475,7 +273,7 @@ const excelHref = "/proposals/Tamjeed_Khan_Proposal_Comparison.xlsx";
 						.map(
 							(r, i) => `
             <div class="prop-bar-row">
-              <div class="hand prop-bar-label" style="font-size:1.1rem">${i + 1}. ${r.name}</div>
+              <div class="prop-bar-label" >${i + 1}. ${r.name}</div>
               <div class="prop-bar-track"><div class="prop-bar-seg ${r.cls}" style="width:${(r.v / max) * 100}%"></div></div>
               <div class="prop-bar-val">${inr(r.v)}</div>
             </div>`,
@@ -617,6 +415,7 @@ const excelHref = "/proposals/Tamjeed_Khan_Proposal_Comparison.xlsx";
           </tr>`;
 				}
 				flushRoom();
+                if (!items.length) html += `<tr><td colspan="7">No items match these filters. Try another room or search.</td></tr>`;
 				html += `<tr class="subtotal"><td colspan="2"><strong>Visible total</strong></td>
           <td class="num"><strong>${inr(totals.ugra)}</strong></td>
           <td class="num"><strong>${inr(totals.hc)}</strong></td>
@@ -634,7 +433,7 @@ const excelHref = "/proposals/Tamjeed_Khan_Proposal_Comparison.xlsx";
 					ugra: `
             <div class="prop-panel">
               <p class="prop-flyer-status">ORIGINAL PDF</p>
-              <h3 class="anton" style="font-size:clamp(1.3rem,4vw,1.7rem);text-transform:uppercase;margin:.2rem 0 .5rem">Ugra Creation Interior Pvt Ltd</h3>
+              <h3 class="prop-vendor-title" style="font-size:clamp(1.3rem,4vw,1.7rem);margin:.2rem 0 .5rem">Ugra Creation Interior Pvt Ltd</h3>
               <p class="meta" style="color:var(--muted);font-size:.88rem">Quote ${d.vendors.ugra.quote} · ${d.vendors.ugra.date}<br>
               ${d.vendors.ugra.address}<br>${d.vendors.ugra.contact}</p>
               <div class="prop-mini-metrics">
@@ -658,12 +457,12 @@ const excelHref = "/proposals/Tamjeed_Khan_Proposal_Comparison.xlsx";
                   </ul>
                 </div>
               </div>
-              <p class="hand" style="margin-top:1rem">Payment: ${d.vendors.ugra.payment}</p>
+              <p class="prop-payment" style="margin-top:1rem">Payment: ${d.vendors.ugra.payment}</p>
             </div>`,
 					hc: `
             <div class="prop-panel">
               <p class="prop-flyer-status">GF + F1</p>
-              <h3 class="anton" style="font-size:clamp(1.3rem,4vw,1.7rem);text-transform:uppercase;margin:.2rem 0 .5rem">High Creation Interior Projects Pvt Ltd</h3>
+              <h3 class="prop-vendor-title" style="font-size:clamp(1.3rem,4vw,1.7rem);margin:.2rem 0 .5rem">High Creation Interior Projects Pvt Ltd</h3>
               <p class="meta" style="color:var(--muted);font-size:.88rem">Quote ${d.vendors.hc.quote} · ${d.vendors.hc.date}<br>
               ${d.vendors.hc.address}<br>${d.vendors.hc.contact}</p>
               <div class="prop-mini-metrics three">
@@ -688,12 +487,12 @@ const excelHref = "/proposals/Tamjeed_Khan_Proposal_Comparison.xlsx";
                   </ul>
                 </div>
               </div>
-              <p class="hand" style="margin-top:1rem">Payment: ${d.vendors.hc.payment}</p>
+              <p class="prop-payment" style="margin-top:1rem">Payment: ${d.vendors.hc.payment}</p>
             </div>`,
 					homebell: `
             <div class="prop-panel">
               <p class="prop-flyer-status">FLAT 1 + 2</p>
-              <h3 class="anton" style="font-size:clamp(1.3rem,4vw,1.7rem);text-transform:uppercase;margin:.2rem 0 .5rem">Homebell Interiors Private Limited</h3>
+              <h3 class="prop-vendor-title" style="font-size:clamp(1.3rem,4vw,1.7rem);margin:.2rem 0 .5rem">Homebell Interiors Private Limited</h3>
               <p class="meta" style="color:var(--muted);font-size:.88rem">${d.vendors.homebell.quote}<br>
               ${d.vendors.homebell.address}<br>${d.vendors.homebell.contact}</p>
               <div class="prop-mini-metrics">
@@ -718,7 +517,7 @@ const excelHref = "/proposals/Tamjeed_Khan_Proposal_Comparison.xlsx";
                   </ul>
                 </div>
               </div>
-              <p class="hand" style="margin-top:1rem">Payment: ${d.vendors.homebell.payment}</p>
+              <p class="prop-payment" style="margin-top:1rem">Payment: ${d.vendors.homebell.payment}</p>
             </div>`,
 				};
 
@@ -733,7 +532,10 @@ const excelHref = "/proposals/Tamjeed_Khan_Proposal_Comparison.xlsx";
 					.querySelectorAll(".prop-detail")
 					.forEach((el) => el.classList.remove("active"));
 				document.querySelectorAll(".prop-tabs button").forEach((b) => {
-					b.classList.toggle("active", b.getAttribute("data-prop") === key);
+					const selected = b.getAttribute("data-prop") === key;
+					b.classList.toggle("active", selected);
+					b.setAttribute("aria-selected", String(selected));
+					b.setAttribute("tabindex", selected ? "0" : "-1");
 				});
 				document.getElementById("proposal-" + key)?.classList.add("active");
 			}
@@ -748,6 +550,7 @@ const excelHref = "/proposals/Tamjeed_Khan_Proposal_Comparison.xlsx";
 				renderDashboard();
 				renderItemized("normalized");
 				renderProposals();
+				document.querySelectorAll(".prop-page h2").forEach((el) => el.setAttribute("tabindex", "-1"));
 
 				document.querySelectorAll("[data-page]").forEach((el) => {
 					el.addEventListener("click", () =>
@@ -762,6 +565,7 @@ const excelHref = "/proposals/Tamjeed_Khan_Proposal_Comparison.xlsx";
 							const on = b === btn;
 							b.classList.toggle("active", on);
 							b.classList.toggle("ghost", !on);
+						b.setAttribute("aria-pressed", String(on));
 						});
 						renderItemized(itemMode);
 					});
@@ -772,6 +576,17 @@ const excelHref = "/proposals/Tamjeed_Khan_Proposal_Comparison.xlsx";
 						showProposal(btn.getAttribute("data-prop") || "ugra"),
 					);
 				});
+
+                document.querySelector(".prop-tabs")?.addEventListener("keydown", (event) => {
+                    const e = event as KeyboardEvent;
+                    const tabs = Array.from(document.querySelectorAll<HTMLButtonElement>("[data-prop]"));
+                    const index = tabs.indexOf(document.activeElement as HTMLButtonElement);
+                    if (index < 0 || !["ArrowLeft", "ArrowRight", "Home", "End"].includes(e.key)) return;
+                    e.preventDefault();
+                    const next = e.key === "Home" ? 0 : e.key === "End" ? tabs.length - 1 : (index + (e.key === "ArrowRight" ? 1 : -1) + tabs.length) % tabs.length;
+                    tabs[next].click();
+                    tabs[next].focus();
+                });
 
 				sel.addEventListener("change", () => renderItemized(itemMode));
 				document
@@ -786,5 +601,4 @@ const excelHref = "/proposals/Tamjeed_Khan_Proposal_Comparison.xlsx";
 				}
 			}
 		</script>
-	</body>
-</html>
+</PageLayout>
