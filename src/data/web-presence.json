@@ -1,0 +1,76 @@
+{
+  "site": "https://tashif.codes",
+  "source": "https://tashif.codes/projects/stats?project=dashboard",
+  "api": "https://tashif.codes/projects/stats/api/v1/stats?slugs=dashboard&days=0",
+  "capturedAt": "2026-10-18T01:34:08.667633Z",
+  "from": "2025-07-31",
+  "to": "2026-10-18",
+  "pageviews": 49884,
+  "googleReferralPageviews": 15409,
+  "monthly": [
+    {
+      "month": "2025-07",
+      "pageviews": 30
+    },
+    {
+      "month": "2025-08",
+      "pageviews": 705
+    },
+    {
+      "month": "2025-09",
+      "pageviews": 863
+    },
+    {
+      "month": "2025-10",
+      "pageviews": 1197
+    },
+    {
+      "month": "2025-11",
+      "pageviews": 1576
+    },
+    {
+      "month": "2025-12",
+      "pageviews": 1262
+    },
+    {
+      "month": "2026-01",
+      "pageviews": 1927
+    },
+    {
+      "month": "2026-02",
+      "pageviews": 2085
+    },
+    {
+      "month": "2026-03",
+      "pageviews": 4529
+    },
+    {
+      "month": "2026-04",
+      "pageviews": 4712
+    },
+    {
+      "month": "2026-05",
+      "pageviews": 2973
+    },
+    {
+      "month": "2026-06",
+      "pageviews": 3517
+    },
+    {
+      "month": "2026-07",
+      "pageviews": 14753
+    },
+    {
+      "month": "2026-08",
+      "pageviews": 5302
+    },
+    {
+      "month": "2026-09",
+      "pageviews": 3864
+    },
+    {
+      "month": "2026-10",
+      "pageviews": 589
+    }
+  ]
+}
