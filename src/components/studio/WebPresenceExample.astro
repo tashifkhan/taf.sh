@@ -1,0 +1,51 @@
+---
+import { webPresence, formatCount, formatDate } from "../../data/web-presence";
+import { kicker } from "./ui";
+const searchUrl = "https://www.google.com/search?q=site%3Atashif.codes%2Fblog";
+---
+
+<div class="min-w-0 overflow-hidden rounded-lg border border-border bg-surface" aria-label="tashif.codes project evidence">
+	<figure>
+		<a href="https://tashif.codes" target="_blank" rel="noopener noreferrer" class="group block overflow-hidden" aria-label="Visit tashif.codes">
+			<img src="/work/tashif-codes/site.webp" alt="tashif.codes project directory, with live demos, documentation and source links" width="1280" height="800" loading="eager" decoding="async" class="aspect-16/10 w-full object-cover transition-transform duration-700 group-hover:scale-[1.02] motion-reduce:transform-none" />
+		</a>
+		<figcaption class="border-t border-border px-6 py-5 text-sm leading-7 text-secondary sm:px-9">The live project directory. Astro renders the pages, React handles the interactive tools, and each route has its own search metadata. A generated sitemap lists the site's pages.</figcaption>
+	</figure>
+
+	<dl class="grid border-t border-border sm:grid-cols-2">
+		<div class="flex flex-col border-b border-border p-6 sm:border-r sm:border-b-0 sm:p-9">
+			<dt class="mt-3 text-sm text-secondary">Recorded pageviews</dt>
+			<dd class="order-first font-display text-[clamp(2.75rem,5vw,4.5rem)] leading-none font-medium tracking-[-0.05em] tabular-nums">{formatCount(webPresence.pageviews)}</dd>
+		</div>
+		<div class="flex flex-col p-6 sm:p-9">
+			<dt class="mt-3 text-sm text-secondary">Pageviews attributed to google.com</dt>
+			<dd class="order-first font-display text-[clamp(2.75rem,5vw,4.5rem)] leading-none font-medium tracking-[-0.05em] text-accent tabular-nums">{formatCount(webPresence.googleReferralPageviews)}</dd>
+		</div>
+	</dl>
+	<p class="border-t border-border px-6 py-4 text-xs leading-6 text-muted sm:px-9">{formatDate(webPresence.from)} to {formatDate(webPresence.to)}. Snapshot from the <a href={webPresence.source} target="_blank" rel="noopener noreferrer" class="underline underline-offset-4 hover:text-accent">public project dashboard</a>, captured {formatDate(webPresence.capturedAt)}. Google referrals are analytics pageviews, not Search Console clicks.</p>
+
+	<div class="grid border-t border-border md:grid-cols-2">
+		<figure class="min-w-0 border-b border-border md:border-r md:border-b-0">
+			<a href="/work/tashif-codes/stats.webp" target="_blank" rel="noopener noreferrer" class="block overflow-hidden" aria-label="Open the full tashif.codes traffic dashboard screenshot">
+				<img src="/work/tashif-codes/stats.webp" alt="Public analytics dashboard for tashif.codes showing lifetime pageviews and the weekly traffic graph, captured 18 October 2026" width="1280" height="800" loading="lazy" decoding="async" class="aspect-16/10 w-full object-cover" />
+			</a>
+			<figcaption class="border-t border-border p-6 sm:p-9">
+				<p class={kicker}>01 / Traffic</p>
+				<h2 class="mt-3 font-display text-xl font-medium tracking-[-0.025em]">The numbers are public.</h2>
+				<p class="mt-3 text-sm leading-7 text-secondary">Explore traffic over time, referrers and popular pages. Dashboard captured 18 Oct 2026. Select tashif.codes to see this site's data.</p>
+				<a href={webPresence.source} target="_blank" rel="noopener noreferrer" class="mt-4 inline-flex gap-3 text-sm text-accent hover:underline">Explore the stats <span aria-hidden="true">↗</span></a>
+			</figcaption>
+		</figure>
+		<figure class="min-w-0">
+			<a href="/work/tashif-codes/search.webp" target="_blank" rel="noopener noreferrer" class="block overflow-hidden" aria-label="Open the full Google search results screenshot">
+				<img src="/work/tashif-codes/search.webp" alt="Google results for site:tashif.codes/blog showing the blog and articles on server rendering and browser rendering, captured 18 October 2026" width="1280" height="800" loading="lazy" decoding="async" class="aspect-16/10 w-full object-cover" />
+			</a>
+			<figcaption class="border-t border-border p-6 sm:p-9">
+				<p class={kicker}>02 / Search</p>
+				<h2 class="mt-3 font-display text-xl font-medium tracking-[-0.025em]">Articles appear in Google.</h2>
+				<p class="mt-3 text-sm leading-7 text-secondary">A public search for <code class="break-all font-mono text-xs">site:tashif.codes/blog</code>, captured 18 Oct 2026. This shows indexed pages. Results vary and this is not a ranking report.</p>
+				<a href={searchUrl} target="_blank" rel="noopener noreferrer" class="mt-4 inline-flex gap-3 text-sm text-accent hover:underline">View Google results <span aria-hidden="true">↗</span></a>
+			</figcaption>
+		</figure>
+	</div>
+</div>
