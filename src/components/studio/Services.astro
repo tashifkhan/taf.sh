@@ -1,13 +1,13 @@
 ---
 import { wrap, section, head, headRow, kicker, h2, lede, btn, btnGhost, btnArrow } from "./ui";
+import { webPresence, formatCount, formatDate, trafficPoints } from "../../data/web-presence";
 
 /*
  * Asymmetric 6-column bento grid adapted from thebuildco.studio:
  * - Tile 1 (01 / product engineering) spans 2 cols × 2 rows on the left.
  * - Tiles 2–5 sit in a 2×2 grid across the remaining 4 columns on the right.
- * - Each tile runs a continuous phase-driven diagram in studio.ts that speeds
- *   up smoothly under the cursor, with 4 perimeter border lines and a radial
- *   spotlight on hover.
+ * - The first four tiles animate on hover. The final tile uses the public
+ *   tashif.codes traffic snapshot, with the same spotlight treatment.
  */
 const tileBase =
 	"group relative isolate flex flex-col justify-between gap-5 overflow-hidden rounded-2xl border border-border bg-surface p-6 shadow-[inset_0_1px_0_rgb(255_255_255/0.05)] transition-colors duration-300 hover:border-accent/60 sm:p-7 before:pointer-events-none before:absolute before:inset-0 before:-z-1 before:bg-[radial-gradient(460px_circle_at_var(--sx,50%)_var(--sy,50%),var(--color-accent-soft),transparent_65%)] before:opacity-0 before:transition-opacity before:duration-400 hover:before:opacity-100";
@@ -26,7 +26,7 @@ const aiTokens = "Matched 6 linked GitHub commits and 2 shipped FastAPI services
 			</div>
 			<p class:list={[lede, "mt-0 max-w-sm"]}>
 				One engineer for the whole stack, from the database schema to the last
-				pixel. Hover any tile to push its loop.
+				pixel. Explore the builds and the numbers behind them.
 			</p>
 		</header>
 
@@ -198,63 +198,24 @@ const aiTokens = "Matched 6 linked GitHub commits and 2 shipped FastAPI services
 				</div>
 			</article>
 
-			<!-- 05 / Speed & web presence -->
-			<article class:list={[tileBase, "lg:col-span-2"]} data-spotlight data-tile="gauge">
-				<div class="flex items-center justify-between gap-2 font-mono text-xs text-muted">
-					<span>05 / web &amp; speed</span>
-					<span class="text-accent tabular-nums" data-gl>lcp 0.6s · cls 0.00</span>
+			<!-- 05 / Measured web presence -->
+			<article class:list={[tileBase, "lg:col-span-2"]} data-spotlight>
+				<div class="flex flex-wrap items-center justify-between gap-2 font-mono text-xs text-muted">
+					<span>05 / web presence</span>
+					<span class="text-accent">tashif.codes</span>
 				</div>
-
-				<div aria-hidden="true" class="flex items-end gap-5 pt-1">
-					<svg viewBox="0 0 200 112" width="150" height="84" class="h-auto w-[min(148px,48%)] shrink-0 overflow-visible">
-						<circle
-							cx="100"
-							cy="100"
-							r="80"
-							fill="none"
-							stroke="var(--color-border-strong)"
-							stroke-width="10"
-							stroke-dasharray="251.33 600"
-							transform="rotate(180 100 100)"
-						/>
-						<circle
-							data-ga
-							cx="100"
-							cy="100"
-							r="80"
-							fill="none"
-							stroke="var(--color-accent)"
-							stroke-width="10"
-							stroke-dasharray="0 600"
-							transform="rotate(180 100 100)"
-						/>
-						<line
-							data-gn
-							x1="100"
-							y1="100"
-							x2="100"
-							y2="34"
-							stroke="var(--color-foreground)"
-							stroke-width="2.5"
-							transform="rotate(-90 100 100)"
-						/>
-						<circle cx="100" cy="100" r="6" fill="var(--color-foreground)" />
+				<div>
+					<p class="font-display text-4xl leading-none font-medium tracking-[-0.04em] tabular-nums">{formatCount(webPresence.pageviews)}<span class="mt-2 block font-mono text-xs font-normal tracking-normal text-muted">recorded pageviews</span></p>
+					<svg viewBox="0 0 600 110" width="600" height="110" class="mt-3 h-14 w-full overflow-visible text-accent" role="img" aria-label={`Monthly pageviews for tashif.codes, ${formatDate(webPresence.from)} to ${formatDate(webPresence.to)}. First and last months are partial.`}>
+						<polyline points={trafficPoints} fill="none" stroke="currentColor" stroke-width="2" vector-effect="non-scaling-stroke" />
 					</svg>
-					<div class="flex flex-col gap-1 pb-1">
-						<span class="font-display text-4xl leading-none font-bold tracking-[-0.04em] text-foreground tabular-nums" data-gv>
-							41
-						</span>
-						<span class="font-mono text-[0.6875rem] text-muted">lighthouse perf</span>
-					</div>
+					<p class="mt-1 text-[0.6875rem] leading-5 text-muted">Monthly totals. First and last months are partial.</p>
 				</div>
-
 				<div class="mt-auto">
-					<h3 class="font-display text-[clamp(1.3rem,1.9vw,1.65rem)] leading-[1.06] font-semibold tracking-[-0.03em] text-foreground">
-						Websites &amp; performance
-					</h3>
-					<p class="mt-1.5 text-[0.9375rem] leading-relaxed text-secondary">
-						Inline-CSS Astro builds, design systems and performance passes that score 100.
-					</p>
+					<h3 class="font-display text-[clamp(1.3rem,1.9vw,1.65rem)] leading-[1.06] font-semibold tracking-[-0.03em] text-foreground">Websites &amp; search</h3>
+					<p class="mt-1.5 text-[0.9375rem] leading-relaxed text-secondary">Astro sites, blogs and developer tools. See the build, traffic and Google results for tashif.codes.</p>
+					<a href="/work/tashif-codes" class="mt-3 inline-flex items-center gap-2 text-sm text-accent hover:underline">See the case study <span aria-hidden="true">↗</span></a>
+					<p class="mt-2 text-[0.6875rem] leading-5 text-muted">Public analytics · {formatDate(webPresence.from)} to {formatDate(webPresence.to)}</p>
 				</div>
 			</article>
 		</div>

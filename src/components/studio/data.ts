@@ -69,7 +69,7 @@ export const services = [
 		index: "04",
 		title: "Web presence",
 		tag: "Astro",
-		body: "Fast, content-driven sites that score well and read well. This one ships its CSS inline and most visitors download no JavaScript framework at all.",
+		body: "Company sites, blogs and developer tools, built with Astro. I handle the design, content structure, search metadata, analytics and deployment.",
 		items: ["Company & product sites", "Docs and marketing", "Design systems in code", "Performance & SEO passes"],
 	},
 ];
