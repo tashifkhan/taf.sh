@@ -1,9 +1,24 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
+import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 
 // https://astro.build/config
 export default defineConfig({
+	/*
+	 * The canonical origin. Two things depend on it: the <link rel="canonical">
+	 * and og:url tags every page emits, and the sitemap the integration below
+	 * writes. It must stay the apex, because v2.taf.sh serves the same build
+	 * and every page there should still point home.
+	 */
+	site: 'https://taf.sh',
+	integrations: [
+		sitemap({
+			// Client proposals are private deliverables, so they stay out of the
+			// sitemap and carry their own noindex meta tag.
+			filter: (page) => !page.includes('/proposals'),
+		}),
+	],
 	// CliniQ was renamed to rah.clinic; keep the old product URL working.
 	redirects: {
 		'/products/cliniq': '/products/rah-clinic',

@@ -1,0 +1,13 @@
+# taf.sh
+#
+# Nothing is disallowed here on purpose. v2.taf.sh serves this same file, and a
+# Disallow there would stop Google from crawling the pages that carry the
+# Worker's noindex header, which is what actually keeps v2 out of the index.
+# /proposals is a client deliverable and stays out via its own noindex meta tag
+# rather than a rule here, for the same reason: a blocked URL can still be
+# listed without the page ever being read.
+
+User-agent: *
+Allow: /
+
+Sitemap: https://taf.sh/sitemap-index.xml

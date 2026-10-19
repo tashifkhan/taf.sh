@@ -8,11 +8,13 @@ interface Props {
 	title: string;
 	description?: string;
 	footerCta?: boolean;
+	/** Forwarded to StudioLayout; keeps the page out of the index. */
+	noindex?: boolean;
 }
-const { title, description, footerCta = true } = Astro.props;
+const { title, description, footerCta = true, noindex = false } = Astro.props;
 ---
 
-<StudioLayout title={title} description={description}>
+<StudioLayout title={title} description={description} noindex={noindex}>
 	<div id="top"></div>
 	<Header base="/" />
 	<div data-page-content>

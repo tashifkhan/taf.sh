@@ -8,16 +8,59 @@ import "../styles/global.css";
 import ThemeScript from "../components/ThemeScript.astro";
 import PageTransitions from "../components/PageTransitions.astro";
 import PostHog from "../components/PostHog.astro";
+import { email } from "../components/studio/data";
 
 interface Props {
 	title: string;
 	description?: string;
+	/** Keeps a page out of the index. Used for client deliverables. */
+	noindex?: boolean;
 }
 
 const {
 	title,
 	description = "taf.sh — an independent software studio and consultancy. AI-native products and engineering, built and run by one engineer.",
+	noindex = false,
 } = Astro.props;
+
+/*
+ * Canonical and og:url resolve against `site` in astro.config.mjs, never the
+ * request host. That is the point: v2.taf.sh serves this same build, so a page
+ * there has to point at taf.sh rather than at itself. It is also the fallback
+ * if the Worker's noindex header is ever bypassed by a routing change.
+ */
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const ogImage = new URL("/icon-512.png", Astro.site).href;
+
+/*
+ * One organization node, sitewide. Everything in it is checkable against the
+ * footer: the name, the email, and the three profiles linked under "Elsewhere".
+ */
+const schema = {
+	"@context": "https://schema.org",
+	"@type": "ProfessionalService",
+	name: "taf.sh",
+	alternateName: "Tashif Ahmad Khan",
+	url: "https://taf.sh/",
+	description,
+	email,
+	image: ogImage,
+	founder: {
+		"@type": "Person",
+		name: "Tashif Ahmad Khan",
+		url: "https://taf.sh/about",
+	},
+	address: {
+		"@type": "PostalAddress",
+		addressLocality: "Delhi",
+		addressCountry: "IN",
+	},
+	sameAs: [
+		"https://github.com/tashifkhan",
+		"https://linkedin.com/in/tashifkhan",
+		"https://tashif.codes",
+	],
+};
 ---
 
 <!doctype html>
@@ -31,6 +74,8 @@ const {
 		<link rel="manifest" href="/site.webmanifest" />
 		<meta name="generator" content={Astro.generator} />
 		<meta name="description" content={description} />
+		<link rel="canonical" href={canonical} />
+		{noindex && <meta name="robots" content="noindex, nofollow" />}
 		<ThemeScript />
 		<PageTransitions />
 		<script is:inline>
@@ -40,6 +85,14 @@ const {
 		<meta property="og:title" content={`${title} · taf.sh`} />
 		<meta property="og:description" content={description} />
 		<meta property="og:type" content="website" />
+		<meta property="og:site_name" content="taf.sh" />
+		<meta property="og:url" content={canonical} />
+		<meta property="og:image" content={ogImage} />
+		<meta property="og:image:width" content="512" />
+		<meta property="og:image:height" content="512" />
+		<meta property="og:image:alt" content="taf.sh — the studio of Tashif Ahmad Khan" />
+		<meta name="twitter:card" content="summary" />
+		{!noindex && <script type="application/ld+json" is:inline set:html={JSON.stringify(schema)} />}
 		<title>{title} · taf.sh</title>
 	</head>
 	<body
