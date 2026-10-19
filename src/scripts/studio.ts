@@ -440,6 +440,7 @@ function demos() {
 		apir: HTMLElement | null;
 		lastJ: number;
 		plugs: HTMLElement[];
+		logs: HTMLElement[];
 		is: HTMLElement | null;
 		tok: HTMLElement[];
 		as: HTMLElement | null;
@@ -465,6 +466,7 @@ function demos() {
 			apir: $("[data-apir]", t),
 			lastJ: 0,
 			plugs: $$("[data-plug]", t),
+			logs: $$("[data-log]", t),
 			is: $("[data-is]", t),
 			tok: $$("[data-tok]", t),
 			as: $("[data-as]", t),
@@ -503,7 +505,7 @@ function demos() {
 				const v = [8 + Math.random() * 6, 20 + Math.random() * 14, 2 + Math.random() * 3].map((x) => x * f);
 				d.lat.forEach((el, idx) => (el.textContent = `${idx === 2 ? v[idx].toFixed(1) : Math.round(v[idx])}ms`));
 				if (d.apir) {
-					d.apir.textContent = `p95 ${Math.round((v[0] + v[1] + v[2]) * 1.15)}ms · ${Math.round(2000 * d.sp + Math.random() * 280).toLocaleString("en-US")} req/m`;
+					d.apir.textContent = `p95 ${Math.round((v[0] + v[1] + v[2]) * 1.15)}ms · ${((2000 * d.sp + Math.random() * 280) / 1000).toFixed(1)}k req/m`;
 				}
 			}
 		} else if (d.k === "int") {
@@ -521,7 +523,10 @@ function demos() {
 					y = -20 * v;
 					o = 1 - v;
 				}
-				if (q >= 0.14 && q <= 0.9) c++;
+				const linked = q >= 0.14 && q <= 0.9;
+				if (linked) c++;
+				const log = d.logs[idx];
+				if (log) log.style.opacity = linked ? "1" : "0.35";
 				p.style.transform = `translate3d(0,${y.toFixed(2)}px,0)`;
 				p.style.opacity = o.toFixed(3);
 			});
