@@ -88,10 +88,27 @@ const external = (href: string) => (href.startsWith("http") ? { target: "_blank"
 		</aside>
 
 		<section
-			class="t-light relative flex h-full translate-x-[105%] flex-col overflow-hidden bg-background text-foreground shadow-[-40px_0_80px_-30px_rgb(0_0_0/0.7)] transition-transform duration-850 ease-[cubic-bezier(0.7,0,0.2,1)] [color-scheme:light] max-lg:translate-x-0 max-lg:translate-y-[105%] in-[.is-open]:translate-x-0 in-[.is-open]:translate-y-0 motion-reduce:transition-none"
+			class="t-light relative flex h-full flex-col overflow-hidden bg-background text-foreground shadow-[-40px_0_80px_-30px_rgb(0_0_0/0.7)] transition-[translate,transform,border-radius] duration-650 ease-[cubic-bezier(0.22,1,0.36,1)] [color-scheme:light] lg:translate-x-[105%] lg:duration-850 lg:ease-[cubic-bezier(0.7,0,0.2,1)] lg:in-[.is-open]:translate-x-0 max-lg:translate-y-[105%] max-lg:rounded-t-[1.75rem] max-lg:border-t max-lg:border-border max-lg:shadow-[0_-24px_64px_-16px_rgb(0_0_0/0.72)] max-lg:in-[.is-open]:translate-y-(--sheet-y,34dvh) max-lg:in-[.is-open.is-expanded]:translate-y-0 max-lg:in-[.is-open.is-expanded]:rounded-t-none max-lg:in-[.is-open.is-expanded]:border-t-0 max-lg:in-[.is-dragging]:transition-none! motion-reduce:transition-none"
 			data-reel-panel
 		>
-			<header class="sticky top-0 z-10 flex shrink-0 items-center gap-3 border-b border-border bg-background/88 px-[clamp(1.25rem,3vw,2.5rem)] py-3.5 backdrop-blur-md">
+			<div
+				class="group/handle flex shrink-0 touch-none flex-col items-center gap-1.5 bg-background/92 pt-2.5 pb-1 select-none lg:hidden"
+				data-reel-handle
+				role="button"
+				tabindex="0"
+				aria-label="Drag or tap to expand or pull down work sheet"
+			>
+				<span class="h-1.5 w-12 rounded-full bg-border-strong transition-[width,background-color] duration-200 group-hover/handle:bg-muted group-active/handle:w-16 group-active/handle:bg-accent in-[.is-dragging]:w-16 in-[.is-dragging]:bg-accent" />
+				<span class="font-mono text-[0.6875rem] leading-none text-muted transition-colors group-hover/handle:text-foreground">
+					<span class="in-[.is-expanded]:hidden">↑ pull up · full screen</span>
+					<span class="hidden in-[.is-expanded]:inline">↓ pull down</span>
+				</span>
+			</div>
+
+			<header
+				class="sticky top-0 z-10 flex shrink-0 items-center gap-3 border-b border-border bg-background/88 px-[clamp(1.25rem,3vw,2.5rem)] py-3.5 backdrop-blur-md max-lg:pt-2"
+				data-reel-header
+			>
 				<div class="-mx-1 flex min-w-0 flex-1 gap-2 overflow-x-auto px-1 [scrollbar-width:none]" role="group" aria-label="Filter">
 					{
 						reelGroups.map((g, i) => (
@@ -120,7 +137,7 @@ const external = (href: string) => (href.startsWith("http") ? { target: "_blank"
 				</button>
 			</header>
 
-			<div class="flex-1 overflow-y-auto overscroll-contain outline-none" tabindex="-1" data-reel-list>
+			<div class="flex-1 overflow-y-auto overscroll-contain outline-none max-lg:pb-[34dvh] max-lg:in-[.is-expanded]:pb-0" tabindex="-1" data-reel-list>
 				<div class="px-[clamp(1.25rem,3vw,2.5rem)] pt-[clamp(1.75rem,3.5vw,3.25rem)]">
 					<h2 class="font-display text-[clamp(2.75rem,5.5vw,4.75rem)] leading-[0.9] font-bold tracking-[-0.055em] text-foreground">
 						Selected work<span class="text-accent">.</span>

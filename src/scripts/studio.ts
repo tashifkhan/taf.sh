@@ -423,7 +423,7 @@ function demos() {
 		return 1 + c3 * Math.pow(t - 1, 3) + c1 * Math.pow(t - 1, 2);
 	};
 
-	const periods: Record<string, number> = { web: 6, api: 2.6, int: 7, ai: 6.5, gauge: 6 };
+	const periods: Record<string, number> = { web: 6, api: 2.6, int: 7, ai: 6.5 };
 	type TileState = {
 		k: string;
 		el: HTMLElement;
@@ -444,10 +444,6 @@ function demos() {
 		tok: HTMLElement[];
 		as: HTMLElement | null;
 		shown: number;
-		ga: SVGCircleElement | null;
-		gn: SVGLineElement | null;
-		gv: HTMLElement | null;
-		gl: HTMLElement | null;
 	};
 
 	const tiles: Record<string, TileState> = {};
@@ -473,10 +469,6 @@ function demos() {
 			tok: $$("[data-tok]", t),
 			as: $("[data-as]", t),
 			shown: -1,
-			ga: $<SVGCircleElement>("[data-ga]", t),
-			gn: $<SVGLineElement>("[data-gn]", t),
-			gv: $("[data-gv]", t),
-			gl: $("[data-gl]", t),
 		};
 		t.addEventListener("pointerenter", () => (tiles[k].spT = 2.8));
 		t.addEventListener("pointerleave", () => (tiles[k].spT = 1));
@@ -549,26 +541,12 @@ function demos() {
 				});
 				if (d.as) d.as.textContent = `${shown} tok · ${Math.round(52 * d.sp)} tok/s`;
 			}
-		} else if (d.k === "gauge") {
-			const ph = d.ph;
-			const v =
-				ph < 0.12
-					? 0
-					: ph < 0.62
-						? easeInOut((ph - 0.12) / 0.5)
-						: ph < 0.9
-							? 1
-							: 1 - easeInOut((ph - 0.9) / 0.1);
-			if (d.ga) d.ga.setAttribute("stroke-dasharray", `${(v * 251.33).toFixed(1)} 600`);
-			if (d.gn) d.gn.setAttribute("transform", `rotate(${(-90 + v * 180).toFixed(1)} 100 100)`);
-			const sc = String(Math.round(42 + 58 * v));
-			if (d.gv && d.gv.textContent !== sc) d.gv.textContent = sc;
-			if (d.gl) d.gl.textContent = `lcp ${(4.8 - 4.2 * v).toFixed(1)}s · cls ${(0.28 * (1 - v)).toFixed(2)}`;
+
 		}
 	};
 
 	if (reduced) {
-		const fin: Record<string, number> = { web: 0.8, api: 0.3, int: 0.5, ai: 0.85, gauge: 0.75 };
+		const fin: Record<string, number> = { web: 0.8, api: 0.3, int: 0.5, ai: 0.85 };
 		Object.values(tiles).forEach((d) => {
 			d.ph = fin[d.k] ?? 0.75;
 			stepTile(d, 0);
@@ -902,12 +880,30 @@ function reel() {
 	if (!dialog || !list) return;
 	const root = document.documentElement;
 	const page = $<HTMLElement>("[data-page]");
+	const panel = $<HTMLElement>("[data-reel-panel]", dialog);
+	const handle = $<HTMLElement>("[data-reel-handle]", dialog);
 	const bg = $<HTMLElement>("[data-wlbg]", dialog);
 	const wlItems = $$<HTMLElement>("[data-wl]", dialog);
 	const E = "cubic-bezier(0.76,0,0.24,1)";
 	const O = "cubic-bezier(0.2,0.8,0.2,1)";
 	let timers: number[] = [];
 	let isClosing = false;
+	let isExpanded = false;
+	let baseScrollTop = 0;
+
+	const isMobile = () => innerWidth < 1024;
+	const peekPx = () => Math.round(innerHeight * 0.34);
+
+	const setExpanded = (expanded: boolean) => {
+		isExpanded = expanded;
+		dialog.classList.toggle("is-expanded", expanded);
+		panel?.style.removeProperty("--sheet-y");
+		if (!expanded) baseScrollTop = list.scrollTop;
+		if (page && isMobile() && dialog.classList.contains("is-open") && !isClosing && !reduced) {
+			page.style.transform = expanded ? "scale(0.9)" : "scale(0.94)";
+			page.style.opacity = expanded ? "0.18" : "0.42";
+		}
+	};
 
 	const clearTimers = () => {
 		timers.forEach(clearTimeout);
@@ -958,6 +954,9 @@ function reel() {
 
 		if (mobile) {
 			if (openState) {
+				isExpanded = false;
+				dialog.classList.remove("is-expanded", "is-dragging");
+				panel?.style.removeProperty("--sheet-y");
 				root.classList.add("reel-open");
 				document.body.style.overflow = "hidden";
 				page.style.transition = "none";
@@ -967,13 +966,15 @@ function reel() {
 				void page.offsetWidth;
 				void dialog.offsetWidth;
 				dialog.classList.add("is-open");
-				page.style.transition = `transform 0.8s ${E}, clip-path 0.8s ${E}, opacity 0.8s`;
-				page.style.transform = "scale(0.92)";
-				page.style.opacity = "0.35";
+				page.style.transition = `transform 0.65s ${E}, clip-path 0.65s ${E}, opacity 0.65s`;
+				page.style.transform = "scale(0.94)";
+				page.style.opacity = "0.42";
 				page.style.clipPath = `inset(${top}px 0 ${bot}px 0 round 24px)`;
 			} else {
-				dialog.classList.remove("is-open");
+				dialog.classList.remove("is-open", "is-expanded", "is-dragging");
+				panel?.style.removeProperty("--sheet-y");
 				root.classList.remove("reel-open");
+				page.style.transition = `transform 0.65s ${E}, clip-path 0.65s ${E}, opacity 0.65s`;
 				page.style.transform = "";
 				page.style.opacity = "";
 				page.style.clipPath = `inset(${top}px 0 ${bot}px 0 round 0px)`;
@@ -983,7 +984,7 @@ function reel() {
 					document.body.style.overflow = "";
 					isClosing = false;
 					then?.();
-				}, 820);
+				}, 660);
 			}
 			return;
 		}
@@ -1082,6 +1083,8 @@ function reel() {
 		list.focus({ preventScroll: true });
 		const el = target ? document.getElementById(target) : null;
 		list.scrollTop = el ? el.getBoundingClientRect().top - list.getBoundingClientRect().top + list.scrollTop - 24 : 0;
+		baseScrollTop = list.scrollTop;
+		requestAnimationFrame(() => (baseScrollTop = list.scrollTop));
 	};
 
 	const close = (then?: () => void) => {
@@ -1095,6 +1098,157 @@ function reel() {
 	$("[data-reel-contact]", dialog)?.addEventListener("click", () =>
 		close(() => document.getElementById("contact")?.scrollIntoView({ behavior: reduced ? "auto" : "smooth" })),
 	);
+	// Tap on the exposed backdrop above the mobile sheet closes the reel.
+	dialog.addEventListener("click", (e) => {
+		if (!isMobile() || !dialog.open || isClosing) return;
+		const t = e.target as Node;
+		if (panel && !panel.contains(t)) close();
+	});
+
+	// Mobile sheet: expand to full screen on scroll, pull up/down via handle or overscroll.
+	let dragging = false;
+	let dragMoved = false;
+	let startX = 0;
+	let startY = 0;
+	let lastY = 0;
+	let startT = 0;
+	let startExpanded = false;
+	let fromHandle = false;
+
+	list.addEventListener(
+		"scroll",
+		() => {
+			if (!isMobile() || !dialog.classList.contains("is-open") || isClosing || dragging || isExpanded) return;
+			if (list.scrollTop > baseScrollTop + 8) setExpanded(true);
+		},
+		{ passive: true },
+	);
+	panel?.addEventListener(
+		"wheel",
+		(e) => {
+			if (!isMobile() || !dialog.classList.contains("is-open") || isClosing || isExpanded) return;
+			if (e.deltaY > 8) setExpanded(true);
+		},
+		{ passive: true },
+	);
+
+	const beginDrag = (x: number, y: number, target: Element | null) => {
+		if (!isMobile() || !dialog.classList.contains("is-open") || isClosing || !panel) return false;
+		if (target?.closest("[data-gallery], video")) return false;
+		dragging = false;
+		dragMoved = false;
+		startX = x;
+		startY = lastY = y;
+		startT = performance.now();
+		startExpanded = isExpanded;
+		fromHandle = !!target?.closest("[data-reel-handle], [data-reel-header]");
+		if (target?.closest("button:not([data-reel-handle]), a")) fromHandle = false;
+		return true;
+	};
+
+	const moveDrag = (x: number, y: number, ev?: Event) => {
+		if (!panel || !isMobile()) return;
+		const dx = x - startX;
+		const dy = y - startY;
+		lastY = y;
+
+		if (!dragging) {
+			if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 8) return;
+			const atTop = list.scrollTop <= 2;
+			const canPullUp = !startExpanded && dy < -8;
+			const canPullDown = (fromHandle || atTop) && dy > 8;
+			const canHandleDrag = fromHandle && Math.abs(dy) > 6;
+			if (!canPullUp && !canPullDown && !canHandleDrag) return;
+			dragging = true;
+			dragMoved = true;
+			dialog.classList.add("is-dragging");
+		}
+
+		if (ev?.cancelable) ev.preventDefault();
+		const baseY = startExpanded ? 0 : peekPx();
+		const nextY = Math.max(0, baseY + dy);
+		dialog.classList.toggle("is-expanded", nextY <= 4);
+		panel.style.setProperty("--sheet-y", `${nextY.toFixed(1)}px`);
+	};
+
+	const endDrag = () => {
+		if (!dragging || !panel) return;
+		dragging = false;
+		dialog.classList.remove("is-dragging");
+		const dy = lastY - startY;
+		const dt = Math.max(16, performance.now() - startT);
+		const vy = dy / dt; // px/ms (+ down, - up)
+
+		if (!startExpanded) {
+			if (dy < -36 || vy < -0.3) setExpanded(true);
+			else if (dy > 68 || vy > 0.45) close();
+			else setExpanded(false);
+		} else {
+			if (dy > peekPx() + 68 || vy > 0.85) close();
+			else if (dy > 56 || vy > 0.32) setExpanded(false);
+			else setExpanded(true);
+		}
+	};
+
+	let touchActive = false;
+	panel?.addEventListener(
+		"touchstart",
+		(e) => {
+			if (e.touches.length !== 1) return;
+			const t = e.touches[0];
+			touchActive = beginDrag(t.clientX, t.clientY, e.target as Element);
+		},
+		{ passive: true },
+	);
+	panel?.addEventListener(
+		"touchmove",
+		(e) => {
+			if (!touchActive || e.touches.length !== 1) return;
+			const t = e.touches[0];
+			moveDrag(t.clientX, t.clientY, e);
+		},
+		{ passive: false },
+	);
+	const finishTouch = () => {
+		if (!touchActive) return;
+		touchActive = false;
+		endDrag();
+	};
+	panel?.addEventListener("touchend", finishTouch);
+	panel?.addEventListener("touchcancel", finishTouch);
+
+	// Pointer drag on the handle bar (also works with mouse in mobile DevTools).
+	let pointerId: number | null = null;
+	handle?.addEventListener("pointerdown", (e) => {
+		if (e.pointerType === "touch" || !beginDrag(e.clientX, e.clientY, handle)) return;
+		pointerId = e.pointerId;
+		handle.setPointerCapture(e.pointerId);
+	});
+	handle?.addEventListener("pointermove", (e) => {
+		if (pointerId !== e.pointerId) return;
+		moveDrag(e.clientX, e.clientY, e);
+	});
+	const finishPointer = (e: PointerEvent) => {
+		if (pointerId !== e.pointerId) return;
+		pointerId = null;
+		endDrag();
+	};
+	handle?.addEventListener("pointerup", finishPointer);
+	handle?.addEventListener("pointercancel", finishPointer);
+	handle?.addEventListener("click", () => {
+		if (dragMoved) {
+			dragMoved = false;
+			return;
+		}
+		if (isMobile()) setExpanded(!isExpanded);
+	});
+	handle?.addEventListener("keydown", (e) => {
+		if (e.key === "Enter" || e.key === " ") {
+			e.preventDefault();
+			setExpanded(!isExpanded);
+		}
+	});
+
 	// Esc is caught as a key first: Chrome only lets a dialog's `cancel` be
 	// prevented after user activation, and otherwise closes it instantly.
 	dialog.addEventListener("keydown", (e) => {
@@ -1110,7 +1264,10 @@ function reel() {
 	dialog.addEventListener("close", () => {
 		clearTimers();
 		isClosing = false;
-		dialog.classList.remove("is-open");
+		isExpanded = false;
+		dragging = false;
+		dialog.classList.remove("is-open", "is-expanded", "is-dragging");
+		panel?.style.removeProperty("--sheet-y");
 		root.classList.remove("reel-open");
 		cleanupPage();
 		document.body.style.overflow = "";
