@@ -49,8 +49,20 @@ Five WebGL effects run on the site: Displacement on the homepage `<h1>`, Decrypt
 - Never wrap an element that carries a `view-transition-name` — the product `<h1>` morph breaks if its element moves into a canvas
 - Reduced motion skips the upgrade entirely
 
+## Indexing and metadata
+
+`site: 'https://taf.sh'` in `astro.config.mjs` is the single source of the canonical origin, and everything below keys off it. Keep it the apex.
+
+- `StudioLayout.astro` is the only `<head>` on the site (`Layout.astro` predates the studio rebuild and nothing renders it). It emits `<link rel="canonical">` and `og:url` from `Astro.url.pathname` resolved against `site`, plus `og:site_name`, `og:image` (the `icon-512.png` mark) and `twitter:card`. Because both resolve against `site` and not the request host, a page served on `v2.taf.sh` still points home — that is the intended behavior, not a bug
+- The same file emits one `ProfessionalService` JSON-LD node sitewide. Its name, email and `sameAs` profiles have to match the footer, so update both together. Pages passing `noindex` skip it
+- `noindex` is a prop on `StudioLayout` and forwarded by `PageLayout`. `/proposals` sets it: that page is a client deliverable, not a landing page
+- `@astrojs/sitemap` writes `sitemap-index.xml` and filters out `/proposals`. `/robots.txt` is a static file in `public/` and points at the absolute index URL
+- `public/robots.txt` disallows nothing deliberately. `v2.taf.sh` serves the same file, and a `Disallow` there would block the crawl that the Worker's `X-Robots-Tag: noindex` header depends on. For the same reason `/proposals` is noindexed by meta tag rather than by a rule: a blocked URL can still be listed without its content ever being read
+- When adding a page, the sitemap and canonical tags come for free. Only reach for `noindex` if the page should stay out of the index
+
 ## Structure
 
+- `src/layouts/StudioLayout.astro` — the HTML shell: head, metadata, theme script, page transitions, film grain. Every page goes through it, directly or via `PageLayout`
 - `src/layouts/Layout.astro` — base HTML shell (fonts, meta, Nav + Footer)
 - `src/components/` — `Nav.astro`, `Footer.astro`, `Logo.astro` (shell-prompt mark: pixel `>` chevron + blinking accent block cursor), `ProductPage.astro` (shared layout for product pages)
 - Inline `<svg>` needs `width`/`height` attributes alongside its sizing class. An SVG with only a `viewBox` lays out at 100% of its container, so while the stylesheet is in flight the mark fills the viewport; the attributes are the CSS-less fallback and the class still wins once styles land
