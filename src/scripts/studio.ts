@@ -1371,7 +1371,7 @@ function cursor() {
 
 /* --------------------------------------------------------------- boot */
 
-/** Shared page chrome, galleries and the contact form, without homepage demos. */
+/** Shared page chrome, galleries, work previews and the contact form, without homepage demos. */
 export function bootPage() {
 	splitHeadings();
 	scrambles();
@@ -1380,6 +1380,7 @@ export function bootPage() {
 	proximity();
 	contactForm();
 	galleries();
+	workPreview();
 	cursor();
 	requestAnimationFrame(() => document.documentElement.classList.add("is-ready"));
 }
