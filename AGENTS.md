@@ -27,7 +27,7 @@ taf.sh is the company/consultancy site (sole proprietorship) — multi-page, sta
 
 ## Motion
 
-Every motion the site depends on is CSS — no animation library, no client router. The two Canvas UI effects on the homepage hero are the one exception, and they are decoration that most visitors never download (see below).
+Most page motion is CSS, with small canvas and pointer effects in `src/scripts/studio.ts`. Navigation uses browser transitions rather than a client router.
 
 - Navigation uses native **cross-document view transitions** (`@view-transition { navigation: auto }` in `global.css`). The current page pulls back while the destination slides over it in 650ms, from the right on desktop and below on smaller screens, like the work panel. `view-transition-name: site-nav` keeps the header still. `PageTransitions.astro` adds CSS exit/entrance classes around normal document navigation in browsers without native support. Its `[data-page-content]` wrapper excludes the header; hash links, downloads, external links and modified clicks keep their normal behavior
 - Product names morph between the index list and the product `<h1>`: both ends set `view-transition-name: product-<id>` plus `view-transition-class: product-title`. New product pages must pass a matching `id` to `ProductPage` and add the same `id` to the `products` array in `index.astro`
@@ -38,7 +38,7 @@ Every motion the site depends on is CSS — no animation library, no client rout
 
 ## Canvas UI effects
 
-Five WebGL effects run on the site: Displacement on the homepage `<h1>`, DecryptReveal on the homepage terminal card, and one ambient effect per product page body — RetroDither on TalentSync AI, Grid on TalentSync HR, GlyphRain on CliniQ. All come from [Canvas UI](https://canvasui.dev), vendored into `src/lib/canvas-ui/` because the library ships shadcn-style rather than as an npm package. `src/lib/canvas-ui/README.md` records what was changed and why. Do not reformat those files.
+Canvas UI supplies the ambient effect on each product page body: RetroDither on TalentSync, Grid on TalentSync HR, and GlyphRain on rah.clinic. The homepage hero uses its own canvas field in `src/components/studio/Hero.astro`. Canvas UI source lives in `src/lib/canvas-ui/` because the library ships as copy-in components rather than an npm package. `src/lib/canvas-ui/README.md` records what was changed and why. Do not reformat those files.
 
 - Product pages pick theirs with `ProductPage`'s `bodyEffect` prop; the tuning lives in `BODY_OPTIONS` in that file. All three sit over running text, so they run well below their upstream defaults — `baseStrength: 0`, `idleRipples: 0` and `dim: 0.12` respectively, each chosen so the page is legible at rest and only reacts under the pointer
 - All of them need the experimental html-in-canvas API, so they run only in Chrome with `chrome://flags/#canvas-draw-element` or an origin trial token. Every other browser gets the plain HTML, untouched. That is the intended fallback, not a degraded one
