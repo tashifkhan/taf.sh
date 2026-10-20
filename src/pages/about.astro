@@ -1,4 +1,5 @@
 ---
+import Arrow from "../components/Arrow.astro";
 import PageLayout from "../layouts/PageLayout.astro";
 import PageIntro from "../components/studio/PageIntro.astro";
 import { stats } from "../components/studio/data";
@@ -24,8 +25,8 @@ const beliefs = [
 <PageLayout title="About" description="Tashif Ahmad Khan, the engineer behind taf.sh, TalentSync and rah.clinic. Based in Delhi.">
 	<PageIntro label="Studio / About" summary="I'm Tashif Ahmad Khan. I build and operate my own products through taf.sh, and take on a small number of client builds.">
 		<Fragment slot="title">About taf.sh</Fragment>
-		<a href="/contact" class:list={[btn, btnLg, btnAccent]}>Work with me <span class={btnArrow} aria-hidden="true">→</span></a>
-		<a href="https://tashif.codes" target="_blank" rel="noopener noreferrer" class:list={[btn, btnLg, btnGhost]}>Personal site <span class={btnArrow} aria-hidden="true">↗</span></a>
+		<a href="/contact" class:list={[btn, btnLg, btnAccent]}>Work with me <span class={btnArrow} aria-hidden="true"><Arrow /></span></a>
+		<a href="https://tashif.codes" target="_blank" rel="noopener noreferrer" class:list={[btn, btnLg, btnGhost]}>Personal site <span class={btnArrow} aria-hidden="true"><Arrow dir="up-right" /></span></a>
 	</PageIntro>
 
 	<div class={wrap}>
@@ -39,7 +40,7 @@ const beliefs = [
 		<div class="space-y-6 text-lg leading-8 text-secondary">
 			<p>I'm the founding engineer at <a href="https://systematicreasoning.com/" target="_blank" rel="noopener noreferrer" class="text-foreground underline decoration-border-strong underline-offset-4 hover:text-accent">Systematic Reasoning</a>. We built <a href="https://app.systematicreasoning.com/" target="_blank" rel="noopener noreferrer" class="text-foreground underline decoration-border-strong underline-offset-4 hover:text-accent">ForgeIQX</a>, a compliance platform that connects regulatory requirements with policy documents, findings and evidence.</p>
 			<p>The work covers the application and the systems behind it. Policy analysis, control mappings and monitoring give teams a way to track what changed and trace a finding back to its source.</p>
-			<a href="/products/systematic-reasoning" class:list={[btn, btnLg, btnGhost]}>See the product <span class={btnArrow} aria-hidden="true">→</span></a>
+			<a href="/products/systematic-reasoning" class:list={[btn, btnLg, btnGhost]}>See the product <span class={btnArrow} aria-hidden="true"><Arrow /></span></a>
 		</div>
 	</section>
 
@@ -65,7 +66,7 @@ const beliefs = [
 	<section class:list={[wrap, "grid gap-10 py-16 sm:py-24 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20"]}>
 		<div><p class={kicker}>On the record</p><h2 class={h2}>The <em>details.</em></h2></div>
 		<dl class="divide-y divide-border border-y border-border">
-			{facts.map(fact => <div class="grid grid-cols-[7rem_1fr] gap-4 py-4 text-sm sm:grid-cols-[10rem_1fr]"><dt class="text-muted">{fact.label}</dt><dd class="min-w-0 break-words text-foreground">{fact.href ? <a href={fact.href} target="_blank" rel="noopener noreferrer" class="transition-colors hover:text-accent">{fact.value} ↗</a> : fact.value}</dd></div>)}
+			{facts.map(fact => <div class="grid grid-cols-[7rem_1fr] gap-4 py-4 text-sm sm:grid-cols-[10rem_1fr]"><dt class="text-muted">{fact.label}</dt><dd class="min-w-0 break-words text-foreground">{fact.href ? <a href={fact.href} target="_blank" rel="noopener noreferrer" class="transition-colors hover:text-accent">{fact.value} <Arrow dir="up-right" /></a> : fact.value}</dd></div>)}
 		</dl>
 	</section>
 </PageLayout>

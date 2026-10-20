@@ -1,4 +1,5 @@
 ---
+import Arrow from "../Arrow.astro";
 import { wrap, kicker } from "./ui";
 ---
 
@@ -11,7 +12,7 @@ import { wrap, kicker } from "./ui";
 					One person.<br /> <span class="text-muted">Start to finish.</span>
 				</h2>
 				<a href="/about" class="mt-7 inline-flex items-center gap-3 text-sm text-secondary transition-colors hover:text-accent">
-					Meet the person behind taf.sh <span aria-hidden="true">↗</span>
+					Meet the person behind taf.sh <Arrow dir="up-right" />
 				</a>
 			</div>
 			<div class="lg:pt-1">
@@ -24,9 +25,9 @@ import { wrap, kicker } from "./ui";
 					No account managers. No handoffs between teams.
 				</p>
 				<div class="mt-8 flex flex-wrap items-center gap-x-3 gap-y-2 border-t border-border pt-5 font-mono text-[0.6875rem] text-muted" aria-label="I handle the schema, interface, deploy and support">
-					<span>Schema</span><span aria-hidden="true" class="text-accent">→</span>
-					<span>Interface</span><span aria-hidden="true" class="text-accent">→</span>
-					<span>Deploy</span><span aria-hidden="true" class="text-accent">→</span>
+					<span>Schema</span><span aria-hidden="true" class="text-accent"><Arrow /></span>
+					<span>Interface</span><span aria-hidden="true" class="text-accent"><Arrow /></span>
+					<span>Deploy</span><span aria-hidden="true" class="text-accent"><Arrow /></span>
 					<span>Support</span>
 				</div>
 			</div>

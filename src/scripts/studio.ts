@@ -878,6 +878,10 @@ function workIndex() {
  * frame later so its panels transition in. Closing runs the same in reverse
  * and only then calls dialog.close(), so Esc animates too. A trigger with
  * data-reel-target opens the view scrolled to that project.
+ *
+ * The open view lives in the URL as ?work=<filter>&project=<slug>, so a
+ * link reopens it on the same filter and project. Opening pushes a history
+ * entry and Back closes the view; filtering and scrolling only replace it.
  */
 function reel() {
 	const dialog = $<HTMLDialogElement>("[data-reel]");
@@ -1081,22 +1085,101 @@ function reel() {
 		}
 	};
 
-	const open = (target?: string) => {
+	const projects = $$<HTMLElement>("[data-reel-project]", list);
+	const filters = $$<HTMLButtonElement>("[data-reel-filter]", dialog);
+	const groups = filters.map((b) => b.dataset.reelFilter ?? "");
+	let filter = "all";
+	let current = "";
+
+	const writeUrl = (mode: "push" | "replace" | "clear") => {
+		const url = new URL(location.href);
+		url.searchParams.delete("work");
+		url.searchParams.delete("project");
+		if (mode !== "clear") {
+			url.searchParams.set("work", filter);
+			if (current) url.searchParams.set("project", current.replace(/^r-/, ""));
+		}
+		const href = url.href;
+		if (href === location.href && mode !== "push") return;
+		if (mode === "push") history.pushState({ reel: true }, "", href);
+		else history.replaceState(mode === "clear" ? null : history.state, "", href);
+	};
+
+	const applyFilter = (group: string, replay: boolean) => {
+		filter = groups.includes(group) ? group : "all";
+		filters.forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.reelFilter === filter)));
+		$$("[data-reel-section]", list).forEach((sec) => {
+			sec.hidden = filter !== "all" && sec.dataset.reelSection !== filter;
+		});
+		let n = 0;
+		projects.forEach((p) => {
+			p.hidden = filter !== "all" && p.dataset.group !== filter;
+			if (p.hidden || !replay) return;
+			p.style.setProperty("--n", String(n++));
+			// Replay the entrance for the new set.
+			p.style.transition = "none";
+			p.style.opacity = "0";
+			p.style.translate = "0 1.5rem";
+			void p.offsetWidth;
+			p.style.transition = "";
+			p.style.opacity = "";
+			p.style.translate = "";
+		});
+	};
+
+	const open = (target?: string, entry: "push" | "none" = "push") => {
 		if (dialog.open && !isClosing) return;
 		isClosing = false;
+		const el = target ? document.getElementById(target) : null;
+		if (el?.hidden) applyFilter("all", false);
+		current = el ? target! : "";
 		applySplit(true);
 		list.focus({ preventScroll: true });
-		const el = target ? document.getElementById(target) : null;
 		list.scrollTop = el ? el.getBoundingClientRect().top - list.getBoundingClientRect().top + list.scrollTop - 24 : 0;
 		baseScrollTop = list.scrollTop;
 		requestAnimationFrame(() => (baseScrollTop = list.scrollTop));
+		if (entry === "push") writeUrl("push");
 	};
 
 	const close = (then?: () => void) => {
 		if (!dialog.open || isClosing) return then?.();
 		isClosing = true;
 		applySplit(false, then);
+		// Unwind our own entry so Forward can reopen it. A view opened from a
+		// pasted link has no entry of ours, so strip the params in place.
+		if (history.state?.reel) history.back();
+		else writeUrl("clear");
 	};
+
+	addEventListener("popstate", () => {
+		const params = new URLSearchParams(location.search);
+		if (!params.has("work")) return close();
+		applyFilter(params.get("work") || "all", false);
+		open(params.has("project") ? `r-${params.get("project")}` : undefined, "none");
+	});
+
+	// Track the project at the top of the list as the reader scrolls.
+	let scrollFrame = 0;
+	list.addEventListener(
+		"scroll",
+		() => {
+			cancelAnimationFrame(scrollFrame);
+			scrollFrame = requestAnimationFrame(() => {
+				if (!dialog.open || isClosing) return;
+				const edge = list.getBoundingClientRect().top + list.clientHeight * 0.35;
+				let next = "";
+				for (const p of projects) {
+					if (p.hidden) continue;
+					if (p.getBoundingClientRect().top > edge) break;
+					next = p.id;
+				}
+				if (next === current) return;
+				current = next;
+				writeUrl("replace");
+			});
+		},
+		{ passive: true },
+	);
 
 	$$("[data-reel-open]").forEach((b) => b.addEventListener("click", () => open(b.dataset.reelTarget)));
 	$$("[data-reel-close]", dialog).forEach((b) => b.addEventListener("click", () => close()));
@@ -1279,32 +1362,21 @@ function reel() {
 		$$<HTMLVideoElement>("video", dialog).forEach((v) => v.pause());
 	});
 
-	const projects = $$("[data-reel-project]", list);
-	const filters = $$<HTMLButtonElement>("[data-reel-filter]", dialog);
 	filters.forEach((btn) =>
 		btn.addEventListener("click", () => {
-			const group = btn.dataset.reelFilter;
-			filters.forEach((b) => b.setAttribute("aria-pressed", String(b === btn)));
-			$$("[data-reel-section]", list).forEach((sec) => {
-				sec.hidden = group !== "all" && sec.dataset.reelSection !== group;
-			});
-			let n = 0;
-			projects.forEach((p) => {
-				p.hidden = group !== "all" && p.dataset.group !== group;
-				if (p.hidden) return;
-				p.style.setProperty("--n", String(n++));
-				// Replay the entrance for the new set.
-				p.style.transition = "none";
-				p.style.opacity = "0";
-				p.style.translate = "0 1.5rem";
-				void p.offsetWidth;
-				p.style.transition = "";
-				p.style.opacity = "";
-				p.style.translate = "";
-			});
+			applyFilter(btn.dataset.reelFilter ?? "all", true);
 			list.scrollTop = 0;
+			current = "";
+			writeUrl("replace");
 		}),
 	);
+
+	// Arriving on a shared link reopens the view where it was left.
+	const initial = new URLSearchParams(location.search);
+	if (initial.has("work")) {
+		applyFilter(initial.get("work") || "all", false);
+		open(initial.has("project") ? `r-${initial.get("project")}` : undefined, "none");
+	}
 
 	// A one-time nudge towards the work, a while into the first visit.
 	const toast = $("[data-toast]");

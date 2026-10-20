@@ -16,7 +16,7 @@ export default defineConfig({
 		sitemap({
 			// Client proposals are private deliverables, so they stay out of the
 			// sitemap and carry their own noindex meta tag.
-			filter: (page) => !page.includes('/proposals'),
+			filter: (page) => !['/proposals', '/404', '/products/cliniq'].includes(new URL(page).pathname.replace(/\/+$/, '')),
 		}),
 	],
 	// CliniQ was renamed to rah.clinic; keep the old product URL working.

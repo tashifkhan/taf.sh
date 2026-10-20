@@ -1,5 +1,6 @@
 ---
 import StudioLayout from "./StudioLayout.astro";
+import Breadcrumbs from "../components/studio/Breadcrumbs.astro";
 import Header from "../components/studio/Header.astro";
 import StudioFooter from "../components/studio/StudioFooter.astro";
 import Cursor from "../components/studio/Cursor.astro";
@@ -19,6 +20,7 @@ const { title, description, footerCta = true, noindex = false } = Astro.props;
 	<Header base="/" />
 	<div data-page-content>
 		<main class="pt-28 sm:pt-36">
+			<Breadcrumbs title={title} />
 			<slot />
 		</main>
 		<StudioFooter cta={footerCta} />

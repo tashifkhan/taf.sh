@@ -1,4 +1,5 @@
 ---
+import Arrow from "../Arrow.astro";
 import { stats, stack } from "./data";
 import { wrap, btn, btnLg, btnAccent, btnGhost, btnArrow } from "./ui";
 
@@ -41,7 +42,7 @@ const builtLines = lines.map((line) => [
 	<!-- Architectural construction geometry: strokes draw in on load and parallax with pointer/scroll. -->
 	<div class="pointer-events-none absolute -inset-x-[5%] -inset-y-[10%] will-change-transform" data-geo aria-hidden="true">
 		<div class="absolute inset-0 transition-transform duration-1200 ease-expo" data-geom>
-			<svg viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" class="absolute inset-0 size-full overflow-visible">
+			<svg width="1440" height="900" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" class="absolute inset-0 size-full overflow-visible">
 				<circle data-geo-d cx="1090" cy="300" r="250" fill="none" stroke="var(--color-border-strong)" stroke-width="1" opacity="0.7" />
 				<circle data-geo-d cx="1090" cy="300" r="145" fill="none" stroke="var(--color-accent)" stroke-width="1" stroke-dasharray="3 6" opacity="0.45" />
 				<circle data-geo-d cx="280" cy="680" r="360" fill="none" stroke="var(--color-border-strong)" stroke-width="1" opacity="0.55" />
@@ -167,10 +168,10 @@ const builtLines = lines.map((line) => [
 			</p>
 			<div class:list={[fadeIn, "flex flex-wrap gap-3"]} style="--d:3">
 				<a href="#contact" class:list={[btn, btnLg, btnAccent]} data-magnetic>
-					Start a project <span class={btnArrow} aria-hidden="true">→</span>
+					Start a project <span class={btnArrow} aria-hidden="true"><Arrow /></span>
 				</a>
 				<button type="button" class:list={[btn, btnLg, btnGhost]} data-reel-open data-magnetic>
-					See the work <span class={btnArrow} aria-hidden="true">↗</span>
+					See the work <span class={btnArrow} aria-hidden="true"><Arrow dir="up-right" /></span>
 				</button>
 			</div>
 		</div>
@@ -178,14 +179,14 @@ const builtLines = lines.map((line) => [
 		<dl class="mt-14 grid grid-cols-2 gap-y-8 border-t border-border pt-8 md:grid-cols-4 lg:mt-20" data-stats>
 			{
 				stats.map((stat, i) => (
-					<div class:list={[fadeIn, "pr-4"]} style={`--d:${4 + i * 0.5}`}>
+					<div class:list={[fadeIn, "flex flex-col pr-4"]} style={`--d:${4 + i * 0.5}`}>
+						<dt class="order-last mt-2 text-sm text-muted">{stat.label}</dt>
 						<dd class="flex items-baseline font-display text-[clamp(2rem,4vw,3rem)] leading-none font-semibold tracking-[-0.04em]">
 							<span class="text-foreground tabular-nums" data-slot={String(stat.value).padStart(2, "0")}>
 								{String(stat.value).padStart(2, "0")}
 							</span>
 							<span class="text-accent">{stat.suffix}</span>
 						</dd>
-						<dt class="mt-2 text-sm text-muted">{stat.label}</dt>
 					</div>
 				))
 			}

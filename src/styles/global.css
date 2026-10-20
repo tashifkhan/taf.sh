@@ -176,18 +176,6 @@ html[data-theme="light"],
 	navigation: auto;
 }
 
-@keyframes vt-fade-in {
-	from {
-		opacity: 0;
-	}
-}
-
-@keyframes vt-fade-out {
-	to {
-		opacity: 0;
-	}
-}
-
 @keyframes vt-panel-in {
 	from {
 		transform: translateX(100%);
@@ -262,13 +250,35 @@ html[data-theme="light"],
 	}
 }
 
-/* Theme switches cross-fade the whole page rather than sliding it. */
+/*
+ * Theme switches reveal the new palette as a circle growing out of the toggle
+ * that was pressed. ThemeToggle sets `--vt-x`, `--vt-y` (the button's centre)
+ * and `--vt-r` (the distance to the farthest viewport corner) on the root,
+ * and the pseudo-elements inherit them. The old page holds still underneath.
+ * Every named element (the header, the product titles) gives its name up for
+ * the duration so it stays in the root snapshot and is revealed with the rest
+ * of the page instead of cross-fading on its own. `!important` outranks the
+ * inline `style` names on product pages.
+ */
+:root[data-theme-switch] * {
+	view-transition-name: none !important;
+}
+
+@keyframes vt-theme-reveal {
+	from {
+		clip-path: circle(0 at var(--vt-x, 50%) var(--vt-y, 0));
+	}
+	to {
+		clip-path: circle(var(--vt-r, 150vmax) at var(--vt-x, 50%) var(--vt-y, 0));
+	}
+}
+
 :root:active-view-transition-type(theme)::view-transition-old(root) {
-	animation: 220ms ease both vt-fade-out;
+	animation: none;
 }
 
 :root:active-view-transition-type(theme)::view-transition-new(root) {
-	animation: 220ms ease both vt-fade-in;
+	animation: 700ms cubic-bezier(0.7, 0, 0.2, 1) both vt-theme-reveal;
 }
 
 /*

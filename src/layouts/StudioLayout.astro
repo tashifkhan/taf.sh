@@ -8,7 +8,9 @@ import "../styles/global.css";
 import ThemeScript from "../components/ThemeScript.astro";
 import PageTransitions from "../components/PageTransitions.astro";
 import PostHog from "../components/PostHog.astro";
-import { email } from "../components/studio/data";
+import { socialImagePath } from "../lib/social";
+import { markdownPath } from "../lib/crawlers";
+import { canonicalPath, normalizePath, pageMetadata, structuredData } from "../lib/seo";
 
 interface Props {
 	title: string;
@@ -23,48 +25,27 @@ const {
 	noindex = false,
 } = Astro.props;
 
-/*
- * Canonical and og:url resolve against `site` in astro.config.mjs, never the
- * request host. That is the point: v2.taf.sh serves this same build, so a page
- * there has to point at taf.sh rather than at itself. It is also the fallback
- * if the Worker's noindex header is ever bypassed by a routing change.
- */
-const canonical = new URL(Astro.url.pathname, Astro.site).href;
-const ogImage = new URL("/icon-512.png", Astro.site).href;
+const path = normalizePath(Astro.url.pathname);
+const metadata = pageMetadata[path];
+// The homepage leads with the brand; every other page leads with its subject.
+const pageTitle = path === "/" ? `taf.sh | ${metadata?.title ?? title}` : `${metadata?.title ?? title} | taf.sh`;
+const pageDescription = metadata?.description ?? description;
+const canonical = new URL(canonicalPath(path), Astro.site).href;
+// Social assets must exist on the deployed host, even while v2 canonicals
+// intentionally point to the main site. deploy:v2 supplies this build value.
+const imageOrigin = process.env.SOCIAL_IMAGE_ORIGIN ?? Astro.site!.origin;
+if (!["https://taf.sh", "https://v2.taf.sh"].includes(imageOrigin)) {
+	throw new Error("SOCIAL_IMAGE_ORIGIN must be a taf.sh deployment origin");
+}
+const ogImage = new URL(socialImagePath(path), imageOrigin).href;
+const schema = structuredData(Astro.site!, path, pageTitle, pageDescription, ogImage);
+// Escape '<' so content can never close the JSON-LD script element.
+const schemaJson = JSON.stringify(schema).replace(/</g, "\\u003c");
 
-/*
- * One organization node, sitewide. Everything in it is checkable against the
- * footer: the name, the email, and the three profiles linked under "Elsewhere".
- */
-const schema = {
-	"@context": "https://schema.org",
-	"@type": "ProfessionalService",
-	name: "taf.sh",
-	alternateName: "Tashif Ahmad Khan",
-	url: "https://taf.sh/",
-	description,
-	email,
-	image: ogImage,
-	founder: {
-		"@type": "Person",
-		name: "Tashif Ahmad Khan",
-		url: "https://taf.sh/about",
-	},
-	address: {
-		"@type": "PostalAddress",
-		addressLocality: "Delhi",
-		addressCountry: "IN",
-	},
-	sameAs: [
-		"https://github.com/tashifkhan",
-		"https://linkedin.com/in/tashifkhan",
-		"https://tashif.codes",
-	],
-};
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" prefix="og: https://ogp.me/ns#">
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -73,27 +54,42 @@ const schema = {
 		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 		<link rel="manifest" href="/site.webmanifest" />
 		<meta name="generator" content={Astro.generator} />
-		<meta name="description" content={description} />
+		<meta name="description" content={pageDescription} />
 		<link rel="canonical" href={canonical} />
-		{noindex && <meta name="robots" content="noindex, nofollow" />}
+		{!noindex && metadata && <>
+			<link rel="alternate" type="text/markdown" href={markdownPath(path)} />
+			<link rel="describedby" type="text/plain" href="/llms.txt" />
+		</>}
+		<meta name="robots" content={noindex ? "noindex, follow" : "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"} />
+		<meta name="author" content="Tashif Ahmad Khan" />
 		<ThemeScript />
 		<PageTransitions />
 		<script is:inline>
 			document.documentElement.classList.add("js");
 		</script>
 		<PostHog />
-		<meta property="og:title" content={`${title} · taf.sh`} />
-		<meta property="og:description" content={description} />
+		<meta property="og:title" content={pageTitle} />
+		<meta property="og:description" content={pageDescription} />
 		<meta property="og:type" content="website" />
+		<meta property="og:locale" content="en_IN" />
 		<meta property="og:site_name" content="taf.sh" />
 		<meta property="og:url" content={canonical} />
 		<meta property="og:image" content={ogImage} />
-		<meta property="og:image:width" content="512" />
-		<meta property="og:image:height" content="512" />
-		<meta property="og:image:alt" content="taf.sh — the studio of Tashif Ahmad Khan" />
-		<meta name="twitter:card" content="summary" />
-		{!noindex && <script type="application/ld+json" is:inline set:html={JSON.stringify(schema)} />}
-		<title>{title} · taf.sh</title>
+		<meta property="og:image:secure_url" content={ogImage} />
+		<meta property="og:image:width" content="1200" />
+		<meta property="og:image:height" content="630" />
+		<meta property="og:image:alt" content={`${pageTitle}. Software by Tashif Ahmad Khan.`} />
+		<meta property="og:image:type" content="image/jpeg" />
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content={pageTitle} />
+		<meta name="twitter:description" content={pageDescription} />
+		<meta name="twitter:image" content={ogImage} />
+		<meta name="twitter:image:alt" content={`${pageTitle}. Software by Tashif Ahmad Khan.`} />
+		<meta itemprop="name" content={pageTitle} />
+		<meta itemprop="description" content={pageDescription} />
+		<meta itemprop="image" content={ogImage} />
+		{!noindex && <script type="application/ld+json" is:inline set:html={schemaJson} />}
+		<title>{pageTitle}</title>
 	</head>
 	<body
 		class="overflow-x-clip bg-background font-body text-foreground antialiased [--gutter:clamp(1.25rem,4vw,3rem)]"

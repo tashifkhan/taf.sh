@@ -1,4 +1,5 @@
 ---
+import Arrow from "../Arrow.astro";
 import Logo from "../Logo.astro";
 import ThemeToggle from "../ThemeToggle.astro";
 import { nav, email } from "./data";
@@ -45,7 +46,7 @@ const menuBtn =
 		<div class="flex items-center gap-3">
 			<div class="hidden sm:block"><ThemeToggle /></div>
 			<a href={base ? "/contact" : "#contact"} class:list={[btn, btnAccent, "h-10 max-sm:hidden"]} data-magnetic>
-				Start a project <span class={btnArrow} aria-hidden="true">→</span>
+				Start a project <span class={btnArrow} aria-hidden="true"><Arrow /></span>
 			</a>
 			<button type="button" class:list={[menuBtn, "lg:hidden"]} aria-expanded="false" aria-controls="s-menu" data-menu-open>
 				<span class="grid w-3.5 gap-1" aria-hidden="true"><i class="h-[1.5px] bg-current"></i><i class="h-[1.5px] bg-current"></i></span>

@@ -1,4 +1,5 @@
 ---
+import Arrow from "../Arrow.astro";
 import { notes } from "./data";
 import { wrap, section, head, headRow, kicker, h2, iconBtn, btn, btnGhost, btnArrow } from "./ui";
 ---
@@ -19,8 +20,8 @@ import { wrap, section, head, headRow, kicker, h2, iconBtn, btn, btnGhost, btnAr
 					<b class="font-normal text-foreground" data-note-index>01</b> / {String(notes.length).padStart(2, "0")}
 				</span>
 				<div class="flex gap-2">
-					<button type="button" class={iconBtn} data-note-prev aria-label="Previous note">←</button>
-					<button type="button" class={iconBtn} data-note-next aria-label="Next note">→</button>
+					<button type="button" class={iconBtn} data-note-prev aria-label="Previous note"><Arrow dir="left" /></button>
+					<button type="button" class={iconBtn} data-note-next aria-label="Next note"><Arrow /></button>
 				</div>
 			</div>
 		</header>
@@ -63,7 +64,7 @@ import { wrap, section, head, headRow, kicker, h2, iconBtn, btn, btnGhost, btnAr
 						rel="noopener noreferrer"
 						class="font-mono text-xs text-foreground underline decoration-border-strong underline-offset-4 transition-colors hover:text-accent hover:decoration-accent"
 					>
-						tashif.codes/blog ↗
+						tashif.codes/blog <Arrow dir="up-right" />
 					</a>
 				</p>
 				<a
@@ -73,7 +74,7 @@ import { wrap, section, head, headRow, kicker, h2, iconBtn, btn, btnGhost, btnAr
 					class:list={[btn, btnGhost]}
 					data-magnetic
 				>
-					Visit tashif.codes/blog <span class={btnArrow} aria-hidden="true">↗</span>
+					Visit tashif.codes/blog <span class={btnArrow} aria-hidden="true"><Arrow dir="up-right" /></span>
 				</a>
 			</div>
 		</div>

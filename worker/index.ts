@@ -101,6 +101,13 @@ export default {
 		);
 		if (redirect) return redirect;
 
+		// Astro's static redirect is an HTML refresh. Send a permanent HTTP
+		// redirect before Assets so crawlers consolidate the renamed product.
+		if (url.pathname.replace(/\/+$/, "") === "/products/cliniq") {
+			url.pathname = "/products/rah-clinic/";
+			return Response.redirect(url.toString(), 301);
+		}
+
 		// PostHog reverse proxy
 		if (url.pathname === "/ph" || url.pathname.startsWith("/ph/")) {
 			return proxyPostHog(request, ctx);
@@ -108,9 +115,9 @@ export default {
 
 		const response = await env.ASSETS.fetch(request);
 
-		if (env.NOINDEX || PREVIEW_HOST.test(url.hostname)) {
+		if (env.NOINDEX || PREVIEW_HOST.test(url.hostname) || url.pathname === "/proposals" || url.pathname.startsWith("/proposals/") || response.status === 404) {
 			const headers = new Headers(response.headers);
-			headers.set("X-Robots-Tag", "noindex, nofollow");
+			headers.set("X-Robots-Tag", "noindex, follow");
 			return new Response(response.body, {
 				status: response.status,
 				statusText: response.statusText,

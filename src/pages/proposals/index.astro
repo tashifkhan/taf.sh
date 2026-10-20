@@ -1,11 +1,12 @@
 ---
+import Arrow from "../../components/Arrow.astro";
 import PageLayout from "../../layouts/PageLayout.astro";
 import PageIntro from "../../components/studio/PageIntro.astro";
 import { wrap, btn, btnLg, btnAccent, btnArrow } from "../../components/studio/ui";
 import data from "../../data/tamjeed-proposals.json";
 import "../../styles/proposal-studio.css";
 
-const title = "Interior proposals · Tamjeed Khan";
+const title = "Tamjeed Khan: interior proposal comparison";
 const description = "Compare Ugra Creation, High Creation and Homebell, normalized for 6 rooms across 2 flats.";
 const excelHref = "/proposals/Tamjeed_Khan_Proposal_Comparison.xlsx";
 const views = [
@@ -18,7 +19,7 @@ const views = [
   <PageIntro label="Client tools / Interior comparison" summary="Three interior proposals for Mr. Tamjeed Khan. Compare their costs and scope on the same basis, with six rooms across two flats.">
     <Fragment slot="title">Three quotes.<br />A clearer <em>picture.</em></Fragment>
     <a href={excelHref} class:list={[btn, btnLg, btnAccent]} download>
-      Download Excel <span class={btnArrow} aria-hidden="true">↓</span>
+      Download Excel <span class={btnArrow} aria-hidden="true"><Arrow dir="down" /></span>
     </a>
   </PageIntro>
 
@@ -36,7 +37,7 @@ const views = [
           </div>
           <div>
             <p>Ugra's single-flat quote is doubled. High Creation and Homebell already cover multiple units. A dash means an item is absent from a proposal, never a zero cost.</p>
-            <button type="button" class="prop-text-link" data-page="itemized">Explore the itemized comparison <span aria-hidden="true">↗</span></button>
+            <button type="button" class="prop-text-link" data-page="itemized">Explore the itemized comparison <Arrow dir="up-right" /></button>
           </div>
         </div>
         <div class="prop-flyers" id="kpi-cards"></div>
@@ -50,7 +51,7 @@ const views = [
         <div class="prop-section prop-grid-2">
           <section aria-labelledby="packages-title">
             <h2 class="prop-section-title" id="packages-title">Package comparison</h2>
-            <p class="prop-scroll-hint">Scroll the table to compare all vendors →</p>
+            <p class="prop-scroll-hint">Scroll the table to compare all vendors&nbsp;<Arrow /></p>
             <div class="prop-table-wrap" id="package-table" tabindex="0" role="region" aria-label="Package comparison table"></div>
           </section>
           <section aria-labelledby="reading-title">
@@ -78,13 +79,13 @@ const views = [
           <label class="prop-filter-label">Room<select id="room-filter"></select></label>
           <label class="prop-filter-label">Search<input id="search" type="search" placeholder="Item, room or note" autocomplete="off" /></label>
         </div>
-        <p class="prop-scroll-hint">Scroll the table to see all columns →</p>
+        <p class="prop-scroll-hint">Scroll the table to see all columns&nbsp;<Arrow /></p>
         <div class="prop-table-wrap" id="itemized-table" tabindex="0" role="region" aria-label="Itemized comparison table"></div>
       </section>
 
       <section class="prop-page" id="page-rooms" aria-label="By room">
         <header class="prop-mast"><p class="prop-eyebrow">03 / By room</p><h2>See where the costs sit.</h2><p class="prop-tagline">Room and zone subtotals across all three proposals.</p></header>
-        <p class="prop-scroll-hint">Scroll the table to compare all vendors →</p>
+        <p class="prop-scroll-hint">Scroll the table to compare all vendors&nbsp;<Arrow /></p>
         <div class="prop-table-wrap" id="room-table" tabindex="0" role="region" aria-label="Room comparison table"></div>
         <div class="prop-section prop-grid-2">
           <div class="prop-dashed"><h3>Where the scope differs</h3><ul class="prop-list">
@@ -98,7 +99,7 @@ const views = [
 
       <section class="prop-page" id="page-gaps" aria-label="Inclusions and gaps">
         <header class="prop-mast"><p class="prop-eyebrow">04 / Inclusions & gaps</p><h2>What the quote leaves out.</h2><p class="prop-tagline">Check fittings, tiles, stone, lights, GST and warranty before deciding.</p></header>
-        <p class="prop-scroll-hint">Scroll the table to compare all vendors →</p>
+        <p class="prop-scroll-hint">Scroll the table to compare all vendors&nbsp;<Arrow /></p>
         <div class="prop-table-wrap" id="inclusion-table" tabindex="0" role="region" aria-label="Inclusions and gaps table"></div>
         <section class="prop-section" aria-labelledby="scope-notes"><h2 class="prop-section-title" id="scope-notes">Scope notes</h2><ul class="prop-strips">
           <li><strong>Tile material</strong><span>All three exclude it.</span></li>
@@ -121,14 +122,14 @@ const views = [
         {[["ugra", true], ["hc", false], ["homebell", false]].map(([key, active]) => <div id={`proposal-${key}`} class:list={["prop-detail", active && "active"]} role="tabpanel" aria-labelledby={`tab-${key}`} tabindex="0"></div>)}
         <section class="prop-section" aria-labelledby="normalization-title">
           <h2 class="prop-section-title" id="normalization-title">Normalization rules</h2>
-          <p class="prop-scroll-hint">Scroll the table to see the full scope →</p>
+          <p class="prop-scroll-hint">Scroll the table to see the full scope&nbsp;<Arrow /></p>
           <div class="prop-table-wrap" tabindex="0" role="region" aria-label="Normalization rules"><table><thead><tr><th>Vendor</th><th>Original scope</th><th>Factor</th><th>Comparison basis</th></tr></thead><tbody>
             <tr><td>Ugra Creation</td><td>One house BOQ, roughly four bedroom zones</td><td>×2</td><td>Maximum furniture for two flats and six rooms</td></tr>
             <tr><td>High Creation</td><td>Ground floor, first floor and site handling</td><td>×1</td><td>Already covers roughly six bedrooms</td></tr>
             <tr><td>Homebell</td><td>Flat 1 and Flat 2 BOQs</td><td>×1</td><td>Already covers two 3BHK flats</td></tr>
           </tbody></table></div>
         </section>
-        <div class="prop-download"><div><p class="prop-eyebrow">Take the details with you</p><h2>The full comparison.</h2><p>Itemized amounts, room subtotals and inclusion gaps in one spreadsheet.</p></div><a class="prop-btn" href={excelHref} download>Download Excel <span aria-hidden="true">↓</span></a></div>
+        <div class="prop-download"><div><p class="prop-eyebrow">Take the details with you</p><h2>The full comparison.</h2><p>Itemized amounts, room subtotals and inclusion gaps in one spreadsheet.</p></div><a class="prop-btn" href={excelHref} download>Download Excel <Arrow dir="down" /></a></div>
       </section>
     </div>
     <footer class="prop-footer"><p>Prepared for Mr. Tamjeed Khan · Rajouri Garden</p><p>6 rooms / 2 flats</p></footer>

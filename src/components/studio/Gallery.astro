@@ -1,4 +1,5 @@
 ---
+import Arrow from "../Arrow.astro";
 /*
  * A screenshot carousel: native horizontal scroll-snap (so touch swipes just
  * work), round arrow buttons, an `01 / 03` counter and an optional "live
@@ -76,7 +77,7 @@ const arrow =
 				rel="noopener noreferrer"
 				class="absolute top-3 right-3 inline-flex h-8 items-center gap-2 rounded-full bg-neutral-900/85 px-3 ring-1 ring-white/25 text-xs leading-none font-medium text-white backdrop-blur transition-colors hover:bg-accent hover:text-accent-contrast"
 			>
-				<span class="size-1.5 rounded-full bg-accent" /> live site ↗
+				<span class="size-1.5 rounded-full bg-accent" /> live site <Arrow dir="up-right" />
 			</a>
 		)
 	}
@@ -85,10 +86,10 @@ const arrow =
 		slides > 1 && (
 			<>
 				<button type="button" class:list={[arrow, "left-3"]} aria-label={`Previous ${name} screen`} data-gallery-prev disabled>
-					←
+					<Arrow dir="left" />
 				</button>
 				<button type="button" class:list={[arrow, "right-3"]} aria-label={`Next ${name} screen`} data-gallery-next>
-					→
+					<Arrow />
 				</button>
 				<span class="absolute top-3 left-3 inline-flex h-8 items-center rounded-full bg-neutral-900/85 px-3 font-mono text-xs leading-none text-white ring-1 ring-white/15 tabular-nums backdrop-blur">
 					<span data-gallery-index>01</span>&nbsp;/ {pad(slides)}

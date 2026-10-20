@@ -1,4 +1,5 @@
 ---
+import Arrow from "./Arrow.astro";
 import PageLayout from "../layouts/PageLayout.astro";
 import Gallery from "./studio/Gallery.astro";
 import CanvasEffect from "./canvas/CanvasEffect.astro";
@@ -112,13 +113,15 @@ const entry = reel.find((r) => r.href === `/products/${id}`);
 const nextEntry = reel.find((r) => r.href === next.href);
 const live = url ? `https://${url}` : entry?.live;
 const pad = (n: number) => String(n).padStart(2, "0");
+// Every product links back to the engineer's own site.
+const details: Spec[] = [...specs, { label: "Engineer", value: "Tashif / tashif.codes", href: "https://tashif.codes" }];
 ---
 
 <PageLayout title={name} description={tagline}>
 		<article>
 			<header class:list={[wrap, "grid gap-10 lg:grid-cols-[1fr_auto] lg:items-end"]}>
 				<div>
-					<a href="/#work" class="text-sm text-muted transition-colors hover:text-foreground">← all work</a>
+					<a href="/work" class="text-sm text-muted transition-colors hover:text-foreground"><Arrow dir="left" /> all work</a>
 					<div class="mt-8 flex flex-wrap items-center gap-3">
 						<span class:list={[chip, status === "Live" && chipOn]}>{status}</span>
 						{entry && <span class={kicker}>{entry.sector} · {entry.year}</span>}
@@ -135,12 +138,12 @@ const pad = (n: number) => String(n).padStart(2, "0");
 					{
 						live && (
 							<a href={live} target="_blank" rel="noopener noreferrer" class:list={[btn, btnLg, btnAccent]} data-magnetic>
-								Visit {name} <span class={btnArrow} aria-hidden="true">↗</span>
+								Visit {name} <span class={btnArrow} aria-hidden="true"><Arrow dir="up-right" /></span>
 							</a>
 						)
 					}
 					<a href="/contact" class:list={[btn, btnLg, btnGhost]} data-magnetic>
-						Build one like it <span class={btnArrow} aria-hidden="true">→</span>
+						Build one like it <span class={btnArrow} aria-hidden="true"><Arrow /></span>
 					</a>
 				</div>
 			</header>
@@ -213,7 +216,7 @@ const pad = (n: number) => String(n).padStart(2, "0");
 					<span class={kicker}>Details</span>
 					<dl class="mt-6 divide-y divide-border border-y border-border">
 						{
-							specs.map((spec) => (
+							details.map((spec) => (
 								<div class="grid gap-1 py-4 sm:grid-cols-[12rem_1fr] sm:gap-6">
 									<dt class="text-sm text-muted">{spec.label}</dt>
 									<dd class="min-w-0 break-words text-[0.9375rem] text-foreground">
@@ -224,7 +227,7 @@ const pad = (n: number) => String(n).padStart(2, "0");
 												class="underline decoration-border-strong underline-offset-4 transition-colors hover:text-accent hover:decoration-accent"
 											>
 												{spec.value}
-												{spec.href.startsWith("http") && " ↗"}
+												{spec.href.startsWith("http") && <> <Arrow dir="up-right" /></>}
 											</a>
 										) : (
 											spec.value
@@ -245,7 +248,7 @@ const pad = (n: number) => String(n).padStart(2, "0");
 					<div class="px-3 py-2 sm:px-4">
 						<span class="font-mono text-xs text-muted">Next product</span>
 						<p class="mt-2 font-display text-[clamp(1.75rem,4vw,3rem)] leading-none font-semibold tracking-[-0.04em] text-foreground transition-colors group-hover:text-accent">
-							{next.name} <span class="inline-block transition-transform duration-500 ease-expo group-hover:translate-x-2">→</span>
+							{next.name} <span class="inline-block transition-transform duration-500 ease-expo group-hover:translate-x-2"><Arrow /></span>
 						</p>
 						{nextEntry && <p class="mt-3 max-w-md text-[0.9375rem] text-secondary">{nextEntry.line}</p>}
 					</div>

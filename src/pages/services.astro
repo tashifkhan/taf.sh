@@ -1,4 +1,5 @@
 ---
+import Arrow from "../components/Arrow.astro";
 import PageLayout from "../layouts/PageLayout.astro";
 import PageIntro from "../components/studio/PageIntro.astro";
 import Process from "../components/studio/Process.astro";
@@ -11,13 +12,20 @@ const examples = [
 	{ label: "See rah.clinic", href: "/products/rah-clinic" },
 	{ label: "See the tashif.codes case study", href: "/work/tashif-codes" },
 ];
+
+const questions = [
+	{ question: "What can I hire taf.sh to build?", answer: "I build web and mobile products, LLM pipelines, WhatsApp workflows and Astro websites. That can mean a complete product or a specific part of your existing system." },
+	{ question: "Who will do the work, and who owns the code?", answer: "You work directly with me, Tashif Ahmad Khan. The repository lives in your organization. At handover you receive the code, infrastructure, documentation and keys, and you own the work outright." },
+	{ question: "Do you work with teams outside Delhi?", answer: "Yes. I'm based in Delhi and work with teams worldwide. We start with a 30-minute call, then agree on a written scope and share a working preview as the build progresses." },
+	{ question: "How do you price a project?", answer: "After the intro call, I write down the deliverables, timeline and a fixed price or weekly rate. For ongoing work, I also offer an embedded retainer. Architecture reviews and AI feasibility work are available as advisory engagements." },
+];
 ---
 
 <PageLayout title="Services" description="Product engineering, AI systems, messaging platforms and websites. Work directly with Tashif from the first call to production.">
 	<PageIntro label="Studio / Services" summary="Architecture, backend, interface and deployment. I take on the whole build, or work alongside your team on the part that needs attention.">
 		<Fragment slot="title">Your idea.<br /> Built to <em>run.</em></Fragment>
-		<a href="/contact" class:list={[btn, btnLg, btnAccent]}>Talk through your project <span class={btnArrow} aria-hidden="true">→</span></a>
-		<a href="/#work" class:list={[btn, btnLg, btnGhost]}>See the work <span class={btnArrow} aria-hidden="true">↗</span></a>
+		<a href="/contact" class:list={[btn, btnLg, btnAccent]}>Talk through your project <span class={btnArrow} aria-hidden="true"><Arrow /></span></a>
+		<a href="/#work" class:list={[btn, btnLg, btnGhost]}>See the work <span class={btnArrow} aria-hidden="true"><Arrow dir="up-right" /></span></a>
 	</PageIntro>
 
 	<div class:list={[wrap, "pb-20"]}>
@@ -30,7 +38,7 @@ const examples = [
 					<div>
 						<p class={kicker}>{service.index} / {service.tag}</p>
 						<h2 id={`service-${service.id}`} class="mt-4 max-w-[16ch] font-display text-[clamp(1.875rem,3.2vw,2.75rem)] leading-[1.08] font-medium tracking-[-0.035em]">{service.title}</h2>
-						<a href={examples[i].href} class="mt-6 inline-flex items-center gap-3 text-sm text-secondary transition-colors hover:text-accent">{examples[i].label} <span aria-hidden="true">↗</span></a>
+						<a href={examples[i].href} class="mt-6 inline-flex items-center gap-3 text-sm text-secondary transition-colors hover:text-accent">{examples[i].label} <Arrow dir="up-right" /></a>
 					</div>
 					<div>
 						<p class="max-w-[50ch] text-lg leading-8 text-secondary">{service.body}</p>
@@ -44,13 +52,24 @@ const examples = [
 	</div>
 
 	<Process />
+	<section class:list={[wrap, "border-b border-border py-16 sm:py-24"]} aria-labelledby="service-questions">
+		<div class="grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
+			<div><p class={kicker}>Before we start</p><h2 id="service-questions" class={h2}>Working <em>together.</em></h2></div>
+			<div class="divide-y divide-border border-y border-border">
+				{questions.map(item => <div class="py-6">
+					<h3 class="font-display text-xl font-medium tracking-tight">{item.question}</h3>
+					<p class="mt-3 max-w-[60ch] leading-7 text-secondary">{item.answer}</p>
+				</div>)}
+			</div>
+		</div>
+	</section>
 	<section class:list={[wrap, "py-16 sm:py-24"]}>
 		<div class="grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
 			<div><p class={kicker}>Selected work</p><h2 class={h2}>See it <em>in use.</em></h2></div>
 			<div class="divide-y divide-border border-y border-border">
-				{reel.filter(r => r.group !== "shenanigan").map(r => <a href={r.href} class="group flex items-center justify-between gap-5 py-5"><div><h3 class="font-display text-xl font-medium tracking-[-0.02em] transition-colors group-hover:text-accent">{r.name}</h3><p class="mt-1 text-sm leading-6 text-secondary">{r.sector} · {r.metric}</p></div><span class="text-accent transition-transform group-hover:translate-x-1" aria-hidden="true">↗</span></a>)}
-				<a href="https://tashif.codes" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-between gap-5 py-5"><div><h3 class="font-display text-xl font-medium tracking-[-0.02em] transition-colors group-hover:text-accent">More shenanigans on tashif.codes</h3><p class="mt-1 text-sm leading-6 text-secondary">all 51 open-source builds, apps, tools and experiments</p></div><span class="text-accent transition-transform group-hover:translate-x-1" aria-hidden="true">↗</span></a>
-				<a href="https://tashif.codes/blog" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-between gap-5 py-5"><div><h3 class="font-display text-xl font-medium tracking-[-0.02em] transition-colors group-hover:text-accent">Engineering blog on tashif.codes/blog</h3><p class="mt-1 text-sm leading-6 text-secondary">architecture notes, deep dives and post-mortems</p></div><span class="text-accent transition-transform group-hover:translate-x-1" aria-hidden="true">↗</span></a>
+				{reel.filter(r => r.group !== "shenanigan").map(r => <a href={r.href} class="group flex items-center justify-between gap-5 py-5"><div><h3 class="font-display text-xl font-medium tracking-[-0.02em] transition-colors group-hover:text-accent">{r.name}</h3><p class="mt-1 text-sm leading-6 text-secondary">{r.sector} · {r.metric}</p></div><span class="text-accent transition-transform group-hover:translate-x-1" aria-hidden="true"><Arrow dir="up-right" /></span></a>)}
+				<a href="https://tashif.codes" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-between gap-5 py-5"><div><h3 class="font-display text-xl font-medium tracking-[-0.02em] transition-colors group-hover:text-accent">More shenanigans on tashif.codes</h3><p class="mt-1 text-sm leading-6 text-secondary">all 51 open-source builds, apps, tools and experiments</p></div><span class="text-accent transition-transform group-hover:translate-x-1" aria-hidden="true"><Arrow dir="up-right" /></span></a>
+				<a href="https://tashif.codes/blog" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-between gap-5 py-5"><div><h3 class="font-display text-xl font-medium tracking-[-0.02em] transition-colors group-hover:text-accent">Engineering blog on tashif.codes/blog</h3><p class="mt-1 text-sm leading-6 text-secondary">architecture notes, deep dives and post-mortems</p></div><span class="text-accent transition-transform group-hover:translate-x-1" aria-hidden="true"><Arrow dir="up-right" /></span></a>
 			</div>
 		</div>
 	</section>

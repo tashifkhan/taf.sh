@@ -1,4 +1,5 @@
 ---
+import Arrow from "../../components/Arrow.astro";
 import PageLayout from "../../layouts/PageLayout.astro";
 import PageIntro from "../../components/studio/PageIntro.astro";
 import PreviewCard from "../../components/studio/PreviewCard.astro";
@@ -14,7 +15,7 @@ const groups = [
 <PageLayout title="Work">
 	<PageIntro label="Studio / Work" summary="Software I've built and operated, plus my founding engineering work at Systematic Reasoning. Read the case studies or open the projects themselves.">
 		<Fragment slot="title">Projects you<br />can <em>open.</em></Fragment>
-		<a href="/contact" class:list={[btn, btnGhost]}>Discuss a project <span class={btnArrow} aria-hidden="true">→</span></a>
+		<a href="/contact" class:list={[btn, btnGhost]}>Discuss a project <span class={btnArrow} aria-hidden="true"><Arrow /></span></a>
 	</PageIntro>
 	{groups.map(group => <section class:list={[wrap, "pb-16 sm:pb-24"]} aria-labelledby={`group-${group.id}`}>
 		<p class={kicker}>{group.id === "team" ? "Built with the team" : "Built by Tashif Ahmad Khan"}</p>

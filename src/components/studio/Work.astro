@@ -1,4 +1,5 @@
 ---
+import Arrow from "../Arrow.astro";
 import Gallery from "./Gallery.astro";
 import PreviewCard from "./PreviewCard.astro";
 import { reel, products as productMeta } from "./data";
@@ -36,7 +37,7 @@ const metaById = Object.fromEntries(productMeta.map((p) => [p.id, p]));
 				</p>
 				<a href="/work" class="text-sm text-accent underline underline-offset-4">Browse all projects</a>
 				<button type="button" class:list={[btn, btnGhost]} data-reel-open data-magnetic>
-					Open full reel ({pad(reel.length)}) <span class={btnArrow} aria-hidden="true">↗</span>
+					Open full reel ({pad(reel.length)}) <span class={btnArrow} aria-hidden="true"><Arrow dir="up-right" /></span>
 				</button>
 			</div>
 		</header>
@@ -93,7 +94,7 @@ const metaById = Object.fromEntries(productMeta.map((p) => [p.id, p]));
 
 								<div class="mt-6 flex flex-wrap items-center gap-5">
 									<a href={r.href} class:list={[btn, btnGhost]}>
-										Read case study <span class={btnArrow} aria-hidden="true">→</span>
+										Read case study <span class={btnArrow} aria-hidden="true"><Arrow /></span>
 									</a>
 									{r.live && (
 										<a
@@ -102,7 +103,7 @@ const metaById = Object.fromEntries(productMeta.map((p) => [p.id, p]));
 											rel="noopener noreferrer"
 											class="font-mono text-xs text-muted transition-colors hover:text-accent"
 										>
-											{r.live.replace(/^https?:\/\//, "")} ↗
+											{r.live.replace(/^https?:\/\//, "")} <Arrow dir="up-right" />
 										</a>
 									)}
 								</div>
@@ -166,7 +167,7 @@ const metaById = Object.fromEntries(productMeta.map((p) => [p.id, p]));
 										data-reel-open
 										data-reel-target={`r-${slug(r.name)}`}
 									>
-										screens ↗
+										screens <Arrow dir="up-right" />
 									</button>
 									<a
 										href={r.live ?? r.href}
@@ -174,7 +175,7 @@ const metaById = Object.fromEntries(productMeta.map((p) => [p.id, p]));
 										rel="noopener noreferrer"
 										class="text-foreground transition-colors hover:text-accent"
 									>
-										visit ↗
+										visit <Arrow dir="up-right" />
 									</a>
 								</div>
 							</div>
@@ -191,7 +192,7 @@ const metaById = Object.fromEntries(productMeta.map((p) => [p.id, p]));
 						rel="noopener noreferrer"
 						class="font-mono text-xs text-foreground underline decoration-border-strong underline-offset-4 transition-colors hover:text-accent hover:decoration-accent"
 					>
-						tashif.codes ↗
+						tashif.codes <Arrow dir="up-right" />
 					</a>{" "}
 					for all 51 shenanigans, and{" "}
 					<a
@@ -200,7 +201,7 @@ const metaById = Object.fromEntries(productMeta.map((p) => [p.id, p]));
 						rel="noopener noreferrer"
 						class="font-mono text-xs text-foreground underline decoration-border-strong underline-offset-4 transition-colors hover:text-accent hover:decoration-accent"
 					>
-						tashif.codes/blog ↗
+						tashif.codes/blog <Arrow dir="up-right" />
 					</a>{" "}
 					for the engineering writeups.
 				</p>
@@ -212,7 +213,7 @@ const metaById = Object.fromEntries(productMeta.map((p) => [p.id, p]));
 						class:list={[btn, btnGhost]}
 						data-magnetic
 					>
-						View more shenanigans on tashif.codes <span class={btnArrow} aria-hidden="true">↗</span>
+						View more shenanigans on tashif.codes <span class={btnArrow} aria-hidden="true"><Arrow dir="up-right" /></span>
 					</a>
 					<a
 						href="https://tashif.codes/blog"
@@ -221,7 +222,7 @@ const metaById = Object.fromEntries(productMeta.map((p) => [p.id, p]));
 						class:list={[btn, btnGhost]}
 						data-magnetic
 					>
-						Visit tashif.codes/blog <span class={btnArrow} aria-hidden="true">↗</span>
+						Visit tashif.codes/blog <span class={btnArrow} aria-hidden="true"><Arrow dir="up-right" /></span>
 					</a>
 				</div>
 			</div>

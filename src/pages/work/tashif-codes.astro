@@ -1,4 +1,5 @@
 ---
+import Arrow from "../../components/Arrow.astro";
 import PageLayout from "../../layouts/PageLayout.astro";
 import PageIntro from "../../components/studio/PageIntro.astro";
 import WebPresenceExample from "../../components/studio/WebPresenceExample.astro";
@@ -7,12 +8,12 @@ import { wrap, btn, btnAccent, btnGhost, btnArrow } from "../../components/studi
 
 <PageLayout title="tashif.codes case study" description="The Astro build behind tashif.codes, with public traffic analytics and captured Google search results.">
 	<div class:list={[wrap, "mb-8"]}>
-		<a href="/services/#web" class="text-sm text-muted transition-colors hover:text-foreground">← Web presence</a>
+		<a href="/services/#web" class="text-sm text-muted transition-colors hover:text-foreground"><Arrow dir="left" /> Web presence</a>
 	</div>
 	<PageIntro label="Case study / Web presence" summary="My project directory, developer tools and engineering blog. I built the site with Astro and React, including the design, search metadata, analytics and deployment. The traffic and search captures below document the results.">
 		<Fragment slot="title">tashif.codes</Fragment>
-		<a href="https://tashif.codes" target="_blank" rel="noopener noreferrer" class:list={[btn, btnAccent]}>Visit the site <span class={btnArrow} aria-hidden="true">↗</span></a>
-		<a href="https://tashif.codes/blog" target="_blank" rel="noopener noreferrer" class:list={[btn, btnGhost]}>Read the blog <span class={btnArrow} aria-hidden="true">↗</span></a>
+		<a href="https://tashif.codes" target="_blank" rel="noopener noreferrer" class:list={[btn, btnAccent]}>Visit the site <span class={btnArrow} aria-hidden="true"><Arrow dir="up-right" /></span></a>
+		<a href="https://tashif.codes/blog" target="_blank" rel="noopener noreferrer" class:list={[btn, btnGhost]}>Read the blog <span class={btnArrow} aria-hidden="true"><Arrow dir="up-right" /></span></a>
 	</PageIntro>
 	<div class:list={[wrap, "pb-16 sm:pb-24"]}>
 		<WebPresenceExample />

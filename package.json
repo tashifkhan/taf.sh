@@ -8,12 +8,17 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "bun run seo:images && astro build && bun run seo:crawlers",
     "preview": "astro preview",
     "astro": "astro",
     "deploy": "bun run build && wrangler deploy",
-    "deploy:v2": "bun run build && wrangler deploy --env v2",
-    "cf:dev": "bun run build && wrangler dev"
+    "deploy:v2": "DEPLOY_ORIGIN=https://v2.taf.sh SOCIAL_IMAGE_ORIGIN=https://v2.taf.sh bun run build && wrangler deploy --env v2",
+    "cf:dev": "bun run build && wrangler dev",
+    "seo:images": "bun scripts/generate-social-images.ts",
+    "seo:crawlers": "bun scripts/generate-crawler-content.ts",
+    "seo:check": "bun run build && bun scripts/check-seo.ts && bun scripts/check-crawlers.ts && bun test scripts/crawler-markdown.test.ts worker/index.test.ts",
+    "seo:crawlers:live": "bun scripts/check-crawlers-live.ts",
+    "seo:check:live": "bun scripts/check-social-live.ts"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",
@@ -42,6 +47,9 @@
     "tailwindcss": "^4.3.3"
   },
   "devDependencies": {
+    "parse5": "7.3.0",
+    "sharp": "0.35.3",
+    "turndown": "7.2.4",
     "wrangler": "^4.118.0"
   }
 }

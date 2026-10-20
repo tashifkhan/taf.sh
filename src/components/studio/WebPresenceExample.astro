@@ -1,4 +1,5 @@
 ---
+import Arrow from "../Arrow.astro";
 import { webPresence, formatCount, formatDate } from "../../data/web-presence";
 import { kicker } from "./ui";
 const searchUrl = "https://www.google.com/search?q=site%3Atashif.codes%2Fblog";
@@ -33,7 +34,7 @@ const searchUrl = "https://www.google.com/search?q=site%3Atashif.codes%2Fblog";
 				<p class={kicker}>01 / Traffic</p>
 				<h2 class="mt-3 font-display text-xl font-medium tracking-[-0.025em]">The numbers are public.</h2>
 				<p class="mt-3 text-sm leading-7 text-secondary">Explore traffic over time, referrers and popular pages. Dashboard captured 18 Oct 2026. Select tashif.codes to see this site's data.</p>
-				<a href={webPresence.source} target="_blank" rel="noopener noreferrer" class="mt-4 inline-flex gap-3 text-sm text-accent hover:underline">Explore the stats <span aria-hidden="true">↗</span></a>
+				<a href={webPresence.source} target="_blank" rel="noopener noreferrer" class="mt-4 inline-flex gap-3 text-sm text-accent hover:underline">Explore the stats <Arrow dir="up-right" /></a>
 			</figcaption>
 		</figure>
 		<figure class="min-w-0">
@@ -44,7 +45,7 @@ const searchUrl = "https://www.google.com/search?q=site%3Atashif.codes%2Fblog";
 				<p class={kicker}>02 / Search</p>
 				<h2 class="mt-3 font-display text-xl font-medium tracking-[-0.025em]">Articles appear in Google.</h2>
 				<p class="mt-3 text-sm leading-7 text-secondary">A public search for <code class="break-all font-mono text-xs">site:tashif.codes/blog</code>, captured 18 Oct 2026. This shows indexed pages. Results vary and this is not a ranking report.</p>
-				<a href={searchUrl} target="_blank" rel="noopener noreferrer" class="mt-4 inline-flex gap-3 text-sm text-accent hover:underline">View Google results <span aria-hidden="true">↗</span></a>
+				<a href={searchUrl} target="_blank" rel="noopener noreferrer" class="mt-4 inline-flex gap-3 text-sm text-accent hover:underline">View Google results <Arrow dir="up-right" /></a>
 			</figcaption>
 		</figure>
 	</div>

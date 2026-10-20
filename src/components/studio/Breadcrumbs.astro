@@ -1,0 +1,15 @@
+---
+import { breadcrumbs, normalizePath, pageMetadata } from "../../lib/seo";
+import { wrap } from "./ui";
+interface Props { title: string; }
+const path = normalizePath(Astro.url.pathname);
+const items = breadcrumbs(path, pageMetadata[path]?.label ?? Astro.props.title);
+---
+<nav aria-label="Breadcrumb" class:list={[wrap, "mb-8"]}>
+	<ol class="flex flex-wrap items-center gap-2 text-xs text-muted">
+		{items.map((item, index) => <li class="flex items-center gap-2">
+			{index > 0 && <span aria-hidden="true">/</span>}
+			{index === items.length - 1 ? <span aria-current="page" class="text-secondary">{item.name}</span> : <a href={item.path} class="transition-colors hover:text-accent">{item.name}</a>}
+		</li>)}
+	</ol>
+</nav>

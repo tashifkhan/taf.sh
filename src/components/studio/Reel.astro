@@ -1,4 +1,5 @@
 ---
+import Arrow from "../Arrow.astro";
 import Logo from "../Logo.astro";
 import Gallery from "./Gallery.astro";
 import { reel, reelGroups, stats } from "./data";
@@ -47,7 +48,7 @@ const external = (href: string) => (href.startsWith("http") ? { target: "_blank"
 					taf.sh
 				</span>
 				<button type="button" class="font-mono text-xs text-muted transition-colors hover:text-foreground" data-reel-close>
-					← back to site
+					<Arrow dir="left" /> back to site
 				</button>
 			</div>
 
@@ -67,7 +68,7 @@ const external = (href: string) => (href.startsWith("http") ? { target: "_blank"
 				</p>
 				<div class="mt-8 opacity-0" data-wl>
 					<button type="button" class:list={[btn, btnLg, btnAccent]} data-reel-contact>
-						Let's talk <span class={btnArrow} aria-hidden="true">→</span>
+						Let's talk <span class={btnArrow} aria-hidden="true"><Arrow /></span>
 					</button>
 				</div>
 			</div>
@@ -100,8 +101,8 @@ const external = (href: string) => (href.startsWith("http") ? { target: "_blank"
 			>
 				<span class="h-1.5 w-12 rounded-full bg-border-strong transition-[width,background-color] duration-200 group-hover/handle:bg-muted group-active/handle:w-16 group-active/handle:bg-accent in-[.is-dragging]:w-16 in-[.is-dragging]:bg-accent" />
 				<span class="font-mono text-[0.6875rem] leading-none text-muted transition-colors group-hover/handle:text-foreground">
-					<span class="in-[.is-expanded]:hidden">↑ pull up · full screen</span>
-					<span class="hidden in-[.is-expanded]:inline">↓ pull down</span>
+					<span class="in-[.is-expanded]:hidden"><Arrow dir="up" /> pull up · full screen</span>
+					<span class="hidden in-[.is-expanded]:inline"><Arrow dir="down" /> pull down</span>
 				</span>
 			</div>
 
@@ -202,10 +203,10 @@ const external = (href: string) => (href.startsWith("http") ? { target: "_blank"
 					</div>
 					<div class="flex flex-wrap gap-2.5">
 						<a href="https://tashif.codes" target="_blank" rel="noopener noreferrer" class:list={[btn, btnSm, btnGhost]}>
-							View more shenanigans <span class={btnArrow} aria-hidden="true">↗</span>
+							View more shenanigans <span class={btnArrow} aria-hidden="true"><Arrow dir="up-right" /></span>
 						</a>
 						<a href="https://tashif.codes/blog" target="_blank" rel="noopener noreferrer" class:list={[btn, btnSm, btnGhost]}>
-							Read the blog <span class={btnArrow} aria-hidden="true">↗</span>
+							Read the blog <span class={btnArrow} aria-hidden="true"><Arrow dir="up-right" /></span>
 						</a>
 					</div>
 				</div>
@@ -225,7 +226,7 @@ const external = (href: string) => (href.startsWith("http") ? { target: "_blank"
 	<div class="mt-4 flex items-center justify-between gap-2">
 		<button type="button" class="text-sm text-muted hover:text-foreground" data-toast-close>not now</button>
 		<button type="button" class:list={[btn, btnSm, btnAccent]} data-reel-open data-toast-close>
-			show me <span class={btnArrow} aria-hidden="true">→</span>
+			show me <span class={btnArrow} aria-hidden="true"><Arrow /></span>
 		</button>
 	</div>
 </div>
