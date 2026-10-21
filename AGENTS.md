@@ -49,6 +49,15 @@ Canvas UI supplies the ambient effect on each product page body: RetroDither on 
 - Never wrap an element that carries a `view-transition-name` — the product `<h1>` morph breaks if its element moves into a canvas
 - Reduced motion skips the upgrade entirely
 
+## ASCII art
+
+`src/components/AsciiArt.astro` plays pieces from the [ascii-magic](https://www.ascii-magic.com/ascii) library (MIT), copied into `src/lib/ascii-magic/`. Current uses: the CI pipeline figure in `Process.astro`, the pulse divider in `StudioFooter.astro`, the fortune cookie on `/about`, a tashif.codes terminal on `/work` (written for this site, in `own/`) and the broken link cloud on the 404 page.
+
+- The build renders one frame into a `<pre>`, so the art shows without JS and under reduced motion. The client script imports a piece once it is near the viewport and pauses it off screen
+- `render.ts` folds each piece's hex palette into the text tokens by lightness, with saturated green and blue mapped to the accent. Never pass the hex colours through
+- The `<pre>` uses Menlo/Consolas, not Plex Mono. The Fontsource subset has no box-drawing glyphs, and mixing fonts knocks the frames out of line
+- Block-shaded pieces (the mascots, the photo halftones) turn to grey mush once the hues are folded into tokens. Prefer line-art pieces
+
 ## Indexing and metadata
 
 `site: 'https://taf.sh'` in `astro.config.mjs` is the single source of the canonical origin, and everything below keys off it. Keep it the apex.

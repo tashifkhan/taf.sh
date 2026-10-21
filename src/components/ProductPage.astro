@@ -214,12 +214,13 @@ const details: Spec[] = [...specs, { label: "Engineer", value: "Tashif / tashif.
 
 				<section class:list={[wrap, "mt-20 sm:mt-28"]}>
 					<span class={kicker}>Details</span>
-					<dl class="mt-6 divide-y divide-border border-y border-border">
+					<!-- A spec sheet in the same tiled grid as the features, so a wide screen gets cells rather than one long ruled list. -->
+					<dl class:list={["mt-6 grid gap-px overflow-hidden rounded-lg border border-border bg-border sm:grid-cols-2", details.length % 3 === 0 && "lg:grid-cols-3"]}>
 						{
 							details.map((spec) => (
-								<div class="grid gap-1 py-4 sm:grid-cols-[12rem_1fr] sm:gap-6">
-									<dt class="text-sm text-muted">{spec.label}</dt>
-									<dd class="min-w-0 break-words text-[0.9375rem] text-foreground">
+								<div class:list={["flex flex-col gap-3 bg-surface p-6 sm:p-7", details.length % 3 !== 0 && "sm:last:odd:col-span-2"]}>
+									<dt class="font-mono text-xs text-muted">{spec.label}</dt>
+									<dd class="min-w-0 break-words font-display text-lg leading-snug font-medium tracking-[-0.015em] text-foreground">
 										{spec.href ? (
 											<a
 												href={spec.href}

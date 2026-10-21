@@ -1,6 +1,7 @@
 ---
 import { process, engagements } from "./data";
 import { wrap, section, kicker } from "./ui";
+import AsciiArt from "../AsciiArt.astro";
 
 const outputs = [
 	"A clear problem to solve",
@@ -55,6 +56,11 @@ const outputs = [
 				}
 			</ol>
 		</div>
+
+		<figure class="mt-16 sm:mt-20">
+			<AsciiArt piece="ci-pipeline" t={6} max={40} />
+			<figcaption class="mt-4 font-mono text-xs text-muted"><span class="text-accent">Fig 2.</span> A pipeline run. Lint, tests and a build gate every deploy.</figcaption>
+		</figure>
 
 		<div class="mt-16 border-t border-border pt-7 sm:mt-20">
 			<p class="font-mono text-xs text-muted">Ways to work together</p>

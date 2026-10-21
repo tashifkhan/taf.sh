@@ -2,6 +2,7 @@
 import Arrow from "../../components/Arrow.astro";
 import PageLayout from "../../layouts/PageLayout.astro";
 import PageIntro from "../../components/studio/PageIntro.astro";
+import AsciiArt from "../../components/AsciiArt.astro";
 import PreviewCard from "../../components/studio/PreviewCard.astro";
 import { reel } from "../../components/studio/data";
 import { projectSlug } from "../../lib/seo";
@@ -13,7 +14,7 @@ const groups = [
 ];
 ---
 <PageLayout title="Work">
-	<PageIntro label="Studio / Work" summary="Software I've built and operated, plus my founding engineering work at Systematic Reasoning. Read the case studies or open the projects themselves.">
+	<PageIntro summary="Software I've built and operated, plus my founding engineering work at Systematic Reasoning. Read the case studies or open the projects themselves.">
 		<Fragment slot="title">Projects you<br />can <em>open.</em></Fragment>
 		<a href="/contact" class:list={[btn, btnGhost]}>Discuss a project <span class={btnArrow} aria-hidden="true"><Arrow /></span></a>
 	</PageIntro>
@@ -35,7 +36,7 @@ const groups = [
 		</div>
 	</section>)}
 	<section class:list={[wrap, "grid gap-8 border-t border-border py-16 sm:py-24 lg:grid-cols-2"]}>
-		<div><p class={kicker}>The personal site</p><h2 class={h2}>More on <em>tashif.codes.</em></h2></div>
+		<div><p class={kicker}>The personal site</p><h2 class={h2}>More on <em>tashif.codes.</em></h2><AsciiArt piece="tashif-codes" t={12} max={12} class="mt-10" /></div>
 		<div class="space-y-5 leading-7 text-secondary">
 			<p><a href="https://tashif.codes" rel="me" class="text-accent underline underline-offset-4">tashif.codes</a> is my personal portfolio and project directory. taf.sh is my software studio. Both cover work I build and maintain.</p>
 			<p>My <a href="https://tashif.codes/blog" class="text-accent underline underline-offset-4">engineering blog</a> covers implementation details and lessons from these projects. The <a href="/work/tashif-codes" class="text-accent underline underline-offset-4">tashif.codes case study</a> documents the site's Astro build, search results and public traffic analytics.</p>

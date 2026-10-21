@@ -35,7 +35,7 @@ const links = [
 	<div class={wrap}>
 		<header class:list={[head, headRow]}>
 			<div>
-				<span class={kicker}>{standalone ? "Studio / Contact" : "05 / Contact"}</span>
+				{!standalone && <span class={kicker}>05 / Contact</span>}
 				<Heading class={standalone ? h1 : h2}>
 					Have something to <em>build?</em>
 				</Heading>

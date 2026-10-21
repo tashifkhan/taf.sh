@@ -1,0 +1,98 @@
+---
+/*
+ * An animated piece from the ascii-magic library (src/lib/ascii-magic).
+ * The frame at `t` is rendered at build time, so the art is there before any
+ * script runs and stays put under reduced motion. The script imports the
+ * piece only once it scrolls near the viewport, and pauses it off screen.
+ * The font size follows the container width, so wide pieces never overflow.
+ */
+import { frameHTML, type Piece } from "../lib/ascii-magic/render";
+
+interface Props {
+	piece: string;
+	/** Seconds into the loop for the static frame and the starting point. */
+	t?: number;
+	/** Largest font size in px; the art shrinks below it to fit. */
+	max?: number;
+	/** Muted greys only, no accent, at half speed. For dividers and other background art. */
+	quiet?: boolean;
+	class?: string;
+}
+
+const { piece, t = 0, max = 13, quiet = false, class: className } = Astro.props;
+const pieces = import.meta.glob<Piece>("../lib/ascii-magic/{pieces,own}/*.js", { eager: true });
+const mod = pieces[`../lib/ascii-magic/pieces/${piece}.js`] ?? pieces[`../lib/ascii-magic/own/${piece}.js`];
+if (!mod) throw new Error(`AsciiArt: no piece named "${piece}"`);
+const { cols, rows } = mod.meta;
+const html = frameHTML(mod.default()(t), mod.meta.palette, quiet);
+---
+
+<div class:list={["ascii-art", className]} style={`--cols:${cols};--rows:${rows};--max:${max}px`} data-ascii={piece} data-t={t} data-quiet={quiet || undefined} aria-hidden="true">
+	<pre set:html={html} />
+</div>
+
+<style>
+	.ascii-art {
+		container-type: inline-size;
+	}
+	/*
+	 * Not Plex Mono: the Fontsource subset has no box-drawing or block glyphs,
+	 * so those would fall back to another font with different metrics and the
+	 * frames would drift out of line. The pieces are drawn for this stack,
+	 * where a cell is 0.602em wide and line-height 1 joins the box characters.
+	 */
+	pre {
+		margin: 0;
+		width: fit-content;
+		font-family: Menlo, Consolas, "DejaVu Sans Mono", "Liberation Mono", monospace;
+		font-size: min(var(--max), 100cqi / (var(--cols) * 0.602));
+		line-height: 1;
+		white-space: pre;
+		color: var(--color-faint);
+		user-select: none;
+		font-variant-ligatures: none;
+	}
+</style>
+
+<script>
+	import { frameHTML, type Piece } from "../lib/ascii-magic/render";
+
+	const pieces = import.meta.glob<Piece>("../lib/ascii-magic/{pieces,own}/*.js");
+	const FPS_CAP = 20;
+
+	function start(el: HTMLElement, mod: Piece) {
+		const pre = el.querySelector("pre")!;
+		const draw = mod.default();
+		const step = 1000 / Math.min(mod.meta.fps, FPS_CAP);
+		const quiet = "quiet" in el.dataset, speed = quiet ? 0.5 : 1;
+		let elapsed = Number(el.dataset.t) || 0, prev = 0, last = 0, visible = true, raf = 0;
+		const loop = (now: number) => {
+			raf = requestAnimationFrame(loop);
+			if (prev) elapsed += ((now - prev) / 1000) * speed;
+			prev = now;
+			if (now - last < step) return;
+			last = now;
+			pre.innerHTML = frameHTML(draw(elapsed), mod.meta.palette, quiet);
+		};
+		new IntersectionObserver(([e]) => {
+			if (e.isIntersecting === visible) return;
+			visible = e.isIntersecting;
+			if (visible) { prev = 0; raf = requestAnimationFrame(loop); }
+			else cancelAnimationFrame(raf);
+		}).observe(el);
+		raf = requestAnimationFrame(loop);
+	}
+
+	if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
+		const io = new IntersectionObserver((entries) => {
+			for (const e of entries) {
+				if (!e.isIntersecting) continue;
+				io.unobserve(e.target);
+				const el = e.target as HTMLElement;
+				const load = pieces[`../lib/ascii-magic/pieces/${el.dataset.ascii}.js`] ?? pieces[`../lib/ascii-magic/own/${el.dataset.ascii}.js`];
+				load?.().then(mod => start(el, mod));
+			}
+		}, { rootMargin: "200px" });
+		document.querySelectorAll<HTMLElement>("[data-ascii]").forEach(el => io.observe(el));
+	}
+</script>

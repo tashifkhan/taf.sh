@@ -1,6 +1,7 @@
 ---
 import Arrow from "../components/Arrow.astro";
 import PageLayout from "../layouts/PageLayout.astro";
+import AsciiArt from "../components/AsciiArt.astro";
 import PageIntro from "../components/studio/PageIntro.astro";
 import { stats } from "../components/studio/data";
 import { wrap, kicker, h2, btn, btnLg, btnAccent, btnGhost, btnArrow } from "../components/studio/ui";
@@ -23,7 +24,7 @@ const beliefs = [
 ---
 
 <PageLayout title="About" description="Tashif Ahmad Khan, the engineer behind taf.sh, TalentSync and rah.clinic. Based in Delhi.">
-	<PageIntro label="Studio / About" summary="I'm Tashif Ahmad Khan. I build and operate my own products through taf.sh, and take on a small number of client builds.">
+	<PageIntro summary="I'm Tashif Ahmad Khan. I build and operate my own products through taf.sh, and take on a small number of client builds.">
 		<Fragment slot="title">About taf.sh</Fragment>
 		<a href="/contact" class:list={[btn, btnLg, btnAccent]}>Work with me <span class={btnArrow} aria-hidden="true"><Arrow /></span></a>
 		<a href="https://tashif.codes" target="_blank" rel="noopener noreferrer" class:list={[btn, btnLg, btnGhost]}>Personal site <span class={btnArrow} aria-hidden="true"><Arrow dir="up-right" /></span></a>
@@ -45,7 +46,7 @@ const beliefs = [
 	</section>
 
 	<section class:list={[wrap, "grid gap-10 py-16 sm:py-24 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20"]}>
-		<div><p class={kicker}>The studio</p><h2 class={h2}>Built from<br /> <em>real problems.</em></h2></div>
+		<div><p class={kicker}>The studio</p><h2 class={h2}>Built from<br /> <em>real problems.</em></h2><AsciiArt piece="fortune-cookie-terminal" t={9} max={9} class="mt-10 hidden lg:block" /></div>
 		<div class="space-y-6 text-lg leading-8 text-secondary">
 			<p>TalentSync started with hiring. Job seekers were trying to understand why their resumes got rejected. Recruiters were trying to make sense of piles of applications. I built tools for both sides.</p>
 			<p><a href="/products/talentsync" class="text-foreground underline decoration-border-strong underline-offset-4 hover:text-accent">TalentSync AI</a> gives job seekers resume feedback and career guidance. <a href="/products/talentsync-hr" class="text-foreground underline decoration-border-strong underline-offset-4 hover:text-accent">TalentSync HR</a> helps recruiters score candidates against evidence.</p>
