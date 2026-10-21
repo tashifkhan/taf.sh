@@ -98,12 +98,18 @@ const schemaJson = JSON.stringify(schema).replace(/</g, "\\u003c");
 		<!--
 			Film grain: one SVG noise tile, oversized and jittered by a stepped
 			animation so it reads as moving grain rather than a static texture.
+			The oversized tile sits inside a viewport-sized clip: a fixed element
+			escapes body's overflow-x-clip, and Android Chrome widens the layout
+			viewport to fit it, pushing the header's Menu button off screen.
+			Blend and opacity live on the wrapper, since its z-index makes it the
+			stacking context the overlay would otherwise blend inside.
 		-->
-		<div
-			class="pointer-events-none fixed -inset-1/2 z-80 animate-grain opacity-[0.045] mix-blend-overlay motion-reduce:animate-none"
-			style={`background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`}
-			aria-hidden="true"
-		>
+		<div class="pointer-events-none fixed inset-0 z-80 overflow-hidden opacity-[0.045] mix-blend-overlay" aria-hidden="true">
+			<div
+				class="absolute -inset-1/2 animate-grain motion-reduce:animate-none"
+				style={`background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`}
+			>
+			</div>
 		</div>
 	</body>
 </html>
