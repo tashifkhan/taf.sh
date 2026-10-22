@@ -1,0 +1,262 @@
+---
+import Arrow from "../Arrow.astro";
+import { email, assurances } from "./data";
+import { wrap, section, head, headRow, kicker, h1, h2, lede, btn, btnLg, btnAccent, btnGhost, btnArrow, pill, dot, live } from "./ui";
+
+interface Props {
+	standalone?: boolean;
+}
+const { standalone = false } = Astro.props;
+const Heading = standalone ? "h1" : "h2";
+const checklist = [
+	"What you're building, in a sentence or two",
+	"Where you're stuck, from the idea to production",
+	"Timeline and a rough budget",
+	"Links to anything that already exists",
+];
+
+const budgets = ["< ₹2L", "₹2–5L", "₹5–15L", "₹15L+", "Not sure"];
+
+const cell = "group/cell px-6 py-4.5 transition-colors focus-within:bg-elevated/65 sm:px-7";
+const cellLabel = "block font-mono text-xs text-muted transition-colors group-focus-within/cell:text-accent";
+const cellInput =
+	"mt-2 w-full border-0 bg-transparent text-base text-foreground placeholder:text-faint outline-none";
+const tipBox =
+	"pointer-events-none invisible absolute z-30 w-72 rounded-2xl border border-border-strong bg-elevated p-4 font-sans text-xs leading-relaxed text-secondary opacity-0 shadow-2xl transition-[opacity,translate,visibility] duration-200 ease-expo group-hover/tip:visible group-hover/tip:translate-y-0 group-hover/tip:opacity-100 group-focus-within/tip:visible group-focus-within/tip:translate-y-0 group-focus-within/tip:opacity-100";
+const links = [
+	{ href: "https://github.com/tashifkhan", label: "GitHub" },
+	{ href: "https://linkedin.com/in/tashifkhan", label: "LinkedIn" },
+	{ href: "https://tashif.codes", label: "tashif.codes" },
+	{ href: "https://tashif.codes/blog", label: "tashif.codes/blog" },
+];
+---
+
+<section id="contact" class={standalone ? "relative pb-16 sm:pb-24" : section}>
+	<div class={wrap}>
+		<header class:list={[head, headRow]}>
+			<div>
+				{!standalone && <span class={kicker}>05 / Contact</span>}
+				<Heading class={standalone ? h1 : h2}>
+					Have something to <em>build?</em>
+				</Heading>
+			</div>
+			<p class:list={[lede, "mt-0 max-w-sm"]}>
+				One inbox, one human. I reply within a day or two, with a yes, a no or a
+				question.
+			</p>
+		</header>
+
+		<div class="grid gap-6 lg:grid-cols-[0.82fr_1.18fr] lg:items-stretch lg:gap-8">
+			<!-- Left card: direct inbox, guarantees with tooltips, and elsewhere links. -->
+			<div class="flex flex-col justify-between gap-7 rounded-3xl border border-border bg-surface p-6 sm:p-8">
+				<div>
+					<div class="flex flex-wrap items-center justify-between gap-2">
+						<p class={live}><span class={dot}></span> accepting work · direct inbox</p>
+						<button
+							type="button"
+							class="rounded-full border border-border px-2.5 py-1 font-mono text-[0.6875rem] text-muted transition-colors hover:border-accent hover:text-accent"
+							data-copy-email={email}
+						>
+							copy address
+						</button>
+					</div>
+					<a
+						href={`mailto:${email}`}
+						class="group mt-4 inline-flex items-baseline gap-2.5 font-display text-[clamp(2rem,3.6vw,3rem)] leading-none font-semibold tracking-[-0.04em] text-foreground transition-colors hover:text-accent"
+						data-magnetic
+						data-cursor="mail"
+					>
+						{email}
+						<span class="text-[0.55em] text-accent transition-transform duration-500 ease-expo group-hover:translate-x-1.5 group-hover:-translate-y-1"><Arrow dir="up-right" /></span>
+					</a>
+					<p class="mt-3 max-w-sm text-sm leading-relaxed text-secondary">
+						Prefer plain email? Skip the form and write directly. Two honest sentences beat a deck.
+					</p>
+				</div>
+
+				<div class="border-y border-border py-5">
+					<p class="font-mono text-xs text-muted">How every engagement works</p>
+					<ul class="mt-3.5 divide-y divide-border">
+						{
+							assurances.map((a, i) => (
+								<li class="group/tip relative flex items-center justify-between gap-3 py-2.5 first:pt-0 last:pb-0">
+									<div class="flex items-baseline gap-3">
+										<span class="font-mono text-xs text-accent">0{i + 1}</span>
+										<span class="text-sm font-medium text-foreground">{a.title}</span>
+									</div>
+									<button
+										type="button"
+										class="inline-flex size-5 items-center justify-center rounded-full border border-border font-mono text-[0.6875rem] text-muted transition-colors group-hover/tip:border-accent group-hover/tip:text-accent focus-visible:border-accent focus-visible:text-accent"
+										aria-label={a.body}
+									>
+										?
+									</button>
+									<span
+										role="tooltip"
+										class:list={[tipBox, "right-0 bottom-full mb-2 translate-y-1"]}
+									>
+										<b class="block font-medium text-foreground">{a.title}</b>
+										<span class="mt-1 block text-secondary">{a.body}</span>
+									</span>
+								</li>
+							))
+						}
+					</ul>
+				</div>
+
+				<div class="flex flex-wrap items-center justify-between gap-4 font-mono text-xs text-muted">
+					<div class="flex flex-wrap gap-x-5 gap-y-2">
+						{
+							links.map((l) => (
+								<a href={l.href} target="_blank" rel="noopener noreferrer" class="transition-colors hover:text-accent">
+									{l.label} <Arrow dir="up-right" />
+								</a>
+							))
+						}
+					</div>
+					<span>delhi · <span class="text-foreground tabular-nums" data-clock>--:--:--</span></span>
+				</div>
+			</div>
+
+			<!-- Right card: specification-sheet form, matched in height with the left card. -->
+			<div class="grid rounded-3xl border border-border bg-surface" data-form-wrap data-state="idle">
+				<form
+					class="[grid-area:1/1] flex flex-col justify-between divide-y divide-border transition-[opacity,translate,visibility] duration-500 ease-expo in-[[data-state=sent]]:invisible in-[[data-state=sent]]:-translate-y-4 in-[[data-state=sent]]:opacity-0"
+					action={`mailto:${email}`}
+					method="post"
+					enctype="text/plain"
+					novalidate
+					data-form
+				>
+					<div class="flex items-center justify-between gap-4 px-6 py-3.5 font-mono text-xs text-muted sm:px-7">
+						<span>Project brief</span>
+						<div class="group/tip relative">
+							<button
+								type="button"
+								class="inline-flex items-center gap-1.5 rounded-full border border-border px-2.5 py-1 text-[0.6875rem] text-muted transition-colors hover:border-accent hover:text-accent focus-visible:border-accent focus-visible:text-accent"
+							>
+								<span>what helps in a first note</span>
+								<span class="text-accent">?</span>
+							</button>
+							<div
+								role="tooltip"
+								class:list={[tipBox, "top-full right-0 mt-2 w-80 -translate-y-1"]}
+							>
+								<p class="font-mono text-[0.6875rem] text-accent">A good first message has</p>
+								<ol class="mt-2.5 space-y-2 text-xs text-secondary">
+									{
+										checklist.map((item, i) => (
+											<li class="grid grid-cols-[1.5rem_1fr] items-baseline">
+												<span class="font-mono text-[0.6875rem] text-muted">0{i + 1}</span>
+												<span>{item}</span>
+											</li>
+										))
+									}
+								</ol>
+							</div>
+						</div>
+					</div>
+
+					<div class="grid divide-y divide-border sm:grid-cols-2 sm:divide-x sm:divide-y-0">
+						<div class={cell}>
+							<label for="f-name" class={cellLabel}>01 / Name</label>
+							<input
+								id="f-name"
+								name="name"
+								autocomplete="name"
+								placeholder="Your name"
+								required
+								class={cellInput}
+							/>
+						</div>
+						<div class={cell}>
+							<label for="f-email" class={cellLabel}>02 / Email</label>
+							<input
+								id="f-email"
+								name="email"
+								type="email"
+								autocomplete="email"
+								placeholder="you@company.com"
+								required
+								class={cellInput}
+							/>
+						</div>
+					</div>
+
+					<fieldset class="px-6 py-4.5 sm:px-7">
+						<div class="flex items-center justify-between gap-4">
+							<legend class="font-mono text-xs text-muted">03 / Rough budget</legend>
+							<div class="group/tip relative">
+								<button
+									type="button"
+									class="font-mono text-[0.6875rem] text-muted transition-colors hover:text-accent focus-visible:text-accent"
+								>
+									how pricing works ?
+								</button>
+								<span
+									role="tooltip"
+									class:list={[tipBox, "right-0 bottom-full mb-2 translate-y-1"]}
+								>
+									Fixed price for defined 0 → 1 scopes, or a weekly rate for ongoing product work. Agreed in writing before code starts.
+								</span>
+							</div>
+						</div>
+						<div class="mt-3 flex flex-wrap gap-2">
+							{
+								budgets.map((b, i) => (
+									<label class="relative">
+										<input type="radio" name="budget" value={b} checked={i === 4} class="peer absolute opacity-0" />
+										<span
+											class:list={[
+												pill,
+												"peer-checked:border-accent peer-checked:bg-accent-soft peer-checked:text-accent peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-accent",
+											]}
+										>
+											{b}
+										</span>
+									</label>
+								))
+							}
+						</div>
+					</fieldset>
+
+					<div class:list={[cell, "flex flex-1 flex-col"]}>
+						<label for="f-brief" class={cellLabel}>04 / The brief</label>
+						<textarea
+							id="f-brief"
+							name="brief"
+							rows="4"
+							required
+							placeholder="What are you building, when do you need it, and what's in the way?"
+							class:list={[cellInput, "flex-1 resize-none leading-relaxed"]}
+						></textarea>
+					</div>
+
+					<div class="flex flex-wrap items-center justify-between gap-4 rounded-b-3xl bg-background/35 px-6 py-4 sm:px-7">
+						<p class="peer font-mono text-xs text-red-500 empty:hidden not-empty:animate-shake" data-form-error role="alert"></p>
+						<span class="font-mono text-xs text-muted peer-[:not(:empty)]:hidden">Fixed quote or weekly rate after one call</span>
+						<button type="submit" class:list={[btn, btnLg, btnAccent, "ml-auto"]} data-magnetic>
+							Send the brief <span class={btnArrow} aria-hidden="true"><Arrow /></span>
+						</button>
+					</div>
+				</form>
+
+				<div
+					class="[grid-area:1/1] invisible translate-y-4 self-center p-[clamp(1.75rem,3.5vw,2.5rem)] opacity-0 transition-[opacity,translate,visibility] duration-500 ease-expo in-[[data-state=sent]]:visible in-[[data-state=sent]]:translate-y-0 in-[[data-state=sent]]:opacity-100"
+					data-form-done
+					tabindex="-1"
+				>
+					<span class={live}><span class={dot}></span> draft ready · ref <b class="font-normal text-foreground" data-done-ref>taf-0000</b></span>
+					<p class="mt-5 font-display text-[clamp(1.75rem,3vw,2.5rem)] leading-[1.05] font-semibold tracking-[-0.035em] text-foreground">
+						Thanks, <span data-done-name>friend</span>.
+					</p>
+					<p class="mt-3 max-w-md leading-relaxed text-secondary">
+						Your mail app should have opened with the brief filled in. Hit send there
+						and it lands in my inbox.
+					</p>
+					<button type="button" class:list={[btn, btnGhost, "mt-7"]} data-form-reset>Write another</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

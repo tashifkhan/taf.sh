@@ -5,13 +5,19 @@
  * - Reverse-proxies /ph/* to PostHog EU (same-origin analytics)
  */
 
-const CANONICAL_HOST = "taf.sh";
+const DEFAULT_CANONICAL_HOST = "taf.sh";
 const API_HOST = "eu.i.posthog.com";
 const ASSET_HOST = "eu-assets.i.posthog.com";
 
-interface Env {
-	ASSETS: Fetcher;
-}
+/*
+ * Versioned preview deploys (`wrangler versions upload`) are served at
+ * `<version-prefix>-taf-sh.<subdomain>.workers.dev`. Those have to answer for
+ * themselves, otherwise the canonical redirect below sends every reviewer
+ * straight to production and the preview is unreviewable. The stable
+ * `taf-sh.<subdomain>.workers.dev` alias still redirects, and previews are
+ * noindexed instead so nothing here costs us a duplicate-content hit.
+ */
+const PREVIEW_HOST = /^[0-9a-z]+-taf-sh\.[^.]+\.workers\.dev$/;
 
 function stripPhPrefix(pathname: string): string {
 	// /ph -> /  |  /ph/static/x -> /static/x  |  /ph/e/ -> /e/
@@ -21,13 +27,12 @@ function stripPhPrefix(pathname: string): string {
 }
 
 function canonicalRedirect(url: URL): Response | null {
-	// Apex taf.sh is the only host that serves content.
-	// www.taf.sh and *.workers.dev (plus any other alias) 301 here.
-	if (url.hostname === CANONICAL_HOST) return null;
+	if (url.hostname === DEFAULT_CANONICAL_HOST) return null;
+	if (PREVIEW_HOST.test(url.hostname)) return null;
 
 	const target = new URL(url.toString());
 	target.protocol = "https:";
-	target.hostname = CANONICAL_HOST;
+	target.hostname = DEFAULT_CANONICAL_HOST;
 	target.port = "";
 
 	return Response.redirect(target.toString(), 301);
@@ -92,11 +97,30 @@ export default {
 		const redirect = canonicalRedirect(url);
 		if (redirect) return redirect;
 
+		// Astro's static redirect is an HTML refresh. Send a permanent HTTP
+		// redirect before Assets so crawlers consolidate the renamed product.
+		if (url.pathname.replace(/\/+$/, "") === "/products/cliniq") {
+			url.pathname = "/products/rah-clinic/";
+			return Response.redirect(url.toString(), 301);
+		}
+
 		// PostHog reverse proxy
 		if (url.pathname === "/ph" || url.pathname.startsWith("/ph/")) {
 			return proxyPostHog(request, ctx);
 		}
 
-		return env.ASSETS.fetch(request);
+		const response = await env.ASSETS.fetch(request);
+
+		if (PREVIEW_HOST.test(url.hostname) || url.pathname === "/proposals" || url.pathname.startsWith("/proposals/") || response.status === 404) {
+			const headers = new Headers(response.headers);
+			headers.set("X-Robots-Tag", "noindex, follow");
+			return new Response(response.body, {
+				status: response.status,
+				statusText: response.statusText,
+				headers,
+			});
+		}
+
+		return response;
 	},
 };

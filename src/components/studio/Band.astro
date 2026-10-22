@@ -1,0 +1,36 @@
+---
+/*
+ * A giant marquee between sections. It drifts on its own and studio.ts adds
+ * scroll velocity on top, so a hard flick sends it racing and skews the type.
+ * `direction` -1 runs it the other way.
+ */
+interface Props {
+	words: string[];
+	direction?: 1 | -1;
+}
+const { words, direction = 1 } = Astro.props;
+---
+
+<div class="relative overflow-hidden border-y border-border py-5" aria-hidden="true">
+	<div class="flex w-max skew-x-(--skew,0deg) will-change-transform" data-marquee={direction}>
+		{
+			[0, 1].map(() => (
+				<div class="flex items-center gap-[0.35em] pr-[0.35em] font-display text-[clamp(2.5rem,7vw,5.5rem)] leading-[1] font-bold tracking-[-0.045em] whitespace-nowrap">
+					{words.map((w, i) => (
+						<>
+							<span
+								class:list={
+									i % 2
+										? "text-accent"
+										: "text-transparent [-webkit-text-stroke:1.25px_var(--color-foreground)]"
+								}
+							>
+								{w}
+							</span>
+						</>
+					))}
+				</div>
+			))
+		}
+	</div>
+</div>

@@ -1,36 +1,106 @@
 @import "tailwindcss";
+@import "./studio.css";
 
 /*
- * Theming: every token is a `light-dark()` pair, so the whole palette follows the
- * `color-scheme` set on <html> (see the base layer below). No JS is needed for the
- * system preference — the inline script in Layout.astro only handles the manual
- * override stored in localStorage.
+ * Theming: every token has a light value (the `@theme` default) and a dark
+ * value in the overrides below. System preference applies through
+ * `prefers-color-scheme`; the toggle pins one via `data-theme`. No JS is
+ * needed for the system preference — the inline script in Layout.astro only
+ * handles the manual override stored in localStorage.
+ *
+ * These are deliberately NOT `light-dark()` pairs: the minifier strips the
+ * comma inside `light-dark()` (`light-dark(#a#b)`), which browsers reject,
+ * so every token went invalid in the built site and fills like `bg-accent`
+ * lost their pairing with `text-accent-contrast` (white on light teal,
+ * ~1.9:1). Plain values scoped by media query / attribute survive the build.
  */
 @theme {
 	--font-sans: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
 	--font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
 
-	/* OpenCode-inspired warm grayscale — light(paper), dark(ink) */
-	--color-background: light-dark(#f4f2f0, #0e0d0d);
-	--color-surface: light-dark(#fbfaf9, #151313);
-	--color-elevated: light-dark(#ffffff, #1c1a1a);
-	--color-border: light-dark(#e0dbd8, #292626);
-	--color-border-strong: light-dark(#c7c1bd, #3b3737);
-	--color-foreground: light-dark(#171615, #f2f1f0);
-	--color-secondary: light-dark(#45403e, #b7b1b1);
-	--color-muted: light-dark(#6d6764, #7a7676);
-	--color-faint: light-dark(#a09a96, #4b4646);
+	/* OpenCode-inspired warm grayscale — light is the default */
+	--color-background: #f4f2f0;
+	--color-surface: #fbfaf9;
+	--color-elevated: #ffffff;
+	--color-border: #dcd6d2;
+	--color-border-strong: #c7c1bd;
+	--color-foreground: #171615;
+	--color-secondary: #3d3836;
+	--color-muted: #5f5956;
+	--color-faint: #857f7b;
 
 	/* Teal — the one non-grayscale hue in the system */
-	--color-accent: light-dark(#0f7a6c, #4fd1c5);
-	--color-accent-strong: light-dark(#0b5b50, #7ce3d9);
-	--color-accent-soft: light-dark(rgba(15, 122, 108, 0.1), rgba(79, 209, 197, 0.14));
-	--color-accent-contrast: light-dark(#ffffff, #04211f);
+	--color-accent: #0f7a6c;
+	--color-accent-strong: #0b5b50;
+	--color-accent-soft: rgba(15, 122, 108, 0.1);
+	--color-accent-contrast: #ffffff;
 
 	/* One easing + duration for every `transition-*` utility on the site */
 	--default-transition-duration: 180ms;
 	--default-transition-timing-function: cubic-bezier(0.2, 0.7, 0.3, 1);
 	--ease-site: cubic-bezier(0.2, 0.7, 0.3, 1);
+}
+
+/*
+ * Dark palette + pinned subtrees. Three ways to get dark tokens, in
+ * increasing order of precedence (later + more specific wins):
+ * 1. the OS preference, 2. the visitor's stored override on <html>,
+ * 3. `.t-dark` / `.t-light` on any subtree (the reel pins one half dark
+ * and the other light regardless of the site theme).
+ * Keep all three value sets in sync.
+ */
+@media (prefers-color-scheme: dark) {
+	:root {
+		--color-background: #0e0d0d;
+		--color-surface: #151313;
+		--color-elevated: #1c1a1a;
+		--color-border: #2c2828;
+		--color-border-strong: #3b3737;
+		--color-foreground: #f2f1f0;
+		--color-secondary: #c4bfbe;
+		--color-muted: #a19c9b;
+		--color-faint: #77716f;
+		--color-accent: #4fd1c5;
+		--color-accent-strong: #7ce3d9;
+		--color-accent-soft: rgba(79, 209, 197, 0.14);
+		--color-accent-contrast: #04211f;
+	}
+}
+
+html[data-theme="dark"],
+.t-dark {
+	--color-background: #0e0d0d;
+	--color-surface: #151313;
+	--color-elevated: #1c1a1a;
+	--color-border: #2c2828;
+	--color-border-strong: #3b3737;
+	--color-foreground: #f2f1f0;
+	--color-secondary: #c4bfbe;
+	--color-muted: #a19c9b;
+	--color-faint: #77716f;
+	--color-accent: #4fd1c5;
+	--color-accent-strong: #7ce3d9;
+	--color-accent-soft: rgba(79, 209, 197, 0.14);
+	/* Dark ink on the light-teal fill: ~9:1, the pairing the CTA depends on. */
+	--color-accent-contrast: #04211f;
+}
+
+html[data-theme="light"],
+.t-light {
+	--color-background: #f4f2f0;
+	--color-surface: #fbfaf9;
+	--color-elevated: #ffffff;
+	--color-border: #dcd6d2;
+	--color-border-strong: #c7c1bd;
+	--color-foreground: #171615;
+	--color-secondary: #3d3836;
+	--color-muted: #5f5956;
+	--color-faint: #857f7b;
+	--color-accent: #0f7a6c;
+	--color-accent-strong: #0b5b50;
+	--color-accent-soft: rgba(15, 122, 108, 0.1);
+	/* White on the deep-teal fill: ~5.2:1. */
+	--color-accent-contrast: #ffffff;
 }
 
 @layer base {
@@ -99,46 +169,33 @@
  * Cross-document view transitions
  * ---------------------------------------------------------------------------
  * The site is plain static Astro with no client-side router, so navigation is
- * animated by the browser itself. Anything unsupported simply hard-cuts as
- * before — there is no JS fallback and none is needed.
+ * animated by the browser itself. PageTransitions.astro supplies a short
+ * exit/entrance animation when cross-document transitions aren't available.
  */
 @view-transition {
 	navigation: auto;
 }
 
-@keyframes vt-fade-in {
+@keyframes vt-panel-in {
 	from {
-		opacity: 0;
+		transform: translateX(100%);
 	}
 }
 
-@keyframes vt-fade-out {
+@keyframes vt-page-back {
 	to {
-		opacity: 0;
+		opacity: 0.55;
+		transform: translateX(-6%) scale(0.96);
 	}
 }
 
-@keyframes vt-rise-in {
-	from {
-		opacity: 0;
-		transform: translateY(14px);
-	}
-}
-
-@keyframes vt-sink-out {
-	to {
-		opacity: 0;
-		transform: translateY(-8px);
-	}
-}
-
-/* Page body: the outgoing view drops away, the incoming one rises into place. */
+/* The page recedes as the destination slides over it, like the work panel. */
 ::view-transition-old(root) {
-	animation: 140ms ease-in both vt-sink-out;
+	animation: 650ms cubic-bezier(0.7, 0, 0.2, 1) both vt-page-back;
 }
 
 ::view-transition-new(root) {
-	animation: 280ms 60ms var(--ease-site) both vt-rise-in;
+	animation: 650ms cubic-bezier(0.7, 0, 0.2, 1) both vt-panel-in;
 }
 
 /*
@@ -155,17 +212,73 @@
  * so one rule tunes all three pairs.
  */
 ::view-transition-group(.product-title) {
-	animation-duration: 340ms;
-	animation-timing-function: var(--ease-site);
+	animation-duration: 650ms;
+	animation-timing-function: cubic-bezier(0.7, 0, 0.2, 1);
 }
 
-/* Theme switches cross-fade the whole page rather than sliding it. */
+/* On small screens the work panel opens from below, so pages do too. */
+@media (max-width: 1023px) {
+	@keyframes vt-panel-in {
+		from { transform: translateY(100%); }
+	}
+
+	@keyframes vt-page-back {
+		to {
+			opacity: 0.55;
+			transform: translateY(-3%) scale(0.97);
+		}
+	}
+}
+
+/* Fallback: animate only the content so the fixed header stays put. */
+@keyframes page-leave {
+	to { opacity: 0.55; transform: translateX(-1.5rem); }
+}
+
+@keyframes page-arrive {
+	from { opacity: 0; transform: translateX(3rem); }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	html[data-page-motion="leave"] [data-page-content] {
+		animation: page-leave 160ms ease-in both;
+		pointer-events: none;
+	}
+
+	html[data-page-motion="arrive"] [data-page-content] {
+		animation: page-arrive 500ms var(--ease-expo) both;
+	}
+}
+
+/*
+ * Theme switches reveal the new palette as a circle growing out of the toggle
+ * that was pressed. ThemeToggle sets `--vt-x`, `--vt-y` (the button's centre)
+ * and `--vt-r` (the distance to the farthest viewport corner) on the root,
+ * and the pseudo-elements inherit them. The old page holds still underneath.
+ * Every named element (the header, the product titles) gives its name up for
+ * the duration so it stays in the root snapshot and is revealed with the rest
+ * of the page instead of cross-fading on its own. `!important` outranks the
+ * inline `style` names on product pages.
+ */
+:root[data-theme-switch] * {
+	view-transition-name: none !important;
+}
+
+@keyframes vt-theme-reveal {
+	from {
+		clip-path: circle(0 at var(--vt-x, 50%) var(--vt-y, 0));
+	}
+	to {
+		clip-path: circle(var(--vt-r, 150vmax) at var(--vt-x, 50%) var(--vt-y, 0));
+	}
+}
+
 :root:active-view-transition-type(theme)::view-transition-old(root) {
-	animation: 220ms ease both vt-fade-out;
+	animation: none;
 }
 
 :root:active-view-transition-type(theme)::view-transition-new(root) {
-	animation: 220ms ease both vt-fade-in;
+	animation: 700ms cubic-bezier(0.7, 0, 0.2, 1) both vt-theme-reveal;
 }
 
 /*
@@ -208,10 +321,11 @@
 	 */
 	::view-transition-old(root),
 	::view-transition-new(root),
+	::view-transition-group(root),
 	::view-transition-group(site-nav),
 	::view-transition-group(product-talentsync),
 	::view-transition-group(product-talentsync-hr),
-	::view-transition-group(product-cliniq) {
+	::view-transition-group(product-rah-clinic) {
 		animation: none !important;
 	}
 

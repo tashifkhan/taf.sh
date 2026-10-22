@@ -1,181 +1,73 @@
 ---
-import Layout from "../layouts/Layout.astro";
+import Arrow from "../components/Arrow.astro";
+import PageLayout from "../layouts/PageLayout.astro";
+import AsciiArt from "../components/AsciiArt.astro";
+import PageIntro from "../components/studio/PageIntro.astro";
+import { stats } from "../components/studio/data";
+import { wrap, kicker, h2, btn, btnLg, btnAccent, btnGhost, btnArrow } from "../components/studio/ui";
 
 const facts = [
+	{ label: "Studio", value: "taf.sh" },
+	{ label: "Founder", value: "Tashif Ahmad Khan" },
+	{ label: "Also", value: "Founding engineer at Systematic Reasoning", href: "https://systematicreasoning.com/" },
+	{ label: "Based", value: "Delhi, India" },
 	{ label: "Legal form", value: "Sole proprietorship" },
-	{ label: "Founder", value: "Tashif" },
-	{ label: "Based", value: "India · remote-first" },
 	{ label: "Personal site", value: "tashif.codes", href: "https://tashif.codes" },
-	{
-		label: "GitHub",
-		value: "github.com/tashifkhan",
-		href: "https://github.com/tashifkhan",
-	},
-	{ label: "Email", value: "me@tashif.codes", href: "mailto:me@tashif.codes" },
+	{ label: "Blog", value: "tashif.codes/blog", href: "https://tashif.codes/blog" },
+	{ label: "GitHub", value: "tashifkhan", href: "https://github.com/tashifkhan" },
 ];
-
 const beliefs = [
-	{
-		title: "Ownership end to end",
-		body: "The person who designs the schema also writes the CSS and answers the email. Nothing gets lost between roles.",
-	},
-	{
-		title: "Products over promises",
-		body: "TalentSync and CliniQ are running systems, not portfolio mockups. The consulting offer is the same engineering, pointed at your problem.",
-	},
-	{
-		title: "Small on purpose",
-		body: "Staying solo keeps the work honest: few clients, deep focus, and no incentive to sell hours for the sake of hours.",
-	},
+	{ title: "One person owns the build", body: "I design the schema, write the CSS and deploy the software. When you have a question, you talk to the person who wrote it." },
+	{ title: "Products you can inspect", body: "TalentSync and rah.clinic are the systems behind this studio. The client work uses the same engineering, applied to your problem." },
+	{ title: "Small on purpose", body: "I take on a few client builds at a time. That leaves room to understand the work and stay responsible for it after launch." },
 ];
 ---
 
-<Layout
-	title="About"
-	description="taf.sh is the independent software studio and sole proprietorship of Tashif — builder of TalentSync and CliniQ."
->
-	<div class="mx-auto max-w-6xl px-6 py-16 md:py-20">
-		<header class="max-w-2xl">
-			<p class="font-mono text-sm text-accent">[*]</p>
-			<h1
-				class="mt-2 text-4xl font-semibold tracking-tight text-foreground md:text-6xl"
-			>
-				One person. Whole stack.
-			</h1>
-			<p class="mt-5 text-lg leading-8 text-secondary">
-				taf.sh is the independent software studio of Tashif — a sole
-				proprietorship that designs, builds, and operates software products,
-				and consults for teams that want the same end-to-end ownership.
-			</p>
-		</header>
+<PageLayout title="About" description="Tashif Ahmad Khan, the engineer behind taf.sh, TalentSync and rah.clinic. Based in Delhi.">
+	<PageIntro summary="I'm Tashif Ahmad Khan. I build and operate my own products through taf.sh, and take on a small number of client builds.">
+		<Fragment slot="title">About taf.sh</Fragment>
+		<a href="/contact" class:list={[btn, btnLg, btnAccent]}>Work with me <span class={btnArrow} aria-hidden="true"><Arrow /></span></a>
+		<a href="https://tashif.codes" target="_blank" rel="noopener noreferrer" class:list={[btn, btnLg, btnGhost]}>Personal site <span class={btnArrow} aria-hidden="true"><Arrow dir="up-right" /></span></a>
+	</PageIntro>
 
-		<div class="mt-16 grid gap-16 lg:grid-cols-[1.4fr_1fr]">
-			<!-- Story -->
-			<div class="space-y-10">
-				<section class="reveal">
-					<h2 class="text-2xl font-semibold tracking-tight text-foreground">
-						The studio
-					</h2>
-					<p class="mt-4 leading-7 text-secondary">
-						It started with a frustration: hiring is broken on both sides.
-						Job seekers bounce off ATS black boxes while recruiters drown in
-						resumes. That became{" "}
-						<a
-							href="/products/talentsync"
-							class="text-foreground underline underline-offset-4 hover:text-accent"
-							>TalentSync</a
-						> — an AI platform serving both candidates and hiring teams.
-					</p>
-					<p class="mt-4 leading-7 text-secondary">
-						The second product,{" "}
-						<a
-							href="/products/cliniq"
-							class="text-foreground underline underline-offset-4 hover:text-accent"
-							>CliniQ</a
-						>, came from another observation: clinics lose hours to phone tag
-						while every patient already lives on WhatsApp. So the practice
-						moved to where the patients are.
-					</p>
-					<p class="mt-4 leading-7 text-secondary">
-						Between products, the studio takes on a small number of
-						consulting engagements — the same architecture, AI, and
-						full-stack work, applied to other people's hard problems.
-					</p>
-				</section>
-
-				<section class="reveal">
-					<h2 class="text-2xl font-semibold tracking-tight text-foreground">
-						How it works
-					</h2>
-					<ul class="mt-6 space-y-6">
-						{
-							beliefs.map((belief) => (
-								<li class="flex gap-3">
-									<span class="font-mono text-sm text-accent">[*]</span>
-									<p class="text-sm leading-6 text-secondary">
-										<strong class="font-semibold text-foreground">
-											{belief.title}
-										</strong>{" "}
-										— {belief.body}
-									</p>
-								</li>
-							))
-						}
-					</ul>
-				</section>
-			</div>
-
-			<!-- Facts -->
-			<aside>
-				<h2 class="font-mono text-xs tracking-wider text-faint uppercase">
-					Facts
-				</h2>
-				<dl
-					class="mt-4 divide-y divide-border border-y border-border font-mono text-sm"
-				>
-					{
-						facts.map((fact) => (
-							<div class="grid grid-cols-[7rem_1fr] gap-4 py-3.5">
-								<dt class="text-muted">{fact.label}</dt>
-								<dd class="text-secondary">
-									{fact.href ? (
-										<a
-											href={fact.href}
-											{...(fact.href.startsWith("mailto:")
-												? {}
-												: { target: "_blank", rel: "noopener noreferrer" })}
-											class="text-foreground underline underline-offset-4 hover:text-accent"
-										>
-											{fact.value}
-											{!fact.href.startsWith("mailto:") && " ↗"}
-										</a>
-									) : (
-										fact.value
-									)}
-								</dd>
-							</div>
-						))
-					}
-				</dl>
-
-				<div class="mt-10 border border-border bg-surface p-5">
-					<p class="font-mono text-xs text-muted">
-						<span class="text-accent">$</span> ls ~/elsewhere
-					</p>
-					<ul class="mt-4 space-y-2.5 font-mono text-sm">
-						<li>
-							<a
-								href="https://tashif.codes"
-								target="_blank"
-								rel="noopener noreferrer"
-								class="text-secondary transition-colors hover:text-foreground"
-							>
-								→ tashif.codes — personal site &amp; dashboard ↗
-							</a>
-						</li>
-						<li>
-							<a
-								href="https://github.com/tashifkhan"
-								target="_blank"
-								rel="noopener noreferrer"
-								class="text-secondary transition-colors hover:text-foreground"
-							>
-								→ github.com/tashifkhan — open source ↗
-							</a>
-						</li>
-						<li>
-							<a
-								href="https://talentsync.tashif.codes"
-								target="_blank"
-								rel="noopener noreferrer"
-								class="text-secondary transition-colors hover:text-foreground"
-							>
-								→ talentsync.tashif.codes ↗
-							</a>
-						</li>
-					</ul>
-				</div>
-			</aside>
-		</div>
+	<div class={wrap}>
+		<dl class="grid grid-cols-2 gap-x-6 gap-y-8 border-y border-border py-8 sm:py-10 lg:grid-cols-4">
+			{stats.map(s => <div><dd class="font-display text-[clamp(2.5rem,4.5vw,3.5rem)] leading-none font-medium tracking-[-0.04em]">{s.value}<span class="text-accent">{s.suffix}</span></dd><dt class="mt-3 text-sm leading-6 text-muted">{s.label}</dt></div>)}
+		</dl>
 	</div>
-</Layout>
+
+	<section class:list={[wrap, "grid gap-10 border-b border-border py-16 sm:py-24 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20"]}>
+		<div><p class={kicker}>Current role</p><h2 class={h2}>Founding engineer.</h2></div>
+		<div class="space-y-6 text-lg leading-8 text-secondary">
+			<p>I'm the founding engineer at <a href="https://systematicreasoning.com/" target="_blank" rel="noopener noreferrer" class="text-foreground underline decoration-border-strong underline-offset-4 hover:text-accent">Systematic Reasoning</a>. We built <a href="https://app.systematicreasoning.com/" target="_blank" rel="noopener noreferrer" class="text-foreground underline decoration-border-strong underline-offset-4 hover:text-accent">ForgeIQX</a>, a compliance platform that connects regulatory requirements with policy documents, findings and evidence.</p>
+			<p>The work covers the application and the systems behind it. Policy analysis, control mappings and monitoring give teams a way to track what changed and trace a finding back to its source.</p>
+			<a href="/products/systematic-reasoning" class:list={[btn, btnLg, btnGhost]}>See the product <span class={btnArrow} aria-hidden="true"><Arrow /></span></a>
+		</div>
+	</section>
+
+	<section class:list={[wrap, "grid gap-10 py-16 sm:py-24 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20"]}>
+		<div><p class={kicker}>The studio</p><h2 class={h2}>Built from<br /> <em>real problems.</em></h2><AsciiArt piece="fortune-cookie-terminal" t={9} max={9} class="mt-10 hidden lg:block" /></div>
+		<div class="space-y-6 text-lg leading-8 text-secondary">
+			<p>TalentSync started with hiring. Job seekers were trying to understand why their resumes got rejected. Recruiters were trying to make sense of piles of applications. I built tools for both sides.</p>
+			<p><a href="/products/talentsync" class="text-foreground underline decoration-border-strong underline-offset-4 hover:text-accent">TalentSync AI</a> gives job seekers resume feedback and career guidance. <a href="/products/talentsync-hr" class="text-foreground underline decoration-border-strong underline-offset-4 hover:text-accent">TalentSync HR</a> helps recruiters score candidates against evidence.</p>
+			<p><a href="/products/rah-clinic" class="text-foreground underline decoration-border-strong underline-offset-4 hover:text-accent">rah.clinic</a> tackles a different problem. It brings appointments, reminders and follow-ups into WhatsApp, where patients already are.</p>
+			<p>The studio grew out of that work. I take what I've learned building my own products and use it to help other teams ship theirs.</p>
+		</div>
+	</section>
+
+	<section class="border-y border-border bg-surface py-16 sm:py-24">
+		<div class={wrap}>
+			<p class={kicker}>How I work</p>
+			<div class="mt-7 border-t border-border">
+				{beliefs.map((belief, i) => <div class="grid gap-4 border-b border-border py-7 sm:py-9 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20"><h3 class="flex items-baseline gap-5 font-display text-xl font-medium tracking-[-0.02em]"><span class="font-mono text-xs text-muted">0{i + 1}</span>{belief.title}</h3><p class="max-w-[52ch] text-base leading-7 text-secondary">{belief.body}</p></div>)}
+			</div>
+		</div>
+	</section>
+
+	<section class:list={[wrap, "grid gap-10 py-16 sm:py-24 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20"]}>
+		<div><p class={kicker}>On the record</p><h2 class={h2}>The <em>details.</em></h2></div>
+		<dl class="divide-y divide-border border-y border-border">
+			{facts.map(fact => <div class="grid grid-cols-[7rem_1fr] gap-4 py-4 text-sm sm:grid-cols-[10rem_1fr]"><dt class="text-muted">{fact.label}</dt><dd class="min-w-0 break-words text-foreground">{fact.href ? <a href={fact.href} target="_blank" rel="noopener noreferrer" class="transition-colors hover:text-accent">{fact.value} <Arrow dir="up-right" /></a> : fact.value}</dd></div>)}
+		</dl>
+	</section>
+</PageLayout>

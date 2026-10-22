@@ -1,0 +1,12 @@
+# taf.sh
+#
+# Nothing is disallowed here on purpose. Crawlers must fetch pages to read
+# the Worker's noindex headers on previews and private deliverables.
+# /proposals is a client deliverable and stays out via its own noindex meta tag
+# rather than a rule here, for the same reason: a blocked URL can still be
+# listed without the page ever being read.
+
+User-agent: *
+Allow: /
+
+Sitemap: https://taf.sh/sitemap-index.xml

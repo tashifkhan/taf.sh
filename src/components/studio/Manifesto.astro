@@ -1,0 +1,36 @@
+---
+import Arrow from "../Arrow.astro";
+import { wrap, kicker } from "./ui";
+---
+
+<section aria-labelledby="one-person-title" class="relative" data-manifesto>
+	<div class:list={[wrap, "py-[clamp(4rem,8vw,6.5rem)]"]}>
+		<span class={kicker}>Why one person</span>
+		<div class="mt-7 grid gap-8 lg:grid-cols-2 lg:gap-16">
+			<div>
+				<h2 id="one-person-title" class="font-display text-[clamp(2.75rem,5.2vw,4.5rem)] leading-[1.02] font-[600] tracking-[-0.045em]">
+					One person.<br /> <span class="text-muted">Start to finish.</span>
+				</h2>
+				<a href="/about" class="mt-7 inline-flex items-center gap-3 text-sm text-secondary transition-colors hover:text-accent">
+					Meet the person behind taf.sh <Arrow dir="up-right" />
+				</a>
+			</div>
+			<div class="lg:pt-1">
+				<p class="max-w-[36ch] text-[clamp(1.125rem,1.7vw,1.375rem)] leading-relaxed text-foreground">
+					I design the schema, write the CSS and deploy the software.
+					When you email, I'm the one who replies.
+				</p>
+				<p class="mt-5 max-w-[45ch] text-base leading-7 text-secondary">
+					You work directly with the person building your product.
+					No account managers. No handoffs between teams.
+				</p>
+				<div class="mt-8 flex flex-wrap items-center gap-x-3 gap-y-2 border-t border-border pt-5 font-mono text-[0.6875rem] text-muted" aria-label="I handle the schema, interface, deploy and support">
+					<span>Schema</span><span aria-hidden="true" class="text-accent"><Arrow /></span>
+					<span>Interface</span><span aria-hidden="true" class="text-accent"><Arrow /></span>
+					<span>Deploy</span><span aria-hidden="true" class="text-accent"><Arrow /></span>
+					<span>Support</span>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

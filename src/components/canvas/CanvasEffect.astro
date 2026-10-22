@@ -1,0 +1,245 @@
+---
+/**
+ * Progressive-enhancement wrapper around the vendored Canvas UI effects.
+ *
+ * The slot renders as ordinary HTML and stays that way. The script below only
+ * upgrades it to a WebGL effect when the browser can actually run one, which
+ * today means Chrome with html-in-canvas enabled. Everywhere else the markup is
+ * untouched, so the fallback is not a degraded effect, it is the page as it
+ * shipped before any of this existed.
+ *
+ * Both effects sample the live DOM, so they inherit the theme for free. The two
+ * colors DecryptReveal takes as options are read back out of the CSS tokens
+ * rather than hardcoded, which keeps the "no hex in markup" rule intact.
+ */
+interface Props {
+	/** Which vendored effect to run. */
+	effect: "decrypt" | "displacement" | "glyph-rain" | "grid" | "retro-dither";
+	/** Passed through to the effect's own options object. */
+	options?: Record<string, number | string>;
+	class?: string;
+}
+
+const { effect, options = {}, class: className } = Astro.props;
+---
+
+<div
+	class:list={["cui", className]}
+	data-cui-effect={effect}
+	data-cui-options={JSON.stringify(options)}
+>
+	<div class="cui-content"><slot /></div>
+</div>
+
+<style>
+	.cui {
+		position: relative;
+	}
+
+	.cui-content {
+		position: relative;
+	}
+</style>
+
+<script>
+	interface EffectInstance {
+		setOptions: (options: Record<string, unknown>) => void;
+		resize: () => void;
+		destroy: () => void;
+	}
+
+	type PaintableCanvas = HTMLCanvasElement & { requestPaint?: () => void };
+	type ElementImageContext = CanvasRenderingContext2D & {
+		drawElementImage?: (element: Element, x: number, y: number) => void;
+	};
+
+	/*
+	 * Deliberately duplicated from the vendored modules. Testing support here
+	 * rather than importing their `supportsHtmlInCanvas` means a browser that
+	 * cannot run the effect never downloads the ~1,600 lines of shader code
+	 * behind the dynamic import below.
+	 */
+	function supportsHtmlInCanvas(): boolean {
+		const probe = document.createElement("canvas") as PaintableCanvas;
+		const ctx = probe.getContext("2d") as ElementImageContext | null;
+		return Boolean(
+			ctx &&
+				typeof ctx.drawElementImage === "function" &&
+				typeof probe.requestPaint === "function",
+		);
+	}
+
+	function supportsWebgl2(): boolean {
+		try {
+			return Boolean(document.createElement("canvas").getContext("webgl2"));
+		} catch {
+			return false;
+		}
+	}
+
+	/*
+	 * Tokens in global.css are plain values scoped by media query, data-theme
+	 * and .t-dark/.t-light, so reading them off a probe in the right subtree
+	 * resolves to the value that subtree actually uses. Painting onto a
+	 * throwaway span and reading the computed color keeps this correct even
+	 * inside the reel's pinned panels.
+	 */
+	function resolveToken(host: HTMLElement, token: string): string {
+		const probe = document.createElement("span");
+		probe.style.cssText = `position:absolute;visibility:hidden;pointer-events:none;color:var(${token})`;
+		host.appendChild(probe);
+		const value = getComputedStyle(probe).color;
+		probe.remove();
+		return value;
+	}
+
+	/*
+	 * GlyphRain, Grid and RetroDither take colors as [r, g, b] floats rather than
+	 * CSS strings, so the resolved `rgb(...)` has to be pulled apart and scaled.
+	 */
+	function resolveTriplet(host: HTMLElement, token: string): [number, number, number] {
+		const parts = resolveToken(host, token).match(/[\d.]+/g) ?? [];
+		const [r = 0, g = 0, b = 0] = parts.slice(0, 3).map(Number);
+		return [r / 255, g / 255, b / 255];
+	}
+
+	function themedOptions(root: HTMLElement, effect: string) {
+		const accent = () => resolveToken(root, "--color-accent");
+		const accentTriplet = () => resolveTriplet(root, "--color-accent");
+
+		switch (effect) {
+			case "decrypt":
+				return {
+					color: accent(),
+					background: resolveToken(root, "--color-background"),
+				};
+			case "glyph-rain":
+				return { color: accentTriplet(), headColor: accentTriplet() };
+			case "grid":
+				return { tint: accentTriplet() };
+			case "retro-dither":
+				return {
+					darkColor: resolveTriplet(root, "--color-background"),
+					lightColor: resolveTriplet(root, "--color-foreground"),
+				};
+			default:
+				return {};
+		}
+	}
+
+	async function loadEffect(effect: string) {
+		switch (effect) {
+			case "decrypt":
+				return (await import("../../lib/canvas-ui/DecryptRevealVanilla"))
+					.createDecryptReveal;
+			case "displacement":
+				return (await import("../../lib/canvas-ui/DisplacementVanilla"))
+					.createDisplacement;
+			case "glyph-rain":
+				return (await import("../../lib/canvas-ui/GlyphRainVanilla"))
+					.createGlyphRain;
+			case "grid":
+				return (await import("../../lib/canvas-ui/GridVanilla")).createGrid;
+			case "retro-dither":
+				return (await import("../../lib/canvas-ui/RetroDitherVanilla"))
+					.createRetroDither;
+			default:
+				return null;
+		}
+	}
+
+	async function upgrade(root: HTMLElement) {
+		const effect = root.dataset.cuiEffect;
+		const content = root.querySelector<HTMLElement>(".cui-content");
+		if (!effect || !content) return;
+
+		const create = await loadEffect(effect);
+		if (!create) return;
+
+		/*
+		 * Content moves inside the source canvas, which is absolutely positioned,
+		 * so the wrapper would collapse to nothing. Pin its height to whatever the
+		 * content measured in normal flow first, then keep the two in step. Upstream
+		 * stretches content to `height: 100%` instead, which assumes a caller with a
+		 * fixed-size box. Here the text decides how tall it is.
+		 */
+		root.style.height = `${content.offsetHeight}px`;
+
+		const source = document.createElement("canvas") as PaintableCanvas;
+		source.setAttribute("layoutsubtree", "true");
+		source.style.cssText =
+			"position:absolute;inset:0;width:100%;height:100%";
+
+		const output = document.createElement("canvas");
+		output.setAttribute("aria-hidden", "true");
+		output.style.cssText =
+			"position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:0;transition:opacity 320ms var(--ease-site, ease)";
+
+		content.style.width = "100%";
+		source.appendChild(content);
+		root.append(source, output);
+
+		let parsed: Record<string, number | string> = {};
+		try {
+			parsed = JSON.parse(root.dataset.cuiOptions || "{}");
+		} catch {}
+
+		const instance: EffectInstance | null = create(
+			{ source, content, output },
+			{ ...parsed, ...themedOptions(root, effect) },
+		);
+
+		/*
+		 * A null instance means the GL context died between the support probe and
+		 * here. Put the content back where it was and leave no trace.
+		 */
+		if (!instance) {
+			root.style.height = "";
+			content.style.width = "";
+			root.prepend(content);
+			source.remove();
+			output.remove();
+			return;
+		}
+
+		requestAnimationFrame(() => {
+			output.style.opacity = "1";
+		});
+
+		const sync = new ResizeObserver(() => {
+			root.style.height = `${content.offsetHeight}px`;
+			instance.resize();
+		});
+		sync.observe(content);
+
+		/*
+		 * ThemeToggle flips `data-theme` on <html>. The sampled DOM re-paints on its
+		 * own; only the two explicit color options need pushing back in.
+		 */
+		new MutationObserver(() => {
+			instance.setOptions(themedOptions(root, effect));
+		}).observe(document.documentElement, {
+			attributes: true,
+			attributeFilter: ["data-theme", "style"],
+		});
+	}
+
+	const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+	if (!reduced && supportsHtmlInCanvas() && supportsWebgl2()) {
+		for (const root of document.querySelectorAll<HTMLElement>("[data-cui-effect]")) {
+			/*
+			 * Nothing renders until the wrapper is near the viewport, matching the
+			 * `client:visible` discipline the plan asked for.
+			 */
+			const observer = new IntersectionObserver((entries, self) => {
+				for (const entry of entries) {
+					if (!entry.isIntersecting) continue;
+					self.disconnect();
+					upgrade(root);
+				}
+			}, { rootMargin: "200px" });
+			observer.observe(root);
+		}
+	}
+</script>

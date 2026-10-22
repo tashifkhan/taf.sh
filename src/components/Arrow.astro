@@ -1,0 +1,39 @@
+---
+/*
+ * The site's arrow icon. Font arrows (→ ↗) render from whichever face has the
+ * glyph, so their weight and baseline drift between IBM Plex, the system
+ * fallback and Android's Roboto. This draws one stroke at a fixed weight.
+ *
+ * `width`/`height` are 1em, so it scales with the surrounding text and still
+ * sits at text size before the stylesheet lands.
+ */
+interface Props {
+	dir?: "right" | "left" | "up" | "down" | "up-right";
+	class?: string;
+}
+const { dir = "right", class: className } = Astro.props;
+
+const paths = {
+	right: "M3 8h10M9 4l4 4-4 4",
+	left: "M13 8H3M7 4 3 8l4 4",
+	up: "M8 13V3M4 7l4-4 4 4",
+	down: "M8 3v10M4 9l4 4 4-4",
+	"up-right": "M4.5 11.5l7-7M5.5 4.5h6v6",
+};
+---
+
+<svg
+	viewBox="0 0 16 16"
+	width="1em"
+	height="1em"
+	fill="none"
+	stroke="currentColor"
+	stroke-width="1.5"
+	stroke-linecap="round"
+	stroke-linejoin="round"
+	aria-hidden="true"
+	focusable="false"
+	class:list={["inline-block shrink-0 align-[-0.125em]", className]}
+>
+	<path d={paths[dir]} />
+</svg>

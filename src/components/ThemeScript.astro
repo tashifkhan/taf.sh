@@ -23,9 +23,11 @@
 		color: light-dark(#171615, #f2f1f0);
 	}
 
-	/* Unstyled links are the purple/blue in the flash — inherit instead. */
-	a {
-		color: inherit;
+	/* Keep the pre-stylesheet fallback below Tailwind's text and hover utilities. */
+	@layer base {
+		a {
+			color: inherit;
+		}
 	}
 </style>
 

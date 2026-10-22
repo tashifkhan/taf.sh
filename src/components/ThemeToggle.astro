@@ -6,12 +6,22 @@ const modes = [
 ] as const;
 ---
 
+<!--
+	A pill with a disc that slides to the selected mode. The disc follows
+	`aria-pressed` through :has(), so it needs no script of its own, and it only
+	animates once the first `apply` has run (`data-ready`) so a stored override
+	doesn't slide in on every page load.
+-->
 <div
-	class="flex items-center border border-border"
+	class="group/theme relative isolate flex h-10 shrink-0 items-center rounded-full border border-border-strong p-1"
 	role="group"
 	aria-label="Color theme"
 	data-theme-toggle
 >
+	<span
+		class="absolute top-1 left-1 -z-1 size-8 rounded-full border border-accent/40 bg-accent-soft group-has-[[data-theme-set=light][aria-pressed=true]]/theme:translate-x-full group-has-[[data-theme-set=dark][aria-pressed=true]]/theme:translate-x-[200%] group-data-ready/theme:transition-[translate] group-data-ready/theme:duration-500 group-data-ready/theme:ease-expo"
+		aria-hidden="true"
+	></span>
 	{
 		modes.map((mode) => (
 			<button
@@ -20,7 +30,7 @@ const modes = [
 				title={mode.label}
 				aria-label={mode.label}
 				aria-pressed="false"
-				class="px-2 py-1.5 text-muted transition-colors hover:text-foreground aria-pressed:bg-accent-soft aria-pressed:text-accent"
+				class="grid size-8 cursor-pointer place-items-center rounded-full text-muted transition-[color,scale] duration-300 hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent active:scale-90 aria-pressed:text-accent"
 			>
 				{mode.id === "system" && (
 					<svg
@@ -121,19 +131,32 @@ const modes = [
 		"selector(:active-view-transition-type(theme))",
 	);
 
-	const select = (mode: Mode) => {
+	const select = (mode: Mode, origin: HTMLElement) => {
+		if (mode === read()) return;
 		if (!document.startViewTransition || reduced.matches) return apply(mode);
 		// Without transition types the root would reuse the navigation slide,
 		// which reads wrong for a palette swap — repaint instantly instead.
 		if (!supportsTypes) return apply(mode);
-		document.startViewTransition({
+
+		// The reveal grows from the pressed button out to the farthest corner.
+		const box = origin.getBoundingClientRect();
+		const x = box.left + box.width / 2;
+		const y = box.top + box.height / 2;
+		const r = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
+		root.style.setProperty("--vt-x", `${x}px`);
+		root.style.setProperty("--vt-y", `${y}px`);
+		root.style.setProperty("--vt-r", `${r}px`);
+		root.dataset.themeSwitch = "";
+
+		const transition = document.startViewTransition({
 			update: () => apply(mode),
 			types: ["theme"],
 		} as unknown as () => void);
+		transition.finished.finally(() => delete root.dataset.themeSwitch);
 	};
 
 	document.querySelectorAll<HTMLButtonElement>("[data-theme-set]").forEach((button) => {
-		button.addEventListener("click", () => select(button.dataset.themeSet as Mode));
+		button.addEventListener("click", () => select(button.dataset.themeSet as Mode, button));
 	});
 
 	media.addEventListener("change", () => {
@@ -141,4 +164,9 @@ const modes = [
 	});
 
 	apply(read());
+	requestAnimationFrame(() => {
+		document.querySelectorAll<HTMLElement>("[data-theme-toggle]").forEach((toggle) => {
+			toggle.dataset.ready = "";
+		});
+	});
 </script>

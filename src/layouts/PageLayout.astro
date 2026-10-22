@@ -1,0 +1,34 @@
+---
+import StudioLayout from "./StudioLayout.astro";
+import Breadcrumbs from "../components/studio/Breadcrumbs.astro";
+import Header from "../components/studio/Header.astro";
+import StudioFooter from "../components/studio/StudioFooter.astro";
+import Cursor from "../components/studio/Cursor.astro";
+
+interface Props {
+	title: string;
+	description?: string;
+	footerCta?: boolean;
+	/** Forwarded to StudioLayout; keeps the page out of the index. */
+	noindex?: boolean;
+}
+const { title, description, footerCta = true, noindex = false } = Astro.props;
+---
+
+<StudioLayout title={title} description={description} noindex={noindex}>
+	<div id="top"></div>
+	<Header base="/" />
+	<div data-page-content>
+		<main class="pt-28 sm:pt-36">
+			<Breadcrumbs title={title} />
+			<slot />
+		</main>
+		<StudioFooter cta={footerCta} />
+	</div>
+	<Cursor />
+</StudioLayout>
+
+<script>
+	import { bootPage } from "../scripts/studio";
+	bootPage();
+</script>

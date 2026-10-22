@@ -1,0 +1,109 @@
+---
+import "@fontsource-variable/inter-tight";
+import "@fontsource-variable/inter";
+import "@fontsource/ibm-plex-mono/400.css";
+import "@fontsource/ibm-plex-mono/500.css";
+import "../styles/global.css";
+
+import ThemeScript from "../components/ThemeScript.astro";
+import PageTransitions from "../components/PageTransitions.astro";
+import PostHog from "../components/PostHog.astro";
+import { socialImagePath } from "../lib/social";
+import { markdownPath } from "../lib/crawlers";
+import { canonicalPath, normalizePath, pageMetadata, structuredData } from "../lib/seo";
+
+interface Props {
+	title: string;
+	description?: string;
+	/** Keeps a page out of the index. Used for client deliverables. */
+	noindex?: boolean;
+}
+
+const {
+	title,
+	description = "taf.sh — an independent software studio and consultancy. AI-native products and engineering, built and run by one engineer.",
+	noindex = false,
+} = Astro.props;
+
+const path = normalizePath(Astro.url.pathname);
+const metadata = pageMetadata[path];
+// The homepage leads with the brand; every other page leads with its subject.
+const pageTitle = path === "/" ? `taf.sh | ${metadata?.title ?? title}` : `${metadata?.title ?? title} | taf.sh`;
+const pageDescription = metadata?.description ?? description;
+const canonical = new URL(canonicalPath(path), Astro.site).href;
+const ogImage = new URL(socialImagePath(path), Astro.site).href;
+const schema = structuredData(Astro.site!, path, pageTitle, pageDescription, ogImage);
+// Escape '<' so content can never close the JSON-LD script element.
+const schemaJson = JSON.stringify(schema).replace(/</g, "\\u003c");
+
+---
+
+<!doctype html>
+<html lang="en" prefix="og: https://ogp.me/ns#">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48" />
+		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+		<link rel="manifest" href="/site.webmanifest" />
+		<meta name="generator" content={Astro.generator} />
+		<meta name="description" content={pageDescription} />
+		<link rel="canonical" href={canonical} />
+		{!noindex && metadata && <>
+			<link rel="alternate" type="text/markdown" href={markdownPath(path)} />
+			<link rel="describedby" type="text/plain" href="/llms.txt" />
+		</>}
+		<meta name="robots" content={noindex ? "noindex, follow" : "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"} />
+		<meta name="author" content="Tashif Ahmad Khan" />
+		<ThemeScript />
+		<PageTransitions />
+		<script is:inline>
+			document.documentElement.classList.add("js");
+		</script>
+		<PostHog />
+		<meta property="og:title" content={pageTitle} />
+		<meta property="og:description" content={pageDescription} />
+		<meta property="og:type" content="website" />
+		<meta property="og:locale" content="en_IN" />
+		<meta property="og:site_name" content="taf.sh" />
+		<meta property="og:url" content={canonical} />
+		<meta property="og:image" content={ogImage} />
+		<meta property="og:image:secure_url" content={ogImage} />
+		<meta property="og:image:width" content="1200" />
+		<meta property="og:image:height" content="630" />
+		<meta property="og:image:alt" content={`${pageTitle}. Software by Tashif Ahmad Khan.`} />
+		<meta property="og:image:type" content="image/jpeg" />
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content={pageTitle} />
+		<meta name="twitter:description" content={pageDescription} />
+		<meta name="twitter:image" content={ogImage} />
+		<meta name="twitter:image:alt" content={`${pageTitle}. Software by Tashif Ahmad Khan.`} />
+		<meta itemprop="name" content={pageTitle} />
+		<meta itemprop="description" content={pageDescription} />
+		<meta itemprop="image" content={ogImage} />
+		{!noindex && <script type="application/ld+json" is:inline set:html={schemaJson} />}
+		<title>{pageTitle}</title>
+	</head>
+	<body
+		class="overflow-x-clip bg-background font-body text-foreground antialiased [--gutter:clamp(1.25rem,4vw,3rem)]"
+	>
+		<slot />
+		<!--
+			Film grain: one SVG noise tile, oversized and jittered by a stepped
+			animation so it reads as moving grain rather than a static texture.
+			The oversized tile sits inside a viewport-sized clip: a fixed element
+			escapes body's overflow-x-clip, and Android Chrome widens the layout
+			viewport to fit it, pushing the header's Menu button off screen.
+			Blend and opacity live on the wrapper, since its z-index makes it the
+			stacking context the overlay would otherwise blend inside.
+		-->
+		<div class="pointer-events-none fixed inset-0 z-80 overflow-hidden opacity-[0.045] mix-blend-overlay" aria-hidden="true">
+			<div
+				class="absolute -inset-1/2 animate-grain motion-reduce:animate-none"
+				style={`background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`}
+			>
+			</div>
+		</div>
+	</body>
+</html>
