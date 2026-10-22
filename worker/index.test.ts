@@ -25,11 +25,6 @@ describe("SEO routing", () => {
 		expect(response.status).toBe(200);
 		expect(response.headers.get("X-Robots-Tag")).toBeNull();
 	});
-	test("v2 stays noindexed while serving its own pages", async () => {
-		const response = await worker.fetch(new Request("https://v2.taf.sh/work/"), environment({ CANONICAL_HOST: "v2.taf.sh", NOINDEX: true }), ctx);
-		expect(response.status).toBe(200);
-		expect(response.headers.get("X-Robots-Tag")).toContain("noindex");
-	});
 	test("version previews remain reviewable and noindexed", async () => {
 		const response = await worker.fetch(new Request("https://abc123-taf-sh.example.workers.dev/work/"), environment(), ctx);
 		expect(response.status).toBe(200);

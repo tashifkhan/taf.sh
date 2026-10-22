@@ -52,7 +52,7 @@ for (const file of files) {
 	assert.equal(meta.get("twitter:description"), meta.get("description"));
 	assert.equal(meta.get("twitter:card"), "summary_large_image");
 	const social = new URL(meta.get("og:image")!);
-	assert.equal(social.origin, process.env.SOCIAL_IMAGE_ORIGIN ?? "https://taf.sh", `Wrong social image host: ${file}`);
+	assert.equal(social.origin, "https://taf.sh", `Wrong social image host: ${file}`);
 	assert.equal(meta.get("og:image:secure_url"), social.href);
 	assert.equal(meta.get("twitter:image"), social.href);
 	assert.equal(meta.get("og:image:type"), "image/jpeg");

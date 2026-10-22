@@ -10,8 +10,7 @@ const root = new URL("../dist/", import.meta.url).pathname;
 const sitemapIndex = await readFile(join(root, "sitemap-index.xml"), "utf8");
 const locations = (xml: string) => [...xml.matchAll(/<loc>(.*?)<\/loc>/g)].map(match => match[1].replaceAll("&amp;", "&"));
 const pages: { source: URL; path: string; markdown: string }[] = [];
-const origin = process.env.DEPLOY_ORIGIN ?? "https://taf.sh";
-assert(["https://taf.sh", "https://v2.taf.sh"].includes(origin), "Invalid DEPLOY_ORIGIN");
+const origin = "https://taf.sh";
 
 // Only sitemap pages qualify. Never export proposal pages or other noindexed
 // deliverables, even if a future sitemap configuration includes one by mistake.

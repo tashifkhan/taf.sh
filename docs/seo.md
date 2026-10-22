@@ -20,7 +20,7 @@ Run `bun run seo:check` after edits. It builds the site and checks titles, descr
 
 Run `bun run seo:images` after changing social card copy or the site's palette. The script generates the committed 1200 by 630 sRGB JPEGs in `public/og/` using the CSS dark theme tokens. The production build also runs this generator. Card copy and route mapping live in `src/lib/social.ts`.
 
-After deployment, run `bun run seo:check:live https://v2.taf.sh` or `bun run seo:check:live https://taf.sh`. This fetches every public page with social crawler user agents and downloads every advertised image. It rejects images on the wrong host, missing images, wrong MIME types and invalid dimensions.
+After deployment, run `bun run seo:check:live`. This fetches every public page with social crawler user agents and downloads every advertised image. It rejects images on the wrong host, missing images, wrong MIME types and invalid dimensions.
 
 The Worker sends a permanent redirect from `/products/cliniq` to `/products/rah-clinic/`. It adds noindex headers to previews, client proposal pages, proposal downloads and missing pages. Keep these paths crawlable in robots.txt so search engines can read the noindex directives.
 
@@ -32,9 +32,9 @@ Every build generates `/llms.txt`, `/llms-full.txt` and a Markdown copy of each 
 
 The guide reads titles, descriptions and availability from existing page and product data. Keep product status accurate and distinguish studio products from team work. The services page answers common questions about scope, code ownership, remote work and pricing in visible HTML.
 
-`DEPLOY_ORIGIN` controls absolute Markdown links in the guide. It defaults to `https://taf.sh`; `deploy:v2` sets it to `https://v2.taf.sh`. Canonical HTML sources remain on the apex. The exports are build artifacts and do not appear in the Astro dev server. Use a production build with Workers Assets to check their response headers.
+Absolute Markdown links in the guide and canonical HTML sources use `https://taf.sh`. The exports are build artifacts and do not appear in the Astro dev server. Use a production build with Workers Assets to check their response headers.
 
-`bun run seo:check` includes export, discovery and content checks. After deployment, run `bun run seo:crawlers:live https://v2.taf.sh`. It checks all public HTML and Markdown routes plus the guides and robots.txt with search crawler user agents. These requests verify responses to those user-agent strings. They do not establish access from the providers' verified crawler IPs.
+`bun run seo:check` includes export, discovery and content checks. After deployment, run `bun run seo:crawlers:live`. It checks all public HTML and Markdown routes plus the guides and robots.txt with search crawler user agents. These requests verify responses to those user-agent strings. They do not establish access from the providers' verified crawler IPs.
 
 The wildcard rule in robots.txt already permits search and AI crawlers. Cloudflare bot rules can still block them independently. If investigating blocked requests, check Cloudflare AI Crawl Control and security events against the provider's published crawler IP ranges. Do not trust a user-agent string alone or disable the site's security rules globally.
 
@@ -42,7 +42,7 @@ The wildcard rule in robots.txt already permits search and AI crawlers. Cloudfla
 
 ## Publishing and search consoles
 
-Use `bun run deploy:v2` for the separate preview Worker. This command sets `SOCIAL_IMAGE_ORIGIN=https://v2.taf.sh` during the build so preview images load from v2 while canonical page URLs still point to taf.sh. v2 stays noindexed, so deploying there does not update search results for the main site. The main site's deployment command is `bun run deploy`.
+Use `bun run deploy` to build and deploy the production `taf-sh` Worker at `https://taf.sh`. Social images and canonical page URLs use the production origin. Version preview URLs remain noindexed.
 
 After a main-site deployment, submit `https://taf.sh/sitemap-index.xml` in the verified taf.sh properties in Google Search Console and Bing Webmaster Tools. Inspect `/`, `/services/`, `/work/` and each product page. Check live rendered HTML, canonical selection and crawl errors. Account verification and sitemap submission require access to those external accounts.
 

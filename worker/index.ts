@@ -26,14 +26,13 @@ function stripPhPrefix(pathname: string): string {
 	return pathname;
 }
 
-function canonicalRedirect(url: URL, canonicalHost: string): Response | null {
-	// Each deployment serves its configured host and redirects other aliases.
-	if (url.hostname === canonicalHost) return null;
+function canonicalRedirect(url: URL): Response | null {
+	if (url.hostname === DEFAULT_CANONICAL_HOST) return null;
 	if (PREVIEW_HOST.test(url.hostname)) return null;
 
 	const target = new URL(url.toString());
 	target.protocol = "https:";
-	target.hostname = canonicalHost;
+	target.hostname = DEFAULT_CANONICAL_HOST;
 	target.port = "";
 
 	return Response.redirect(target.toString(), 301);
@@ -95,10 +94,7 @@ export default {
 	): Promise<Response> {
 		const url = new URL(request.url);
 
-		const redirect = canonicalRedirect(
-			url,
-			env.CANONICAL_HOST ?? DEFAULT_CANONICAL_HOST,
-		);
+		const redirect = canonicalRedirect(url);
 		if (redirect) return redirect;
 
 		// Astro's static redirect is an HTML refresh. Send a permanent HTTP
@@ -115,7 +111,7 @@ export default {
 
 		const response = await env.ASSETS.fetch(request);
 
-		if (env.NOINDEX || PREVIEW_HOST.test(url.hostname) || url.pathname === "/proposals" || url.pathname.startsWith("/proposals/") || response.status === 404) {
+		if (PREVIEW_HOST.test(url.hostname) || url.pathname === "/proposals" || url.pathname.startsWith("/proposals/") || response.status === 404) {
 			const headers = new Headers(response.headers);
 			headers.set("X-Robots-Tag", "noindex, follow");
 			return new Response(response.body, {

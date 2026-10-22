@@ -12,7 +12,6 @@
     "preview": "astro preview",
     "astro": "astro",
     "deploy": "bun run build && wrangler deploy",
-    "deploy:v2": "DEPLOY_ORIGIN=https://v2.taf.sh SOCIAL_IMAGE_ORIGIN=https://v2.taf.sh bun run build && wrangler deploy --env v2",
     "cf:dev": "bun run build && wrangler dev",
     "seo:images": "bun scripts/generate-social-images.ts",
     "seo:crawlers": "bun scripts/generate-crawler-content.ts",

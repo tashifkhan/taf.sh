@@ -2,8 +2,8 @@ import assert from "node:assert/strict";
 import { markdownPath } from "../src/lib/crawlers";
 import { canonicalPath, pageMetadata } from "../src/lib/seo";
 
-const origin = new URL(process.argv[2] ?? "https://v2.taf.sh").origin;
-assert(["https://taf.sh", "https://v2.taf.sh"].includes(origin));
+const origin = new URL(process.argv[2] ?? "https://taf.sh").origin;
+assert.equal(origin, "https://taf.sh");
 const agents = ["OAI-SearchBot", "Claude-SearchBot", "PerplexityBot", "Googlebot"];
 let checks = 0;
 for (const [index, path] of Object.keys(pageMetadata).entries()) {
@@ -16,10 +16,8 @@ for (const [index, path] of Object.keys(pageMetadata).entries()) {
 	assert(alternate.headers.get("content-type")?.startsWith("text/markdown"), `Wrong Markdown MIME: ${path}`);
 	assert(alternate.headers.get("link")?.includes(`https://taf.sh${canonicalPath(path)}`), `Wrong canonical header: ${path}`);
 	assert((await alternate.text()).startsWith(`Source: <https://taf.sh${canonicalPath(path)}>`));
-	if (origin === "https://v2.taf.sh") {
-		assert(html.headers.get("x-robots-tag")?.includes("noindex"));
-		assert(alternate.headers.get("x-robots-tag")?.includes("noindex"));
-	}
+	assert(!html.headers.get("x-robots-tag")?.includes("noindex"), `HTML must be indexable: ${path}`);
+	assert(!alternate.headers.get("x-robots-tag")?.includes("noindex"), `Markdown must be indexable: ${path}`);
 	checks += 2;
 }
 for (const path of ["/robots.txt", "/llms.txt", "/llms-full.txt"]) {

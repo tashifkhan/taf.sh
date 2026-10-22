@@ -2,8 +2,8 @@ import assert from "node:assert/strict";
 import sharp from "sharp";
 import { socialCards } from "../src/lib/social";
 
-const origin = process.argv[2] ?? "https://v2.taf.sh";
-assert(["https://taf.sh", "https://v2.taf.sh"].includes(origin));
+const origin = process.argv[2] ?? "https://taf.sh";
+assert.equal(origin, "https://taf.sh");
 const agents = ["facebookexternalhit/1.1", "Twitterbot/1.0", "WhatsApp/2.24.1"];
 const images = new Set<string>();
 for (const path of Object.keys(socialCards)) {

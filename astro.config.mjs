@@ -8,8 +8,7 @@ export default defineConfig({
 	/*
 	 * The canonical origin. Two things depend on it: the <link rel="canonical">
 	 * and og:url tags every page emits, and the sitemap the integration below
-	 * writes. It must stay the apex, because v2.taf.sh serves the same build
-	 * and every page there should still point home.
+	 * writes. Keep it set to the production origin.
 	 */
 	site: 'https://taf.sh',
 	integrations: [

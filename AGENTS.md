@@ -1,7 +1,7 @@
 ## Development
 
-Deploy the current working tree to `https://v2.taf.sh` with `bun run deploy:v2`.
-This uses the separate `taf-sh-v2` Worker. The default `bun run deploy` still targets the main site.
+Deploy the current working tree to `https://taf.sh` with `bun run deploy`.
+This targets the production `taf-sh` Worker.
 Regenerate Worker binding types after configuration changes with `bunx wrangler types worker/worker-configuration.d.ts --include-runtime false`.
 
 When starting the dev server, use background mode:
@@ -62,11 +62,11 @@ Canvas UI supplies the ambient effect on each product page body: RetroDither on 
 
 `site: 'https://taf.sh'` in `astro.config.mjs` is the single source of the canonical origin, and everything below keys off it. Keep it the apex.
 
-- `StudioLayout.astro` is the only `<head>` on the site (`Layout.astro` predates the studio rebuild and nothing renders it). It emits `<link rel="canonical">` and `og:url` from `Astro.url.pathname` resolved against `site`, plus `og:site_name`, `og:image` (the `icon-512.png` mark) and `twitter:card`. Because both resolve against `site` and not the request host, a page served on `v2.taf.sh` still points home — that is the intended behavior, not a bug
+- `StudioLayout.astro` is the only `<head>` on the site (`Layout.astro` predates the studio rebuild and nothing renders it). It emits `<link rel="canonical">` and `og:url` from `Astro.url.pathname` resolved against `site`, plus `og:site_name`, `og:image` (the `icon-512.png` mark) and `twitter:card`. Both resolve against `site` so version preview URLs still point to the production page
 - The same file emits one `ProfessionalService` JSON-LD node sitewide. Its name, email and `sameAs` profiles have to match the footer, so update both together. Pages passing `noindex` skip it
 - `noindex` is a prop on `StudioLayout` and forwarded by `PageLayout`. `/proposals` sets it: that page is a client deliverable, not a landing page
 - `@astrojs/sitemap` writes `sitemap-index.xml` and filters out `/proposals`. `/robots.txt` is a static file in `public/` and points at the absolute index URL
-- `public/robots.txt` disallows nothing deliberately. `v2.taf.sh` serves the same file, and a `Disallow` there would block the crawl that the Worker's `X-Robots-Tag: noindex` header depends on. For the same reason `/proposals` is noindexed by meta tag rather than by a rule: a blocked URL can still be listed without its content ever being read
+- `public/robots.txt` disallows nothing deliberately. Version previews serve the same file, and a `Disallow` would block the crawl that the Worker's `X-Robots-Tag: noindex` header depends on. For the same reason `/proposals` is noindexed by meta tag rather than by a rule: a blocked URL can still be listed without its content ever being read
 - When adding a page, the sitemap and canonical tags come for free. Only reach for `noindex` if the page should stay out of the index
 
 ## Structure

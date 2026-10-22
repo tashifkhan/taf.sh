@@ -31,13 +31,7 @@ const metadata = pageMetadata[path];
 const pageTitle = path === "/" ? `taf.sh | ${metadata?.title ?? title}` : `${metadata?.title ?? title} | taf.sh`;
 const pageDescription = metadata?.description ?? description;
 const canonical = new URL(canonicalPath(path), Astro.site).href;
-// Social assets must exist on the deployed host, even while v2 canonicals
-// intentionally point to the main site. deploy:v2 supplies this build value.
-const imageOrigin = process.env.SOCIAL_IMAGE_ORIGIN ?? Astro.site!.origin;
-if (!["https://taf.sh", "https://v2.taf.sh"].includes(imageOrigin)) {
-	throw new Error("SOCIAL_IMAGE_ORIGIN must be a taf.sh deployment origin");
-}
-const ogImage = new URL(socialImagePath(path), imageOrigin).href;
+const ogImage = new URL(socialImagePath(path), Astro.site).href;
 const schema = structuredData(Astro.site!, path, pageTitle, pageDescription, ogImage);
 // Escape '<' so content can never close the JSON-LD script element.
 const schemaJson = JSON.stringify(schema).replace(/</g, "\\u003c");
