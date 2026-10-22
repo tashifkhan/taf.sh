@@ -121,8 +121,7 @@ const details: Spec[] = [...specs, { label: "Engineer", value: "Tashif / tashif.
 		<article>
 			<header class:list={[wrap, "grid gap-10 lg:grid-cols-[1fr_auto] lg:items-end"]}>
 				<div>
-					<a href="/work" class="text-sm text-muted transition-colors hover:text-foreground"><Arrow dir="left" /> all work</a>
-					<div class="mt-8 flex flex-wrap items-center gap-3">
+					<div class="flex flex-wrap items-center gap-3">
 						<span class:list={[chip, status === "Live" && chipOn]}>{status}</span>
 						{entry && <span class={kicker}>{entry.sector} · {entry.year}</span>}
 					</div>
