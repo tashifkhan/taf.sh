@@ -19,11 +19,11 @@
 	--font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
 
 	/* OpenCode-inspired warm grayscale — light is the default */
-	--color-background: #f4f2f0;
-	--color-surface: #fbfaf9;
-	--color-elevated: #ffffff;
-	--color-border: #dcd6d2;
-	--color-border-strong: #c7c1bd;
+	--color-background: #f6f1e9;
+	--color-surface: #fdfaf4;
+	--color-elevated: #fffdf8;
+	--color-border: #ded4c5;
+	--color-border-strong: #c7b9a6;
 	--color-foreground: #171615;
 	--color-secondary: #3d3836;
 	--color-muted: #5f5956;
@@ -87,11 +87,11 @@ html[data-theme="dark"],
 
 html[data-theme="light"],
 .t-light {
-	--color-background: #f4f2f0;
-	--color-surface: #fbfaf9;
-	--color-elevated: #ffffff;
-	--color-border: #dcd6d2;
-	--color-border-strong: #c7c1bd;
+	--color-background: #f6f1e9;
+	--color-surface: #fdfaf4;
+	--color-elevated: #fffdf8;
+	--color-border: #ded4c5;
+	--color-border-strong: #c7b9a6;
 	--color-foreground: #171615;
 	--color-secondary: #3d3836;
 	--color-muted: #5f5956;

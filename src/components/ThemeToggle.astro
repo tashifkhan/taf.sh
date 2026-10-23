@@ -110,7 +110,7 @@ const modes = [
 		const resolved = mode === "system" ? (media.matches ? "light" : "dark") : mode;
 		document
 			.querySelector("meta[data-theme-color]")
-			?.setAttribute("content", resolved === "light" ? "#f4f2f0" : "#0e0d0d");
+			?.setAttribute("content", resolved === "light" ? "#f6f1e9" : "#0e0d0d");
 
 		document.querySelectorAll<HTMLButtonElement>("[data-theme-set]").forEach((button) => {
 			button.setAttribute(
