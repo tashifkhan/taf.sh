@@ -11,6 +11,7 @@ const full = await readFile(join(root, "llms-full.txt"), "utf8");
 const headers = await readFile(join(root, "_headers"), "utf8");
 assert(guide.startsWith("# taf.sh\n\n> "));
 assert(guide.includes("https://tashif.codes/") && guide.includes("https://github.com/tashifkhan"));
+assert(guide.includes("document.modelContext") && guide.includes("start_contact"));
 assert(guide.includes("team work") && guide.includes("Status: In development."));
 assert(headers.includes("Content-Type: text/markdown; charset=utf-8"));
 

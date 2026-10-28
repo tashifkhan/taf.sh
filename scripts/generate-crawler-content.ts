@@ -48,6 +48,14 @@ taf.sh is Tashif Ahmad Khan's independent software studio and consultancy. tashi
 
 The Markdown pages contain the public website's main content, generated from its HTML on each build. Each includes its canonical HTML source for attribution. Product availability is listed below. Systematic Reasoning and ForgeIQX are team work, where Tashif is a founding engineer, rather than products owned by taf.sh.
 
+## In-browser tools (WebMCP)
+
+When an agent is visiting this site in a live tab, the page registers tools on document.modelContext. They are not HTTP APIs. Crawlers that never run JavaScript should keep using the Markdown pages above.
+
+Tools: get_studio_overview, list_services, get_service, list_work, get_product, get_about, get_contact, copy_studio_email, start_contact.
+
+start_contact drafts a message to ${email}, fills the contact form when it is on the page, and opens the visitor's mail app. It does not send mail. In-chat agents such as Grok should show the returned draft and send it from the user's mailbox after they confirm.
+
 ## Studio and services
 
 ${["/", "/about", "/services", "/contact", "/work", "/work/tashif-codes"].map(entry).join("\n")}
@@ -60,6 +68,7 @@ ${products.map(product => `${entry(product.href)} Status: ${product.status}.`).j
 
 - [Complete public website text](${new URL("/llms-full.txt", origin).href}): All ${pages.length} public pages in one file, with source URLs.
 - [Personal portfolio](https://tashif.codes/): Tashif's wider project directory, apps and developer tools.
+- [Personal portfolio crawler guide](https://tashif.codes/llms.txt): Pages and in-browser WebMCP tools on tashif.codes.
 - [Engineering blog](https://tashif.codes/blog): Technical posts and project implementation notes.
 - [GitHub](https://github.com/tashifkhan): Public source code by Tashif Ahmad Khan.
 `;
@@ -73,6 +82,7 @@ const headers = [
 	...pages.map(page => `${page.source.pathname}\n  Link: <${markdownPath(page.path)}>; rel="alternate"; type="text/markdown", </llms.txt>; rel="describedby"; type="text/plain"`),
 	"/llms.txt\n  Content-Type: text/plain; charset=utf-8",
 	"/llms-full.txt\n  Content-Type: text/plain; charset=utf-8",
+	"/*\n  Permissions-Policy: tools=self",
 ].join("\n\n");
 const existingHeaders = await readFile(join(root, "_headers"), "utf8").catch(error => {
 	if (error.code !== "ENOENT") throw error;

@@ -10,3 +10,5 @@ User-agent: *
 Allow: /
 
 Sitemap: https://taf.sh/sitemap-index.xml
+
+# Crawler guide: /llms.txt. In-browser tools are WebMCP on a live tab, not HTTP APIs.
