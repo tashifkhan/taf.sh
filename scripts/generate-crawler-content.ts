@@ -50,7 +50,7 @@ The Markdown pages contain the public website's main content, generated from its
 
 ## In-browser tools (WebMCP)
 
-When an agent is visiting this site in a live tab, the page registers tools on document.modelContext. They are not HTTP APIs. Crawlers that never run JavaScript should keep using the Markdown pages above.
+When an agent is visiting this site in a live tab, the page registers tools on document.modelContext. They are not HTTP APIs. Crawlers that never run JavaScript should keep using the Markdown pages above. The static tool list is at /.well-known/webmcp.json (also /webmcp.json).
 
 Tools: get_studio_overview, list_services, get_service, list_work, get_product, get_about, get_contact, copy_studio_email, start_contact.
 
@@ -66,6 +66,7 @@ ${products.map(product => `${entry(product.href)} Status: ${product.status}.`).j
 
 ## Optional
 
+- [WebMCP tool list](${new URL("/.well-known/webmcp.json", origin).href}): Names, descriptions and input schemas for the in-tab tools.
 - [Complete public website text](${new URL("/llms-full.txt", origin).href}): All ${pages.length} public pages in one file, with source URLs.
 - [Personal portfolio](https://tashif.codes/): Tashif's wider project directory, apps and developer tools.
 - [Personal portfolio crawler guide](https://tashif.codes/llms.txt): Pages and in-browser WebMCP tools on tashif.codes.
@@ -82,6 +83,8 @@ const headers = [
 	...pages.map(page => `${page.source.pathname}\n  Link: <${markdownPath(page.path)}>; rel="alternate"; type="text/markdown", </llms.txt>; rel="describedby"; type="text/plain"`),
 	"/llms.txt\n  Content-Type: text/plain; charset=utf-8",
 	"/llms-full.txt\n  Content-Type: text/plain; charset=utf-8",
+	"/.well-known/webmcp.json\n  Content-Type: application/json; charset=utf-8",
+	"/webmcp.json\n  Content-Type: application/json; charset=utf-8",
 	"/*\n  Permissions-Policy: tools=self",
 ].join("\n\n");
 const existingHeaders = await readFile(join(root, "_headers"), "utf8").catch(error => {

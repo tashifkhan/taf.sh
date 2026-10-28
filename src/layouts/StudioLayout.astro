@@ -53,6 +53,7 @@ const schemaJson = JSON.stringify(schema).replace(/</g, "\\u003c");
 		{!noindex && metadata && <>
 			<link rel="alternate" type="text/markdown" href={markdownPath(path)} />
 			<link rel="describedby" type="text/plain" href="/llms.txt" />
+			<link rel="webmcp-manifest" type="application/json" href="/.well-known/webmcp.json" />
 		</>}
 		<meta name="robots" content={noindex ? "noindex, follow" : "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"} />
 		<meta name="author" content="Tashif Ahmad Khan" />
