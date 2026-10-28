@@ -110,9 +110,10 @@ export default {
 		}
 
 		const response = await env.ASSETS.fetch(request);
+		const headers = new Headers(response.headers);
+		headers.set("Permissions-Policy", "tools=self");
 
 		if (PREVIEW_HOST.test(url.hostname) || url.pathname === "/proposals" || url.pathname.startsWith("/proposals/") || response.status === 404) {
-			const headers = new Headers(response.headers);
 			headers.set("X-Robots-Tag", "noindex, follow");
 			return new Response(response.body, {
 				status: response.status,
@@ -121,6 +122,10 @@ export default {
 			});
 		}
 
-		return response;
+		return new Response(response.body, {
+			status: response.status,
+			statusText: response.statusText,
+			headers,
+		});
 	},
 };

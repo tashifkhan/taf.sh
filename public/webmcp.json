@@ -1,0 +1,94 @@
+{
+	"version": "1.0",
+	"name": "taf.sh",
+	"origin": "https://taf.sh",
+	"description": "Independent software studio of Tashif Ahmad Khan. Tools register on document.modelContext in a live tab. They are not HTTP APIs.",
+	"registration": "document.modelContext.registerTool",
+	"contact": "me@taf.sh",
+	"llms": "https://taf.sh/llms.txt",
+	"canonical": "https://taf.sh/.well-known/webmcp.json",
+	"tools": [
+		{
+			"name": "get_studio_overview",
+			"description": "Overview of taf.sh, Tashif Ahmad Khan, and the public pages on this site.",
+			"inputSchema": { "type": "object", "properties": {} },
+			"annotations": { "readOnlyHint": true }
+		},
+		{
+			"name": "list_services",
+			"description": "List taf.sh engineering services.",
+			"inputSchema": { "type": "object", "properties": {} },
+			"annotations": { "readOnlyHint": true }
+		},
+		{
+			"name": "get_service",
+			"description": "Get one taf.sh service by id: product, ai, messaging, or web.",
+			"inputSchema": {
+				"type": "object",
+				"properties": {
+					"id": { "type": "string", "description": "Service id: product, ai, messaging, web" }
+				},
+				"required": ["id"]
+			},
+			"annotations": { "readOnlyHint": true }
+		},
+		{
+			"name": "list_work",
+			"description": "List studio products, team work, and tools shown on taf.sh.",
+			"inputSchema": { "type": "object", "properties": {} },
+			"annotations": { "readOnlyHint": true }
+		},
+		{
+			"name": "get_product",
+			"description": "Get one product or case study by name or path, such as TalentSync or /products/rah-clinic.",
+			"inputSchema": {
+				"type": "object",
+				"properties": {
+					"query": { "type": "string", "description": "Product name or path" }
+				},
+				"required": ["query"]
+			},
+			"annotations": { "readOnlyHint": true }
+		},
+		{
+			"name": "get_about",
+			"description": "Facts about Tashif Ahmad Khan and taf.sh.",
+			"inputSchema": { "type": "object", "properties": {} },
+			"annotations": { "readOnlyHint": true }
+		},
+		{
+			"name": "get_contact",
+			"description": "How to reach Tashif. Does not send mail.",
+			"inputSchema": { "type": "object", "properties": {} },
+			"annotations": { "readOnlyHint": true }
+		},
+		{
+			"name": "copy_studio_email",
+			"description": "Copy me@taf.sh to the clipboard. Does not send mail.",
+			"inputSchema": { "type": "object", "properties": {} },
+			"annotations": { "readOnlyHint": false, "consequentialHint": true }
+		},
+		{
+			"name": "start_contact",
+			"description": "Draft a project brief to me@taf.sh. Fills the on-page form when present, opens the visitor's mail app, and returns the full draft. Does not send until a human hits Send or the agent sends from the user's mailbox after they confirm.",
+			"inputSchema": {
+				"type": "object",
+				"properties": {
+					"name": { "type": "string", "description": "Visitor's name" },
+					"email": { "type": "string", "description": "Visitor's reply-to email" },
+					"brief": {
+						"type": "string",
+						"description": "What they are building, timing, and what is in the way. At least 20 characters."
+					},
+					"budget": {
+						"type": "string",
+						"enum": ["< ₹2L", "₹2–5L", "₹5–15L", "₹15L+", "Not sure"],
+						"description": "Rough budget band"
+					}
+				},
+				"required": ["name", "email", "brief"]
+			},
+			"annotations": { "readOnlyHint": false, "consequentialHint": true }
+		}
+	]
+}

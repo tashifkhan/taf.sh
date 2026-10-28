@@ -24,6 +24,7 @@ describe("SEO routing", () => {
 		const response = await worker.fetch(new Request("https://taf.sh/work/"), environment(), ctx);
 		expect(response.status).toBe(200);
 		expect(response.headers.get("X-Robots-Tag")).toBeNull();
+		expect(response.headers.get("Permissions-Policy")).toBe("tools=self");
 	});
 	test("version previews remain reviewable and noindexed", async () => {
 		const response = await worker.fetch(new Request("https://abc123-taf-sh.example.workers.dev/work/"), environment(), ctx);

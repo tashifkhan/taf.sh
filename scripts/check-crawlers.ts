@@ -11,6 +11,11 @@ const full = await readFile(join(root, "llms-full.txt"), "utf8");
 const headers = await readFile(join(root, "_headers"), "utf8");
 assert(guide.startsWith("# taf.sh\n\n> "));
 assert(guide.includes("https://tashif.codes/") && guide.includes("https://github.com/tashifkhan"));
+assert(guide.includes("document.modelContext") && guide.includes("start_contact"));
+assert(guide.includes("/.well-known/webmcp.json"));
+const webmcp = JSON.parse(await readFile(join(root, ".well-known/webmcp.json"), "utf8")) as { tools: { name: string }[] };
+assert.equal(webmcp.tools.map((tool) => tool.name).join(","), "get_studio_overview,list_services,get_service,list_work,get_product,get_about,get_contact,copy_studio_email,start_contact");
+assert.equal(await readFile(join(root, "webmcp.json"), "utf8").then((text) => JSON.parse(text).canonical), "https://taf.sh/.well-known/webmcp.json");
 assert(guide.includes("team work") && guide.includes("Status: In development."));
 assert(headers.includes("Content-Type: text/markdown; charset=utf-8"));
 
@@ -25,13 +30,15 @@ for (const [path, metadata] of Object.entries(pageMetadata)) {
 	assert(guide.includes(markdownPath(path)), `Page missing from guide: ${metadata.label}`);
 	assert(headers.includes(`Link: <${canonical}>; rel="canonical"`));
 	const html = await readFile(join(root, canonicalPath(path), "index.html"), "utf8");
-	let alternate = "", describedby = "";
+	let alternate = "", describedby = "", webmcpManifest = "";
 	await new HTMLRewriter().on("link", { element(node) {
 		if (node.getAttribute("rel") === "alternate" && node.getAttribute("type") === "text/markdown") alternate = node.getAttribute("href") ?? "";
 		if (node.getAttribute("rel") === "describedby") describedby = node.getAttribute("href") ?? "";
+		if (node.getAttribute("rel") === "webmcp-manifest") webmcpManifest = node.getAttribute("href") ?? "";
 	} }).transform(new Response(html)).text();
 	assert.equal(alternate, markdownPath(path));
 	assert.equal(describedby, "/llms.txt");
+	assert.equal(webmcpManifest, "/.well-known/webmcp.json");
 }
 for (const path of ["proposals", "404", "products/cliniq"]) {
 	assert.equal(await stat(join(root, path, "index.md")).catch(() => null), null, `Exported excluded page: ${path}`);
