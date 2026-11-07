@@ -335,6 +335,7 @@ export const reel: ReelItem[] = [
 		live: "https://codetrace.xyz",
 		metric: "7 APIs",
 		shots: shots("codetrace", 3),
+		video: { src: "/reel/codetrace-demo.mp4", poster: "/reel/codetrace-poster.jpg" },
 	},
 	{
 		name: "JIIT Campus Updates",
