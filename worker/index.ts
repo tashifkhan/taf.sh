@@ -104,6 +104,13 @@ export default {
 			return Response.redirect(url.toString(), 301);
 		}
 
+		// The sitemap integration writes /sitemap-index.xml, but crawlers and
+		// people probe /sitemap.xml first. Point the conventional path at it.
+		if (url.pathname === "/sitemap.xml") {
+			url.pathname = "/sitemap-index.xml";
+			return Response.redirect(url.toString(), 301);
+		}
+
 		// PostHog reverse proxy
 		if (url.pathname === "/ph" || url.pathname.startsWith("/ph/")) {
 			return proxyPostHog(request, ctx);

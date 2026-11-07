@@ -20,6 +20,11 @@ describe("SEO routing", () => {
 		expect(response.status).toBe(301);
 		expect(response.headers.get("Location")).toBe("https://taf.sh/products/rah-clinic/?source=old");
 	});
+	test("conventional sitemap path redirects to the generated index", async () => {
+		const response = await worker.fetch(new Request("https://taf.sh/sitemap.xml"), environment(), ctx);
+		expect(response.status).toBe(301);
+		expect(response.headers.get("Location")).toBe("https://taf.sh/sitemap-index.xml");
+	});
 	test("main site remains indexable", async () => {
 		const response = await worker.fetch(new Request("https://taf.sh/work/"), environment(), ctx);
 		expect(response.status).toBe(200);
