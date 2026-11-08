@@ -5,6 +5,8 @@
  * - Reverse-proxies /ph/* to PostHog EU (same-origin analytics)
  */
 
+import { videoResponse } from "./video";
+
 const DEFAULT_CANONICAL_HOST = "taf.sh";
 const API_HOST = "eu.i.posthog.com";
 const ASSET_HOST = "eu-assets.i.posthog.com";
@@ -116,7 +118,7 @@ export default {
 			return proxyPostHog(request, ctx);
 		}
 
-		const response = await env.ASSETS.fetch(request);
+		const response = await videoResponse(request, await env.ASSETS.fetch(request));
 		const headers = new Headers(response.headers);
 		headers.set("Permissions-Policy", "tools=self");
 
