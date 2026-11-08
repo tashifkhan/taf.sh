@@ -249,6 +249,8 @@ export type ReelItem = {
 	metric?: string;
 	shots: string[];
 	video?: { src: string; poster: string };
+	/** Related services and source for projects with several entry points. */
+	links?: { label: string; href: string }[];
 };
 
 const shots = (name: string, n: number) => Array.from({ length: n }, (_, i) => `/reel/${name}-${i + 1}.jpg`);
@@ -389,16 +391,28 @@ export const reel: ReelItem[] = [
 		shots: shots("wikispark", 2),
 	},
 	{
-		name: "GitHub Stats API",
+		name: "Coding platforms stats APIs",
 		group: "shenanigan",
 		sector: "developer",
 		year: "2024",
-		line: "A REST API and dashboard for GitHub profiles, commits and heatmaps. One of seven that feed CodeTrace.",
-		tags: ["api"],
-		stack: ["FastAPI", "Redis"],
+		line: "REST APIs for GitHub, LeetCode, Codeforces, GeeksforGeeks, CodeChef, HackerRank and takeUforward, plus self-hosted Forgejo and Gitea. Profiles, coding stats and activity share one JSON response format, with SVG cards for READMEs and a browser playground to try each endpoint.",
+		tags: ["api", "developer tools"],
+		stack: ["FastAPI", "Pydantic", "Redis"],
 		href: "https://github-stats.tashif.codes",
 		live: "https://github-stats.tashif.codes",
-		shots: shots("github-stats", 2),
+		metric: "7 public APIs + self-hosted Git",
+		shots: shots("stats-api", 6),
+		video: { src: "/reel/stats-api-demo.mp4", poster: "/reel/stats-api-poster.jpg" },
+		links: [
+			{ label: "GitHub", href: "https://github-stats.tashif.codes" },
+			{ label: "LeetCode", href: "https://leetcode-stats.tashif.codes" },
+			{ label: "Codeforces", href: "https://codeforces-stats.tashif.codes" },
+			{ label: "GeeksforGeeks", href: "https://gfg-stats.tashif.codes" },
+			{ label: "CodeChef", href: "https://codechef-stats.tashif.codes" },
+			{ label: "HackerRank", href: "https://hackerrank-stats.tashif.codes" },
+			{ label: "takeUforward", href: "https://tuf-stats.tashif.codes" },
+			{ label: "Forgejo & Gitea source", href: "https://github.com/tashifkhan/GitHost-Stats-API" },
+		],
 	},
 	{
 		name: "Paisa",

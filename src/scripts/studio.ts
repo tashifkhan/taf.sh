@@ -10,6 +10,7 @@ import {
 	scrambles,
 	slots,
 } from "./motion";
+import { initVideoPlayers } from "./video";
 
 const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
 const finePointer = matchMedia("(hover: hover) and (pointer: fine)").matches;
@@ -797,6 +798,7 @@ function contactForm() {
  * into view.
  */
 function galleries() {
+	initVideoPlayers();
 	const io = new IntersectionObserver(
 		(entries) => {
 			for (const e of entries) {

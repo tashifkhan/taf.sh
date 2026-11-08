@@ -1,0 +1,500 @@
+{
+  "name": "stats-api",
+  "out": "../../public/reel/stats-api-demo.mp4",
+  "poster": "../../public/reel/stats-api-poster.jpg",
+  "posterAt": 4.0,
+  "product": {
+    "name": "Stats API",
+    "host": "tashif.codes"
+  },
+  "theme": {
+    "fonts": "family=Inter:wght@500;700&family=JetBrains+Mono:wght@400;600",
+    "vars": {
+      "bg": "#000000",
+      "fg": "#fafafa",
+      "muted": "#9b9ba4",
+      "card": "#0a0a0c",
+      "chrome": "#0a0a0c",
+      "urlbg": "#000000",
+      "line": "rgba(255,255,255,.10)",
+      "slab": "#000000",
+      "accent": "#ffa116",
+      "accent-fg": "#050506",
+      "accent-soft": "rgba(255,161,22,.14)",
+      "accent-line": "rgba(255,161,22,.45)",
+      "shadow": "rgba(0,0,0,.8)",
+      "grid": "rgba(255,161,22,.12)",
+      "pill-bg": "rgba(8,8,12,.94)",
+      "pill-fg": "#fafafa",
+      "fadebg": "#000000",
+      "head": "Inter, sans-serif",
+      "head-weight": "700",
+      "head-track": "-.03em",
+      "body": "Inter, sans-serif",
+      "mono": "'JetBrains Mono', ui-monospace, monospace",
+      "hand": "Inter, sans-serif",
+      "hand-weight": "700",
+      "bgimg": "radial-gradient(circle at 16% 0%, rgba(255,161,22,.09), transparent 55%)"
+    },
+    "css": ""
+  },
+  "music": {
+    "bpm": 90,
+    "chords": [
+      [
+        55,
+        59,
+        62
+      ],
+      [
+        50,
+        57,
+        62
+      ],
+      [
+        48,
+        55,
+        60
+      ],
+      [
+        53,
+        57,
+        60
+      ]
+    ]
+  },
+  "cursor": false,
+  "scenes": [
+    {
+      "type": "platformIntro",
+      "dur": 8.0,
+      "kicker": "Stats API",
+      "title": "Your stats. <em>One API shape.</em>",
+      "tagline": "Coding platforms and self-hosted Git. Consistent JSON. Shareable SVG cards."
+    },
+    {
+      "type": "stats",
+      "dur": 7.2,
+      "kicker": "What you get",
+      "title": "A handle in the path. JSON back.",
+      "items": [
+        {
+          "text": "7 + 2",
+          "label": "Seven public platform APIs. Forgejo and Gitea for self-hosted Git."
+        },
+        {
+          "text": "GET",
+          "label": "Public platform APIs need no key. Put the handle in the path."
+        },
+        {
+          "text": "24h",
+          "label": "The SVG card caches for a day. Fine in a README."
+        }
+      ],
+      "links": [
+        "github-stats.tashif.codes",
+        "leetcode-stats.tashif.codes",
+        "codeforces-stats.tashif.codes",
+        "gfg-stats.tashif.codes",
+        "codechef-stats.tashif.codes",
+        "hackerrank-stats.tashif.codes",
+        "tuf-stats.tashif.codes"
+      ],
+      "foot": ""
+    },
+    {
+      "type": "arch",
+      "dur": 8.4,
+      "kicker": "How a call runs",
+      "title": "The path names the section.",
+      "cols": 7,
+      "rows": 3,
+      "nodes": [
+        {
+          "id": "in",
+          "x": 0,
+          "y": 1,
+          "kind": "request",
+          "label": "GET",
+          "sub": "/{handle}/profile"
+        },
+        {
+          "id": "api",
+          "x": 3,
+          "y": 1,
+          "kind": "service",
+          "label": "One host",
+          "sub": "FastAPI, its platform",
+          "hot": true
+        },
+        {
+          "id": "up",
+          "x": 6,
+          "y": 0,
+          "kind": "upstream",
+          "label": "The platform",
+          "sub": "public profile"
+        },
+        {
+          "id": "out",
+          "x": 6,
+          "y": 2,
+          "kind": "response",
+          "label": "Envelope",
+          "sub": "status, platform, data"
+        }
+      ],
+      "edges": [
+        {
+          "from": "in",
+          "to": "api",
+          "label": "handle"
+        },
+        {
+          "from": "api",
+          "to": "up"
+        },
+        {
+          "from": "up",
+          "to": "out",
+          "label": "mapped"
+        }
+      ]
+    },
+    {
+      "type": "chapter",
+      "dur": 4.6,
+      "n": 1,
+      "still": "assets/stills/envelope.png",
+      "path": "/",
+      "title": "The same routes on every host.",
+      "body": "Profile, stats, contests, rating, heatmap, badges. A missing value comes back null, not omitted.",
+      "points": [
+        "platform and username sit on every response",
+        "Old paths stay, marked legacy",
+        "OpenAPI and ReDoc ship with the service"
+      ]
+    },
+    {
+      "type": "demo",
+      "n": 1,
+      "path": "/",
+      "caption": "The same five fields, on every response",
+      "src": {
+        "raw": "assets/footage/stats-api-data.webm",
+        "a": 5.4,
+        "b": 9.4,
+        "speed": 1
+      },
+      "highlights": [
+        {
+          "at": 0.6,
+          "dur": 3.2,
+          "box": [
+            0.24166666666666667,
+            0.19666666666666666,
+            0.5159722222222223,
+            0.25666666666666665
+          ],
+          "label": "The same five fields on every response",
+          "side": "below"
+        }
+      ]
+    },
+    {
+      "type": "chapter",
+      "dur": 4.6,
+      "n": 2,
+      "still": "assets/stills/06-profile.png",
+      "path": "/playground",
+      "title": "Type a handle. Run the route.",
+      "body": "The playground fills the path and calls the live API from the browser. The response renders as fields, with the raw JSON one tab over.",
+      "points": [
+        "One handle covers every row",
+        "The status pill shows the code and the time",
+        "Nothing is sent anywhere else"
+      ]
+    },
+    {
+      "type": "demo",
+      "n": 2,
+      "path": "/playground",
+      "caption": "khan-tashif, live",
+      "src": {
+        "raw": "assets/footage/stats-api-profile.webm",
+        "a": 7.0,
+        "b": 9.6,
+        "speed": 1
+      },
+      "highlights": [
+        {
+          "at": 0.35,
+          "dur": 2.1,
+          "box": [
+            0.25,
+            0.3,
+            0.51,
+            0.22
+          ],
+          "label": "Name, country, institution",
+          "side": "below"
+        }
+      ]
+    },
+    {
+      "type": "chapter",
+      "dur": 4.6,
+      "n": 3,
+      "still": "assets/stills/svg-card.png",
+      "path": "/khan-tashif/stats/svg",
+      "title": "The same stats, as an SVG.",
+      "body": "An SVG image, cached for 24 hours. theme picks dark or light, and exclude drops topics from the bars.",
+      "points": [
+        "Drops into a README as an image",
+        "Built from the same stats block as the JSON",
+        "The playground renders the card, not a download"
+      ]
+    },
+    {
+      "type": "demo",
+      "n": 3,
+      "path": "/playground",
+      "caption": "165 of 4,105, with the topics",
+      "src": {
+        "raw": "assets/footage/stats-api-hosts.webm",
+        "a": 6.2,
+        "b": 9.0,
+        "speed": 1
+      },
+      "highlights": [
+        {
+          "at": 0.5,
+          "dur": 2.6,
+          "box": [
+            0.34,
+            0.206,
+            0.326,
+            0.322
+          ],
+          "label": "165 of 4,105, topics beside it",
+          "side": "below"
+        }
+      ]
+    },
+    {
+      "type": "chapter",
+      "dur": 4.6,
+      "n": 4,
+      "still": "assets/stills/10-gh-stats.png",
+      "path": "/playground",
+      "title": "Swap the host. Keep the client.",
+      "body": "Codeforces returns a rating series. GitHub returns commits and languages. takeUforward returns the sheet, split by difficulty.",
+      "points": [
+        "tourist, 3408 current and 4009 max",
+        "tashifkhan, 10,185 commits",
+        "striver, 248 solved of 1,505"
+      ]
+    },
+    {
+      "type": "demo",
+      "n": 4,
+      "path": "/playground",
+      "caption": "GitHub, 10,185 commits",
+      "src": {
+        "raw": "assets/footage/stats-api-hosts.webm",
+        "a": 14.6,
+        "b": 17.6,
+        "speed": 1
+      },
+      "highlights": [
+        {
+          "at": 0.4,
+          "dur": 2.4,
+          "box": [
+            0.255,
+            0.22,
+            0.48,
+            0.56
+          ],
+          "label": "10,185 commits, then the languages",
+          "side": "below"
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "n": 4,
+      "path": "/playground",
+      "caption": "Codeforces, 3408 current and 4009 max",
+      "src": {
+        "raw": "assets/footage/stats-api-cf.webm",
+        "a": 8.6,
+        "b": 11.6,
+        "speed": 1
+      },
+      "highlights": [
+        {
+          "at": 0.4,
+          "dur": 2.4,
+          "box": [
+            0.252,
+            0.178,
+            0.5,
+            0.635
+          ],
+          "label": "3408 now, 4009 at the peak",
+          "side": "below"
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "n": 4,
+      "path": "/playground",
+      "caption": "takeUforward, 248 of 1,505",
+      "src": {
+        "raw": "assets/footage/stats-api-tuf-hold.webm",
+        "a": 0.2,
+        "b": 2.5,
+        "speed": 1
+      },
+      "highlights": [
+        {
+          "at": 0.3,
+          "dur": 1.8,
+          "box": [
+            0.257,
+            0.306,
+            0.403,
+            0.183
+          ],
+          "label": "248 solved of 1,505",
+          "side": "below"
+        }
+      ]
+    },
+    {
+      "type": "platformSchema",
+      "dur": 8.2,
+      "kicker": "Under the hood",
+      "title": "Nine platforms. <em>One schema.</em>"
+    },
+    {
+      "type": "demo",
+      "n": 4,
+      "path": "/playground",
+      "caption": "The live response, raw",
+      "src": {
+        "raw": "assets/footage/stats-api-raw.webm",
+        "a": 9.6,
+        "b": 13.4,
+        "speed": 1
+      },
+      "highlights": [
+        {
+          "at": 0.5,
+          "dur": 2.8,
+          "box": [
+            0.26,
+            0.4,
+            0.48,
+            0.3
+          ],
+          "label": "platform, cached, then data",
+          "side": "below"
+        }
+      ]
+    },
+    {
+      "type": "contact",
+      "dur": 8.6,
+      "kicker": "Stats API",
+      "title": "Stats, ready for <em>your next build.</em>",
+      "site": "taf.sh",
+      "email": "me@taf.sh"
+    }
+  ],
+  "platforms": [
+    {
+      "id": "github",
+      "name": "GitHub",
+      "color": "#f0f0f0",
+      "value": "10,190",
+      "detail": "commits",
+      "route": "github-stats.tashif.codes",
+      "icon": "assets/icons/github.svg"
+    },
+    {
+      "id": "leetcode",
+      "name": "LeetCode",
+      "color": "#ffa116",
+      "value": "165 / 4,105",
+      "detail": "problems solved",
+      "route": "leetcode-stats.tashif.codes",
+      "icon": "assets/icons/leetcode.svg"
+    },
+    {
+      "id": "codeforces",
+      "name": "Codeforces",
+      "color": "#6b9efa",
+      "value": "3,060",
+      "detail": "problems solved",
+      "route": "codeforces-stats.tashif.codes",
+      "icon": "assets/icons/codeforces.svg"
+    },
+    {
+      "id": "gfg",
+      "name": "GeeksforGeeks",
+      "color": "#4ab76b",
+      "value": "4 solved",
+      "detail": "practice problems",
+      "route": "gfg-stats.tashif.codes",
+      "icon": "assets/icons/gfg.svg"
+    },
+    {
+      "id": "codechef",
+      "name": "CodeChef",
+      "color": "#d6ad8a",
+      "value": "0 solved",
+      "detail": "practice problems",
+      "route": "codechef-stats.tashif.codes",
+      "icon": "assets/icons/codechef.svg"
+    },
+    {
+      "id": "hackerrank",
+      "name": "HackerRank",
+      "color": "#20ce79",
+      "value": "2 solved",
+      "detail": "practice problems",
+      "route": "hackerrank-stats.tashif.codes",
+      "icon": "assets/icons/hackerrank.svg"
+    },
+    {
+      "id": "tuf",
+      "name": "takeUforward",
+      "color": "#ff7a3d",
+      "value": "248 / 1,505",
+      "detail": "problems solved",
+      "route": "tuf-stats.tashif.codes",
+      "icon": "assets/icons/tuf.png"
+    },
+    {
+      "id": "forgejo",
+      "name": "Forgejo",
+      "color": "#fb923c",
+      "value": "Open source",
+      "detail": "self-hosted Git",
+      "selfHosted": true,
+      "icon": "assets/icons/forgejo.svg"
+    },
+    {
+      "id": "gitea",
+      "name": "Gitea",
+      "color": "#8fc85c",
+      "value": "Open source",
+      "detail": "self-hosted Git",
+      "selfHosted": true,
+      "icon": "assets/icons/gitea.svg"
+    }
+  ]
+}
