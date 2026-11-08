@@ -46,3 +46,33 @@ describe("SEO routing", () => {
 		expect(response.headers.get("X-Robots-Tag")).toContain("noindex");
 	});
 });
+
+describe("video streaming", () => {
+	test("forwards byte ranges and preserves partial asset responses", async () => {
+		let range: string | null = null;
+		const env = environment({
+			ASSETS: { fetch: async (request: Request) => {
+				range = request.headers.get("Range");
+				return new Response(new Uint8Array([1, 2, 3, 4]), {
+					status: 206,
+					headers: {
+						"Content-Type": "video/mp4",
+						"Accept-Ranges": "bytes",
+						"Content-Range": "bytes 0-3/100",
+						"Content-Length": "4",
+					},
+				});
+			} } as Fetcher,
+		});
+		const response = await worker.fetch(new Request("https://taf.sh/reel/stats-api-demo.mp4", {
+			headers: { Range: "bytes=0-3" },
+		}), env, ctx);
+		expect(range).toBe("bytes=0-3");
+		expect(response.status).toBe(206);
+		expect(response.headers.get("Content-Type")).toBe("video/mp4");
+		expect(response.headers.get("Accept-Ranges")).toBe("bytes");
+		expect(response.headers.get("Content-Range")).toBe("bytes 0-3/100");
+		expect(response.headers.get("Content-Length")).toBe("4");
+		expect([...new Uint8Array(await response.arrayBuffer())]).toEqual([1, 2, 3, 4]);
+	});
+});
