@@ -48,6 +48,73 @@ describe("SEO routing", () => {
 });
 
 describe("video streaming", () => {
+	const bytes = Uint8Array.from({ length: 20 }, (_, index) => index);
+	function fullVideo(method = "GET") {
+		return environment({ ASSETS: { fetch: async () => new Response(method === "HEAD" ? null : bytes, {
+			headers: { "Content-Type": "video/mp4", "Content-Length": "20", ETag: '"video-v1"' },
+		}) } as Fetcher });
+	}
+	for (const [range, start, end] of [
+		["bytes=0-3", 0, 3], ["bytes=4-10", 4, 10], ["bytes=17-", 17, 19],
+		["bytes=0-999", 0, 19], ["bytes=-4", 16, 19], ["bytes=-99", 0, 19],
+	] as const) test(`serves ${range} when Assets ignores the range`, async () => {
+		const response = await worker.fetch(new Request("https://taf.sh/reel/stats-api-demo.mp4", {
+			headers: { Range: range },
+		}), fullVideo(), ctx);
+		expect(response.status).toBe(206);
+		expect(response.headers.get("Content-Range")).toBe(`bytes ${start}-${end}/20`);
+		expect(response.headers.get("Accept-Ranges")).toBe("bytes");
+		expect([...new Uint8Array(await response.arrayBuffer())]).toEqual([...bytes.slice(start, end + 1)]);
+	});
+	for (const range of ["bytes=20-", "bytes=-0"]) test(`rejects unsatisfiable ${range}`, async () => {
+		const response = await worker.fetch(new Request("https://taf.sh/reel/stats-api-demo.mp4", {
+			headers: { Range: range },
+		}), fullVideo(), ctx);
+		expect(response.status).toBe(416);
+		expect(response.headers.get("Content-Range")).toBe("bytes */20");
+		expect(await response.text()).toBe("");
+	});
+	for (const range of ["bytes=", "bytes=8-2", "bytes=0-1,4-5", "items=0-1"]) test(`ignores unsupported ${range}`, async () => {
+		const response = await worker.fetch(new Request("https://taf.sh/reel/stats-api-demo.mp4", {
+			headers: { Range: range },
+		}), fullVideo(), ctx);
+		expect(response.status).toBe(200);
+		expect([...new Uint8Array(await response.arrayBuffer())]).toEqual([...bytes]);
+	});
+	for (const [ifRange, status] of [['"video-v1"', 206], ['"old-video"', 200], ['W/"video-v1"', 200]] as const) test(`respects If-Range ${ifRange}`, async () => {
+		const response = await worker.fetch(new Request("https://taf.sh/reel/stats-api-demo.mp4", {
+			headers: { Range: "bytes=0-3", "If-Range": ifRange },
+		}), fullVideo(), ctx);
+		expect(response.status).toBe(status);
+		expect((await response.arrayBuffer()).byteLength).toBe(status === 206 ? 4 : 20);
+	});
+	test("HEAD advertises ranges without a response body", async () => {
+		const response = await worker.fetch(new Request("https://taf.sh/reel/stats-api-demo.mp4", {
+			method: "HEAD", headers: { Range: "bytes=0-3" },
+		}), fullVideo("HEAD"), ctx);
+		expect(response.status).toBe(200);
+		expect(response.headers.get("Accept-Ranges")).toBe("bytes");
+		expect(response.headers.get("Content-Length")).toBe("20");
+		expect(await response.text()).toBe("");
+	});
+	test("streams across chunks and cancels the asset before reading the rest", async () => {
+		let offset = 0;
+		let cancelled = false;
+		const env = environment({ ASSETS: { fetch: async () => new Response(new ReadableStream({
+			pull(controller) {
+				controller.enqueue(bytes.slice(offset, offset + 3));
+				offset += 3;
+				if (offset >= bytes.length) controller.close();
+			},
+			cancel() { cancelled = true; },
+		}), { headers: { "Content-Type": "video/mp4", "Content-Length": "20" } }) } as Fetcher });
+		const response = await worker.fetch(new Request("https://taf.sh/reel/stats-api-demo.mp4", {
+			headers: { Range: "bytes=4-7" },
+		}), env, ctx);
+		expect([...new Uint8Array(await response.arrayBuffer())]).toEqual([4, 5, 6, 7]);
+		expect(cancelled).toBe(true);
+		expect(offset).toBeLessThan(bytes.length);
+	});
 	test("forwards byte ranges and preserves partial asset responses", async () => {
 		let range: string | null = null;
 		const env = environment({
