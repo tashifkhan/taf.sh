@@ -165,6 +165,22 @@ html[data-theme="light"],
 }
 
 /*
+ * Freeze the page behind the open work sheet. Several of its loops animate
+ * on the main thread (the box-shadow ping on the status dots, the SVG cursor
+ * blink, the hero's stroke draw-in), and each one repaints part of the page
+ * layer every frame while the sheet slides over it. studio.ts adds
+ * `reel-open` in the frame before the slide starts, so this restyle is paid
+ * before anything moves.
+ */
+html.reel-open :not([data-reel], [data-reel] *) {
+	animation-play-state: paused !important;
+}
+
+html.reel-open [data-geo] * {
+	transition: none !important;
+}
+
+/*
  * ---------------------------------------------------------------------------
  * Cross-document view transitions
  * ---------------------------------------------------------------------------
