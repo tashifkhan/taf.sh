@@ -6,6 +6,7 @@
  */
 
 import { videoResponse } from "./video";
+import videoSizes from "./video-manifest.json";
 
 const DEFAULT_CANONICAL_HOST = "taf.sh";
 const API_HOST = "eu.i.posthog.com";
@@ -118,7 +119,8 @@ export default {
 			return proxyPostHog(request, ctx);
 		}
 
-		const response = await videoResponse(request, await env.ASSETS.fetch(request));
+		const videoLength = (videoSizes as Record<string, number>)[url.pathname];
+		const response = await videoResponse(request, await env.ASSETS.fetch(request), videoLength);
 		const headers = new Headers(response.headers);
 		headers.set("Permissions-Policy", "tools=self");
 

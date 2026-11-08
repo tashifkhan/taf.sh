@@ -1,10 +1,10 @@
 /** Supply single byte ranges when the deployed Assets binding returns a full MP4. */
-export async function videoResponse(request: Request, response: Response): Promise<Response> {
+export async function videoResponse(request: Request, response: Response, knownLength?: number): Promise<Response> {
 	if (response.status !== 200 || !response.headers.get("Content-Type")?.startsWith("video/mp4")) return response;
 	const headers = new Headers(response.headers);
 	headers.set("Accept-Ranges", "bytes");
 	const full = () => new Response(response.body, { status: response.status, headers });
-	const length = Number(headers.get("Content-Length"));
+	const length = Number(headers.get("Content-Length") ?? knownLength);
 	const range = request.headers.get("Range");
 	if (request.method !== "GET" || !range || !Number.isSafeInteger(length) || length <= 0 || headers.has("Content-Encoding")) return full();
 

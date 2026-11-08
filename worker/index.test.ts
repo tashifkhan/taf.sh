@@ -97,6 +97,27 @@ describe("video streaming", () => {
 		expect(response.headers.get("Content-Length")).toBe("20");
 		expect(await response.text()).toBe("");
 	});
+	test("uses deployed video metadata when Assets omits Content-Length", async () => {
+		const env = environment({ ASSETS: { fetch: async () => new Response(bytes, {
+			headers: { "Content-Type": "video/mp4" },
+		}) } as Fetcher });
+		const response = await worker.fetch(new Request("https://taf.sh/reel/stats-api-demo.mp4", {
+			headers: { Range: "bytes=0-3" },
+		}), env, ctx);
+		expect(response.status).toBe(206);
+		expect(response.headers.get("Content-Range")).toBe("bytes 0-3/22391889");
+		expect([...new Uint8Array(await response.arrayBuffer())]).toEqual([0, 1, 2, 3]);
+	});
+	test("leaves unknown-length videos unchanged when metadata is unavailable", async () => {
+		const env = environment({ ASSETS: { fetch: async () => new Response(bytes, {
+			headers: { "Content-Type": "video/mp4" },
+		}) } as Fetcher });
+		const response = await worker.fetch(new Request("https://taf.sh/unknown.mp4", {
+			headers: { Range: "bytes=0-3" },
+		}), env, ctx);
+		expect(response.status).toBe(200);
+		expect([...new Uint8Array(await response.arrayBuffer())]).toEqual([...bytes]);
+	});
 	test("streams across chunks and cancels the asset before reading the rest", async () => {
 		let offset = 0;
 		let cancelled = false;

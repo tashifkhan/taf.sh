@@ -8,7 +8,8 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "bun run seo:images && astro build && bun run seo:crawlers",
+    "build": "bun run media:manifest && bun run seo:images && astro build && bun run seo:crawlers",
+    "media:manifest": "bun scripts/generate-video-manifest.ts",
     "preview": "astro preview",
     "astro": "astro",
     "deploy": "bun run build && wrangler deploy",
