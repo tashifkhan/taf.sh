@@ -41,10 +41,9 @@ for(const platform of selected.length?selected:['ios','android']){
       .sub{position:absolute;left:100px;right:80px;top:505px;font-size:32px;line-height:1.4;color:#685865;margin:0;font-weight:450}
       .device{position:absolute;top:620px;left:175px;width:970px;border:14px solid #25202A;border-radius:112px;overflow:hidden;background:#000;box-shadow:0 0 0 3px #A4777380,0 32px 55px #39213230}
       .device img{display:block;width:100%;height:auto}
-      .sample{position:absolute;bottom:40px;left:96px;right:96px;display:flex;justify-content:space-between;font-size:20px;letter-spacing:2px;text-transform:uppercase;color:#7E6B77}
       .thread{position:absolute;right:46px;top:180px;width:125px;height:380px;border-right:3px dashed #AC8A8A55;border-top:3px dashed #AC8A8A55;border-radius:0 90px 0 0;transform:rotate(10deg)}
       .index{position:absolute;right:101px;top:540px;color:#927A8466;font:500 25px Archivo,sans-serif;letter-spacing:2px}
-    </style></head><body><main class="art"><div class="thread"></div><header><img src="${icon}" alt="">Patchwork<small>${platform==='ios'?'iOS':'Android'}</small></header><h1>${p.title}</h1><p class="sub">${p.sub}</p><span class="index">0${i+1}</span><div class="device"><img src="${shot}" alt="${p.screen}"></div><div class="sample"><span>Native ${platform==='ios'?'iOS':'Android'} app</span><span>Sample data</span></div></main></body></html>`;
+    </style></head><body><main class="art"><div class="thread"></div><header><img src="${icon}" alt="">Patchwork<small>${platform==='ios'?'iOS':'Android'}</small></header><h1>${p.title}</h1><p class="sub">${p.sub}</p><span class="index">0${i+1}</span><div class="device"><img src="${shot}" alt="${p.screen}"></div></main></body></html>`;
     await page.setContent(html,{waitUntil:'load'});await page.evaluate(()=>document.fonts.ready);
     const overflow=await page.evaluate(()=>[...document.querySelectorAll('h1,.sub')].some(el=>el.getBoundingClientRect().right>innerWidth-30));
     if(overflow)throw new Error(`Text exceeds margins in ${platform}/${p.id}`);
