@@ -1,0 +1,605 @@
+{
+  "name": "paisa",
+  "out": "/Users/taf/Projects/taf.sh/public/reel/paisa-demo.mp4",
+  "poster": "/Users/taf/Projects/taf.sh/public/reel/paisa-poster.jpg",
+  "posterAt": 3.6,
+  "fps": 30,
+  "product": {
+    "name": "Paisa",
+    "host": "Kotlin Multiplatform",
+    "icon": "/Users/taf/Projects/taf.sh/scripts/paisa-video/paisa-icon.svg"
+  },
+  "cursor": false,
+  "theme": {
+    "fonts": "family=Roboto:wght@400;500;600;700&family=Roboto+Mono:wght@400;500",
+    "vars": {
+      "bg": "#F1F8E9",
+      "fg": "#172116",
+      "muted": "#4E604A",
+      "card": "#E5EFDD",
+      "line": "#C8D8BF",
+      "shadow": "rgba(28,58,22,.20)",
+      "chrome": "#E1ECD9",
+      "urlbg": "#F1F8E9",
+      "slab": "#CBDCC3",
+      "accent": "#1B5E20",
+      "accent-fg": "#FFFFFF",
+      "accent-soft": "rgba(27,94,32,.10)",
+      "accent-line": "rgba(27,94,32,.30)",
+      "grid": "rgba(27,94,32,.08)",
+      "dim": "rgba(15,32,12,.22)",
+      "pill-bg": "#193A1A",
+      "pill-fg": "#FFFFFF",
+      "fadebg": "#F1F8E9",
+      "head": "Roboto, Arial, sans-serif",
+      "head-weight": "600",
+      "head-track": "-.035em",
+      "body": "Roboto, Arial, sans-serif",
+      "mono": "\"Roboto Mono\", monospace",
+      "hand": "Roboto, Arial, sans-serif",
+      "hand-weight": "600",
+      "bgimg": "none"
+    },
+    "css": ".intro .chip{display:none}.intro .copy{width:550px}.intro .title{font-size:72px}.intro .tagline{max-width:480px}.intro .orbit{left:1050px}.chapter .copy{width:480px}.chapter .title{font-size:54px}.chapter .tilt{left:650px;width:590px}.chapter .tilt .win{width:590px}.chapter .tilt .view{height:368px}.stats .title{font-size:56px}.stat b{font-size:37px}.statrow{top:370px}.outro .term{top:300px;height:270px}.outro .title{font-size:55px}.outro .term .row b{width:325px}.arch .title{font-size:43px}"
+  },
+  "music": {
+    "bpm": 94,
+    "chords": [
+      [
+        48,
+        55,
+        60,
+        64
+      ],
+      [
+        45,
+        52,
+        57,
+        60
+      ],
+      [
+        41,
+        48,
+        53,
+        57
+      ],
+      [
+        43,
+        50,
+        55,
+        59
+      ]
+    ]
+  },
+  "scenes": [
+    {
+      "type": "intro",
+      "dur": 7,
+      "pre": "Paisa \u00b7 open source",
+      "kicker": "Paisa",
+      "title": "Your expenses. On <em>your device</em>",
+      "tagline": "An expense manager for Android and the web. Built with Kotlin and Compose Multiplatform.",
+      "shots": [
+        "/Users/taf/Projects/taf.sh/scripts/paisa-video/desktop-home.png",
+        "/Users/taf/Projects/taf.sh/scripts/paisa-video/desktop-analytics.png",
+        "/Users/taf/Projects/taf.sh/scripts/paisa-video/desktop-detail.png"
+      ],
+      "decor": "none"
+    },
+    {
+      "type": "stats",
+      "dur": 8,
+      "kicker": "A local money record",
+      "title": "Start without an <em>account</em>",
+      "items": [
+        {
+          "text": "On-device",
+          "label": "Android parses bank SMS locally"
+        },
+        {
+          "text": "Optional",
+          "label": "AI uses the provider and key you choose"
+        },
+        {
+          "text": "Your choice",
+          "label": "Keep a file or connect your own backup"
+        }
+      ],
+      "foot": "No Paisa account required. The app keeps its database on your device."
+    },
+    {
+      "type": "arch",
+      "dur": 9,
+      "kicker": "The everyday loop",
+      "title": "Capture, categorize, <em>review</em>",
+      "cols": 4,
+      "rows": 2,
+      "nodes": [
+        {
+          "id": "capture",
+          "x": 0,
+          "y": 0,
+          "kind": "Capture",
+          "label": "Manual or SMS",
+          "sub": "SMS on Android only",
+          "hot": true
+        },
+        {
+          "id": "category",
+          "x": 1,
+          "y": 0,
+          "kind": "Organize",
+          "label": "Merchant rules",
+          "sub": "Remember corrections"
+        },
+        {
+          "id": "data",
+          "x": 2,
+          "y": 0,
+          "kind": "Store",
+          "label": "Local database",
+          "sub": "SQLite on each device",
+          "hot": true
+        },
+        {
+          "id": "review",
+          "x": 3,
+          "y": 0,
+          "kind": "Review",
+          "label": "Spending + budgets",
+          "sub": "See the original records"
+        },
+        {
+          "id": "backup",
+          "x": 2,
+          "y": 1,
+          "kind": "Optional",
+          "label": "Backup + sync",
+          "sub": "Your file, Drive or server"
+        }
+      ],
+      "edges": [
+        {
+          "to": "category",
+          "from": "capture"
+        },
+        {
+          "to": "data",
+          "from": "category"
+        },
+        {
+          "to": "review",
+          "from": "data"
+        },
+        {
+          "to": "backup",
+          "from": "data"
+        }
+      ]
+    },
+    {
+      "type": "chapter",
+      "n": 1,
+      "dur": 7,
+      "title": "Keep the everyday <em>record</em>",
+      "body": "Add a cash expense by hand. On Android, bank alerts can become records on the device.",
+      "points": [
+        "Choose a category and account",
+        "Merchant rules remember your corrections"
+      ],
+      "still": "/Users/taf/Projects/taf.sh/scripts/paisa-video/desktop-home.png",
+      "path": " \u00b7 Compose Multiplatform"
+    },
+    {
+      "type": "demo",
+      "n": 1,
+      "path": " \u00b7 local Wasm build",
+      "caption": "Native Android \u00b7 phone",
+      "src": {
+        "raw": "/Users/taf/Projects/taf.sh/scripts/paisa-video/raw/phone.mp4",
+        "a": 3,
+        "b": 11,
+        "speed": 1,
+        "crop": "1080:2424:498:0"
+      },
+      "hold": 0.5,
+      "layout": "phone",
+      "kicker": "Phone \u00b7 native Android",
+      "title": "A balance you can check at a glance",
+      "body": "Your accounts, recent records and credit card usage fit the cover display.",
+      "points": [
+        "Bottom navigation stays within reach",
+        "All amounts shown here are sample data"
+      ]
+    },
+    {
+      "type": "demo",
+      "n": 1,
+      "path": " \u00b7 local Wasm build",
+      "caption": "Manual entry \u00b7 real app",
+      "src": {
+        "raw": "/Users/taf/Projects/taf.sh/scripts/paisa-video/raw/phone.mp4",
+        "a": 91,
+        "b": 100,
+        "speed": 1,
+        "crop": "1080:2424:498:0"
+      },
+      "hold": 0.5,
+      "layout": "phone",
+      "kicker": "Phone \u00b7 add an expense",
+      "title": "Put the details with the amount",
+      "body": "The add sheet keeps the amount, date, category and account together.",
+      "points": [
+        "Manual entry needs no AI service",
+        "Review the record before saving"
+      ]
+    },
+    {
+      "type": "demo",
+      "n": 1,
+      "path": " \u00b7 local Wasm build",
+      "caption": "Saved locally \u00b7 a \u20b9240 expense",
+      "src": {
+        "raw": "/Users/taf/Projects/taf.sh/scripts/paisa-video/raw/phone.mp4",
+        "a": 147,
+        "b": 150,
+        "speed": 1,
+        "crop": "1080:2424:498:0"
+      },
+      "hold": 5.5,
+      "layout": "phone",
+      "kicker": "Phone \u00b7 local record",
+      "title": "Save it on the device",
+      "body": "Saving the expense updates the balance and adds it to the transaction list.",
+      "points": [
+        "\u20b9240 sample expense",
+        "No account or cloud connection needed"
+      ]
+    },
+    {
+      "type": "chapter",
+      "n": 2,
+      "dur": 7,
+      "title": "Give the layout <em>room</em>",
+      "body": "The same Kotlin UI adapts when the foldable opens or the browser gets wider.",
+      "points": [
+        "A rail replaces the phone bottom bar",
+        "Transaction details can stay beside the list"
+      ],
+      "still": "/Users/taf/Projects/taf.sh/scripts/paisa-video/desktop-detail.png",
+      "path": " \u00b7 Compose Multiplatform"
+    },
+    {
+      "type": "demo",
+      "n": 2,
+      "path": " \u00b7 local Wasm build",
+      "caption": "Native Android \u00b7 unfolded foldable",
+      "src": {
+        "raw": "/Users/taf/Projects/taf.sh/scripts/paisa-video/raw/foldable.mp4",
+        "a": 3,
+        "b": 11,
+        "speed": 1,
+        "crop": "2076:2152:0:136"
+      },
+      "hold": 0.5,
+      "layout": "foldable",
+      "kicker": "Foldable \u00b7 native Android",
+      "title": "Unfold into more context",
+      "body": "The inner display makes room for the overview and a navigation rail.",
+      "points": [
+        "One app across both displays",
+        "No separate tablet rewrite"
+      ]
+    },
+    {
+      "type": "demo",
+      "n": 2,
+      "path": " \u00b7 local Wasm build",
+      "caption": "Native Android \u00b7 list and detail",
+      "src": {
+        "raw": "/Users/taf/Projects/taf.sh/scripts/paisa-video/raw/foldable.mp4",
+        "a": 27,
+        "b": 35,
+        "speed": 1,
+        "crop": "2076:2152:0:136"
+      },
+      "hold": 0.5,
+      "layout": "foldable",
+      "kicker": "Foldable \u00b7 two panes",
+      "title": "Open a record. Keep the list.",
+      "body": "Check the source, category and account while the transaction list remains visible.",
+      "points": [
+        "Edit the amount or title in place",
+        "Return to the next record without losing context"
+      ]
+    },
+    {
+      "type": "chapter",
+      "n": 3,
+      "dur": 7,
+      "title": "See where the money <em>went</em>",
+      "body": "Search the original records, compare spending and set a monthly category budget.",
+      "points": [
+        "Desktop keeps navigation visible",
+        "Charts lead back to actual transactions"
+      ],
+      "still": "/Users/taf/Projects/taf.sh/scripts/paisa-video/desktop-analytics.png",
+      "path": " \u00b7 Compose Multiplatform"
+    },
+    {
+      "type": "demo",
+      "n": 3,
+      "path": " \u00b7 local Wasm build",
+      "caption": "Search a merchant across the record",
+      "src": {
+        "raw": "/Users/taf/Projects/taf.sh/scripts/paisa-video/raw/desktop-details.mp4",
+        "a": 16,
+        "b": 24,
+        "speed": 1
+      },
+      "hold": 0.5,
+      "highlights": [
+        {
+          "at": 3,
+          "dur": 2.7,
+          "box": [
+            0.185,
+            0.05,
+            0.5,
+            0.09
+          ],
+          "label": "Swiggy \u00b7 4 matching transactions",
+          "side": "below"
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "n": 3,
+      "path": " \u00b7 local Wasm build",
+      "caption": "Open the source record beside the results",
+      "src": {
+        "raw": "/Users/taf/Projects/taf.sh/scripts/paisa-video/raw/desktop-details.mp4",
+        "a": 46,
+        "b": 54,
+        "speed": 1
+      },
+      "hold": 0.5,
+      "highlights": [
+        {
+          "at": 3,
+          "dur": 2.6,
+          "box": [
+            0.68,
+            0.06,
+            0.3,
+            0.52
+          ],
+          "label": "Source, date, category and account",
+          "side": "below"
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "n": 3,
+      "path": " \u00b7 local Wasm build",
+      "caption": "Compare the month and inspect category spending",
+      "src": {
+        "raw": "/Users/taf/Projects/taf.sh/scripts/paisa-video/raw/desktop.mp4",
+        "a": 15,
+        "b": 23,
+        "speed": 1
+      },
+      "hold": 0.5,
+      "highlights": [
+        {
+          "at": 2,
+          "dur": 2.5,
+          "box": [
+            0.18,
+            0.19,
+            0.8,
+            0.1
+          ],
+          "label": "Income, expense and savings for the selected period",
+          "side": "below"
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "n": 3,
+      "path": " \u00b7 local Wasm build",
+      "caption": "Monthly budgets with category progress",
+      "src": {
+        "raw": "/Users/taf/Projects/taf.sh/scripts/paisa-video/raw/desktop.mp4",
+        "a": 40,
+        "b": 48,
+        "speed": 1
+      },
+      "hold": 0.5,
+      "highlights": [
+        {
+          "at": 2,
+          "dur": 2.7,
+          "box": [
+            0.18,
+            0.07,
+            0.79,
+            0.2
+          ],
+          "label": "Set caps for the categories you want to watch",
+          "side": "below"
+        }
+      ]
+    },
+    {
+      "type": "chapter",
+      "n": 4,
+      "dur": 7,
+      "title": "Choose what <em>leaves</em> the device",
+      "body": "Keep your records local. Connect backup, sync or an AI provider when you want them.",
+      "points": [
+        "File, Google Drive or Nextcloud",
+        "AI sends only what you choose to submit"
+      ],
+      "still": "/Users/taf/Projects/taf.sh/scripts/paisa-video/desktop-backup.png",
+      "path": " \u00b7 Compose Multiplatform"
+    },
+    {
+      "type": "demo",
+      "n": 4,
+      "path": " \u00b7 local Wasm build",
+      "caption": "Accounts keep cash, bank and credit records separate",
+      "src": {
+        "raw": "/Users/taf/Projects/taf.sh/scripts/paisa-video/raw/desktop.mp4",
+        "a": 54,
+        "b": 61,
+        "speed": 1
+      },
+      "hold": 0.5,
+      "highlights": [
+        {
+          "at": 2,
+          "dur": 2.5,
+          "box": [
+            0.18,
+            0.06,
+            0.38,
+            0.35
+          ],
+          "label": "Sample cash, bank, card and wallet accounts",
+          "side": "below"
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "n": 4,
+      "path": " \u00b7 local Wasm build",
+      "caption": "Backup and sync are optional",
+      "src": {
+        "raw": "/Users/taf/Projects/taf.sh/scripts/paisa-video/raw/desktop.mp4",
+        "a": 89,
+        "b": 97,
+        "speed": 1
+      },
+      "hold": 0.5,
+      "highlights": [
+        {
+          "at": 2,
+          "dur": 2.8,
+          "box": [
+            0.45,
+            0.35,
+            0.53,
+            0.29
+          ],
+          "label": "Connect your own destination first",
+          "side": "below"
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "n": 4,
+      "path": " \u00b7 local Wasm build",
+      "caption": "Bring your own AI provider and model",
+      "src": {
+        "raw": "/Users/taf/Projects/taf.sh/scripts/paisa-video/raw/desktop.mp4",
+        "a": 104,
+        "b": 112,
+        "speed": 1
+      },
+      "hold": 0.5,
+      "highlights": [
+        {
+          "at": 3,
+          "dur": 2.6,
+          "box": [
+            0.45,
+            0.36,
+            0.53,
+            0.29
+          ],
+          "label": "Configure optional import and Add with AI",
+          "side": "below"
+        }
+      ]
+    },
+    {
+      "type": "arch",
+      "dur": 9,
+      "kicker": "One shared codebase",
+      "title": "Kotlin on Android. Compose in the <em>browser</em>",
+      "cols": 3,
+      "rows": 2,
+      "nodes": [
+        {
+          "id": "shared",
+          "x": 1,
+          "y": 0,
+          "kind": "Shared",
+          "label": "Kotlin + Compose",
+          "sub": "UI and application logic",
+          "hot": true
+        },
+        {
+          "id": "android",
+          "x": 0,
+          "y": 1,
+          "kind": "Android",
+          "label": "Phone + foldable",
+          "sub": "Native app and local SMS"
+        },
+        {
+          "id": "web",
+          "x": 2,
+          "y": 1,
+          "kind": "Web",
+          "label": "Kotlin/Wasm",
+          "sub": "SQLite in browser storage"
+        }
+      ],
+      "edges": [
+        {
+          "from": "shared",
+          "to": "android"
+        },
+        {
+          "from": "shared",
+          "to": "web"
+        }
+      ]
+    },
+    {
+      "type": "outro",
+      "dur": 8,
+      "kicker": "Paisa \u00b7 open source",
+      "title": "Keep your money record <em>yours</em>",
+      "url": "github.com/tashifkhan/Paisa",
+      "trace": [
+        {
+          "name": "Android phone",
+          "status": "native app"
+        },
+        {
+          "name": "Unfolded foldable",
+          "status": "adaptive two panes"
+        },
+        {
+          "name": "Web browser",
+          "status": "Kotlin/Wasm"
+        }
+      ],
+      "stack": [
+        "Kotlin",
+        "Compose Multiplatform",
+        "SQLite",
+        "AGPL-3.0"
+      ],
+      "sign": "<b>Built by taf.sh</b> \u00b7 github.com/tashifkhan/Paisa"
+    }
+  ]
+}

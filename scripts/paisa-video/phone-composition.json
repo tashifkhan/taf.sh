@@ -1,0 +1,145 @@
+{
+  "name": "paisa-phone",
+  "out": "/Users/taf/Projects/taf.sh/public/reel/paisa-phone-demo.mp4",
+  "poster": "/Users/taf/Projects/taf.sh/public/reel/paisa-phone-poster.jpg",
+  "posterAt": 2.5,
+  "fps": 30,
+  "product": {
+    "name": "Paisa",
+    "host": "Kotlin Multiplatform",
+    "icon": "/Users/taf/Projects/taf.sh/scripts/paisa-video/paisa-icon.svg"
+  },
+  "cursor": false,
+  "theme": {
+    "fonts": "family=Roboto:wght@400;500;600;700&family=Roboto+Mono:wght@400;500",
+    "vars": {
+      "bg": "#F1F8E9",
+      "fg": "#172116",
+      "muted": "#4E604A",
+      "card": "#E5EFDD",
+      "line": "#C8D8BF",
+      "shadow": "rgba(28,58,22,.20)",
+      "chrome": "#E1ECD9",
+      "urlbg": "#F1F8E9",
+      "slab": "#CBDCC3",
+      "accent": "#1B5E20",
+      "accent-fg": "#FFFFFF",
+      "accent-soft": "rgba(27,94,32,.10)",
+      "accent-line": "rgba(27,94,32,.30)",
+      "grid": "rgba(27,94,32,.08)",
+      "dim": "rgba(15,32,12,.22)",
+      "pill-bg": "#193A1A",
+      "pill-fg": "#FFFFFF",
+      "fadebg": "#F1F8E9",
+      "head": "Roboto, Arial, sans-serif",
+      "head-weight": "600",
+      "head-track": "-.035em",
+      "body": "Roboto, Arial, sans-serif",
+      "mono": "\"Roboto Mono\", monospace",
+      "hand": "Roboto, Arial, sans-serif",
+      "hand-weight": "600",
+      "bgimg": "none"
+    },
+    "css": "html,body{width:720px;height:1280px}.hud{display:none}.demo.portrait .win{left:132px;top:190px;width:456px;border:7px solid #263522;border-radius:32px}.demo.portrait .bar{display:none}.demo.portrait .view{height:990px;background:var(--bg)}.demo.portrait .shot{object-fit:contain!important}.portrait-header{position:absolute;left:40px;right:40px;top:26px;text-align:center}.portrait-header small{font:14px var(--mono);letter-spacing:.13em;color:var(--accent)}.portrait-header h2{font:600 38px/1.12 var(--head);letter-spacing:-.03em;margin:16px 0 8px}.portrait-header p{font:20px/1.4 var(--body);color:var(--muted);margin:0}.caption{left:40px;right:40px;bottom:31px;justify-content:center;padding:11px 12px;font-size:20px;box-shadow:none}.caption b{display:none}.sample-data{left:0;right:0;bottom:8px;text-align:center;font-size:11px}"
+  },
+  "music": {
+    "bpm": 94,
+    "chords": [
+      [
+        48,
+        55,
+        60,
+        64
+      ],
+      [
+        45,
+        52,
+        57,
+        60
+      ],
+      [
+        41,
+        48,
+        53,
+        57
+      ],
+      [
+        43,
+        50,
+        55,
+        59
+      ]
+    ]
+  },
+  "scenes": [
+    {
+      "type": "demo",
+      "n": 1,
+      "layout": "portrait",
+      "title": "Your expenses. On your device.",
+      "body": "The native Kotlin app on a phone.",
+      "caption": "Check balances and recent records",
+      "path": "",
+      "src": {
+        "raw": "/Users/taf/Projects/taf.sh/scripts/paisa-video/raw/phone.mp4",
+        "a": 3,
+        "b": 11,
+        "speed": 1,
+        "crop": "1080:2424:498:0"
+      },
+      "hold": 0.5
+    },
+    {
+      "type": "demo",
+      "n": 1,
+      "layout": "portrait",
+      "title": "Add an expense",
+      "body": "Choose the amount, category and account.",
+      "caption": "Manual entry \u00b7 no AI service needed",
+      "path": "",
+      "src": {
+        "raw": "/Users/taf/Projects/taf.sh/scripts/paisa-video/raw/phone.mp4",
+        "a": 37,
+        "b": 46,
+        "speed": 1,
+        "crop": "1080:2424:498:0"
+      },
+      "hold": 0.5
+    },
+    {
+      "type": "demo",
+      "n": 1,
+      "layout": "portrait",
+      "title": "Review the details",
+      "body": "A sample \u20b9240 expense in the add sheet.",
+      "caption": "Review before saving",
+      "path": "",
+      "src": {
+        "raw": "/Users/taf/Projects/taf.sh/scripts/paisa-video/raw/phone.mp4",
+        "a": 91,
+        "b": 100,
+        "speed": 1,
+        "crop": "1080:2424:498:0"
+      },
+      "hold": 0.5
+    },
+    {
+      "type": "demo",
+      "n": 1,
+      "layout": "portrait",
+      "title": "Saved on the device",
+      "body": "The balance updates with your new record.",
+      "caption": "github.com/tashifkhan/Paisa",
+      "path": "",
+      "src": {
+        "raw": "/Users/taf/Projects/taf.sh/scripts/paisa-video/raw/phone.mp4",
+        "a": 147,
+        "b": 150,
+        "speed": 1,
+        "crop": "1080:2424:498:0"
+      },
+      "hold": 5.5
+    }
+  ],
+  "format": "portrait"
+}
