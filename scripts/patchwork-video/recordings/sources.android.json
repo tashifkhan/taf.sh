@@ -1,0 +1,51 @@
+{
+  "platform": "native Android emulator",
+  "device": "Pixel 8, API 35, Android 15",
+  "bundle": "codes.tashhif.patchwork.dev",
+  "data": "Synthetic CalDAV and Nextcloud Deck fixtures",
+  "recordingTool": "T3 agent-device",
+  "clips": [
+    {
+      "file": "android-plan.mp4",
+      "sourceStart": 8,
+      "sourceEnd": 13,
+      "fps": 30
+    },
+    {
+      "file": "android-detail.mp4",
+      "sourceStart": 0,
+      "sourceEnd": 4.5,
+      "fps": 30
+    },
+    {
+      "file": "android-priority.mp4",
+      "sourceStart": 0,
+      "sourceEnd": 4.5,
+      "fps": 30
+    },
+    {
+      "file": "android-boards.mp4",
+      "sourceStart": 0,
+      "sourceEnd": 4.5,
+      "fps": 30
+    },
+    {
+      "file": "android-card.mp4",
+      "sourceStart": 0,
+      "sourceEnd": 5.5,
+      "fps": 30
+    },
+    {
+      "file": "android-appearance.mp4",
+      "sourceStart": 0,
+      "sourceEnd": 4.8,
+      "fps": 30
+    },
+    {
+      "file": "android-search-clean.mp4",
+      "sourceStart": 0,
+      "sourceEnd": 4.5,
+      "fps": 30
+    }
+  ]
+}

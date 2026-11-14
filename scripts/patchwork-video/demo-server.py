@@ -9,6 +9,11 @@ from html import escape
 import json
 import re
 import base64
+import importlib.util
+from pathlib import Path
+_spec=importlib.util.spec_from_file_location("jira_fixtures",Path(__file__).with_name("jira-fixtures.py"))
+jira_fixtures=importlib.util.module_from_spec(_spec)
+_spec.loader.exec_module(jira_fixtures)
 
 NOW = datetime.now(timezone.utc).replace(hour=12, minute=0, second=0, microsecond=0)
 SAMPLES = [
@@ -80,6 +85,7 @@ class Handler(BaseHTTPRequestHandler):
         self.send(f'<d:multistatus xmlns:d="DAV:" xmlns:c="urn:ietf:params:xml:ns:caldav">{responses}</d:multistatus>',207,'application/xml')
 
     def do_GET(self):
+        if jira_fixtures.dispatch(self): return
         # An older simulator has a second, empty local test account.
         # Keep its fixtures empty so accounts do not duplicate the demo board.
         auth=self.headers.get('Authorization','').removeprefix('Basic ')
@@ -98,6 +104,7 @@ class Handler(BaseHTTPRequestHandler):
         self.send(dict(status='ok',nextcloud_configured=True,gemini_configured=False))
 
     def do_PUT(self):
+        if jira_fixtures.dispatch(self): return
         data=self.body()
         uid=self.path.rsplit('/',1)[-1][:-4]
         if uid in TASKS:
@@ -105,6 +112,8 @@ class Handler(BaseHTTPRequestHandler):
             for field,prop in [('title','SUMMARY'),('markdown','DESCRIPTION')]:
                 m=re.search(rf'(?m)^{prop}:(.*)',data)
                 if m:t[field]=m[1].rstrip('\r').replace('\\n','\n')
+            m=re.search(r'(?m)^PRIORITY:(\d+)',data)
+            if m:t['priority']=int(m[1]) or None
             t['completed']='STATUS:COMPLETED' in data
         self.send('',204)
 
@@ -117,6 +126,7 @@ class Handler(BaseHTTPRequestHandler):
         self.send(data)
 
     def do_POST(self):
+        if jira_fixtures.dispatch(self): return
         self.send(json.loads(self.body() or '{}'))
 
 if __name__ == '__main__':

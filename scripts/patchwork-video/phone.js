@@ -24,7 +24,8 @@ S.phone = (sc) => {
   const phones = (sc.phones || [{ platform: sc.platform, still: sc.still }]).map((p, i) => {
     const group = $("div", "native-device device-" + i);
     const name = $("div", "native-platform", esc(p.platform || "iOS"));
-    const frame = $("div", "native-bezel");
+    const android = /android/i.test(p.platform || sc.platform || "");
+    const frame = $("div", "native-bezel" + (android ? " android-bezel" : ""));
     const shot = $("img", "native-screen");
     shot.src = p.still || sc.still || "";
     const reflection = $("div", "native-reflection");

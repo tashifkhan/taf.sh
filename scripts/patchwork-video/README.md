@@ -1,66 +1,75 @@
-# Patchwork media
+# Patchwork native media
 
-Native iOS preview and six App Store screenshots for Patchwork. The reference
-is https://www.amyfoodjournal.com/. The artwork borrows its spacious portrait
-layout and soft backgrounds. Patchwork supplies the app icon, coral accent,
-product copy and native screens.
+One film follows release work in the real native iOS and Android apps. Eight
+store screenshots per platform use spacious portrait layouts and soft colors
+inspired by https://www.amyfoodjournal.com/. Patchwork supplies the icon,
+coral accent, product copy and actual app screens.
 
-Archivo is the only font in the artwork and video, including captions and
-diagram labels. The app captures retain the app's native font. No serif accents.
+Archivo is the only font in the artwork and video. Native captures retain
+platform fonts. The screenshot artwork has no sample-data or native-app footer.
+Video frames fit the actual capture height, with no black bands inside the bezel.
 
 ## Outputs
 
-- `public/reel/patchwork-ios-preview.mp4`, about 117 seconds at 1920 × 1200, 30 fps.
-- `public/reel/patchwork-ios-preview-poster.jpg`.
-- `public/reel/patchwork-1.jpg` through `patchwork-6.jpg`, landscape site gallery.
-- `public/reel/patchwork-store/ios/`, six 1320 × 2868 PNG screenshots.
+- `public/reel/patchwork-native-demo.mp4`, 123.8 seconds, 1920 × 1200, 30 fps.
+- `public/reel/patchwork-native-poster.jpg`.
+- `public/reel/patchwork-1.jpg` through `patchwork-6.jpg`, landscape gallery.
+- `public/reel/patchwork-store/ios/`, eight 1320 × 2868 PNGs.
+- `public/reel/patchwork-store/android/`, eight 1080 × 2400 PNGs.
 - `public/reel/patchwork-store/patchwork-ios-screenshots.zip`.
-- `public/reel/patchwork-store/ios-overview.png`.
+- `public/reel/patchwork-store/patchwork-android-screenshots.zip`.
+- `public/reel/patchwork-store/patchwork-ios-android-screenshots.zip`.
+- Platform overview PNGs and a combined overview JPG in `patchwork-store/`.
+
+The prior iOS preview remains available under `patchwork-ios-preview.mp4`.
+The site gallery now uses the combined native film.
 
 ## Recording provenance
 
-The screens and clips show the real `codes.tashhif.patchwork.dev` native build
-on an iPhone 18 Pro simulator running iOS 27.0. T3 agent-device captured them.
-`recordings/sources.json` records the clip windows. The retained MP4 clips use
-constant 30 fps and contain only the footage used in the composition.
+T3 agent-device captured the actual `codes.tashhif.patchwork.dev` builds on
+an iPhone 18 Pro simulator with iOS 27.0 and a Pixel 8 emulator with Android 15,
+API 35. Android uses the bundled release APK. `recordings/sources.json` and
+`recordings/sources.android.json` list source windows.
+`recordings/sources.jira.json` records the new Jira board clips. Retained clips use CFR30.
 
-Tasks and Deck boards use synthetic data served by `demo-server.py` on port
-5232. Edits use the actual native CalDAV requests. GitHub and Jira are
-unconnected in the recording, so only their settings appear. The AI scene
-shows provider configuration, with no key value or generated result.
+Tasks and Deck boards contain synthetic fixtures served by `demo-server.py`.
+Video scenes label that data. The priority scene shows the native High to Medium
+UI change. It does not claim a server round trip or cross-device synchronization.
+Jira uses synthetic issues in `jira-fixtures.py`, captured through each native
+client. GitHub is unconnected in this recording. AI settings show provider
+configuration, without key values or a generated result. No concept screens.
 
-The scene order is introduction, source diagram, daily planning and search,
-task details and editing, Deck boards and cards, integration settings, AI
-configuration, appearance, device storage diagram, and closing repository URL.
-Music and sound effects come from the product-video skill's audio synthesizer.
+## Scene order
+
+Both phones introduce Patchwork. iOS shows due-date groups. Android filters the
+release tag and searches tasks and cards. Both apps open the release checklist.
+Android changes priority. Both platforms show a populated Jira board. Android
+and iOS narrow the scope to assigned or reported issues. iOS selects the active
+sprint. Both platforms show an actual card drag with a drop marker. Paired
+appearance screens show native theme controls, followed by provider settings
+and the closing source URL.
+
+The supplied Android screenshots guide the Jira board layout and interactions.
+All final board captures come from the running native apps, with sample issues
+about Patchwork. No Android screenshot is relabeled as iOS. Drag artwork uses
+frames from the actual gesture recordings.
 
 ## Render
 
-Requires Node, ffmpeg, uv, Pillow, the installed product-video skill and its
-Playwright dependency. Run from the taf.sh repository root.
+Requires Node, ffmpeg, uv, Pillow, and the installed product-video skill with
+its Playwright dependency. Run from the taf.sh repository root.
 
 ```sh
 export VID=/tmp/patchwork-video
-node scripts/patchwork-video/make-comp.mjs
-node scripts/patchwork-video/render.mjs "$VID/comp/patchwork-ios-preview.json" --still 3.6,21,37,46,65,83,89,97,105,113
-WORKERS=4 node scripts/patchwork-video/render.mjs "$VID/comp/patchwork-ios-preview.json"
-node scripts/patchwork-video/screenshots.mjs ios
+node scripts/patchwork-video/make-combined.mjs
+node scripts/patchwork-video/render.mjs "$VID/comp/patchwork-native-demo.json" --still 3.5,11.7,18.9,26.1,33.3,41.5,47.7,54.9,62.1,69.3,76.5,82.7,89.9,97.1,104.3,111.5,118.7
+WORKERS=4 node scripts/patchwork-video/render.mjs "$VID/comp/patchwork-native-demo.json"
+node scripts/patchwork-video/screenshots.mjs ios android
 python3 scripts/patchwork-video/export-gallery.py
 bun run build
 ```
 
-`make-comp.mjs` reads the durable clips in this directory and the raw native
-PNGs in `public/reel`. `prepare-footage.mjs` is only needed after new device
-recordings. It reads the original temporary recordings and keeps the selected
-windows. `PRODUCT_VIDEO_SCRIPTS` can override the installed skill script path.
-
-## Android status
-
-Android work is paused at the user's request. The release APK built successfully
-at `~/Projects/Patchwork/app/android/app/build/outputs/apk/release/app-release.apk`.
-Installation on the Pixel 8 API 35 emulator failed because its internal storage
-was full. Do not retry, erase emulator data or switch emulators until the user
-resumes Android work. Android screenshots and footage have not been produced.
-`screenshots.mjs` has an Android layout ready for real Android captures.
-
-The current video and site entry explicitly say iOS preview. No deployment.
+`prepare-footage.mjs`, `prepare-android.mjs` and `prepare-jira.mjs` preserve selected windows from
+new raw recordings. They are not needed for a normal render. The bad Android
+edit recording is excluded. Music comes from the skill's synthesizer.
+No deployment is part of this work.

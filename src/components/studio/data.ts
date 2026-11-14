@@ -248,7 +248,7 @@ export type ReelItem = {
 	live?: string;
 	metric?: string;
 	shots: string[];
-	video?: { src: string; poster: string; phone?: { src: string; poster: string } };
+	video?: { src: string; poster: string; label?: string; phone?: { src: string; poster: string } };
 	/** Related services and source for projects with several entry points. */
 	links?: { label: string; href: string }[];
 };
@@ -436,6 +436,30 @@ export const reel: ReelItem[] = [
 		live: "https://paisa.tashif.codes",
 		metric: "Local-first",
 		shots: shots("paisa", 1),
+	},
+	{
+		name: "Patchwork",
+		group: "shenanigan",
+		sector: "productivity",
+		year: "2026",
+		line: "CalDAV tasks, Nextcloud Deck boards, GitHub issues and Jira in one native app for iOS and Android. This walkthrough follows tasks and populated Jira boards across both native builds, including sprint filters and card dragging with sample data.",
+		tags: ["app", "mobile"],
+		stack: ["Expo", "React Native", "CalDAV", "Nextcloud Deck"],
+		href: "https://github.com/tashifkhan/Patchwork",
+		metric: "Native iOS + Android",
+		shots: shots("patchwork", 6),
+		video: {
+			src: "/reel/patchwork-native-demo.mp4",
+			poster: "/reel/patchwork-native-poster.jpg",
+			label: "iOS + Android",
+		},
+		links: [
+			{ label: "Source", href: "https://github.com/tashifkhan/Patchwork" },
+			{ label: "Native app video", href: "/reel/patchwork-native-demo.mp4" },
+			{ label: "iOS screenshot pack", href: "/reel/patchwork-store/patchwork-ios-screenshots.zip" },
+			{ label: "Android screenshot pack", href: "/reel/patchwork-store/patchwork-android-screenshots.zip" },
+			{ label: "All screenshots", href: "/reel/patchwork-store/patchwork-ios-android-screenshots.zip" },
+		],
 	},
 ];
 

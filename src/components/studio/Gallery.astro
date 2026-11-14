@@ -10,7 +10,7 @@ interface Props {
 	name: string;
 	shots: string[];
 	/** A walkthrough video loaded on Play, then shown with native controls. */
-	video?: { src: string; poster: string; phone?: { src: string; poster: string } };
+	video?: { src: string; poster: string; label?: string; phone?: { src: string; poster: string } };
 	live?: string;
 	class?: string;
 	/** Load the first screen eagerly (above-the-fold use). */
@@ -18,7 +18,7 @@ interface Props {
 }
 const { name, shots, live, video, class: className, eager = false } = Astro.props;
 const videos = video ? [
-	{ src: video.src, poster: video.poster, label: video.phone ? "Web walkthrough" : "Video", width: 1280, height: 800 },
+	{ src: video.src, poster: video.poster, label: video.label ?? (video.phone ? "Web walkthrough" : "Video"), width: 1280, height: 800 },
 	...(video.phone ? [{ ...video.phone, label: "Phone walkthrough", width: 720, height: 1280 }] : []),
 ] : [];
 const slides = videos.length + shots.length;

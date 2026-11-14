@@ -10,16 +10,18 @@
 .native-note{font:12px var(--mono);color:var(--muted);margin-top:32px;line-height:1.6;max-width:540px}
 .native-device{position:absolute;left:830px;top:104px;width:270px}
 .native-platform{font:12px var(--mono);text-align:center;color:var(--muted);letter-spacing:1px;margin-bottom:13px;text-transform:uppercase}
-.native-bezel{background:#111;border:6px solid #17141b;border-radius:35px;overflow:hidden;box-shadow:0 24px 60px #24182d24,0 0 0 1px #ffffff38;position:relative;aspect-ratio:1206/2622}
-.native-screen{width:100%;height:100%;object-fit:contain;display:block;background:#000}
+.native-bezel{background:#111;border:6px solid #17141b;border-radius:35px;overflow:hidden;box-shadow:0 24px 60px #24182d24,0 0 0 1px #ffffff38;position:relative}
+.native-screen{width:100%;height:auto;display:block;background:transparent}
 .native-reflection{position:absolute;inset:0;pointer-events:none;border:1px solid #ffffff16;border-radius:27px}
 .native-strip{position:absolute;left:96px;bottom:50px;display:flex;gap:8px}
 .native-strip i{height:3px;width:42px;background:var(--line);border-radius:2px}
 .native-strip .active{background:var(--accent)}
 .dual .native-copy{width:470px;top:168px}
-.dual .native-title{font-size:61px;max-width:470px}
+.dual .native-title{font-size:53px;max-width:470px}
 .dual .native-body{max-width:435px;font-size:21px}
 .dual .native-points{max-width:435px}
 .dual .native-device{left:635px;top:129px;width:246px}
 .dual .device-1{left:913px;top:154px}
 .dual .native-bezel{border-width:5px;border-radius:31px}
+
+.native-bezel.android-bezel{border-radius:27px}

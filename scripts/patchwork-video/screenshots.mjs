@@ -15,10 +15,12 @@ const icon=uri('/Users/taf/Projects/Patchwork/app/assets/images/icon.png','image
 const panels=[
   {id:'01-tasks',screen:'tasks',title:'Your work.<br>One <em>app.</em>',sub:'CalDAV, GitHub, Jira and Nextcloud Deck.',bg:'#FAF1E6'},
   {id:'02-detail',screen:'detail',title:'Keep the<br><em>details.</em>',sub:'Notes, checklists, tags and due dates.',bg:'#F4D4CC'},
-  {id:'03-boards',screen:'boards',title:'See what<br>comes <em>next.</em>',sub:'Your boards, columns and cards on your phone.',bg:'#E9E3D5'},
+  {id:'03-boards',screen:'jira-board',title:'Your projects.<br>In <em>motion.</em>',sub:'Jira boards, sprints, priorities and assignees.',bg:'#E9E3D5'},
   {id:'04-search',screen:'search',title:'Find it.<br>Get <em>moving.</em>',sub:'Search your tasks, cards and issues.',bg:'#E7E0EF'},
   {id:'05-appearance',screen:'appearance',title:'Make room<br>for <em>you.</em>',sub:'Choose your theme, accent and contrast.',bg:'#FAF1E6'},
   {id:'06-ai',screen:'ai',title:'Choose your<br><em>AI.</em>',sub:'Bring your own key. Review every draft.',bg:'#E5E9DD'},
+  {id:'07-filters',screen:'jira-filter',title:'See only<br><em>your work.</em>',sub:'Filter by assignee, sprint, type and priority.',bg:'#F4D4CC'},
+  {id:'08-drag',screen:'jira-drag',title:'Pick it up.<br>Move it <em>on.</em>',sub:'Drag cards to reorder your board.',bg:'#E9E3D5'},
 ];
 const browser=await chromium.launch({executablePath:exe,args:['--allow-file-access-from-files']});
 const selected=process.argv.slice(2).filter(x=>['ios','android'].includes(x));
