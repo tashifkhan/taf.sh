@@ -3,6 +3,7 @@
 The completed film combines real iOS and Android footage in one story. Keep Archivo
 throughout. Use the actual native navigation and controls on each platform.
 Remove the platform and sample-data footer from exported store screenshots.
+Keep platform labels only on the first image of each store set and the first video scene.
 
 ## Story
 
@@ -22,7 +23,7 @@ list, the setup guide is on a board, and the day has personal tasks too.
    to demonstrate an AI result.
 
 Close with both phones and "Pick up the next task. On your phone."
-Show the source URL and native iOS and Android availability. Keep source
+Show the source URL. Name iOS and Android only in the opening scene. Keep source
 integration and storage explanations short so the film follows the work.
 
 Task and board recordings use synthetic local fixtures. Label those video

@@ -45,7 +45,7 @@ for(const platform of selected.length?selected:['ios','android']){
       .device img{display:block;width:100%;height:auto}
       .thread{position:absolute;right:46px;top:180px;width:125px;height:380px;border-right:3px dashed #AC8A8A55;border-top:3px dashed #AC8A8A55;border-radius:0 90px 0 0;transform:rotate(10deg)}
       .index{position:absolute;right:101px;top:540px;color:#927A8466;font:500 25px Archivo,sans-serif;letter-spacing:2px}
-    </style></head><body><main class="art"><div class="thread"></div><header><img src="${icon}" alt="">Patchwork<small>${platform==='ios'?'iOS':'Android'}</small></header><h1>${p.title}</h1><p class="sub">${p.sub}</p><span class="index">0${i+1}</span><div class="device"><img src="${shot}" alt="${p.screen}"></div></main></body></html>`;
+    </style></head><body><main class="art"><div class="thread"></div><header><img src="${icon}" alt="">Patchwork${i===0?`<small>${platform==='ios'?'iOS':'Android'}</small>`:''}</header><h1>${p.title}</h1><p class="sub">${p.sub}</p><span class="index">0${i+1}</span><div class="device"><img src="${shot}" alt="${p.screen}"></div></main></body></html>`;
     await page.setContent(html,{waitUntil:'load'});await page.evaluate(()=>document.fonts.ready);
     const overflow=await page.evaluate(()=>[...document.querySelectorAll('h1,.sub')].some(el=>el.getBoundingClientRect().right>innerWidth-30));
     if(overflow)throw new Error(`Text exceeds margins in ${platform}/${p.id}`);

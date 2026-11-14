@@ -77,7 +77,8 @@
         "CalDAV, Nextcloud Deck and Jira boards",
         "Native apps for iOS and Android"
       ],
-      "note": "Real native builds · Sample tasks, Deck cards and Jira issues",
+      "showPlatform": true,
+      "note": "Sample tasks, Deck cards and Jira issues",
       "kicker": "Patchwork · iOS + Android",
       "dual": true,
       "phones": [
@@ -102,7 +103,8 @@
         "See today, tomorrow and upcoming tasks",
         "Keep each task connected to its list"
       ],
-      "note": "Real native builds · Sample tasks, Deck cards and Jira issues",
+      "showPlatform": false,
+      "note": "Sample tasks, Deck cards and Jira issues",
       "kicker": "01 · Decide what needs doing",
       "still": "/Users/taf/Projects/taf.sh/public/reel/patchwork-ios-tasks.png"
     },
@@ -117,7 +119,8 @@
         "Plan the Patchwork release",
         "Publish release notes"
       ],
-      "note": "Real native builds · Sample tasks, Deck cards and Jira issues",
+      "showPlatform": false,
+      "note": "Sample tasks, Deck cards and Jira issues",
       "kicker": "01 · Decide what needs doing",
       "src": {
         "raw": "/Users/taf/Projects/taf.sh/scripts/patchwork-video/recordings/android-plan.mp4",
@@ -138,7 +141,8 @@
         "Task notes appear in the results",
         "Switch result types without a new search"
       ],
-      "note": "Real native builds · Sample tasks, Deck cards and Jira issues",
+      "showPlatform": false,
+      "note": "Sample tasks, Deck cards and Jira issues",
       "kicker": "01 · Decide what needs doing",
       "dual": true,
       "phones": [
@@ -168,10 +172,11 @@
       "title": "Read before you <em>act.</em>",
       "body": "Open the release task to see what still needs checking before the builds ship.",
       "points": [
-        "iOS and Android checks in the same note",
+        "Release checks in the same note",
         "The task list stays behind the detail view"
       ],
-      "note": "Real native builds · Sample tasks, Deck cards and Jira issues",
+      "showPlatform": false,
+      "note": "Sample tasks, Deck cards and Jira issues",
       "kicker": "02 · Turn a task into a next step",
       "src": {
         "raw": "/Users/taf/Projects/taf.sh/scripts/patchwork-video/recordings/ios-detail.mp4",
@@ -186,13 +191,14 @@
       "n": 2,
       "platform": "Native Android",
       "dur": 8,
-      "title": "The same task. Native <em>Android.</em>",
-      "body": "Open the same release notes in the Android app, with its own navigation and controls.",
+      "title": "The same task. Every <em>detail.</em>",
+      "body": "Open the release notes, then check the deadline, tags and source list before you act.",
       "points": [
         "Markdown and checklist together",
         "Tags, due date and source list in view"
       ],
-      "note": "Real native builds · Sample tasks, Deck cards and Jira issues",
+      "showPlatform": false,
+      "note": "Sample tasks, Deck cards and Jira issues",
       "kicker": "02 · Turn a task into a next step",
       "src": {
         "raw": "/Users/taf/Projects/taf.sh/scripts/patchwork-video/recordings/android-detail.mp4",
@@ -210,10 +216,11 @@
       "title": "Decide what comes <em>next.</em>",
       "body": "Change the release task from High to Medium priority in the full task editor.",
       "points": [
-        "A real native priority change",
+        "Update priority in the task editor",
         "Deadline and reminder controls alongside"
       ],
-      "note": "Real native builds · Sample tasks, Deck cards and Jira issues",
+      "showPlatform": false,
+      "note": "Sample tasks, Deck cards and Jira issues",
       "kicker": "02 · Turn a task into a next step",
       "src": {
         "raw": "/Users/taf/Projects/taf.sh/scripts/patchwork-video/recordings/android-priority.mp4",
@@ -232,9 +239,10 @@
       "body": "Open a populated Jira board with sprint groups, issue keys, priorities and assignees.",
       "points": [
         "Active sprints and backlog together",
-        "Each platform keeps its native navigation"
+        "Issue details stay connected to the board"
       ],
-      "note": "Real native builds · Sample tasks, Deck cards and Jira issues",
+      "showPlatform": false,
+      "note": "Sample tasks, Deck cards and Jira issues",
       "kicker": "03 · Keep the project moving",
       "dual": true,
       "phones": [
@@ -259,7 +267,8 @@
         "Choose whose issues load",
         "Narrow by sprint, type or priority"
       ],
-      "note": "Real native builds · Sample tasks, Deck cards and Jira issues",
+      "showPlatform": false,
+      "note": "Sample tasks, Deck cards and Jira issues",
       "kicker": "03 · Keep the project moving",
       "dual": true,
       "phones": [
@@ -287,12 +296,13 @@
       "platform": "Native iOS",
       "dur": 8,
       "title": "Find your place in <em>the project.</em>",
-      "body": "Use the same issue scopes in the iOS app. The board updates to your work.",
+      "body": "Choose an issue scope. The board updates to show the work assigned to you or reported by you.",
       "points": [
         "Assignee and reporter scopes",
         "Sprint groups remain visible"
       ],
-      "note": "Real native builds · Sample tasks, Deck cards and Jira issues",
+      "showPlatform": false,
+      "note": "Sample tasks, Deck cards and Jira issues",
       "kicker": "03 · Keep the project moving",
       "src": {
         "raw": "/Users/taf/Projects/taf.sh/scripts/patchwork-video/recordings/ios-jira-filter.mp4",
@@ -313,7 +323,8 @@
         "Switch with the sprint chips",
         "Return to All for the full board"
       ],
-      "note": "Real native builds · Sample tasks, Deck cards and Jira issues",
+      "showPlatform": false,
+      "note": "Sample tasks, Deck cards and Jira issues",
       "kicker": "03 · Keep the project moving",
       "src": {
         "raw": "/Users/taf/Projects/taf.sh/scripts/patchwork-video/recordings/ios-jira-sprint.mp4",
@@ -329,12 +340,13 @@
       "platform": "Native iOS",
       "dur": 8,
       "title": "Pick up a card. Place it <em>where it belongs.</em>",
-      "body": "Long press and drag the setup-guide card on the native iOS board.",
+      "body": "Long press and drag the setup-guide card to a new position on the board.",
       "points": [
         "The lifted card stays under your finger",
         "A line marks the drop position"
       ],
-      "note": "Real native builds · Sample tasks, Deck cards and Jira issues",
+      "showPlatform": false,
+      "note": "Sample tasks, Deck cards and Jira issues",
       "kicker": "03 · Keep the project moving",
       "src": {
         "raw": "/Users/taf/Projects/taf.sh/scripts/patchwork-video/recordings/ios-jira-drag.mp4",
@@ -350,12 +362,13 @@
       "platform": "Native Android",
       "dur": 8,
       "title": "Move the work. Keep <em>the context.</em>",
-      "body": "Drag the same card in Android, with its Material navigation and board controls.",
+      "body": "Drag a card while its issue key, priority and assignee remain in view.",
       "points": [
         "Issue key, priority and assignee stay visible",
         "A drop marker guides placement"
       ],
-      "note": "Real native builds · Sample tasks, Deck cards and Jira issues",
+      "showPlatform": false,
+      "note": "Sample tasks, Deck cards and Jira issues",
       "kicker": "03 · Keep the project moving",
       "src": {
         "raw": "/Users/taf/Projects/taf.sh/scripts/patchwork-video/recordings/android-jira-drag.mp4",
@@ -373,10 +386,11 @@
       "title": "Make room for <em>your way.</em>",
       "body": "Choose light, dark or system appearance, then pick an accent palette.",
       "points": [
-        "iOS appearance and contrast options",
-        "Android Material palette choices"
+        "Light, dark or system appearance",
+        "Accent palettes and contrast options"
       ],
-      "note": "Real native appearance controls",
+      "showPlatform": false,
+      "note": "",
       "kicker": "04 · Choose how you work",
       "dual": true,
       "phones": [
@@ -404,12 +418,13 @@
       "platform": "Native Android",
       "dur": 8,
       "title": "Light or dark. Still <em>Patchwork.</em>",
-      "body": "Switch the Android app to light mode. Its Material controls keep the platform familiar.",
+      "body": "Switch to light mode, then tune the accent and contrast to suit you.",
       "points": [
         "Theme and accent are your choice",
         "OLED and contrast options in settings"
       ],
-      "note": "Real native appearance controls",
+      "showPlatform": false,
+      "note": "",
       "kicker": "04 · Choose how you work",
       "dual": true,
       "phones": [
@@ -442,7 +457,8 @@
         "Provider and model configuration",
         "No generated result shown in this film"
       ],
-      "note": "Real native settings · No API key values shown",
+      "showPlatform": false,
+      "note": "No API key values shown",
       "kicker": "04 · Choose how you work",
       "dual": true,
       "phones": [
@@ -462,12 +478,13 @@
       "platform": "Native iOS",
       "dur": 9,
       "title": "Pick up the <em>next task.</em>",
-      "body": "Patchwork for iOS and Android. Your task lists and project boards, on your phone.",
+      "body": "Your task lists and project boards, on your phone.",
       "points": [
         "Source and build instructions on GitHub"
       ],
+      "showPlatform": false,
       "note": "github.com/tashifkhan/Patchwork · Sample data in task and board scenes",
-      "kicker": "Patchwork · Native iOS + Android",
+      "kicker": "Patchwork",
       "dual": true,
       "phones": [
         {

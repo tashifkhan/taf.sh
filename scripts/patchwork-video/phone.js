@@ -19,7 +19,7 @@ S.phone = (sc) => {
     const li = $("div", "native-point", `<i></i><span>${esc(p)}</span>`);
     points.append(li); return li;
   });
-  const label = $("div", "native-note", esc(sc.note || "Native app · Sample data"));
+  const label = $("div", "native-note", esc(sc.note ?? "Sample data"));
   copy.append(kick, title.box, body, points, label);
   const phones = (sc.phones || [{ platform: sc.platform, still: sc.still }]).map((p, i) => {
     const group = $("div", "native-device device-" + i);
@@ -30,7 +30,8 @@ S.phone = (sc) => {
     shot.src = p.still || sc.still || "";
     const reflection = $("div", "native-reflection");
     frame.append(shot, reflection);
-    group.append(name, frame);
+    if (sc.showPlatform) group.append(name);
+    group.append(frame);
     el.append(group);
     return { group, shot, animated: sc.frames && i === (sc.activePhone ?? 0) };
   });

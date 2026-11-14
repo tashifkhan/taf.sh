@@ -8,6 +8,8 @@ coral accent, product copy and actual app screens.
 Archivo is the only font in the artwork and video. Native captures retain
 platform fonts. The screenshot artwork has no sample-data or native-app footer.
 Video frames fit the actual capture height, with no black bands inside the bezel.
+Platform labels appear only in the opening scene and the first image of each
+App Store and Google Play screenshot set. Later frames focus on the product.
 
 ## Outputs
 
