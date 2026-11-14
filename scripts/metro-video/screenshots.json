@@ -1,0 +1,148 @@
+{
+  "reference": "https://www.amyfoodjournal.com/",
+  "description": "Original Delhi NCR Metro layouts inspired by pale feature cards and phone closeups. All product screens are actual live app captures.",
+  "phone": {
+    "width": 1290,
+    "height": 2796,
+    "cards": [
+      {
+        "id": "01",
+        "title": "Your whole commute.<br><em>One clear plan.</em>",
+        "sub": "Delhi Metro and the Aqua Line, with the changes in between.",
+        "shot": "cross",
+        "eyebrow": "Delhi + Noida",
+        "paper": "#EDF3FC",
+        "tag": "Both networks in one app"
+      },
+      {
+        "id": "02",
+        "title": "A shorter trip.<br><em>Or fewer changes.</em>",
+        "sub": "Compare routes, check fares and see the train times before leaving.",
+        "shot": "journey",
+        "eyebrow": "Plan before you leave",
+        "paper": "#F6F2EA",
+        "tag": "Shortest / fewest changes"
+      },
+      {
+        "id": "03",
+        "title": "The walk is<br><em>part of the plan.</em>",
+        "sub": "See the Sector 52 to Sector 51 transfer before boarding the Aqua Line.",
+        "shot": "transfer",
+        "eyebrow": "Change networks",
+        "paper": "#E9F4F1",
+        "tag": "Delhi Metro → Noida Metro"
+      },
+      {
+        "id": "04",
+        "title": "Two tickets.<br><em>Both fares.</em>",
+        "sub": "See what each operator charges on a cross-network journey.",
+        "shot": "split-fare",
+        "eyebrow": "Know what to pay",
+        "paper": "#F7EFE3",
+        "tag": "Separate operator fares"
+      },
+      {
+        "id": "05",
+        "title": "Find your exit.<br><em>Before you arrive.</em>",
+        "sub": "Read gate destinations and choose the one that leads to your stop.",
+        "shot": "gates",
+        "eyebrow": "Station details",
+        "paper": "#EDF3FC",
+        "tag": "Real station gate information"
+      },
+      {
+        "id": "06",
+        "title": "Know where<br><em>the lifts are.</em>",
+        "sub": "Check lift locations and station facilities before the journey.",
+        "shot": "lifts",
+        "eyebrow": "Plan the station too",
+        "paper": "#F3F0FA",
+        "tag": "Lifts and accessibility"
+      },
+      {
+        "id": "07",
+        "title": "Zoom in on<br><em>the network.</em>",
+        "sub": "Follow the lines and find the connections on the network map.",
+        "shot": "map",
+        "eyebrow": "See the bigger picture",
+        "paper": "#EAF4EE",
+        "tag": "Pan and zoom the map"
+      },
+      {
+        "id": "08",
+        "title": "Light or dark.<br><em>Your choice.</em>",
+        "sub": "Choose a theme and color palette in Appearance settings.",
+        "shot": "appearance",
+        "eyebrow": "Make it yours",
+        "paper": "#ECEFF6",
+        "tag": "Light / dark / color palettes"
+      }
+    ]
+  },
+  "web": {
+    "width": 1920,
+    "height": 1200,
+    "cards": [
+      {
+        "id": "01",
+        "title": "Delhi and Noida.<br><em>One clear plan.</em>",
+        "sub": "Plan the whole journey, including the change between metro operators.",
+        "phone": "cross",
+        "web": "cross",
+        "eyebrow": "Your NCR commute",
+        "paper": "#EDF3FC",
+        "tag": "Web and Android"
+      },
+      {
+        "id": "02",
+        "title": "Compare the ride.<br><em>Check the fare.</em>",
+        "sub": "Choose the shortest route or fewer changes. See fares and first and last trains.",
+        "phone": "journey",
+        "web": "journey",
+        "eyebrow": "Before you leave",
+        "paper": "#F6F2EA",
+        "tag": "Two Delhi route strategies"
+      },
+      {
+        "id": "03",
+        "title": "The walk between<br>networks is <em>included.</em>",
+        "sub": "The Sector 52 to Sector 51 walk is a leg in the plan. The fares stay separate.",
+        "phone": "transfer",
+        "web": "transfer",
+        "eyebrow": "Across Delhi and Noida",
+        "paper": "#E9F4F1",
+        "tag": "Aqua Line transfers"
+      },
+      {
+        "id": "04",
+        "title": "Choose the exit.<br><em>Before you arrive.</em>",
+        "sub": "Open the station to find gate destinations, lift locations and platform details.",
+        "phone": "gates",
+        "web": "gates",
+        "eyebrow": "At the station",
+        "paper": "#F7EFE3",
+        "tag": "Gates, lifts and facilities"
+      },
+      {
+        "id": "05",
+        "title": "Zoom in.<br><em>Find your connection.</em>",
+        "sub": "A network map you can pan and zoom, with a layout for both desktop and phone.",
+        "phone": "map",
+        "web": "map",
+        "eyebrow": "The whole network",
+        "paper": "#EAF4EE",
+        "tag": "Real network map"
+      },
+      {
+        "id": "06",
+        "title": "Switch between<br><em>light and dark.</em>",
+        "sub": "Choose a comfortable theme and change the color palette in Appearance.",
+        "phone": "appearance",
+        "web": "appearance",
+        "eyebrow": "Your view of the commute",
+        "paper": "#ECEFF6",
+        "tag": "Appearance settings"
+      }
+    ]
+  }
+}

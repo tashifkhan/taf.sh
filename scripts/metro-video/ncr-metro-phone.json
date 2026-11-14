@@ -1,0 +1,532 @@
+{
+  "name": "ncr-metro-phone",
+  "canvas": {
+    "width": 720,
+    "height": 1280
+  },
+  "fps": 30,
+  "crf": 24,
+  "preset": "medium",
+  "out": "/Users/taf/Projects/taf.sh/public/reel/ncr-metro-phone-demo.mp4",
+  "poster": "/Users/taf/Projects/taf.sh/public/reel/ncr-metro-phone-poster.jpg",
+  "posterAt": 3.8,
+  "product": {
+    "name": "Delhi NCR Metro",
+    "host": "ncr-metro.tashif.codes"
+  },
+  "theme": {
+    "fonts": "",
+    "vars": {
+      "bg": "#FDFCFF",
+      "fg": "#1A1C1E",
+      "muted": "#43474E",
+      "card": "#F0F4FB",
+      "line": "#C4C6D0",
+      "shadow": "#2A436130",
+      "chrome": "#E9EFF9",
+      "urlbg": "#FDFCFF",
+      "slab": "#D8E3F8",
+      "accent": "#005FAF",
+      "accent-fg": "#FFFFFF",
+      "accent-soft": "#005FAF14",
+      "accent-line": "#005FAF5C",
+      "grid": "#005FAF18",
+      "dim": "#1A2E442B",
+      "pill-bg": "#FFFFFF",
+      "pill-fg": "#1A1C1E",
+      "fadebg": "#FDFCFF",
+      "head": "-apple-system,BlinkMacSystemFont,Arial,sans-serif",
+      "head-weight": "700",
+      "head-track": "-.035em",
+      "body": "-apple-system,BlinkMacSystemFont,Arial,sans-serif",
+      "mono": "Menlo,monospace",
+      "hand": "-apple-system,BlinkMacSystemFont,Arial,sans-serif",
+      "hand-weight": "700",
+      "bgimg": "radial-gradient(ellipse at 85% 20%,#D4E3FF55,transparent 60%)"
+    },
+    "css": "\n.outro .tilt{position:absolute;left:96px;top:285px;width:1088px}\n.outro .tilt .win{width:1088px}\n.outro .tilt .view{height:330px}\n.ring{border-color:#A65F00;box-shadow:0 0 0 5px #F4AA2640}\n.label{background:#854C00;color:#fff}\n.intro.landing .title{font-size:65px}\n.intro.landing .card3d img{background:var(--bg)}\n/* A real 720 x 1280 composition, not a crop of the desktop cut. */\nhtml,body{width:720px;height:1280px}\n.hud{left:48px;right:48px;top:24px;font-size:16px}\n.hud .hr em{display:none}\n.kicker{font-size:17px;letter-spacing:.1em}\n.intro.landing .copy{left:56px;right:56px;top:65px;bottom:auto;width:auto;justify-content:flex-start}\n.intro .pre{font-size:17px;margin-bottom:22px}\n.intro .title{font-size:64px;max-width:610px}\n.intro.landing .tagline{font-size:25px;max-width:600px;margin-top:20px}\n.intro .chip{display:none}\n.intro.landing .orbit{left:174px;right:auto;top:435px;width:372px;height:805px}\n.intro.landing .card3d{width:372px;height:805px;border:5px solid #172536;border-radius:32px}\n.intro.landing .card3d .bar{display:none}\n.intro.landing .card3d img{width:362px;height:795px;object-fit:cover;background:var(--bg)}\n.stats .copy{left:56px;right:56px;top:155px}\n.stats .title{font-size:64px;max-width:600px}\n.statrow{left:56px;right:56px;top:460px;display:flex;flex-direction:column;gap:20px}\n.stat{padding:25px 30px;display:flex;align-items:center;gap:36px;border-radius:24px}\n.stat b{font-size:62px;min-width:75px}\n.stat span{font-size:25px;margin:0}\n.statfoot{left:56px;right:56px;top:1030px;font-size:27px}\n.statlink{left:56px;right:56px;top:1140px;font-size:19px}\n.chapter .copy{left:56px;top:85px;bottom:auto;width:608px;justify-content:flex-start}\n.chapter .title{font-size:58px;line-height:1.04;margin-top:18px}\n.chapter .body{font-size:24px;margin-top:18px;line-height:1.4}\n.points{margin-top:20px;gap:10px}\n.points li{font-size:21px;padding:10px 15px;border-radius:15px}\n.chapter .tilt{left:213px;top:570px;width:294px;height:636px}\n.chapter .tilt .win{width:294px;border:4px solid #172536;border-radius:26px}\n.chapter .tilt .bar{display:none}\n.chapter .tilt .view{height:628px}\n.chapter .tilt .glow{width:350px;height:530px;left:-40px;top:0}\n.chapter .bignum{right:-10px;bottom:-55px;font-size:400px}\n.prog{left:56px;bottom:35px}\n.demo-heading{position:absolute;left:56px;right:56px;top:77px;font:700 52px/1.07 var(--head);letter-spacing:-.035em;color:var(--fg)}\n.demo-sub{position:absolute;left:56px;right:56px;top:197px;font:22px/1.35 var(--body);color:var(--muted)}\n.demo .win{left:145px;top:278px;width:430px;border:5px solid #172536;border-radius:33px}\n.demo .bar{display:none}\n.demo .view{width:420px;height:909px;background:var(--bg)}\n.demo .caption{left:44px;bottom:22px;max-width:632px;padding:12px 18px 12px 12px;font-size:21px;line-height:1.25;border:1px solid var(--line);background:var(--card);color:var(--fg)}\n.demo .caption b{width:32px;height:32px;font-size:15px;flex:none}\n.demo .ring{border-color:#A65F00;box-shadow:0 0 0 5px #F4AA2640}\n.demo .label{font-size:17px;max-width:390px;white-space:normal;background:#854C00;color:white}\n.arch .copy{left:56px;right:56px;top:100px}\n.arch .title{font-size:60px;line-height:1.07;margin-top:20px}\n.arch .cam{top:350px;bottom:75px}\n.plane,.plane.tall{width:600px;height:780px;top:50%}\n.node,.node.dense,.nshadow{width:240px;height:96px;padding:13px 17px;border-radius:18px}\n.node small,.node.dense small{font-size:15px}\n.node b,.node.dense b{font-size:24px;margin-top:4px}\n.node span,.node.dense span{font-size:18px;margin-top:5px}\n.elabel{font-size:16px;padding:7px 11px}\n.outro .copy{left:56px;right:56px;top:100px}\n.outro .title{font-size:64px;line-height:1.05}\n.outro .chip.big{font-size:21px;padding:17px;max-width:608px}\n.outro .tilt{position:absolute;left:195px;top:415px;width:330px}\n.outro .tilt .win{width:330px;border:4px solid #172536;border-radius:27px}\n.outro .tilt .bar{display:none}\n.outro .tilt .view{height:697px}\n.stackrow{left:56px;right:56px;bottom:90px;gap:8px}\n.stackrow span{font-size:17px;padding:8px 12px}\n.sign{left:56px;right:56px;bottom:28px;font-size:19px;padding-top:17px}\n/* Diagram cards need room for the kind, name and explanatory line. */\n.node,.node.dense{height:116px}\n.node small,.node.dense small{font-size:13px;line-height:1.15;letter-spacing:.06em}\n.node b,.node.dense b{font-size:22px;line-height:1.1}\n.node span,.node.dense span{font-size:17px;line-height:1.2;margin-top:5px;flex-shrink:0}\n"
+  },
+  "music": {
+    "bpm": 96,
+    "chords": [
+      [
+        50,
+        57,
+        62
+      ],
+      [
+        55,
+        59,
+        62
+      ],
+      [
+        52,
+        55,
+        59
+      ],
+      [
+        57,
+        61,
+        64
+      ]
+    ]
+  },
+  "cursor": false,
+  "scenes": [
+    {
+      "type": "intro",
+      "dur": 6,
+      "pre": "taf.sh / mobile web walkthrough",
+      "kicker": "Delhi NCR Metro",
+      "title": "Plan your <em>whole commute</em>",
+      "tagline": "Delhi Metro and Noida Metro, with the changes in between.",
+      "landing": true,
+      "shots": [
+        "/Users/taf/Projects/taf.sh/public/reel/ncr-metro-phone-home.png"
+      ],
+      "decor": "none"
+    },
+    {
+      "type": "stats",
+      "dur": 7,
+      "kicker": "The gap between networks",
+      "title": "Two operators. <em>One journey</em>",
+      "items": [
+        {
+          "n": 2,
+          "label": "networks, Delhi and Noida"
+        },
+        {
+          "n": 2,
+          "label": "Delhi route strategies"
+        },
+        {
+          "n": 1,
+          "label": "plan across both operators"
+        }
+      ],
+      "foot": "Changing operators means a walk and a separate ticket. The planner shows both.",
+      "link": "Real app footage / recorded 14 November 2026"
+    },
+    {
+      "type": "arch",
+      "dur": 8,
+      "kicker": "Before you leave",
+      "title": "Choose stations. <em>Check the whole trip</em>",
+      "cols": 2,
+      "rows": 4,
+      "nodes": [
+        {
+          "id": "a",
+          "x": 0,
+          "y": 0,
+          "kind": "01 / choose",
+          "label": "Both stations",
+          "sub": "Delhi or Noida"
+        },
+        {
+          "id": "b",
+          "x": 1,
+          "y": 1,
+          "kind": "02 / compare",
+          "label": "Your route",
+          "sub": "Distance or changes",
+          "hot": true
+        },
+        {
+          "id": "c",
+          "x": 0,
+          "y": 2,
+          "kind": "03 / check",
+          "label": "Fares and times",
+          "sub": "Tickets and train service"
+        },
+        {
+          "id": "d",
+          "x": 1,
+          "y": 3,
+          "kind": "04 / leave",
+          "label": "Station details",
+          "sub": "Gates and lifts"
+        }
+      ],
+      "edges": [
+        {
+          "from": "a",
+          "to": "b"
+        },
+        {
+          "from": "b",
+          "to": "c"
+        },
+        {
+          "from": "c",
+          "to": "d"
+        }
+      ]
+    },
+    {
+      "type": "chapter",
+      "n": 1,
+      "dur": 6,
+      "title": "Know the trip <em>before you leave</em>",
+      "body": "Pick both stations and compare the plan before you set off.",
+      "points": [
+        "Shortest or fewest changes",
+        "Fare, platforms and train times"
+      ],
+      "still": "/Users/taf/Projects/taf.sh/public/reel/ncr-metro-phone-journey.png",
+      "path": ""
+    },
+    {
+      "type": "demo",
+      "n": 1,
+      "caption": "Choose AIIMS and Rajiv Chowk",
+      "heading": "Pick your departure and destination",
+      "sub": "Search by station name across both networks.",
+      "path": "",
+      "src": {
+        "raw": "/tmp/vid/raw/ncr-metro-phone.webm",
+        "a": 13.171,
+        "b": 22.125,
+        "speed": 1.1938666666666669,
+        "crop": "390:844:0:0"
+      },
+      "hold": 0.45
+    },
+    {
+      "type": "demo",
+      "n": 1,
+      "caption": "Compare shortest and fewest-change routes",
+      "heading": "Compare the route strategies",
+      "sub": "See stops, travel time and line changes together.",
+      "path": "",
+      "src": {
+        "raw": "/tmp/vid/raw/ncr-metro-phone.webm",
+        "a": 26.501,
+        "b": 34.902,
+        "speed": 1.1201333333333332,
+        "crop": "390:844:0:0"
+      },
+      "hold": 0.45
+    },
+    {
+      "type": "demo",
+      "n": 1,
+      "caption": "Check the fare before you leave",
+      "heading": "Check the fare for your trip",
+      "sub": "The results show weekday and weekend prices.",
+      "path": "",
+      "src": {
+        "raw": "/tmp/vid/raw/ncr-metro-phone.webm",
+        "a": 34.902,
+        "b": 41.047,
+        "speed": 1,
+        "crop": "390:844:0:0"
+      },
+      "hold": 0.45
+    },
+    {
+      "type": "demo",
+      "n": 1,
+      "caption": "Follow the platform and station sequence",
+      "heading": "Know which train to board",
+      "sub": "Read the platform, direction and ordered stops.",
+      "path": "",
+      "src": {
+        "raw": "/tmp/vid/raw/ncr-metro-phone.webm",
+        "a": 41.047,
+        "b": 46.727999999999994,
+        "speed": 1,
+        "crop": "390:844:0:0"
+      },
+      "hold": 0.45
+    },
+    {
+      "type": "demo",
+      "n": 1,
+      "caption": "Check the first and last train",
+      "heading": "Check the service window",
+      "sub": "First and last trains appear with the plan.",
+      "path": "",
+      "src": {
+        "raw": "/tmp/vid/raw/ncr-metro-phone.webm",
+        "a": 46.729,
+        "b": 52.354,
+        "speed": 1,
+        "crop": "390:844:0:0"
+      },
+      "hold": 0.45
+    },
+    {
+      "type": "chapter",
+      "n": 2,
+      "dur": 6,
+      "title": "Cross to Aqua <em>with the walk included</em>",
+      "body": "Continue to Noida Sector 137 without planning the operator change yourself.",
+      "points": [
+        "Sector 52 to Sector 51 walk",
+        "Separate Delhi and Noida tickets"
+      ],
+      "still": "/Users/taf/Projects/taf.sh/public/reel/ncr-metro-phone-cross.png",
+      "path": ""
+    },
+    {
+      "type": "demo",
+      "n": 2,
+      "caption": "Change destination to Noida Sector 137",
+      "heading": "One search covers both networks",
+      "sub": "Choose an Aqua Line station in the same planner.",
+      "path": "",
+      "src": {
+        "raw": "/tmp/vid/raw/ncr-metro-phone.webm",
+        "a": 53.486,
+        "b": 56.766,
+        "speed": 1,
+        "crop": "390:844:0:0"
+      },
+      "hold": 0.7199999999999989
+    },
+    {
+      "type": "demo",
+      "n": 2,
+      "caption": "See the fare for each operator",
+      "heading": "Two operators need two tickets",
+      "sub": "The result splits Delhi Metro and Noida Metro fares.",
+      "path": "",
+      "src": {
+        "raw": "/tmp/vid/raw/ncr-metro-phone.webm",
+        "a": 69.55,
+        "b": 76.24,
+        "speed": 1,
+        "crop": "390:844:0:0"
+      },
+      "hold": 0.45
+    },
+    {
+      "type": "demo",
+      "n": 2,
+      "caption": "The Sector 52 to Sector 51 walk is included",
+      "heading": "See the gap between networks",
+      "sub": "The route includes the transfer walk before the Aqua Line.",
+      "path": "",
+      "src": {
+        "raw": "/tmp/vid/raw/ncr-metro-phone.webm",
+        "a": 76.24,
+        "b": 83.43199999999999,
+        "speed": 1,
+        "crop": "390:844:0:0"
+      },
+      "hold": 0.45
+    },
+    {
+      "type": "chapter",
+      "n": 3,
+      "dur": 6,
+      "title": "Find the <em>right exit</em>",
+      "body": "Open a station before you arrive and check the details that matter.",
+      "points": [
+        "Gate destinations and lifts",
+        "Line stations in travel order"
+      ],
+      "still": "/Users/taf/Projects/taf.sh/public/reel/ncr-metro-phone-gates.png",
+      "path": ""
+    },
+    {
+      "type": "demo",
+      "n": 3,
+      "caption": "Find Rajiv Chowk by name or station code",
+      "heading": "Find the station you need",
+      "sub": "Results identify the station, code and operator.",
+      "path": "",
+      "src": {
+        "raw": "/tmp/vid/raw/ncr-metro-phone.webm",
+        "a": 86.56,
+        "b": 93.074,
+        "speed": 1,
+        "crop": "390:844:0:0"
+      },
+      "hold": 0.45
+    },
+    {
+      "type": "demo",
+      "n": 3,
+      "caption": "Read where each station gate leads",
+      "heading": "Choose the right gate",
+      "sub": "Read gate destinations before leaving the platform.",
+      "path": "",
+      "src": {
+        "raw": "/tmp/vid/raw/ncr-metro-phone-details.webm",
+        "a": 12.598,
+        "b": 23.073,
+        "speed": 1.3966666666666667,
+        "crop": "390:844:0:0"
+      },
+      "hold": 0.45
+    },
+    {
+      "type": "demo",
+      "n": 3,
+      "caption": "Check lift locations and station facilities",
+      "heading": "Check the accessible route",
+      "sub": "Station details list available lifts and facilities.",
+      "path": "",
+      "src": {
+        "raw": "/tmp/vid/raw/ncr-metro-phone-details.webm",
+        "a": 27.143,
+        "b": 37.771,
+        "speed": 1.4170666666666667,
+        "crop": "390:844:0:0"
+      },
+      "hold": 0.45
+    },
+    {
+      "type": "demo",
+      "n": 3,
+      "caption": "Browse the line and its stations",
+      "heading": "See how the line fits together",
+      "sub": "Explore termini and stations in their travel order.",
+      "path": "",
+      "src": {
+        "raw": "/tmp/vid/raw/ncr-metro-phone.webm",
+        "a": 116.292,
+        "b": 126.12,
+        "speed": 1.3104000000000005,
+        "crop": "390:844:0:0"
+      },
+      "hold": 0.45
+    },
+    {
+      "type": "chapter",
+      "n": 4,
+      "dur": 6,
+      "title": "Keep the network <em>in view</em>",
+      "body": "Use the map, read service notices and choose a comfortable theme.",
+      "points": [
+        "Zoom the network map",
+        "Dated notices and light or dark mode"
+      ],
+      "still": "/Users/taf/Projects/taf.sh/public/reel/ncr-metro-phone-map.png",
+      "path": ""
+    },
+    {
+      "type": "demo",
+      "n": 4,
+      "caption": "Zoom the network map",
+      "heading": "Read the whole network",
+      "sub": "Zoom in to inspect stations and line connections.",
+      "path": "",
+      "src": {
+        "raw": "/tmp/vid/raw/ncr-metro-phone.webm",
+        "a": 131.353,
+        "b": 139.467,
+        "speed": 1.0818666666666672,
+        "crop": "390:844:0:0"
+      },
+      "hold": 0.45
+    },
+    {
+      "type": "demo",
+      "n": 4,
+      "caption": "Read dated passenger notices",
+      "heading": "Check notices before you travel",
+      "sub": "Published dates keep service changes in context.",
+      "path": "",
+      "src": {
+        "raw": "/tmp/vid/raw/ncr-metro-phone.webm",
+        "a": 144.252,
+        "b": 151.597,
+        "speed": 1,
+        "crop": "390:844:0:0"
+      },
+      "hold": 0.45
+    },
+    {
+      "type": "demo",
+      "n": 4,
+      "caption": "Choose light or dark mode",
+      "heading": "Choose a comfortable theme",
+      "sub": "Switch between light and dark in Appearance settings.",
+      "path": "",
+      "src": {
+        "raw": "/tmp/vid/raw/ncr-metro-phone-details.webm",
+        "a": 40.541,
+        "b": 48.54,
+        "speed": 1.0665333333333336,
+        "crop": "390:844:0:0"
+      },
+      "hold": 0.45
+    },
+    {
+      "type": "arch",
+      "dur": 8,
+      "kicker": "Built for the commute",
+      "title": "One app. <em>A shared transit API</em>",
+      "cols": 2,
+      "rows": 3,
+      "nodes": [
+        {
+          "id": "app",
+          "x": 0,
+          "y": 0,
+          "kind": "expo / react native",
+          "label": "Web and Android",
+          "sub": "One application"
+        },
+        {
+          "id": "api",
+          "x": 1,
+          "y": 1,
+          "kind": "fastapi",
+          "label": "Normalized API",
+          "sub": "DMRC and NMRC",
+          "hot": true
+        },
+        {
+          "id": "up",
+          "x": 1,
+          "y": 2,
+          "kind": "upstream",
+          "label": "Operator services",
+          "sub": "Sarthi, DMRC, NMRC"
+        },
+        {
+          "id": "local",
+          "x": 0,
+          "y": 2,
+          "kind": "on this browser",
+          "label": "Trip history",
+          "sub": "Saved on this device"
+        }
+      ],
+      "edges": [
+        {
+          "from": "app",
+          "to": "api"
+        },
+        {
+          "from": "api",
+          "to": "up"
+        },
+        {
+          "from": "app",
+          "to": "local"
+        }
+      ]
+    },
+    {
+      "type": "outro",
+      "dur": 7,
+      "kicker": "Delhi NCR Metro",
+      "title": "Your next ride. <em>Planned</em>",
+      "url": "ncr-metro.tashif.codes",
+      "still": "/Users/taf/Projects/taf.sh/public/reel/ncr-metro-phone-home.png",
+      "stack": [
+        "Web app",
+        "Android app",
+        "Open REST API"
+      ],
+      "sign": "<b>built by taf.sh</b> · Delhi and Noida"
+    }
+  ]
+}

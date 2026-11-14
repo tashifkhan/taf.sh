@@ -248,7 +248,7 @@ export type ReelItem = {
 	live?: string;
 	metric?: string;
 	shots: string[];
-	video?: { src: string; poster: string };
+	video?: { src: string; poster: string; phone?: { src: string; poster: string } };
 	/** Related services and source for projects with several entry points. */
 	links?: { label: string; href: string }[];
 };
@@ -376,7 +376,17 @@ export const reel: ReelItem[] = [
 		href: "https://ncr-metro.tashif.codes",
 		live: "https://ncr-metro.tashif.codes",
 		metric: "F-Droid",
-		shots: shots("ncr-metro", 3),
+		shots: Array.from({ length: 6 }, (_, i) => `/reel/ncr-metro-screenshots/web-${String(i + 1).padStart(2, "0")}.webp`),
+		video: {
+			src: "/reel/ncr-metro-web-demo.mp4",
+			poster: "/reel/ncr-metro-web-poster.jpg",
+			phone: { src: "/reel/ncr-metro-phone-demo.mp4", poster: "/reel/ncr-metro-phone-poster.jpg" },
+		},
+		links: [
+			{ label: "Web video", href: "/reel/ncr-metro-web-demo.mp4" },
+			{ label: "Phone video", href: "/reel/ncr-metro-phone-demo.mp4" },
+			{ label: "Screenshot pack", href: "/reel/ncr-metro-screenshots.zip" },
+		],
 	},
 	{
 		name: "WikiSpark",

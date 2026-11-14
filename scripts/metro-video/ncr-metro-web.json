@@ -1,0 +1,502 @@
+{
+  "name": "ncr-metro-web",
+  "canvas": {
+    "width": 1280,
+    "height": 800
+  },
+  "fps": 30,
+  "crf": 22,
+  "preset": "slow",
+  "out": "/Users/taf/Projects/taf.sh/public/reel/ncr-metro-web-demo.mp4",
+  "poster": "/Users/taf/Projects/taf.sh/public/reel/ncr-metro-web-poster.jpg",
+  "posterAt": 3.8,
+  "product": {
+    "name": "Delhi NCR Metro",
+    "host": "ncr-metro.tashif.codes"
+  },
+  "theme": {
+    "fonts": "",
+    "vars": {
+      "bg": "#FDFCFF",
+      "fg": "#1A1C1E",
+      "muted": "#43474E",
+      "card": "#F0F4FB",
+      "line": "#C4C6D0",
+      "shadow": "#2A436130",
+      "chrome": "#E9EFF9",
+      "urlbg": "#FDFCFF",
+      "slab": "#D8E3F8",
+      "accent": "#005FAF",
+      "accent-fg": "#FFFFFF",
+      "accent-soft": "#005FAF14",
+      "accent-line": "#005FAF5C",
+      "grid": "#005FAF18",
+      "dim": "#1A2E442B",
+      "pill-bg": "#FFFFFF",
+      "pill-fg": "#1A1C1E",
+      "fadebg": "#FDFCFF",
+      "head": "-apple-system,BlinkMacSystemFont,Arial,sans-serif",
+      "head-weight": "700",
+      "head-track": "-.035em",
+      "body": "-apple-system,BlinkMacSystemFont,Arial,sans-serif",
+      "mono": "Menlo,monospace",
+      "hand": "-apple-system,BlinkMacSystemFont,Arial,sans-serif",
+      "hand-weight": "700",
+      "bgimg": "radial-gradient(ellipse at 85% 20%,#D4E3FF55,transparent 60%)"
+    },
+    "css": "\n.outro .tilt{position:absolute;left:96px;top:285px;width:1088px}\n.outro .tilt .win{width:1088px}\n.outro .tilt .view{height:330px}\n.ring{border-color:#A65F00;box-shadow:0 0 0 5px #F4AA2640}\n.label{background:#854C00;color:#fff}\n.intro.landing .title{font-size:65px}\n.intro.landing .card3d img{background:var(--bg)}\n"
+  },
+  "music": {
+    "bpm": 96,
+    "chords": [
+      [
+        50,
+        57,
+        62
+      ],
+      [
+        55,
+        59,
+        62
+      ],
+      [
+        52,
+        55,
+        59
+      ],
+      [
+        57,
+        61,
+        64
+      ]
+    ]
+  },
+  "cursor": false,
+  "scenes": [
+    {
+      "type": "intro",
+      "dur": 6,
+      "pre": "taf.sh / desktop web walkthrough",
+      "kicker": "Delhi NCR Metro",
+      "title": "Plan your <em>whole commute</em>",
+      "tagline": "Delhi Metro and Noida Metro, with the changes in between.",
+      "landing": true,
+      "shots": [
+        "/Users/taf/Projects/taf.sh/public/reel/ncr-metro-web-home.png"
+      ],
+      "decor": "none"
+    },
+    {
+      "type": "stats",
+      "dur": 7,
+      "kicker": "The gap between networks",
+      "title": "Two operators. <em>One journey</em>",
+      "items": [
+        {
+          "n": 2,
+          "label": "networks, Delhi and Noida"
+        },
+        {
+          "n": 2,
+          "label": "Delhi route strategies"
+        },
+        {
+          "n": 1,
+          "label": "plan across both operators"
+        }
+      ],
+      "foot": "Changing operators means a walk and a separate ticket. The planner shows both.",
+      "link": "Real app footage / recorded 14 November 2026"
+    },
+    {
+      "type": "arch",
+      "dur": 8,
+      "kicker": "Before you leave",
+      "title": "Choose stations. <em>Check the whole trip</em>",
+      "cols": 4,
+      "rows": 3,
+      "nodes": [
+        {
+          "id": "a",
+          "x": 0,
+          "y": 1,
+          "kind": "01 / choose",
+          "label": "Both stations",
+          "sub": "Delhi or Noida"
+        },
+        {
+          "id": "b",
+          "x": 1,
+          "y": 1,
+          "kind": "02 / compare",
+          "label": "Your route",
+          "sub": "Distance or changes",
+          "hot": true
+        },
+        {
+          "id": "c",
+          "x": 2,
+          "y": 1,
+          "kind": "03 / check",
+          "label": "Fares and times",
+          "sub": "Tickets and train service"
+        },
+        {
+          "id": "d",
+          "x": 3,
+          "y": 1,
+          "kind": "04 / leave",
+          "label": "Station details",
+          "sub": "Gates and lifts"
+        }
+      ],
+      "edges": [
+        {
+          "from": "a",
+          "to": "b"
+        },
+        {
+          "from": "b",
+          "to": "c"
+        },
+        {
+          "from": "c",
+          "to": "d"
+        }
+      ]
+    },
+    {
+      "type": "chapter",
+      "n": 1,
+      "dur": 6,
+      "title": "Know the trip <em>before you leave</em>",
+      "body": "Pick both stations and compare the plan before you set off.",
+      "points": [
+        "Shortest or fewest changes",
+        "Fare, platforms and train times"
+      ],
+      "still": "/Users/taf/Projects/taf.sh/public/reel/ncr-metro-web-journey.png",
+      "path": ""
+    },
+    {
+      "type": "demo",
+      "n": 1,
+      "caption": "Choose AIIMS and Rajiv Chowk",
+      "path": "",
+      "src": {
+        "raw": "/tmp/vid/raw/ncr-metro-web.webm",
+        "a": 12.395,
+        "b": 21.255,
+        "speed": 1.1813333333333333,
+        "crop": "1440:900:0:0"
+      },
+      "hold": 0.45
+    },
+    {
+      "type": "demo",
+      "n": 1,
+      "caption": "Compare shortest and fewest-change routes",
+      "path": "",
+      "src": {
+        "raw": "/tmp/vid/raw/ncr-metro-web.webm",
+        "a": 26.195,
+        "b": 34.663,
+        "speed": 1.1290666666666662,
+        "crop": "1440:900:0:0"
+      },
+      "hold": 0.45
+    },
+    {
+      "type": "demo",
+      "n": 1,
+      "caption": "Check the fare before you leave",
+      "path": "",
+      "src": {
+        "raw": "/tmp/vid/raw/ncr-metro-web.webm",
+        "a": 34.663,
+        "b": 40.824,
+        "speed": 1,
+        "crop": "1440:900:0:0"
+      },
+      "hold": 0.45
+    },
+    {
+      "type": "demo",
+      "n": 1,
+      "caption": "Follow the platform and station sequence",
+      "path": "",
+      "src": {
+        "raw": "/tmp/vid/raw/ncr-metro-web.webm",
+        "a": 40.825,
+        "b": 46.509,
+        "speed": 1,
+        "crop": "1440:900:0:0"
+      },
+      "hold": 0.45
+    },
+    {
+      "type": "demo",
+      "n": 1,
+      "caption": "Check the first and last train",
+      "path": "",
+      "src": {
+        "raw": "/tmp/vid/raw/ncr-metro-web.webm",
+        "a": 46.509,
+        "b": 52.142,
+        "speed": 1,
+        "crop": "1440:900:0:0"
+      },
+      "hold": 0.45
+    },
+    {
+      "type": "chapter",
+      "n": 2,
+      "dur": 6,
+      "title": "Cross to Aqua <em>with the walk included</em>",
+      "body": "Continue to Noida Sector 137 without planning the operator change yourself.",
+      "points": [
+        "Sector 52 to Sector 51 walk",
+        "Separate Delhi and Noida tickets"
+      ],
+      "still": "/Users/taf/Projects/taf.sh/public/reel/ncr-metro-web-cross.png",
+      "path": ""
+    },
+    {
+      "type": "demo",
+      "n": 2,
+      "caption": "Change destination to Noida Sector 137",
+      "path": "",
+      "src": {
+        "raw": "/tmp/vid/raw/ncr-metro-web.webm",
+        "a": 53.27,
+        "b": 56.533,
+        "speed": 1,
+        "crop": "1440:900:0:0"
+      },
+      "hold": 0.7370000000000019
+    },
+    {
+      "type": "demo",
+      "n": 2,
+      "caption": "See the fare for each operator",
+      "path": "",
+      "src": {
+        "raw": "/tmp/vid/raw/ncr-metro-web.webm",
+        "a": 69.336,
+        "b": 76.04599999999999,
+        "speed": 1,
+        "crop": "1440:900:0:0"
+      },
+      "hold": 0.45
+    },
+    {
+      "type": "demo",
+      "n": 2,
+      "caption": "The Sector 52 to Sector 51 walk is included",
+      "path": "",
+      "src": {
+        "raw": "/tmp/vid/raw/ncr-metro-web.webm",
+        "a": 76.047,
+        "b": 83.25399999999999,
+        "speed": 1,
+        "crop": "1440:900:0:0"
+      },
+      "hold": 0.45
+    },
+    {
+      "type": "chapter",
+      "n": 3,
+      "dur": 6,
+      "title": "Find the <em>right exit</em>",
+      "body": "Open a station before you arrive and check the details that matter.",
+      "points": [
+        "Gate destinations and lifts",
+        "Line stations in travel order"
+      ],
+      "still": "/Users/taf/Projects/taf.sh/public/reel/ncr-metro-web-gates.png",
+      "path": ""
+    },
+    {
+      "type": "demo",
+      "n": 3,
+      "caption": "Find Rajiv Chowk by name or station code",
+      "path": "",
+      "src": {
+        "raw": "/tmp/vid/raw/ncr-metro-web.webm",
+        "a": 86.274,
+        "b": 92.822,
+        "speed": 1,
+        "crop": "1440:900:0:0"
+      },
+      "hold": 0.45
+    },
+    {
+      "type": "demo",
+      "n": 3,
+      "caption": "Read where each station gate leads",
+      "path": "",
+      "src": {
+        "raw": "/tmp/vid/raw/ncr-metro-web-details.webm",
+        "a": 9.782,
+        "b": 20.299,
+        "speed": 1.4022666666666666,
+        "crop": "1440:900:0:0"
+      },
+      "hold": 0.45
+    },
+    {
+      "type": "demo",
+      "n": 3,
+      "caption": "Check lift locations and station facilities",
+      "path": "",
+      "src": {
+        "raw": "/tmp/vid/raw/ncr-metro-web-details.webm",
+        "a": 24.392,
+        "b": 34.717,
+        "speed": 1.3766666666666665,
+        "crop": "1440:900:0:0"
+      },
+      "hold": 0.45
+    },
+    {
+      "type": "demo",
+      "n": 3,
+      "caption": "Browse the line and its stations",
+      "path": "",
+      "src": {
+        "raw": "/tmp/vid/raw/ncr-metro-web.webm",
+        "a": 114.484,
+        "b": 124.38499999999999,
+        "speed": 1.320133333333333,
+        "crop": "1440:900:0:0"
+      },
+      "hold": 0.45
+    },
+    {
+      "type": "chapter",
+      "n": 4,
+      "dur": 6,
+      "title": "Keep the network <em>in view</em>",
+      "body": "Use the map, read service notices and choose a comfortable theme.",
+      "points": [
+        "Zoom the network map",
+        "Dated notices and light or dark mode"
+      ],
+      "still": "/Users/taf/Projects/taf.sh/public/reel/ncr-metro-web-map.png",
+      "path": ""
+    },
+    {
+      "type": "demo",
+      "n": 4,
+      "caption": "Zoom the network map",
+      "path": "",
+      "src": {
+        "raw": "/tmp/vid/raw/ncr-metro-web.webm",
+        "a": 130.624,
+        "b": 139,
+        "speed": 1.1168000000000007,
+        "crop": "1440:900:0:0"
+      },
+      "hold": 0.45
+    },
+    {
+      "type": "demo",
+      "n": 4,
+      "caption": "Read dated passenger notices",
+      "path": "",
+      "src": {
+        "raw": "/tmp/vid/raw/ncr-metro-web.webm",
+        "a": 143.839,
+        "b": 150.983,
+        "speed": 1,
+        "crop": "1440:900:0:0"
+      },
+      "hold": 0.45
+    },
+    {
+      "type": "demo",
+      "n": 4,
+      "caption": "Choose light or dark mode",
+      "path": "",
+      "src": {
+        "raw": "/tmp/vid/raw/ncr-metro-web-details.webm",
+        "a": 37.411,
+        "b": 45.577,
+        "speed": 1.0887999999999995,
+        "crop": "1440:900:0:0"
+      },
+      "hold": 0.45
+    },
+    {
+      "type": "arch",
+      "dur": 8,
+      "kicker": "Built for the commute",
+      "title": "One app. <em>A shared transit API</em>",
+      "cols": 5,
+      "rows": 3,
+      "nodes": [
+        {
+          "id": "app",
+          "x": 0,
+          "y": 1,
+          "kind": "expo / react native",
+          "label": "Web and Android",
+          "sub": "One application"
+        },
+        {
+          "id": "api",
+          "x": 2,
+          "y": 1,
+          "kind": "fastapi",
+          "label": "Normalized API",
+          "sub": "DMRC and NMRC",
+          "hot": true
+        },
+        {
+          "id": "up",
+          "x": 4,
+          "y": 0,
+          "kind": "upstream",
+          "label": "Operator services",
+          "sub": "Sarthi, DMRC, NMRC"
+        },
+        {
+          "id": "local",
+          "x": 0,
+          "y": 2,
+          "kind": "local persistence",
+          "label": "Trip history",
+          "sub": "Saved on this device"
+        }
+      ],
+      "edges": [
+        {
+          "from": "app",
+          "to": "api"
+        },
+        {
+          "from": "api",
+          "to": "up"
+        },
+        {
+          "from": "app",
+          "to": "local"
+        }
+      ]
+    },
+    {
+      "type": "outro",
+      "dur": 7,
+      "kicker": "Delhi NCR Metro",
+      "title": "Your next ride. <em>Planned</em>",
+      "url": "ncr-metro.tashif.codes",
+      "still": "/Users/taf/Projects/taf.sh/public/reel/ncr-metro-web-home.png",
+      "stack": [
+        "Web app",
+        "Android app",
+        "Open REST API"
+      ],
+      "sign": "<b>built by taf.sh</b> · Delhi and Noida"
+    }
+  ]
+}
