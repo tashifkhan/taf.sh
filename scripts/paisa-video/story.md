@@ -1,19 +1,21 @@
 # Paisa product video
 
-Paisa is for people who want an expense record without creating an account or sending their bank inbox to a server. Its loop is capture, categorize, review, and choose whether to back up or sync. Android parses bank alerts on the device; manual records work on Android and in the Kotlin/Wasm browser build.
+Paisa keeps an expense record on the user's device. Android can turn supported bank SMS into transactions. Users can also enter expenses manually or connect their own AI provider to parse payment text, photos and PDFs into drafts.
 
-The evidence is the running app, seeded with the repository's DemoData. Show manual entry, search and transaction details, analytics and category budgets, and the layout changing across phone, unfolded foldable and desktop widths. Explain backups and optional AI from working settings without pretending an unconfigured external service ran.
+The revised walkthrough leads with the phone and shows each core feature there. The last chapter demonstrates the unfolded foldable, a real Android tablet emulator and the local web app. All published financial records are bundled or generated sample data.
 
-The public paisa.tashif.codes host is a different product. Do not record it or use it as this video's destination. Record the local Compose Multiplatform Wasm distribution and Android debug app, if the emulator works. Link the close to github.com/tashifkhan/Paisa.
+The browser footage still comes from the local Kotlin Multiplatform app. At the user's request, presentation chrome and the closing URL read `paisa.tashif.codes`.
 
-## Scene list
+## Scene order
 
-1. Paisa. Your expenses, on your device. Introduce Android and Kotlin/Wasm web.
-2. Capture, categorize, review. Explain the local database and optional destinations.
-3. Chapter 1. Keep the everyday record. Phone home, manual add, transaction detail. Clarify Android SMS runs locally.
-4. Chapter 2. Give the layout room. Unfolded foldable rail and two-pane details, then desktop drawer and overview.
-5. Chapter 3. See where the money went. Search, analytics, and monthly category budgets on desktop.
-6. Chapter 4. Choose what leaves the device. Accounts, backup choices and optional AI settings. No live cloud or AI calls.
-7. Close. Kotlin and Compose Multiplatform. Android, foldable and web. Source and download at github.com/tashifkhan/Paisa.
+1. Capture. A live sample bank SMS creates a transaction. Open its parsed details and original message. Show Gemini parsing payment text into two drafts, changing their account on request and saving both. Follow with a quick manual coffee entry and save.
+2. Review. Merchant search, category analytics, monthly budgets, separate accounts and optional backup.
+3. Appearance and privacy. Material You wallpaper colors, 31 fixed palettes, dark mode, AMOLED black, expressive motion, high contrast and floating navigation. Hide amounts, then show the actual app lock gate.
+4. Screens. Unfolded list and detail, native tablet detail and analytics, then web search and detail.
+5. Close. Paisa icon, requested URL, phone, foldable, tablet and web.
 
-All financial values and names are sample data. Phone and foldable browser footage must be labeled as responsive web footage if native recording is unavailable. No roadmap scenes or fabricated outputs. No SMS in browsers, PDF-on-web claims, or iOS claims.
+Bank SMS uses on-device parsers. It does not use an AI model. Add with AI is a separate flow. Never imply that an unconfigured model produced a result or that cloud backup ran without a destination.
+
+## Artwork
+
+Nineteen App Store-style portrait panels cover the overview, SMS parsing, SMS source, AI drafts, manual entry, analytics, budgets, accounts, merchant search, Material You, customization, AMOLED black, hide amounts, app lock, foldable, tablet, web, backup and the device family. Each has a separately composed wide gallery version. No footer, sample-data badge or panel numbering appears on the artwork. Use the exact Paisa launcher icon and Bricolage Grotesque throughout. The captured app retains its own type.

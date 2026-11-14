@@ -55,7 +55,7 @@ function words(text, cls) {
   // Splits on spaces, keeps <em> runs styled. Returns element + list of word spans.
   const box = $("div", cls);
   const list = [];
-  const parts = text.split(/(<em>.*?<\/em>)/);
+  const parts = text.replace(/<br\s*\/?>/gi, " ").split(/(<em>.*?<\/em>)/);
   for (const part of parts) {
     if (!part) continue;
     const em = part.startsWith("<em>");
@@ -72,7 +72,7 @@ function words(text, cls) {
 // Chapter index shown on every scene after the intro, taf.sh style.
 function hud(n) {
   const el = $("div", "hud");
-  el.innerHTML = `<span class="hl">${productMark}<span>${esc(C.product.name)}</span></span><span class="hr">${n ? `Fig ${String(n).padStart(2, "0")}.` : ""}<em>${esc(C.product.host)}</em></span>`;
+  el.innerHTML = `<span class="hl">${productMark}<span>${esc(C.product.name)}</span></span><span class="hr"><em>${esc(C.product.host)}</em></span>`;
   return el;
 }
 
@@ -242,7 +242,8 @@ S.demo = (sc) => {
   const rings = (sc.highlights || []).map((h) => {
     const r = $("div", "ring");
     const lab = $("div", "label " + (h.side || "below"), esc(h.label));
-    r.append(lab);
+    el.append(lab);
+    lab.className = "highlight-note";
     view.append(r);
     cue(sc.at + h.at, "tick", 0.9);
     cue(sc.at + h.at + 0.12, "pop", 0.5);
@@ -255,11 +256,10 @@ S.demo = (sc) => {
   cue(sc.at + 0.5, "pop", 0.4);
   if (sc.layout === "portrait") {
     const header = $("div", "portrait-header");
-    header.innerHTML = `<small>${productMark} PAISA · NATIVE ANDROID</small><h2>${esc(sc.title || "")}</h2><p>${esc(sc.body || "")}</p>`;
+    header.innerHTML = `<small>${productMark}</small><h2>${esc(sc.title || "")}</h2><p>${esc(sc.body || "")}</p>`;
     el.append(header);
   }
-  const VW = sc.layout === "phone" ? 296 : sc.layout === "foldable" ? 554 : 1088;
-  const VH = sc.layout === "phone" ? 620 : sc.layout === "foldable" ? 574 : 680;
+
   if (sc.layout && sc.layout !== "desktop" && sc.layout !== "portrait") {
     const copy = $("div", "device-copy");
     copy.innerHTML = `<div class="kicker">${esc(sc.kicker || "Native Android")}</div><h2>${sc.title || ""}</h2><p>${esc(sc.body || "")}</p><ul>${(sc.points || []).map(p => `<li>${esc(p)}</li>`).join("")}</ul>`;
@@ -272,6 +272,7 @@ S.demo = (sc) => {
     el,
     frames: sc.frames,
     update(t) {
+      const VW = view.clientWidth, VH = view.clientHeight;
       const i = Math.min(sc.frames.count - 1, Math.max(0, Math.floor(t * FPS)));
       const src = `${sc.frames.dir}/${String(i + 1).padStart(5, "0")}.${sc.frames.ext || "jpg"}`;
       if (img.getAttribute("src") !== src) img.setAttribute("src", src);
@@ -280,6 +281,7 @@ S.demo = (sc) => {
         const lt = t - h.at, len = h.dur || 2.4;
         const on = lt >= 0 && lt < len + 0.5;
         r.style.display = on ? "block" : "none";
+        lab.style.display = on ? "block" : "none";
         if (!on) continue;
         const e = pop(lt, 2.2, 0.38);
         const out = clamp((lt - len) / 0.35);
@@ -289,16 +291,16 @@ S.demo = (sc) => {
         // page scrolling upward is negative, so the ring rides the content
         // instead of staying glued to the screen.
         const dy = (h.track || 0) * (t - (h.trackFrom ?? h.at));
-        r.style.left = px(x * VW); r.style.top = px((y + dy) * VH); r.style.width = px(w * VW); r.style.height = px(hh * VH);
+        r.style.left = px(Math.max(4,x * VW)); r.style.top = px(Math.max(4,(y + dy) * VH)); r.style.width = px(Math.min(w * VW,VW-x*VW-4)); r.style.height = px(Math.min(hh * VH,VH-(y+dy)*VH-4));
         r.style.opacity = e.o * (1 - out);
-        r.style.transform = `scale(${lerp(1.25, 1, clamp(e.p, 0, 1.2)) * (1 + 0.04 * (e.sx - 1))},${lerp(1.25, 1, clamp(e.p, 0, 1.2)) * (1 + 0.04 * (e.sy - 1))})`;
+        r.style.transform = "none";
         const l = pop(lt - 0.15, 2, 0.35);
-        lab.style.transform = `scale(${l.sx},${l.sy})`;
+        lab.style.transform = "none";
         lab.style.opacity = l.o;
         dim = Math.max(dim, clamp(lt / 0.3) * (1 - out));
         if (dim > 0) { spot.style.left = r.style.left; spot.style.top = r.style.top; spot.style.width = r.style.width; spot.style.height = r.style.height; }
       }
-      spot.style.opacity = dim;
+      spot.style.opacity = 0;
       // cursor
       let a = stops[0], b = stops[0];
       for (let k = 0; k < stops.length; k++) { if (stops[k].t <= t) a = stops[k]; if (stops[k].t > t) { b = stops[k]; break; } b = stops[k]; }
@@ -634,7 +636,7 @@ S.outro = (sc) => {
   const title = words(sc.title, "title");
   // A trace close types the platforms into a terminal. No screenshot.
   // Other videos keep the URL chip under the title.
-  const line = sc.trace ? null : $("div", "chip big", `<span>$</span> open ${esc(sc.url)}`);
+  const line = sc.trace ? null : $("div", "chip big", `${productMark}<span>${esc(sc.url)}</span>`);
   copy.append(kick, title.box);
   if (line) copy.append(line);
   const names = (sc.trace || []).map((t) => (typeof t === "string" ? { name: t, status: "wired" } : t));

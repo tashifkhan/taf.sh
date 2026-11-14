@@ -240,3 +240,20 @@ html,body{margin:0;width:1280px;height:800px;overflow:hidden;background:var(--bg
 .demo.native-phone .caption,.demo.foldable .caption{font-size:17px;left:96px;bottom:36px;box-shadow:none}
 .hud .hr em{opacity:1}
 .sample-data{position:absolute;right:96px;bottom:14px;font:11px var(--mono);color:var(--muted)}
+
+/* Match each physical screen without letterboxing or stretching. */
+.demo.native-phone .win{top:55px;border-radius:36px}
+.demo.native-phone .view{height:auto;aspect-ratio:1080/2424;border-radius:29px;overflow:hidden;background:#000}
+.demo.foldable .view{height:auto;aspect-ratio:2076/2152;border-radius:18px;overflow:hidden}
+.demo.tablet .win{left:575px;top:172px;width:640px;border:8px solid #263522;border-radius:28px}
+.demo.tablet .bar{display:none}.demo.tablet .view{height:auto;aspect-ratio:2560/1600;border-radius:20px}
+.demo.tablet .shot{object-fit:fill!important}
+.demo.tablet .device-copy{width:405px;top:165px}.demo.tablet .device-copy h2{font-size:46px}
+.demo.tablet .caption{left:96px;bottom:36px;font-size:17px;box-shadow:none}
+.highlight-note{position:absolute;left:96px;bottom:100px;max-width:1000px;padding:9px 14px;border-left:4px solid #a56b08;background:#fff9e8;color:#69440c;font:500 17px var(--body);z-index:5}
+.native-phone .highlight-note,.foldable .highlight-note,.tablet .highlight-note{max-width:450px;bottom:114px}
+.ring{border:2px solid #d79723;border-radius:10px;box-shadow:0 0 0 2px #fff8}
+.outro .chip.big{background:none;border:0;box-shadow:none;gap:18px;display:flex;align-items:center;color:var(--accent);font:500 28px var(--body);padding:0}
+.outro .chip.big .product-icon{width:64px;height:64px;border-radius:16px}
+
+.demo.desktop .win{left:150px;top:65px;width:980px}.demo.desktop .view{height:auto;aspect-ratio:2880/1800}.demo.desktop .highlight-note{bottom:80px;left:96px}.demo.desktop .caption{bottom:23px;left:96px;font-size:17px;padding:9px 16px}.outro .stackrow{height:auto;align-items:center}.outro .stackrow span{height:auto;padding:12px 20px;border-radius:999px}.outro .title .w{margin-right:.12em}

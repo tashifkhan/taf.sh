@@ -6,7 +6,7 @@
   "fps": 30,
   "product": {
     "name": "Paisa",
-    "host": "Kotlin Multiplatform",
+    "host": "paisa.tashif.codes",
     "icon": "/Users/taf/Projects/taf.sh/scripts/paisa-video/paisa-icon.svg"
   },
   "cursor": false,
@@ -40,7 +40,7 @@
       "hand-weight": "600",
       "bgimg": "none"
     },
-    "css": ".intro .chip{display:none}.intro .copy{width:550px}.intro .title{font-size:72px}.intro .tagline{max-width:480px}.intro .orbit{left:1050px}.chapter .copy{width:480px}.chapter .title{font-size:54px}.chapter .tilt{left:650px;width:590px}.chapter .tilt .win{width:590px}.chapter .tilt .view{height:368px}.stats .title{font-size:56px}.stat b{font-size:37px}.statrow{top:370px}.outro .term{top:300px;height:270px}.outro .title{font-size:55px}.outro .term .row b{width:325px}.arch .title{font-size:43px}"
+    "css": ".intro .chip{display:none}.intro .copy{width:550px}.intro .title{font-size:72px}.intro .tagline{max-width:490px}.intro .orbit{left:1050px}.chapter .copy{width:480px}.chapter .title{font-size:54px}.chapter .tilt{left:650px;width:590px}.chapter .tilt .win{width:590px}.chapter .tilt .view{height:368px}.outro .title{font-size:64px}.outro .copy{top:170px}.outro .stackrow{top:540px}.intro.landing .orbit{left:830px;right:auto;top:75px;width:290px;height:652px}.intro.landing .card3d{width:290px;height:auto;border:7px solid #263522;border-radius:34px}.intro.landing .card3d .bar{display:none}.intro.landing .card3d img{width:100%;height:auto;aspect-ratio:1080/2424;border-radius:27px}.intro.landing .copy{width:550px}"
   },
   "music": {
     "bpm": 94,
@@ -74,532 +74,552 @@
   "scenes": [
     {
       "type": "intro",
-      "dur": 7,
-      "pre": "Paisa \u00b7 open source",
+      "dur": 5.5,
+      "pre": "Paisa",
       "kicker": "Paisa",
-      "title": "Your expenses. On <em>your device</em>",
-      "tagline": "An expense manager for Android and the web. Built with Kotlin and Compose Multiplatform.",
+      "title": "Your money.<br>On <em>your terms.</em>",
+      "tagline": "Bank SMS, quick entries, budgets and private records. On your phone and every bigger screen.",
       "shots": [
-        "/Users/taf/Projects/taf.sh/scripts/paisa-video/desktop-home.png",
-        "/Users/taf/Projects/taf.sh/scripts/paisa-video/desktop-analytics.png",
-        "/Users/taf/Projects/taf.sh/scripts/paisa-video/desktop-detail.png"
+        "/Users/taf/Projects/taf.sh/scripts/paisa-video/phone-manual-saved.png"
       ],
+      "landing": true,
       "decor": "none"
     },
     {
-      "type": "stats",
-      "dur": 8,
-      "kicker": "A local money record",
-      "title": "Start without an <em>account</em>",
-      "items": [
-        {
-          "text": "On-device",
-          "label": "Android parses bank SMS locally"
-        },
-        {
-          "text": "Optional",
-          "label": "AI uses the provider and key you choose"
-        },
-        {
-          "text": "Your choice",
-          "label": "Keep a file or connect your own backup"
-        }
-      ],
-      "foot": "No Paisa account required. The app keeps its database on your device."
-    },
-    {
-      "type": "arch",
-      "dur": 9,
-      "kicker": "The everyday loop",
-      "title": "Capture, categorize, <em>review</em>",
-      "cols": 4,
-      "rows": 2,
-      "nodes": [
-        {
-          "id": "capture",
-          "x": 0,
-          "y": 0,
-          "kind": "Capture",
-          "label": "Manual or SMS",
-          "sub": "SMS on Android only",
-          "hot": true
-        },
-        {
-          "id": "category",
-          "x": 1,
-          "y": 0,
-          "kind": "Organize",
-          "label": "Merchant rules",
-          "sub": "Remember corrections"
-        },
-        {
-          "id": "data",
-          "x": 2,
-          "y": 0,
-          "kind": "Store",
-          "label": "Local database",
-          "sub": "SQLite on each device",
-          "hot": true
-        },
-        {
-          "id": "review",
-          "x": 3,
-          "y": 0,
-          "kind": "Review",
-          "label": "Spending + budgets",
-          "sub": "See the original records"
-        },
-        {
-          "id": "backup",
-          "x": 2,
-          "y": 1,
-          "kind": "Optional",
-          "label": "Backup + sync",
-          "sub": "Your file, Drive or server"
-        }
-      ],
-      "edges": [
-        {
-          "to": "category",
-          "from": "capture"
-        },
-        {
-          "to": "data",
-          "from": "category"
-        },
-        {
-          "to": "review",
-          "from": "data"
-        },
-        {
-          "to": "backup",
-          "from": "data"
-        }
-      ]
-    },
-    {
       "type": "chapter",
       "n": 1,
-      "dur": 7,
-      "title": "Keep the everyday <em>record</em>",
-      "body": "Add a cash expense by hand. On Android, bank alerts can become records on the device.",
-      "points": [
-        "Choose a category and account",
-        "Merchant rules remember your corrections"
-      ],
+      "dur": 4.2,
+      "title": "Less typing.<br>More <em>recorded.</em>",
+      "body": "Capture a bank alert automatically, use your own AI provider, or add an expense by hand.",
+      "points": [],
       "still": "/Users/taf/Projects/taf.sh/scripts/paisa-video/desktop-home.png",
-      "path": " \u00b7 Compose Multiplatform"
+      "path": ""
     },
     {
       "type": "demo",
       "n": 1,
-      "path": " \u00b7 local Wasm build",
-      "caption": "Native Android \u00b7 phone",
+      "path": "",
+      "caption": "SMS parsing happens on the device",
+      "layout": "phone",
       "src": {
-        "raw": "/Users/taf/Projects/taf.sh/scripts/paisa-video/raw/phone.mp4",
-        "a": 3,
-        "b": 11,
+        "raw": "/Users/taf/Projects/taf.sh/scripts/paisa-video/raw/phone-sms.mp4",
+        "a": 0,
+        "b": 8,
+        "speed": 1.25,
+        "crop": "1080:2424:498:0"
+      },
+      "hold": 0.7,
+      "kicker": "Capture your spending",
+      "title": "A bank SMS becomes a transaction",
+      "body": "Paisa reads supported bank alerts on your Android device and saves the amount and account.",
+      "points": [
+        "Live sample bank alert",
+        "No AI key needed for bank SMS"
+      ],
+      "highlights": []
+    },
+    {
+      "type": "demo",
+      "n": 1,
+      "path": "",
+      "caption": "\u20b9460 parsed from a sample bank SMS",
+      "layout": "phone",
+      "src": {
+        "raw": "/Users/taf/Projects/taf.sh/scripts/paisa-video/raw/phone-sms.mp4",
+        "a": 45,
+        "b": 50,
         "speed": 1,
+        "crop": "1080:2424:498:0"
+      },
+      "hold": 0.7,
+      "kicker": "Capture your spending",
+      "title": "Keep the source with the record",
+      "body": "Open the parsed expense to check the amount, account, reference and original bank message.",
+      "points": [],
+      "highlights": [
+        {
+          "at": 1,
+          "dur": 2.5,
+          "box": [
+            0.035,
+            0.195,
+            0.93,
+            0.235
+          ],
+          "label": "Parsed amount and SMS source"
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "n": 1,
+      "path": "",
+      "caption": "Original SMS attached to the transaction",
+      "layout": "phone",
+      "src": {
+        "raw": "/Users/taf/Projects/taf.sh/scripts/paisa-video/raw/phone-sms.mp4",
+        "a": 58,
+        "b": 62.5,
+        "speed": 1,
+        "crop": "1080:2424:498:0"
+      },
+      "hold": 0.7,
+      "kicker": "Capture your spending",
+      "title": "Read the original message",
+      "body": "The SMS remains attached, so you can check what the bank actually sent.",
+      "points": [],
+      "highlights": []
+    },
+    {
+      "type": "demo",
+      "n": 1,
+      "path": "",
+      "caption": "Real Gemini response \u00b7 two editable drafts",
+      "layout": "phone",
+      "src": {
+        "raw": "/Users/taf/Projects/taf.sh/scripts/paisa-video/raw/phone-ai-results.mp4",
+        "a": 104,
+        "b": 117,
+        "speed": 1.6,
+        "crop": "1080:2424:498:0"
+      },
+      "hold": 0.6,
+      "kicker": "Capture your spending",
+      "title": "Let AI read the payment text",
+      "body": "Gemini turns a bank message and a ride note into two drafts with amounts, merchants and categories.",
+      "points": [
+        "Use your own AI provider",
+        "Check the drafts before saving"
+      ],
+      "highlights": []
+    },
+    {
+      "type": "demo",
+      "n": 1,
+      "path": "",
+      "caption": "Ask AI to change the account",
+      "layout": "phone",
+      "src": {
+        "raw": "/Users/taf/Projects/taf.sh/scripts/paisa-video/raw/phone-ai-results.mp4",
+        "a": 126,
+        "b": 140,
+        "speed": 1.8,
+        "crop": "1080:2424:498:0"
+      },
+      "hold": 0.6,
+      "kicker": "Capture your spending",
+      "title": "Change the drafts in plain words",
+      "body": "Ask AI to use HDFC Savings for both payments. Review the updated accounts before saving.",
+      "points": [],
+      "highlights": []
+    },
+    {
+      "type": "demo",
+      "n": 1,
+      "path": "",
+      "caption": "Two AI drafts saved after review",
+      "layout": "phone",
+      "src": {
+        "raw": "/Users/taf/Projects/taf.sh/scripts/paisa-video/raw/phone-ai-results.mp4",
+        "a": 145,
+        "b": 152.5,
+        "speed": 1.5,
+        "crop": "1080:2424:498:0"
+      },
+      "hold": 0.6,
+      "kicker": "Capture your spending",
+      "title": "Save the payments together",
+      "body": "Choose the drafts to include, then save both transactions to your records.",
+      "points": [],
+      "highlights": []
+    },
+    {
+      "type": "demo",
+      "n": 1,
+      "path": "",
+      "caption": "Fast manual entry \u00b7 no AI service needed",
+      "layout": "phone",
+      "src": {
+        "raw": "/Users/taf/Projects/taf.sh/scripts/paisa-video/raw/phone-manual.mp4",
+        "a": 0,
+        "b": 4,
+        "speed": 1.45,
         "crop": "1080:2424:498:0"
       },
       "hold": 0.5,
-      "layout": "phone",
-      "kicker": "Phone \u00b7 native Android",
-      "title": "A balance you can check at a glance",
-      "body": "Your accounts, recent records and credit card usage fit the cover display.",
-      "points": [
-        "Bottom navigation stays within reach",
-        "All amounts shown here are sample data"
-      ]
+      "kicker": "Capture your spending",
+      "title": "Add a cash expense in seconds",
+      "body": "Enter \u20b9180 and a title. The category and account stay beside the amount.",
+      "points": [],
+      "highlights": []
     },
     {
       "type": "demo",
       "n": 1,
-      "path": " \u00b7 local Wasm build",
-      "caption": "Manual entry \u00b7 real app",
+      "path": "",
+      "caption": "A sample coffee expense saved on the device",
+      "layout": "phone",
       "src": {
-        "raw": "/Users/taf/Projects/taf.sh/scripts/paisa-video/raw/phone.mp4",
-        "a": 91,
-        "b": 100,
-        "speed": 1,
+        "raw": "/Users/taf/Projects/taf.sh/scripts/paisa-video/raw/phone-manual.mp4",
+        "a": 16,
+        "b": 18.7,
+        "speed": 1.35,
         "crop": "1080:2424:498:0"
       },
-      "hold": 0.5,
-      "layout": "phone",
-      "kicker": "Phone \u00b7 add an expense",
-      "title": "Put the details with the amount",
-      "body": "The add sheet keeps the amount, date, category and account together.",
-      "points": [
-        "Manual entry needs no AI service",
-        "Review the record before saving"
-      ]
-    },
-    {
-      "type": "demo",
-      "n": 1,
-      "path": " \u00b7 local Wasm build",
-      "caption": "Saved locally \u00b7 a \u20b9240 expense",
-      "src": {
-        "raw": "/Users/taf/Projects/taf.sh/scripts/paisa-video/raw/phone.mp4",
-        "a": 147,
-        "b": 150,
-        "speed": 1,
-        "crop": "1080:2424:498:0"
-      },
-      "hold": 5.5,
-      "layout": "phone",
-      "kicker": "Phone \u00b7 local record",
-      "title": "Save it on the device",
-      "body": "Saving the expense updates the balance and adds it to the transaction list.",
-      "points": [
-        "\u20b9240 sample expense",
-        "No account or cloud connection needed"
-      ]
+      "hold": 1.5,
+      "kicker": "Capture your spending",
+      "title": "Review. Save. Done.",
+      "body": "Save the entry locally and return to your updated balance and recent transactions.",
+      "points": [],
+      "highlights": []
     },
     {
       "type": "chapter",
       "n": 2,
-      "dur": 7,
-      "title": "Give the layout <em>room</em>",
-      "body": "The same Kotlin UI adapts when the foldable opens or the browser gets wider.",
-      "points": [
-        "A rail replaces the phone bottom bar",
-        "Transaction details can stay beside the list"
-      ],
-      "still": "/Users/taf/Projects/taf.sh/scripts/paisa-video/desktop-detail.png",
-      "path": " \u00b7 Compose Multiplatform"
+      "dur": 4.2,
+      "title": "Know where<br>it <em>went.</em>",
+      "body": "Search individual payments, compare categories, and keep monthly spending within a budget.",
+      "points": [],
+      "still": "/Users/taf/Projects/taf.sh/scripts/paisa-video/desktop-analytics.png",
+      "path": ""
     },
     {
       "type": "demo",
       "n": 2,
-      "path": " \u00b7 local Wasm build",
-      "caption": "Native Android \u00b7 unfolded foldable",
+      "path": "",
+      "caption": "Merchant search on your phone",
+      "layout": "phone",
       "src": {
-        "raw": "/Users/taf/Projects/taf.sh/scripts/paisa-video/raw/foldable.mp4",
-        "a": 3,
-        "b": 11,
+        "raw": "/Users/taf/Projects/taf.sh/scripts/paisa-video/raw/phone-search.mp4",
+        "a": 0,
+        "b": 3,
         "speed": 1,
-        "crop": "2076:2152:0:136"
+        "crop": "1080:2424:498:0"
       },
-      "hold": 0.5,
-      "layout": "foldable",
-      "kicker": "Foldable \u00b7 native Android",
-      "title": "Unfold into more context",
-      "body": "The inner display makes room for the overview and a navigation rail.",
+      "hold": 2.0,
+      "kicker": "Understand your money",
+      "title": "Find the payments you need",
+      "body": "Search a merchant to bring matching records together.",
+      "points": [],
+      "highlights": []
+    },
+    {
+      "type": "demo",
+      "n": 2,
+      "path": "",
+      "caption": "Monthly analytics \u00b7 real sample records",
+      "layout": "phone",
+      "src": {
+        "raw": "/Users/taf/Projects/taf.sh/scripts/paisa-video/raw/phone-analytics.mp4",
+        "a": 0,
+        "b": 3,
+        "speed": 1,
+        "crop": "1080:2424:498:0"
+      },
+      "hold": 2,
+      "kicker": "Understand your money",
+      "title": "See the spending by category",
+      "body": "Monthly totals and category breakdowns help you review the original records.",
+      "points": [],
+      "highlights": []
+    },
+    {
+      "type": "demo",
+      "n": 2,
+      "path": "",
+      "caption": "Monthly budgets and category progress",
+      "layout": "phone",
+      "src": {
+        "raw": "/Users/taf/Projects/taf.sh/scripts/paisa-video/raw/phone-review.mp4",
+        "a": 2.4,
+        "b": 6.1,
+        "speed": 1,
+        "crop": "1080:2424:498:0"
+      },
+      "hold": 1,
+      "kicker": "Understand your money",
+      "title": "Give each category a budget",
+      "body": "Set monthly caps and compare spending with the amount you planned.",
+      "points": [],
+      "highlights": []
+    },
+    {
+      "type": "demo",
+      "n": 2,
+      "path": "",
+      "caption": "Bank, cash, card and wallet accounts",
+      "layout": "phone",
+      "src": {
+        "raw": "/Users/taf/Projects/taf.sh/scripts/paisa-video/raw/phone-accounts.mp4",
+        "a": 0,
+        "b": 1.2,
+        "speed": 1,
+        "crop": "1080:2424:498:0"
+      },
+      "hold": 3.5,
+      "kicker": "Understand your money",
+      "title": "Keep every account in view",
+      "body": "Review bank, cash and credit card balances separately.",
+      "points": [],
+      "highlights": []
+    },
+    {
+      "type": "demo",
+      "n": 2,
+      "path": "",
+      "caption": "Your choice of backup destination",
+      "layout": "phone",
+      "src": {
+        "raw": "/Users/taf/Projects/taf.sh/scripts/paisa-video/raw/phone-backup.mp4",
+        "a": 0,
+        "b": 1.5,
+        "speed": 1,
+        "crop": "1080:2424:498:0"
+      },
+      "hold": 3,
+      "kicker": "Understand your money",
+      "title": "Choose your backup",
+      "body": "Connect Google Drive or Nextcloud, or keep a backup file. Backup and sync are optional.",
+      "points": [],
+      "highlights": []
+    },
+    {
+      "type": "chapter",
+      "n": 3,
+      "dur": 4.2,
+      "title": "Your colors.<br>Your <em>privacy.</em>",
+      "body": "Material You colors, appearance controls, hidden amounts and an app lock.",
+      "points": [],
+      "still": "/Users/taf/Projects/taf.sh/scripts/paisa-video/desktop-home.png",
+      "path": ""
+    },
+    {
+      "type": "demo",
+      "n": 3,
+      "path": "",
+      "caption": "Material 3 \u00b7 wallpaper colors and 31 themes",
+      "layout": "phone",
+      "src": {
+        "raw": "/Users/taf/Projects/taf.sh/scripts/paisa-video/raw/phone-appearance.mp4",
+        "a": 0.2,
+        "b": 6.6,
+        "speed": 1,
+        "crop": "1080:2424:498:0"
+      },
+      "hold": 0.7,
+      "kicker": "Make Paisa yours",
+      "title": "Material You, your way",
+      "body": "Follow your wallpaper colors on Android 12 and later, or pick a fixed palette.",
       "points": [
-        "One app across both displays",
-        "No separate tablet rewrite"
+        "Dynamic Material You colors",
+        "System, light or dark appearance"
+      ],
+      "highlights": []
+    },
+    {
+      "type": "demo",
+      "n": 3,
+      "path": "",
+      "caption": "Customize color, contrast, motion and navigation",
+      "layout": "phone",
+      "src": {
+        "raw": "/Users/taf/Projects/taf.sh/scripts/paisa-video/raw/phone-appearance.mp4",
+        "a": 7,
+        "b": 13.2,
+        "speed": 1.15,
+        "crop": "1080:2424:498:0"
+      },
+      "hold": 0.7,
+      "kicker": "Make Paisa yours",
+      "title": "Make the interface yours",
+      "body": "Choose AMOLED black, expressive motion, stronger contrast and a floating navigation bar.",
+      "points": [],
+      "highlights": []
+    },
+    {
+      "type": "demo",
+      "n": 3,
+      "path": "",
+      "caption": "Ocean palette \u00b7 AMOLED black \u00b7 floating navbar",
+      "layout": "phone",
+      "src": {
+        "raw": "/Users/taf/Projects/taf.sh/scripts/paisa-video/raw/phone-appearance.mp4",
+        "a": 14,
+        "b": 16.5,
+        "speed": 1,
+        "crop": "1080:2424:498:0"
+      },
+      "hold": 2,
+      "kicker": "Make Paisa yours",
+      "title": "An AMOLED black home",
+      "body": "Your selected palette carries through the app, including the floating bottom bar.",
+      "points": [],
+      "highlights": []
+    },
+    {
+      "type": "demo",
+      "n": 3,
+      "path": "",
+      "caption": "Hide amounts on the home screen",
+      "layout": "phone",
+      "src": {
+        "raw": "/Users/taf/Projects/taf.sh/scripts/paisa-video/raw/phone-privacy.mp4",
+        "a": 0,
+        "b": 4.7,
+        "speed": 1,
+        "crop": "1080:2424:498:0"
+      },
+      "hold": 1,
+      "kicker": "Make Paisa yours",
+      "title": "Hide the amounts",
+      "body": "Tap the eye to hide balances and transaction amounts. Reveal them when you need them.",
+      "points": [],
+      "highlights": [
+        {
+          "at": 1.2,
+          "dur": 1.8,
+          "box": [
+            0.025,
+            0.25,
+            0.95,
+            0.18
+          ],
+          "label": "Amounts concealed with one tap"
+        }
       ]
     },
     {
       "type": "demo",
-      "n": 2,
-      "path": " \u00b7 local Wasm build",
-      "caption": "Native Android \u00b7 list and detail",
+      "n": 3,
+      "path": "",
+      "caption": "App lock \u00b7 real locked screen",
+      "layout": "phone",
+      "src": {
+        "raw": "/Users/taf/Projects/taf.sh/scripts/paisa-video/raw/phone-lock.mp4",
+        "a": 14,
+        "b": 19,
+        "speed": 1,
+        "crop": "1080:2424:498:0"
+      },
+      "hold": 1.2,
+      "kicker": "Make Paisa yours",
+      "title": "Lock your finances",
+      "body": "Require fingerprint, face or your device credentials when you return to Paisa.",
+      "points": [],
+      "highlights": []
+    },
+    {
+      "type": "chapter",
+      "n": 4,
+      "dur": 4.2,
+      "title": "Fits the screen<br>you <em>have.</em>",
+      "body": "Use Paisa on a phone, an unfolded foldable, a tablet or the web.",
+      "points": [],
+      "still": "/Users/taf/Projects/taf.sh/scripts/paisa-video/desktop-detail.png",
+      "path": ""
+    },
+    {
+      "type": "demo",
+      "n": 4,
+      "path": "",
+      "caption": "Foldable \u00b7 list and details together",
+      "layout": "foldable",
       "src": {
         "raw": "/Users/taf/Projects/taf.sh/scripts/paisa-video/raw/foldable.mp4",
         "a": 27,
-        "b": 35,
-        "speed": 1,
+        "b": 34,
+        "speed": 1.15,
         "crop": "2076:2152:0:136"
       },
-      "hold": 0.5,
-      "layout": "foldable",
-      "kicker": "Foldable \u00b7 two panes",
-      "title": "Open a record. Keep the list.",
-      "body": "Check the source, category and account while the transaction list remains visible.",
-      "points": [
-        "Edit the amount or title in place",
-        "Return to the next record without losing context"
-      ]
-    },
-    {
-      "type": "chapter",
-      "n": 3,
-      "dur": 7,
-      "title": "See where the money <em>went</em>",
-      "body": "Search the original records, compare spending and set a monthly category budget.",
-      "points": [
-        "Desktop keeps navigation visible",
-        "Charts lead back to actual transactions"
-      ],
-      "still": "/Users/taf/Projects/taf.sh/scripts/paisa-video/desktop-analytics.png",
-      "path": " \u00b7 Compose Multiplatform"
+      "hold": 0.7,
+      "kicker": "Room for every screen",
+      "title": "Unfold into two panes",
+      "body": "Open a transaction beside your records on the inner display.",
+      "points": [],
+      "highlights": []
     },
     {
       "type": "demo",
-      "n": 3,
-      "path": " \u00b7 local Wasm build",
-      "caption": "Search a merchant across the record",
+      "n": 4,
+      "path": "",
+      "caption": "Native Android \u00b7 tablet support",
+      "layout": "tablet",
       "src": {
-        "raw": "/Users/taf/Projects/taf.sh/scripts/paisa-video/raw/desktop-details.mp4",
-        "a": 16,
-        "b": 24,
+        "raw": "/Users/taf/Projects/taf.sh/scripts/paisa-video/raw/tablet.mp4",
+        "a": 0,
+        "b": 4.5,
         "speed": 1
       },
-      "hold": 0.5,
-      "highlights": [
-        {
-          "at": 3,
-          "dur": 2.7,
-          "box": [
-            0.185,
-            0.05,
-            0.5,
-            0.09
-          ],
-          "label": "Swiggy \u00b7 4 matching transactions",
-          "side": "below"
-        }
-      ]
+      "hold": 1,
+      "kicker": "Room for every screen",
+      "title": "A proper tablet layout",
+      "body": "A larger display keeps navigation, records and transaction details visible together.",
+      "points": [],
+      "highlights": []
     },
     {
       "type": "demo",
-      "n": 3,
-      "path": " \u00b7 local Wasm build",
-      "caption": "Open the source record beside the results",
+      "n": 4,
+      "path": "",
+      "caption": "Tablet analytics",
+      "layout": "tablet",
+      "src": {
+        "raw": "/Users/taf/Projects/taf.sh/scripts/paisa-video/raw/tablet.mp4",
+        "a": 6,
+        "b": 9,
+        "speed": 1
+      },
+      "hold": 1.2,
+      "kicker": "Room for every screen",
+      "title": "More room for analytics",
+      "body": "Review totals, category charts and spending patterns across the tablet display.",
+      "points": [],
+      "highlights": []
+    },
+    {
+      "type": "demo",
+      "n": 4,
+      "path": "",
+      "caption": "Web \u00b7 paisa.tashif.codes",
+      "layout": "desktop",
       "src": {
         "raw": "/Users/taf/Projects/taf.sh/scripts/paisa-video/raw/desktop-details.mp4",
         "a": 46,
-        "b": 54,
+        "b": 53,
         "speed": 1
       },
-      "hold": 0.5,
-      "highlights": [
-        {
-          "at": 3,
-          "dur": 2.6,
-          "box": [
-            0.68,
-            0.06,
-            0.3,
-            0.52
-          ],
-          "label": "Source, date, category and account",
-          "side": "below"
-        }
-      ]
-    },
-    {
-      "type": "demo",
-      "n": 3,
-      "path": " \u00b7 local Wasm build",
-      "caption": "Compare the month and inspect category spending",
-      "src": {
-        "raw": "/Users/taf/Projects/taf.sh/scripts/paisa-video/raw/desktop.mp4",
-        "a": 15,
-        "b": 23,
-        "speed": 1
-      },
-      "hold": 0.5,
-      "highlights": [
-        {
-          "at": 2,
-          "dur": 2.5,
-          "box": [
-            0.18,
-            0.19,
-            0.8,
-            0.1
-          ],
-          "label": "Income, expense and savings for the selected period",
-          "side": "below"
-        }
-      ]
-    },
-    {
-      "type": "demo",
-      "n": 3,
-      "path": " \u00b7 local Wasm build",
-      "caption": "Monthly budgets with category progress",
-      "src": {
-        "raw": "/Users/taf/Projects/taf.sh/scripts/paisa-video/raw/desktop.mp4",
-        "a": 40,
-        "b": 48,
-        "speed": 1
-      },
-      "hold": 0.5,
-      "highlights": [
-        {
-          "at": 2,
-          "dur": 2.7,
-          "box": [
-            0.18,
-            0.07,
-            0.79,
-            0.2
-          ],
-          "label": "Set caps for the categories you want to watch",
-          "side": "below"
-        }
-      ]
-    },
-    {
-      "type": "chapter",
-      "n": 4,
-      "dur": 7,
-      "title": "Choose what <em>leaves</em> the device",
-      "body": "Keep your records local. Connect backup, sync or an AI provider when you want them.",
-      "points": [
-        "File, Google Drive or Nextcloud",
-        "AI sends only what you choose to submit"
-      ],
-      "still": "/Users/taf/Projects/taf.sh/scripts/paisa-video/desktop-backup.png",
-      "path": " \u00b7 Compose Multiplatform"
-    },
-    {
-      "type": "demo",
-      "n": 4,
-      "path": " \u00b7 local Wasm build",
-      "caption": "Accounts keep cash, bank and credit records separate",
-      "src": {
-        "raw": "/Users/taf/Projects/taf.sh/scripts/paisa-video/raw/desktop.mp4",
-        "a": 54,
-        "b": 61,
-        "speed": 1
-      },
-      "hold": 0.5,
-      "highlights": [
-        {
-          "at": 2,
-          "dur": 2.5,
-          "box": [
-            0.18,
-            0.06,
-            0.38,
-            0.35
-          ],
-          "label": "Sample cash, bank, card and wallet accounts",
-          "side": "below"
-        }
-      ]
-    },
-    {
-      "type": "demo",
-      "n": 4,
-      "path": " \u00b7 local Wasm build",
-      "caption": "Backup and sync are optional",
-      "src": {
-        "raw": "/Users/taf/Projects/taf.sh/scripts/paisa-video/raw/desktop.mp4",
-        "a": 89,
-        "b": 97,
-        "speed": 1
-      },
-      "hold": 0.5,
+      "hold": 0.7,
+      "kicker": "Room for every screen",
+      "title": "Paisa in your browser",
+      "body": "Open transaction details beside your search results.",
+      "points": [],
       "highlights": [
         {
           "at": 2,
           "dur": 2.8,
           "box": [
-            0.45,
-            0.35,
-            0.53,
-            0.29
+            0.672,
+            0.135,
+            0.322,
+            0.5
           ],
-          "label": "Connect your own destination first",
-          "side": "below"
-        }
-      ]
-    },
-    {
-      "type": "demo",
-      "n": 4,
-      "path": " \u00b7 local Wasm build",
-      "caption": "Bring your own AI provider and model",
-      "src": {
-        "raw": "/Users/taf/Projects/taf.sh/scripts/paisa-video/raw/desktop.mp4",
-        "a": 104,
-        "b": 112,
-        "speed": 1
-      },
-      "hold": 0.5,
-      "highlights": [
-        {
-          "at": 3,
-          "dur": 2.6,
-          "box": [
-            0.45,
-            0.36,
-            0.53,
-            0.29
-          ],
-          "label": "Configure optional import and Add with AI",
-          "side": "below"
-        }
-      ]
-    },
-    {
-      "type": "arch",
-      "dur": 9,
-      "kicker": "One shared codebase",
-      "title": "Kotlin on Android. Compose in the <em>browser</em>",
-      "cols": 3,
-      "rows": 2,
-      "nodes": [
-        {
-          "id": "shared",
-          "x": 1,
-          "y": 0,
-          "kind": "Shared",
-          "label": "Kotlin + Compose",
-          "sub": "UI and application logic",
-          "hot": true
-        },
-        {
-          "id": "android",
-          "x": 0,
-          "y": 1,
-          "kind": "Android",
-          "label": "Phone + foldable",
-          "sub": "Native app and local SMS"
-        },
-        {
-          "id": "web",
-          "x": 2,
-          "y": 1,
-          "kind": "Web",
-          "label": "Kotlin/Wasm",
-          "sub": "SQLite in browser storage"
-        }
-      ],
-      "edges": [
-        {
-          "from": "shared",
-          "to": "android"
-        },
-        {
-          "from": "shared",
-          "to": "web"
+          "label": "Transaction details stay beside your records"
         }
       ]
     },
     {
       "type": "outro",
-      "dur": 8,
-      "kicker": "Paisa \u00b7 open source",
-      "title": "Keep your money record <em>yours</em>",
-      "url": "github.com/tashifkhan/Paisa",
-      "trace": [
-        {
-          "name": "Android phone",
-          "status": "native app"
-        },
-        {
-          "name": "Unfolded foldable",
-          "status": "adaptive two panes"
-        },
-        {
-          "name": "Web browser",
-          "status": "Kotlin/Wasm"
-        }
-      ],
+      "dur": 6,
+      "kicker": "Paisa",
+      "title": "Keep your money<br>record <em>yours.</em>",
+      "url": "paisa.tashif.codes",
       "stack": [
-        "Kotlin",
-        "Compose Multiplatform",
-        "SQLite",
-        "AGPL-3.0"
+        "Phone",
+        "Foldable",
+        "Tablet",
+        "Web"
       ],
-      "sign": "<b>Built by taf.sh</b> \u00b7 github.com/tashifkhan/Paisa"
+      "sign": "<b>Built by taf.sh</b> \u00b7 Open source"
     }
   ]
 }

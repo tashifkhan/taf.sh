@@ -2,11 +2,11 @@
   "name": "paisa-phone",
   "out": "/Users/taf/Projects/taf.sh/public/reel/paisa-phone-demo.mp4",
   "poster": "/Users/taf/Projects/taf.sh/public/reel/paisa-phone-poster.jpg",
-  "posterAt": 2.5,
+  "posterAt": 3,
   "fps": 30,
   "product": {
     "name": "Paisa",
-    "host": "Kotlin Multiplatform",
+    "host": "paisa.tashif.codes",
     "icon": "/Users/taf/Projects/taf.sh/scripts/paisa-video/paisa-icon.svg"
   },
   "cursor": false,
@@ -40,7 +40,7 @@
       "hand-weight": "600",
       "bgimg": "none"
     },
-    "css": "html,body{width:720px;height:1280px}.hud{display:none}.demo.portrait .win{left:132px;top:190px;width:456px;border:7px solid #263522;border-radius:32px}.demo.portrait .bar{display:none}.demo.portrait .view{height:990px;background:var(--bg)}.demo.portrait .shot{object-fit:contain!important}.portrait-header{position:absolute;left:40px;right:40px;top:26px;text-align:center}.portrait-header small{font:14px var(--mono);letter-spacing:.13em;color:var(--accent)}.portrait-header h2{font:600 38px/1.12 var(--head);letter-spacing:-.03em;margin:16px 0 8px}.portrait-header p{font:20px/1.4 var(--body);color:var(--muted);margin:0}.caption{left:40px;right:40px;bottom:31px;justify-content:center;padding:11px 12px;font-size:20px;box-shadow:none}.caption b{display:none}.sample-data{left:0;right:0;bottom:8px;text-align:center;font-size:11px}"
+    "css": "html,body{width:720px;height:1280px}.hud{display:none}.demo.portrait .win{left:146px;top:223px;width:428px;border:7px solid #263522;border-radius:34px;background:#000}.demo.portrait .bar{display:none}.demo.portrait .view{height:auto;aspect-ratio:1080/2424;border-radius:27px;background:#000}.demo.portrait .shot{object-fit:fill!important}.portrait-header{position:absolute;left:32px;right:32px;top:24px;text-align:center}.portrait-header small{display:block;height:42px}.portrait-header small .product-icon{width:42px;height:42px;border-radius:12px}.portrait-header h2{font:600 36px/1.1 var(--head);letter-spacing:-.03em;margin:16px 0 10px}.portrait-header p{font:18px/1.3 var(--body);color:var(--muted);margin:0}.caption{left:24px;right:24px;bottom:37px;justify-content:center;padding:10px 5px;font-size:18px;box-shadow:none}.caption b{display:none}.sample-data{left:0;right:0;bottom:12px;text-align:center;font-size:11px}"
   },
   "music": {
     "bpm": 94,
@@ -75,70 +75,371 @@
     {
       "type": "demo",
       "n": 1,
-      "layout": "portrait",
-      "title": "Your expenses. On your device.",
-      "body": "The native Kotlin app on a phone.",
-      "caption": "Check balances and recent records",
       "path": "",
+      "caption": "SMS parsing happens on the device",
+      "layout": "portrait",
       "src": {
-        "raw": "/Users/taf/Projects/taf.sh/scripts/paisa-video/raw/phone.mp4",
-        "a": 3,
-        "b": 11,
-        "speed": 1,
+        "raw": "/Users/taf/Projects/taf.sh/scripts/paisa-video/raw/phone-sms.mp4",
+        "a": 0,
+        "b": 8,
+        "speed": 1.25,
         "crop": "1080:2424:498:0"
       },
-      "hold": 0.5
+      "hold": 0.7,
+      "kicker": "Capture your spending",
+      "title": "A bank SMS becomes a transaction",
+      "body": "",
+      "points": [
+        "Live sample bank alert",
+        "No AI key needed for bank SMS"
+      ],
+      "highlights": []
     },
     {
       "type": "demo",
       "n": 1,
-      "layout": "portrait",
-      "title": "Add an expense",
-      "body": "Choose the amount, category and account.",
-      "caption": "Manual entry \u00b7 no AI service needed",
       "path": "",
+      "caption": "\u20b9460 parsed from a sample bank SMS",
+      "layout": "portrait",
       "src": {
-        "raw": "/Users/taf/Projects/taf.sh/scripts/paisa-video/raw/phone.mp4",
-        "a": 37,
-        "b": 46,
+        "raw": "/Users/taf/Projects/taf.sh/scripts/paisa-video/raw/phone-sms.mp4",
+        "a": 45,
+        "b": 50,
         "speed": 1,
         "crop": "1080:2424:498:0"
       },
-      "hold": 0.5
+      "hold": 0.7,
+      "kicker": "Capture your spending",
+      "title": "Keep the source with the record",
+      "body": "",
+      "points": [],
+      "highlights": []
     },
     {
       "type": "demo",
       "n": 1,
-      "layout": "portrait",
-      "title": "Review the details",
-      "body": "A sample \u20b9240 expense in the add sheet.",
-      "caption": "Review before saving",
       "path": "",
+      "caption": "Original SMS attached to the transaction",
+      "layout": "portrait",
       "src": {
-        "raw": "/Users/taf/Projects/taf.sh/scripts/paisa-video/raw/phone.mp4",
-        "a": 91,
-        "b": 100,
+        "raw": "/Users/taf/Projects/taf.sh/scripts/paisa-video/raw/phone-sms.mp4",
+        "a": 58,
+        "b": 62.5,
         "speed": 1,
         "crop": "1080:2424:498:0"
       },
-      "hold": 0.5
+      "hold": 0.7,
+      "kicker": "Capture your spending",
+      "title": "Read the original message",
+      "body": "",
+      "points": [],
+      "highlights": []
     },
     {
       "type": "demo",
       "n": 1,
-      "layout": "portrait",
-      "title": "Saved on the device",
-      "body": "The balance updates with your new record.",
-      "caption": "github.com/tashifkhan/Paisa",
       "path": "",
+      "caption": "Real Gemini response \u00b7 two editable drafts",
+      "layout": "portrait",
       "src": {
-        "raw": "/Users/taf/Projects/taf.sh/scripts/paisa-video/raw/phone.mp4",
-        "a": 147,
-        "b": 150,
+        "raw": "/Users/taf/Projects/taf.sh/scripts/paisa-video/raw/phone-ai-results.mp4",
+        "a": 104,
+        "b": 117,
+        "speed": 1.6,
+        "crop": "1080:2424:498:0"
+      },
+      "hold": 0.6,
+      "kicker": "Capture your spending",
+      "title": "Let AI read the payment text",
+      "body": "",
+      "points": [
+        "Use your own AI provider",
+        "Check the drafts before saving"
+      ],
+      "highlights": []
+    },
+    {
+      "type": "demo",
+      "n": 1,
+      "path": "",
+      "caption": "Ask AI to change the account",
+      "layout": "portrait",
+      "src": {
+        "raw": "/Users/taf/Projects/taf.sh/scripts/paisa-video/raw/phone-ai-results.mp4",
+        "a": 126,
+        "b": 140,
+        "speed": 1.8,
+        "crop": "1080:2424:498:0"
+      },
+      "hold": 0.6,
+      "kicker": "Capture your spending",
+      "title": "Change the drafts in plain words",
+      "body": "",
+      "points": [],
+      "highlights": []
+    },
+    {
+      "type": "demo",
+      "n": 1,
+      "path": "",
+      "caption": "Two AI drafts saved after review",
+      "layout": "portrait",
+      "src": {
+        "raw": "/Users/taf/Projects/taf.sh/scripts/paisa-video/raw/phone-ai-results.mp4",
+        "a": 145,
+        "b": 152.5,
+        "speed": 1.5,
+        "crop": "1080:2424:498:0"
+      },
+      "hold": 0.6,
+      "kicker": "Capture your spending",
+      "title": "Save the payments together",
+      "body": "",
+      "points": [],
+      "highlights": []
+    },
+    {
+      "type": "demo",
+      "n": 1,
+      "path": "",
+      "caption": "Fast manual entry",
+      "layout": "portrait",
+      "src": {
+        "raw": "/Users/taf/Projects/taf.sh/scripts/paisa-video/raw/phone-manual.mp4",
+        "a": 0,
+        "b": 4,
+        "speed": 1.45,
+        "crop": "1080:2424:498:0"
+      },
+      "hold": 0.5,
+      "kicker": "Capture your spending",
+      "title": "Add a cash expense in seconds",
+      "body": "",
+      "points": [],
+      "highlights": []
+    },
+    {
+      "type": "demo",
+      "n": 1,
+      "path": "",
+      "caption": "A sample coffee expense saved on the device",
+      "layout": "portrait",
+      "src": {
+        "raw": "/Users/taf/Projects/taf.sh/scripts/paisa-video/raw/phone-manual.mp4",
+        "a": 16,
+        "b": 18.7,
+        "speed": 1.35,
+        "crop": "1080:2424:498:0"
+      },
+      "hold": 1.5,
+      "kicker": "Capture your spending",
+      "title": "Review. Save. Done.",
+      "body": "",
+      "points": [],
+      "highlights": []
+    },
+    {
+      "type": "demo",
+      "n": 2,
+      "path": "",
+      "caption": "Merchant search on your phone",
+      "layout": "portrait",
+      "src": {
+        "raw": "/Users/taf/Projects/taf.sh/scripts/paisa-video/raw/phone-search.mp4",
+        "a": 0,
+        "b": 3,
         "speed": 1,
         "crop": "1080:2424:498:0"
       },
-      "hold": 5.5
+      "hold": 2.0,
+      "kicker": "Understand your money",
+      "title": "Find the payments you need",
+      "body": "",
+      "points": [],
+      "highlights": []
+    },
+    {
+      "type": "demo",
+      "n": 2,
+      "path": "",
+      "caption": "Monthly analytics \u00b7 real sample records",
+      "layout": "portrait",
+      "src": {
+        "raw": "/Users/taf/Projects/taf.sh/scripts/paisa-video/raw/phone-analytics.mp4",
+        "a": 0,
+        "b": 3,
+        "speed": 1,
+        "crop": "1080:2424:498:0"
+      },
+      "hold": 2,
+      "kicker": "Understand your money",
+      "title": "See the spending by category",
+      "body": "",
+      "points": [],
+      "highlights": []
+    },
+    {
+      "type": "demo",
+      "n": 2,
+      "path": "",
+      "caption": "Monthly budgets and category progress",
+      "layout": "portrait",
+      "src": {
+        "raw": "/Users/taf/Projects/taf.sh/scripts/paisa-video/raw/phone-review.mp4",
+        "a": 2.4,
+        "b": 6.1,
+        "speed": 1,
+        "crop": "1080:2424:498:0"
+      },
+      "hold": 1,
+      "kicker": "Understand your money",
+      "title": "Give each category a budget",
+      "body": "",
+      "points": [],
+      "highlights": []
+    },
+    {
+      "type": "demo",
+      "n": 2,
+      "path": "",
+      "caption": "Bank, cash, card and wallet accounts",
+      "layout": "portrait",
+      "src": {
+        "raw": "/Users/taf/Projects/taf.sh/scripts/paisa-video/raw/phone-accounts.mp4",
+        "a": 0,
+        "b": 1.2,
+        "speed": 1,
+        "crop": "1080:2424:498:0"
+      },
+      "hold": 3.5,
+      "kicker": "Understand your money",
+      "title": "Keep every account in view",
+      "body": "",
+      "points": [],
+      "highlights": []
+    },
+    {
+      "type": "demo",
+      "n": 2,
+      "path": "",
+      "caption": "Your choice of backup destination",
+      "layout": "portrait",
+      "src": {
+        "raw": "/Users/taf/Projects/taf.sh/scripts/paisa-video/raw/phone-backup.mp4",
+        "a": 0,
+        "b": 1.5,
+        "speed": 1,
+        "crop": "1080:2424:498:0"
+      },
+      "hold": 3,
+      "kicker": "Understand your money",
+      "title": "Choose your backup",
+      "body": "",
+      "points": [],
+      "highlights": []
+    },
+    {
+      "type": "demo",
+      "n": 3,
+      "path": "",
+      "caption": "Material 3 \u00b7 wallpaper colors and 31 themes",
+      "layout": "portrait",
+      "src": {
+        "raw": "/Users/taf/Projects/taf.sh/scripts/paisa-video/raw/phone-appearance.mp4",
+        "a": 0.2,
+        "b": 6.6,
+        "speed": 1,
+        "crop": "1080:2424:498:0"
+      },
+      "hold": 0.7,
+      "kicker": "Make Paisa yours",
+      "title": "Material You, your way",
+      "body": "",
+      "points": [
+        "Dynamic Material You colors",
+        "System, light or dark appearance"
+      ],
+      "highlights": []
+    },
+    {
+      "type": "demo",
+      "n": 3,
+      "path": "",
+      "caption": "Customize color, contrast, motion and navigation",
+      "layout": "portrait",
+      "src": {
+        "raw": "/Users/taf/Projects/taf.sh/scripts/paisa-video/raw/phone-appearance.mp4",
+        "a": 7,
+        "b": 13.2,
+        "speed": 1.15,
+        "crop": "1080:2424:498:0"
+      },
+      "hold": 0.7,
+      "kicker": "Make Paisa yours",
+      "title": "Make the interface yours",
+      "body": "",
+      "points": [],
+      "highlights": []
+    },
+    {
+      "type": "demo",
+      "n": 3,
+      "path": "",
+      "caption": "Ocean palette \u00b7 AMOLED black \u00b7 floating navbar",
+      "layout": "portrait",
+      "src": {
+        "raw": "/Users/taf/Projects/taf.sh/scripts/paisa-video/raw/phone-appearance.mp4",
+        "a": 14,
+        "b": 16.5,
+        "speed": 1,
+        "crop": "1080:2424:498:0"
+      },
+      "hold": 2,
+      "kicker": "Make Paisa yours",
+      "title": "An AMOLED black home",
+      "body": "",
+      "points": [],
+      "highlights": []
+    },
+    {
+      "type": "demo",
+      "n": 3,
+      "path": "",
+      "caption": "Hide amounts on the home screen",
+      "layout": "portrait",
+      "src": {
+        "raw": "/Users/taf/Projects/taf.sh/scripts/paisa-video/raw/phone-privacy.mp4",
+        "a": 0,
+        "b": 4.7,
+        "speed": 1,
+        "crop": "1080:2424:498:0"
+      },
+      "hold": 1,
+      "kicker": "Make Paisa yours",
+      "title": "Hide the amounts",
+      "body": "",
+      "points": [],
+      "highlights": []
+    },
+    {
+      "type": "demo",
+      "n": 3,
+      "path": "",
+      "caption": "App lock \u00b7 real locked screen",
+      "layout": "portrait",
+      "src": {
+        "raw": "/Users/taf/Projects/taf.sh/scripts/paisa-video/raw/phone-lock.mp4",
+        "a": 14,
+        "b": 19,
+        "speed": 1,
+        "crop": "1080:2424:498:0"
+      },
+      "hold": 1.2,
+      "kicker": "Make Paisa yours",
+      "title": "Lock your finances",
+      "body": "",
+      "points": [],
+      "highlights": []
     }
   ],
   "format": "portrait"

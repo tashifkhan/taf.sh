@@ -15,32 +15,30 @@ mkdirSync(`${work}/artwork`, { recursive: true });
 const data = (p, type = 'image/png') => `data:${type};base64,${readFileSync(p).toString('base64')}`;
 const asset = name => data(`${root}/${name}.png`);
 const font = (name, file) => `@font-face{font-family:'${name}';src:url('${data(`${site}/node_modules/@fontsource/${file}`, 'font/woff2')}')}`;
-const crop = (name, source, box) => {
-  const file = `${work}/artwork/${name}.png`;
-  execFileSync('ffmpeg', ['-v','error','-y','-i',`${root}/${source}.png`,'-vf',`crop=${box}`,'-frames:v','1',file]);
-  return data(file);
-};
-const budgets = [
-  crop('monthly','desktop-budgets','760:190:530:126'),
-  crop('food','desktop-budgets','760:190:1310:126'),
-  crop('shopping','desktop-budgets','760:190:530:326'),
-  crop('transport','desktop-budgets','760:190:1310:326'),
-];
-const backup = crop('backup-settings','desktop-backup','1600:1570:1260:110');
-const record = crop('record-summary','desktop-detail','960:850:1920:0');
 const phone = (src, cls = '') => `<div class="device phone ${cls}"><img src="${asset(src)}"></div>`;
 const fold = (src, cls = '') => `<div class="device fold ${cls}"><img src="${asset(src)}"></div>`;
-const web = (src, cls = '') => `<div class="browser ${cls}"><div class="chrome"><i></i><i></i><i></i><span>Paisa · Kotlin / Wasm</span></div><img src="${asset(src)}"></div>`;
+const web = (src, cls = '') => `<div class="browser ${cls}"><div class="chrome"><i></i><i></i><i></i><span>paisa.tashif.codes</span></div><img src="${asset(src)}"></div>`;
 const panels = [
-  { id:'01', cls:'hero', tag:'A little more clarity', title:'Your money.<br>Your <em>business.</em>', body:'Keep your expenses on your device.<br>No Paisa account required.', art:phone('phone-home'), note:'A local record of everyday spending', platform:'Native Android' },
-  { id:'02', cls:'entry', tag:'For the everyday spend', title:'Coffee. Lunch.<br><em>Logged.</em>', body:'Add the amount, category and account.<br>Save the record on your device.', art:phone('phone-add'), note:'Manual entry works without an AI service', platform:'Native Android' },
-  { id:'03', cls:'adaptive', tag:'Made for a little more room', title:'Unfold.<br>See <em>more.</em>', body:'Open a transaction beside your records.<br>The layout adapts to the inner display.', art:fold('foldable-detail'), note:'The list stays. The details open beside it.', platform:'Android · foldable' },
-  { id:'04', cls:'analytics', tag:'Follow the spending', title:'Where did<br>it <em>go?</em>', body:'Compare the month. Inspect categories.<br>Review the original transactions.', art:fold('foldable-analytics'), note:'Monthly totals, category charts and a heatmap', platform:'Android · foldable' },
-  { id:'05', cls:'budgets dark', tag:'Give spending a limit', title:'A budget for<br><em>your life.</em>', body:'Set monthly caps for the categories<br>you want to watch.', art:`<div class="budget-stack">${budgets.map((s,i)=>`<div class="budget b${i}"><img src="${s}"></div>`).join('')}</div>`, note:'Real category budgets in Paisa', platform:'Kotlin Multiplatform' },
-  { id:'06', cls:'desktop', tag:'The bigger picture', title:'Same Paisa.<br>More <em>space.</em>', body:'Search the original records.<br>Open the details beside the results.', art:`${web('desktop-detail')}<div class="record-preview"><img src="${record}"></div>`, note:'Compose Multiplatform in your browser', platform:'Web · Kotlin / Wasm' },
-  { id:'07', cls:'backup', tag:'You choose what leaves', title:'Your records.<br>Your <em>choice.</em>', body:'Keep them local, export a file, or connect<br>your own Drive or Nextcloud backup.', art:`<div class="settings"><img src="${backup}"></div>`, note:'Backup and sync are optional', platform:'Your backup destinations' },
-  { id:'08', cls:'family dark', tag:'Paisa', title:'At home on<br><em>your screen.</em>', body:'Native Android on phones and foldables.<br>Compose in the browser.', art:`${web('desktop-home')}${fold('foldable-home')}${phone('phone-saved')}`, note:'Open source · github.com/tashifkhan/Paisa', platform:'Phone · foldable · web' },
-];
+  { cls:'hero', tag:'Everyday money, recorded', title:'Your money.<br>Your <em>business.</em>', body:'Keep expenses on your device.<br>No Paisa account required.', art:phone('phone-manual-saved'), note:'', platform:'Android' },
+  { cls:'sms', tag:'Bank alert to transaction', title:'An SMS.<br><em>Recorded.</em>', body:'Supported bank alerts become transactions.<br>Paisa parses them on your Android device.', art:phone('phone-sms-detail'), note:'', platform:'Automatic SMS parsing' },
+  { cls:'source', tag:'Check the original', title:'The source.<br><em>Right there.</em>', body:'See the original bank message beside<br>the parsed amount and account.', art:phone('phone-sms-source'), note:'', platform:'SMS source attached' },
+  { cls:'ai', tag:'Add with AI', title:'Say what<br>you <em>spent.</em>', body:'Turn payment text into editable drafts.<br>Review, ask for changes, then save.', art:phone('phone-ai-drafts'), note:'', platform:'Text · photos · PDFs' },
+  { cls:'entry', tag:'For the everyday spend', title:'Coffee. Lunch.<br><em>Logged.</em>', body:'Enter the amount, category and account.<br>Save your expense on the device.', art:phone('phone-manual'), note:'', platform:'Quick manual entry' },
+  { cls:'analytics', tag:'Follow the spending', title:'Where did<br>it <em>go?</em>', body:'Compare monthly totals and categories.<br>Review the payments behind them.', art:phone('phone-analytics-chart'), note:'', platform:'Spending analytics' },
+  { cls:'dark', tag:'Give spending a limit', title:'A budget for<br><em>your life.</em>', body:'Set monthly caps for the categories<br>you want to watch.', art:phone('phone-budgets'), note:'', platform:'Monthly category budgets' },
+  { cls:'accounts', tag:'All your accounts', title:'Every balance.<br>One <em>place.</em>', body:'Keep bank, cash and credit card<br>records in separate accounts.', art:phone('phone-accounts'), note:'', platform:'Accounts and balances' },
+  { cls:'search', tag:'Find the payment', title:'Search.<br><em>There it is.</em>', body:'Bring matching merchant records<br>together on your phone.', art:phone('phone-search'), note:'', platform:'Transaction search' },
+  { cls:'material', tag:'Material You', title:'Your wallpaper.<br>Your <em>colors.</em>', body:'Follow wallpaper colors on Android 12+.<br>Or choose one of 31 fixed themes.', art:phone('phone-material-you'), note:'', platform:'Material 3 · dynamic colors' },
+  { cls:'custom', tag:'Make Paisa yours', title:'Change it.<br>Make it <em>fit.</em>', body:'Choose contrast, motion, theme mode<br>and a floating navigation bar.', art:phone('phone-customization'), note:'', platform:'Appearance controls' },
+  { cls:'dark', tag:'For darker screens', title:'Dark mode.<br><em>Pure black.</em>', body:'Use AMOLED black with your palette<br>and a floating bottom bar.', art:phone('phone-dark'), note:'', platform:'AMOLED black' },
+  { cls:'hidden', tag:'Private at a glance', title:'Tap to hide<br>the <em>amounts.</em>', body:'Hide balances and transaction amounts.<br>Reveal them when you need them.', art:phone('phone-hidden'), note:'', platform:'Hide amounts' },
+  { cls:'dark', tag:'Your finances, locked', title:'Only you.<br><em>Unlocked.</em>', body:'Require fingerprint, face or device<br>credentials when you return to Paisa.', art:phone('phone-lock'), note:'', platform:'App lock' },
+  { cls:'adaptive', tag:'Made for more room', title:'Unfold.<br>See <em>more.</em>', body:'Open details beside your records.<br>The layout adapts to the inner display.', art:fold('foldable-detail'), note:'', platform:'Foldable support' },
+  { cls:'tablet', tag:'A proper tablet layout', title:'Spread<br><em>things out.</em>', body:'Keep navigation, records and details<br>together on a tablet.', art:fold('tablet-detail','tablet-device'), note:'', platform:'Native Android · tablet' },
+  { cls:'desktop', tag:'Paisa on the web', title:'Same Paisa.<br>More <em>space.</em>', body:'Search your records and open<br>the details beside the results.', art:web('desktop-detail'), note:'', platform:'paisa.tashif.codes' },
+  { cls:'backup', tag:'You choose what leaves', title:'Your records.<br>Your <em>choice.</em>', body:'Keep a file or connect your own<br>Google Drive or Nextcloud backup.', art:phone('phone-backup'), note:'', platform:'Optional backup and sync' },
+  { cls:'family dark', tag:'Paisa', title:'At home on<br><em>your screen.</em>', body:'Phone. Foldable. Tablet. Web.<br>Your money record, your way.', art:`${web('desktop-home')}${fold('tablet-home')}${phone('phone-manual-saved')}`, note:'', platform:'paisa.tashif.codes' },
+].map((p,i)=>({...p,id:String(i+1).padStart(2,'0')}));
 const css = `
 ${font('Bricolage','bricolage-grotesque/files/bricolage-grotesque-latin-700-normal.woff2')}
 ${font('BricolageBody','bricolage-grotesque/files/bricolage-grotesque-latin-400-normal.woff2')}
@@ -67,9 +65,9 @@ h1{font:700 130px/.99 Bricolage;letter-spacing:-6px;margin:0 0 40px}h1 em{font:i
 .family .browser{top:1035px;left:130px;width:1400px;transform:rotate(-4deg)}.family .fold{top:1560px;left:-30px;width:850px;transform:rotate(-5deg)}.family .phone{width:410px;left:775px;top:1420px;transform:rotate(8deg)}.family .note{font-size:25px;bottom:180px}
 .wide{width:1920px;height:1200px}.wide .brand{left:100px;right:100px;top:64px;font-size:33px}.wide .brand small{font-size:20px}.wide .brand .mark{width:36px;height:36px;border-radius:11px}.wide .copy{left:100px;top:270px;width:770px;right:auto}.wide .tag{font-size:18px;margin-bottom:34px}.wide h1{font-size:112px;letter-spacing:-5px;margin-bottom:40px}.wide .body{font-size:28px;line-height:1.5}.wide .phone{width:420px;left:1190px;top:110px;border-radius:44px;padding:8px}.wide .phone img{border-radius:34px}.wide .footer{bottom:40px;left:100px;right:100px;font-size:20px;padding-top:21px}.wide .footer small{font-size:16px}.wide .note{display:none}.wide:before{left:800px;top:200px;width:1100px;height:1100px}.wide .fold{width:870px;top:180px;left:970px;border-radius:36px;padding:9px}.wide .fold img{border-radius:25px}.wide .budget-stack{left:1030px;right:100px;top:220px}.wide .budget{padding:12px;margin-bottom:24px;border-radius:26px}.wide .budget img{border-radius:20px}.wide .browser{width:1200px;left:930px;top:270px}.wide .settings{width:820px;left:1020px;top:160px;border-radius:32px;border-width:8px}.wide .family .copy{width:750px}.wide.family .browser{width:1130px;left:900px;top:210px}.wide.family .fold{width:610px;left:930px;top:610px}.wide.family .phone{width:285px;left:1550px;top:420px}.wide.family h1{font-size:106px}
 `;
-const wideFix = '.wide.desktop .browser{width:950px;left:930px;top:270px}.wide .record-preview{display:none}';
+const wideFix = '.tablet .tablet-device{top:1100px;aspect-ratio:auto}.tablet .tablet-device img{height:auto}.wide.tablet .tablet-device{top:300px;width:900px;left:970px}.custom{background:#e6e7f0}.material{background:#e7e7f5}.hidden{background:#e0eadc}.sms{background:#e2efdc}.source{background:#edf1df}.ai{background:#e9e6dc}.accounts{background:#e6edde}.search{background:#e5ecdf}.phone{border-radius:70px;padding:13px}.phone img{border-radius:54px}.panel .note:empty{display:none}.wide .phone{top:125px}.family .note{display:none} .wide.desktop .browser{width:950px;left:930px;top:270px}.wide .record-preview{display:none}';
 const mark = `<img src="${data(`${root}/paisa-icon.svg`,'image/svg+xml')}" alt="Paisa">`;
-const html = (p, wide) => `<!doctype html><meta charset="utf-8"><style>${css}${wideFix}</style><main class="panel ${p.cls} ${wide?'wide':''}"><div class="brand"><span><span class="mark">${mark}</span>paisa</span><small>${p.platform}</small></div><div class="copy"><div class="tag">${p.tag}</div><h1>${p.title}</h1><p class="body">${p.body}</p></div><div class="art">${p.art}</div><div class="note">${p.note}</div><div class="footer"><span>Paisa · local expense tracking</span><small>Real app captures · sample data · ${p.id}/08</small></div></main>`;
+const html = (p, wide) => `<!doctype html><meta charset="utf-8"><style>${css}${wideFix}</style><main class="panel ${p.cls} ${wide?'wide':''}"><div class="brand"><span><span class="mark">${mark}</span>paisa</span><small>${p.platform}</small></div><div class="copy"><div class="tag">${p.tag}</div><h1>${p.title}</h1><p class="body">${p.body}</p></div><div class="art">${p.art}</div><div class="note">${p.note}</div></main>`;
 const cache = `${process.env.HOME}/Library/Caches/ms-playwright`;
 const version = readdirSync(cache).filter(x=>x.startsWith('chromium_headless_shell-')).sort((a,b)=>a.localeCompare(b,undefined,{numeric:true})).at(-1);
 const dir = `${cache}/${version}`;
@@ -94,5 +92,5 @@ const tiles = await Promise.all(panels.map(async (p,i) => ({
   left: (i%4)*412,
   top: Math.floor(i/4)*878,
 })));
-await sharp({create:{width:1636,height:1744,channels:3,background:'#d7dace'}}).composite(tiles).png().toFile(`${out}/paisa-screenshots.png`);
+await sharp({create:{width:1636,height:Math.ceil(panels.length/4)*878-12,channels:3,background:'#d7dace'}}).composite(tiles).png().toFile(`${out}/paisa-screenshots.png`);
 execFileSync('zip',['-j','-q',`${out}/paisa-appstore-screenshots.zip`,...panels.map(p=>`${out}/paisa-appstore-${p.id}.png`)]);

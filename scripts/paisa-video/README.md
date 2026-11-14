@@ -1,57 +1,51 @@
 # Paisa product video
 
-This video shows the Kotlin Multiplatform Paisa app in `../Paisa`, using its bundled sample data. It does not show the separate app hosted at paisa.tashif.codes.
+This package records the Kotlin Multiplatform Paisa app in `../Paisa`. It uses real Android and local web footage with sample financial records. At the user's request, browser presentation chrome and the closing card show `paisa.tashif.codes`. The footage does not connect to that host.
 
-The footage includes the native Android app on the inner and cover displays of a foldable emulator, and the local Compose/Wasm browser distribution. The Android APK was built on November 11, 2026; the browser distribution on November 10. Capture date is November 14. These recordings demonstrate the existing core flows, rather than every change in the latest source.
+The main cut leads with phone footage. It shows a live bank SMS becoming a transaction, the attached original message, Add with AI, fast manual entry, search, analytics, budgets, accounts and optional backup. The appearance chapter shows Material You wallpaper colors, fixed palettes, dark mode, AMOLED black and floating navigation. Privacy includes hiding amounts and the real app lock gate. The final chapter shows an unfolded foldable, a separate native Android tablet and the browser.
 
-`story.md` contains the scene brief. `create-comp.py` generates both compositions with paths for the current checkout. `engine/` is a project-local copy of the imported Codex `product-video` renderer. It adds phone, foldable and portrait framing, a sample-data label, and a PNG chapter-still fix. It normalizes the recordings to 30 fps before trimming, preserves their aspect ratios and crops only the recorder's black padding. Clip holds keep the final saved state readable.
-
-The main video is 155 seconds at 1920 × 1200. The separate phone cut is 33.6 seconds at 1080 × 1920. Both have a synthesized instrumental soundtrack and no voiceover.
+The real Paisa launcher icon appears throughout. On the portrait video, the header brand is the icon alone. All presentation type is sans serif. Highlights use the displayed viewport dimensions and place their labels outside the phone content. Phone frames use the exact 1080/2424 aspect ratio. Foldable frames use 2076/2152 and tablet frames use 2560/1600.
 
 ## Rebuild
 
-Requirements are Node, Bun, Python, uv, ffmpeg and a Playwright Chromium headless shell in `~/Library/Caches/ms-playwright`. `EXE` can point to another compatible Chromium binary. The renderer installs numpy through uv for the synthesized soundtrack.
+Requirements are Node, Bun, Python, uv, ffmpeg and an installed Playwright Chromium headless shell. The browser only composites local artwork and video frames. App interaction uses T3 browser or bound agent-device sessions.
 
 ```sh
-cd scripts/paisa-video/engine
-bun install
-cd ../../..
 python3 scripts/paisa-video/create-comp.py
-VID=/tmp/paisa-video node scripts/paisa-video/engine/render.mjs scripts/paisa-video/composition.json --still 3,12,22,31,39,47,55,64,73,83,93,103,114,125,136
-VID=/tmp/paisa-video WORKERS=4 node scripts/paisa-video/engine/render.mjs scripts/paisa-video/composition.json
-VID=/tmp/paisa-video WORKERS=2 node scripts/paisa-video/engine/render.mjs scripts/paisa-video/phone-composition.json
+python3 scripts/paisa-video/create-web-comp.py
+VID=/tmp/paisa-video node scripts/paisa-video/engine/render.mjs scripts/paisa-video/composition.json --still 3,16,33,64,78,83,98,107,114
+VID=/tmp/paisa-video WORKERS=3 node scripts/paisa-video/engine/render.mjs scripts/paisa-video/composition.json
+VID=/tmp/paisa-video WORKERS=3 node scripts/paisa-video/engine/render.mjs scripts/paisa-video/phone-composition.json
+VID=/tmp/paisa-video WORKERS=3 node scripts/paisa-video/engine/render.mjs scripts/paisa-video/web-composition.json
 VID=/tmp/paisa-video python3 scripts/paisa-video/export-platform-cuts.py
 node scripts/paisa-video/screenshots.mjs
 bun run build
 ```
 
-The final MP4, poster and gallery stills live in `public/reel/`. `export-platform-cuts.py` derives a 14.4-second foldable cut and a 50.55-second web cut from the main video, with fades and a music crossfade at the web join. It reads the scene timings so chapter cards stay outside those cuts. Frames, cut footage and synthesized WAV files are temporary and stay outside the checkout.
+The main and web videos are 1920 by 1200. The phone cut is 1080 by 1920 and contains every phone feature chapter. The tablet and foldable cuts come from the main video. The main cut is about 132 seconds, the phone cut about 87 seconds, and the detailed web cut about 46 seconds. All have a synthesized instrumental soundtrack and no voiceover. Final MP4s and posters live in `public/reel/`. Render frames and audio remain under `/tmp/paisa-video`.
 
-Use `--frames start:end` to replace a selected range of frames, then `--encode-only` to rebuild the MP4 from all existing frames. Do not use `--encode-only` after a layout change unless every affected frame has been rendered again.
+## Screenshots
 
-## Product screenshots
+`screenshots.mjs` exports nineteen 1242 by 2688 portrait PNGs, nineteen separately composed 1920 by 1200 gallery JPEGs, a contact sheet and a ZIP containing the portrait PNGs. These are store-style marketing assets for Android and web. They make no iOS availability claim.
 
-`screenshots.mjs` exports eight 1242 × 2688 portrait PNGs, eight separately composed 1920 × 1200 gallery JPEGs, a contact sheet, and a ZIP containing the portrait PNGs. These are store-style marketing assets for Android and web, with no iOS availability claim. The gallery includes the main walkthrough and links to the platform cuts and screenshot ZIP.
+Amy Food Journal inspired the large benefit headlines, pastel backgrounds, rounded frames and prominent app screenshots. Paisa uses forest green, cream and mint, with Bricolage Grotesque. There are no footer labels, sample-data badges or panel numbers in the artwork.
 
-Amy Food Journal's site was the visual reference for large benefit headlines, rounded pastel panels, soft shadows and prominent real app screens. Paisa's panels use forest green, mint and cream. All text uses Bricolage Grotesque, with no serif font. The captured application UI keeps its original typography. The video uses Roboto and Roboto Mono.
+The panel order is overview, SMS, SMS source, AI drafts, manual entry, analytics, budgets, accounts, search, Material You, appearance controls, AMOLED black, hidden amounts, app lock, foldable, tablet, web, backup and device family.
 
-`paisa-icon.svg` is a direct conversion of the paths and colors in Paisa's `app/src/androidMain/res/drawable/ic_launcher_legacy.xml`. It is the actual green coin and rupee launcher icon. The artwork renderer loads fonts from the site's existing Fontsource packages and embeds local captures. It never connects to a third-party app or invents an application screen.
+`paisa-icon.svg` converts the paths and colors of `app/src/androidMain/res/drawable/ic_launcher_legacy.xml` directly. No generated or replacement logo is used.
 
-Screenshot order is overview, manual entry, foldable details, analytics, category budgets, browser records, optional backup, and the phone/foldable/browser family. `phone-add.png` was extracted at 100 seconds from the native recording. Budget and backup cards are crops of the captured UI.
+## Capture evidence
 
-The Codex skill was imported to `/Users/taf/.codex/skills/product-video`. All composition, rendering and artwork work here runs in Codex.
+New phone recordings cover SMS, Gemini draft generation, account refinement and saving, manual entry, search, category analytics, budgets/accounts, backup, appearance, hidden amounts and app lock. They use the cover display of an Android foldable. The screen recorder retains a 2076 by 2424 encoder canvas, so compositions crop the 498-pixel black strips at each side. Direct phone screenshots are already 1080 by 2424.
 
-## Footage
+`raw/tablet.mp4` comes from a separate Android tablet emulator at 2560 by 1600. The older unfolded recording uses a 2076 by 2424 canvas with 136-pixel black strips above and below the 2076 by 2152 screen. Browser footage is 2880 by 1800.
 
-- `raw/desktop.mp4` shows analytics, budgets, accounts, backup and AI settings in the local Wasm app at 1440 by 900 CSS pixels.
-- `raw/desktop-details.mp4` shows merchant search and a record opening beside the results.
-- `raw/foldable.mp4` shows native Android on the inner display. Crop the 136-pixel black bars at the top and bottom.
-- `raw/phone.mp4` shows the same native app on the cover display. Crop the 498-pixel black bars at each side.
+The SMS scene delivers a synthetic Standard Chartered alert through the emulator telephony interface. The app's on-device bank parser creates the real transaction and retains the source message. AI is a separate Add with AI flow. Never describe the SMS bank parser as an AI model.
 
-The desktop recordings use T3's browser recorder. The native recordings use the device session's `agent-device record`. The originals remain here so another render does not require the recording session or a private account.
+App lock uses an emulator-only device PIN. The shipped clip shows the actual locked Paisa gate. Authentication itself is an Android secure surface and is excluded from the edit. Backup destinations are shown as optional settings; no cloud backup or cross-device sync is claimed to have run.
 
-No external AI provider, cloud destination, or sync account was configured. Their settings are shown as settings. SMS import is described as Android-only. No iOS, browser SMS, browser PDF, or browser offline-install claims appear in the video. All names, transactions and bank balances come from sample data.
+The Codex product-video skill lives at `/Users/taf/.codex/skills/product-video`. All editing and rendering in this package runs in Codex.
 
-## Validation
+## AI capture
 
-Verified November 15, 2026. `bun run build` passes. All four H.264/AAC exports decode without errors at 30 fps. Encoded frames and posters were inspected, including the entered amount, saved balance, foldable details and web analytics. The main soundtrack has a measured mean level of -18.3 dB and peak of -1.8 dB. The eight portrait PNGs have the expected dimensions and match their ZIP entries byte for byte. The built homepage references every Paisa video and gallery asset, and the video manifest matches their final file sizes.
+`raw/phone-ai-results.mp4` shows Google Gemini 2.5 Flash parsing a synthetic bank message and a ride note into two selected drafts. A follow-up request changes both accounts to HDFC Savings, then both transactions are saved. The provider key was configured before recording and is absent from all footage and source files. The key stays in the app's secure provider configuration.
