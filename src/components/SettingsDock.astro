@@ -1,7 +1,8 @@
 ---
 /**
- * The settings dock, ported from tashif.codes: theme mode, accent, haptics
- * and reduced motion in one panel pinned to the bottom-left corner. It folds
+ * The settings dock, ported from tashif.codes: theme mode, style and colour
+ * combo, haptics and reduced motion in one panel pinned to the bottom-left
+ * corner. It folds
  * into a round button once the page scrolls, and steps aside while the page
  * is moving.
  *
@@ -14,10 +15,15 @@ const modes = [
 	{ id: "dark", label: "Dark" },
 ] as const;
 
-const accents = [
-	{ id: "teal", label: "Teal accent", swatch: "bg-swatch-teal" },
-	{ id: "orange", label: "Orange accent", swatch: "bg-swatch-orange" },
-] as const;
+import { SKIN_STYLES } from "../lib/skins";
+
+/*
+ * The previews are the one place this file paints with literal colours: each
+ * sample has to show a style that is not on, so it cannot read the live
+ * tokens. They come from src/lib/skins.ts as custom properties.
+ */
+const INK = "#191713";
+const sampleEdge = (edge: string) => (edge === "ink" ? `1.5px solid ${INK}` : edge === "hair" ? "1px solid rgb(0 0 0 / 0.14)" : "none");
 
 const card = "rounded-2xl border border-border bg-background/60 p-2.5";
 const cardLabel = "truncate font-mono text-[0.625rem] tracking-wide text-muted";
@@ -102,32 +108,81 @@ const knob =
 			}
 		</div>
 
-		<div class="mt-2 grid grid-cols-[auto_1fr_1fr] gap-2">
-			<div class={card}>
-				<p class={cardLabel}>Accent</p>
-				<div role="radiogroup" aria-label="Accent colour" class="mt-2 flex items-center gap-1.5">
-					{
-						accents.map((accent) => (
+		<div class="mt-2 rounded-[1.25rem] border border-border bg-background/60 p-2.5">
+			<p id="dock-style-label" class={cardLabel}>Style</p>
+			<div role="radiogroup" aria-labelledby="dock-style-label" class="mt-2 grid grid-cols-5 gap-1">
+				{
+					SKIN_STYLES.map((style) => (
+						<button
+							type="button"
+							role="radio"
+							aria-checked="false"
+							title={style.name}
+							data-haptic="manual"
+							data-skin-set={style.id}
+							style={`--paper:${style.colors[0].paper};--ink-accent:${style.colors[0].accent}`}
+							class:list={[
+								"group/style flex cursor-pointer flex-col items-stretch gap-1.5 rounded-xl p-1 text-center transition-colors hover:bg-foreground/5 aria-checked:bg-foreground/10",
+								focus,
+							]}
+						>
+							{/* A sample card in the style's own corners, edge and shadow. */}
+							<span class="relative block h-10 overflow-hidden rounded-lg bg-(--paper) ring-1 ring-foreground/10" aria-hidden="true">
+								<span
+									class="absolute inset-x-1.5 top-2 -bottom-1.5 block bg-white/90 px-1.5 pt-1.5"
+									style={`border-radius:${style.radius}px;border:${sampleEdge(style.edge)};box-shadow:${style.stamp ? `2px 2px 0 ${INK}` : "none"}`}
+								>
+									<span class="block h-1.5 w-6 bg-(--ink-accent)" style={`border-radius:${style.radius > 8 ? 999 : style.radius / 3}px`}></span>
+									<span class="mt-1 block h-1 w-full rounded-full bg-black/15"></span>
+								</span>
+							</span>
+							<span class="truncate font-mono text-[0.625rem] leading-none text-muted group-hover/style:text-foreground group-aria-checked/style:text-foreground">{style.name}</span>
+						</button>
+					))
+				}
+			</div>
+
+			<div class="mt-3 flex items-baseline justify-between gap-3">
+				<p id="dock-color-label" class={cardLabel}>Colour</p>
+				<p class="truncate font-mono text-[0.625rem] text-foreground" data-color-name></p>
+			</div>
+			{
+				SKIN_STYLES.map((style) => (
+					<div
+						role="radiogroup"
+						aria-labelledby="dock-color-label"
+						class="mt-2 flex flex-wrap items-center gap-2"
+						data-color-group={style.id}
+						hidden
+					>
+						{style.colors.map((color) => (
 							<button
 								type="button"
 								role="radio"
 								aria-checked="false"
-								aria-label={accent.label}
-								title={accent.label}
+								aria-label={color.name}
+								title={color.name}
 								data-haptic="manual"
-								data-accent-set={accent.id}
+								data-color-set={color.id}
+								data-color-label={color.name}
 								class:list={[
-									"grid size-7 cursor-pointer place-items-center rounded-full ring-offset-2 ring-offset-elevated transition-[scale] hover:scale-110 aria-checked:ring-2 aria-checked:ring-foreground/60",
+									"size-7 cursor-pointer rounded-full p-0.5 ring-offset-2 ring-offset-elevated transition-[scale] hover:scale-110 aria-checked:ring-2 aria-checked:ring-foreground/60",
 									focus,
 								]}
 							>
-								<span class:list={["size-5 rounded-full ring-1 ring-foreground/10", accent.swatch]} />
+								{/* Paper on one half, accent on the other: the combo at a glance. */}
+								<span
+									class="block size-full rounded-full ring-1 ring-black/15"
+									style={`background:linear-gradient(135deg,${color.paper} 0 50%,${color.accent} 50% 100%)`}
+								></span>
 							</button>
-						))
-					}
-				</div>
-			</div>
+						))}
+					</div>
+				))
+			}
+		</div>
 
+		<div class="mt-2 grid grid-cols-2 gap-2">
 			<div class={card}>
 				<p class={cardLabel}>Haptics</p>
 				<div class="mt-2 flex h-7 items-center justify-between gap-2">
@@ -197,8 +252,9 @@ const knob =
 	import { KEYS, motionReduced, setReduceMotion, systemReducesMotion } from "../scripts/prefs";
 	import { hapticsEnabled, installHaptics, setHapticsEnabled, trigger } from "../scripts/haptics";
 
+	import { SKIN_COLORS_KEY, SKIN_KEY, SKIN_STYLES, type SkinId } from "../lib/skins";
+
 	type Mode = "system" | "light" | "dark";
-	type Accent = "teal" | "orange";
 
 	const root = document.documentElement;
 	const dock = document.querySelector<HTMLElement>("[data-settings-dock]")!;
@@ -231,13 +287,45 @@ const knob =
 		const stored = storage.get(KEYS.theme);
 		return stored === "light" || stored === "dark" ? stored : "system";
 	};
-	const readAccent = (): Accent => (root.dataset.accent === "orange" ? "orange" : "teal");
+	const readSkin = (): SkinId => (SKIN_STYLES.some((s) => s.id === root.dataset.skin) ? (root.dataset.skin as SkinId) : "studio");
+	const styleOf = (id: SkinId) => SKIN_STYLES.find((s) => s.id === id)!;
+	const readColors = (): Record<string, string> => {
+		try {
+			return JSON.parse(storage.get(SKIN_COLORS_KEY) || "{}");
+		} catch {
+			return {};
+		}
+	};
+	/** The combo a style opens with: the visitor's last pick for it, or its first. */
+	const colorFor = (id: SkinId) => {
+		const saved = readColors()[id];
+		const style = styleOf(id);
+		return style.colors.some((c) => c.id === saved) ? saved : style.colors[0].id;
+	};
 
 	const sync = () => {
 		const mode = readMode();
-		const accent = readAccent();
+		const skin = readSkin();
+		const color = colorFor(skin);
 		dock.querySelectorAll<HTMLElement>("[data-theme-set]").forEach((b) => b.setAttribute("aria-checked", String(b.dataset.themeSet === mode)));
-		dock.querySelectorAll<HTMLElement>("[data-accent-set]").forEach((b) => b.setAttribute("aria-checked", String(b.dataset.accentSet === accent)));
+
+		// Each style tile previews the combo that style would open with.
+		dock.querySelectorAll<HTMLElement>("[data-skin-set]").forEach((tile) => {
+			const id = tile.dataset.skinSet as SkinId;
+			tile.setAttribute("aria-checked", String(id === skin));
+			const shown = styleOf(id).colors.find((c) => c.id === colorFor(id))!;
+			tile.style.setProperty("--paper", shown.paper);
+			tile.style.setProperty("--ink-accent", shown.accent);
+		});
+		dock.querySelectorAll<HTMLElement>("[data-color-group]").forEach((group) => {
+			group.hidden = group.dataset.colorGroup !== skin;
+			if (group.hidden) return;
+			group.querySelectorAll<HTMLElement>("[data-color-set]").forEach((b) => {
+				const on = b.dataset.colorSet === color;
+				b.setAttribute("aria-checked", String(on));
+				if (on) dock.querySelector("[data-color-name]")!.textContent = b.dataset.colorLabel ?? "";
+			});
+		});
 
 		hapticsSwitch.setAttribute("aria-checked", String(hapticsEnabled()));
 
@@ -246,9 +334,8 @@ const knob =
 		motionSwitch.toggleAttribute("aria-disabled", systemReduce);
 		motionSwitch.title = systemReduce ? "Reduced by your system setting" : "Turn off page animations";
 
-		// The browser chrome follows the resolved canvas colour.
-		const resolved = mode === "system" ? (prefersLight.matches ? "light" : "dark") : mode;
-		document.querySelector("meta[data-theme-color]")?.setAttribute("content", resolved === "light" ? "#f6f1e9" : "#0e0d0d");
+		// The browser chrome follows the page colour, whichever style painted it.
+		document.querySelector("meta[data-theme-color]")?.setAttribute("content", getComputedStyle(document.body).backgroundColor);
 	};
 
 	const applyMode = (mode: Mode) => {
@@ -262,15 +349,19 @@ const knob =
 		sync();
 	};
 
-	const applyAccent = (accent: Accent) => {
-		if (accent === "teal") delete root.dataset.accent;
-		else root.dataset.accent = accent;
-		storage.set(KEYS.accent, accent === "teal" ? null : accent);
+	/** Puts a style and its combo on <html>. Defaults set no attribute. */
+	const applySkin = (skin: SkinId, color = colorFor(skin)) => {
+		if (skin === "studio") delete root.dataset.skin;
+		else root.dataset.skin = skin;
+		if (color === styleOf(skin).colors[0].id) delete root.dataset.color;
+		else root.dataset.color = color;
+		storage.set(SKIN_KEY, skin === "studio" ? null : skin);
+		storage.set(SKIN_COLORS_KEY, JSON.stringify({ ...readColors(), [skin]: color }));
 		sync();
 	};
 
 	/**
-	 * Mode and accent swaps share the circular reveal in global.css: it grows
+	 * Mode, style and colour swaps share the circular reveal in global.css: it grows
 	 * from the pressed control out to the farthest corner. Browsers without
 	 * transition types would reuse the navigation slide, which reads wrong for
 	 * a palette change, so they repaint instantly instead.
@@ -365,11 +456,20 @@ const knob =
 		});
 	});
 
-	dock.querySelectorAll<HTMLButtonElement>("[data-accent-set]").forEach((button) => {
+	dock.querySelectorAll<HTMLButtonElement>("[data-skin-set]").forEach((button) => {
 		button.addEventListener("click", () => {
 			trigger("selection");
-			const accent = button.dataset.accentSet as Accent;
-			if (accent !== readAccent()) reveal(button, () => applyAccent(accent));
+			const skin = button.dataset.skinSet as SkinId;
+			if (skin !== readSkin()) reveal(button, () => applySkin(skin));
+		});
+	});
+
+	dock.querySelectorAll<HTMLButtonElement>("[data-color-set]").forEach((button) => {
+		button.addEventListener("click", () => {
+			trigger("selection");
+			const color = button.dataset.colorSet!;
+			const skin = readSkin();
+			if (color !== colorFor(skin)) reveal(button, () => applySkin(skin, color));
 		});
 	});
 
@@ -391,7 +491,7 @@ const knob =
 	systemMotion.addEventListener("change", sync);
 	addEventListener("storage", (event) => {
 		if (event.key === KEYS.theme) applyMode(readMode());
-		else if (event.key === KEYS.accent) applyAccent(event.newValue === "orange" ? "orange" : "teal");
+		else if (event.key === SKIN_KEY || event.key === SKIN_COLORS_KEY) applySkin(SKIN_STYLES.some((st) => st.id === storage.get(SKIN_KEY)) ? (storage.get(SKIN_KEY) as SkinId) : "studio");
 		else if (event.key === KEYS.reduceMotion) root.toggleAttribute("data-reduce-motion", event.newValue === "true");
 		sync();
 	});

@@ -9,7 +9,11 @@
  * The hex values duplicate `--color-background` / `--color-foreground` from
  * `global.css`. They have to: a token defined in the stylesheet cannot colour
  * the page before the stylesheet exists. Keep the two in sync.
+ *
+ * The fallback only covers Studio. Another style sets `data-skin` here, before
+ * paint, and its own background comes from the inlined stylesheet.
  */
+import { SKIN_COLOR_IDS, SKIN_COLORS_KEY, SKIN_KEY } from "../lib/skins";
 ---
 
 <!-- Canvas follows the OS before any CSS parses; the script below pins it when
@@ -18,7 +22,8 @@
 <meta name="theme-color" content="#0e0d0d" data-theme-color />
 
 <style is:inline>
-	html {
+	/* Unlayered, so it would outrank every style's layered background. */
+	html:not([data-skin]) {
 		background-color: light-dark(#f6f1e9, #0e0d0d);
 		color: light-dark(#171615, #f2f1f0);
 	}
@@ -31,16 +36,26 @@
 	}
 </style>
 
-<script is:inline>
+<script is:inline define:vars={{ colorIds: SKIN_COLOR_IDS, skinKey: SKIN_KEY, colorsKey: SKIN_COLORS_KEY }}>
 	(() => {
 		const root = document.documentElement;
 		let stored = null;
 		try {
 			stored = localStorage.getItem("taf-theme");
-			// The settings dock's other two choices. Both are read by global.css,
-			// so they have to be on <html> before the first paint too.
-			const accent = localStorage.getItem("taf-accent");
-			if (accent === "orange") root.dataset.accent = accent;
+			// The dock's style and colour combo. global.css reads both, so they
+			// have to be on <html> before the first paint too. Studio, and each
+			// style's first combo, set no attribute.
+			const skin = localStorage.getItem(skinKey);
+			const colors = JSON.parse(localStorage.getItem(colorsKey) || "{}");
+			// The old single accent picker stored orange; amber is the closest combo.
+			if (localStorage.getItem("taf-accent") === "orange") {
+				colors.studio ??= "amber";
+				localStorage.setItem(colorsKey, JSON.stringify(colors));
+				localStorage.removeItem("taf-accent");
+			}
+			const style = skin && colorIds[skin] ? skin : "studio";
+			if (style !== "studio") root.dataset.skin = style;
+			if (colorIds[style].includes(colors[style])) root.dataset.color = colors[style];
 			if (localStorage.getItem("taf-reduce-motion") === "true") root.setAttribute("data-reduce-motion", "");
 		} catch {}
 		const override = stored === "light" || stored === "dark";
