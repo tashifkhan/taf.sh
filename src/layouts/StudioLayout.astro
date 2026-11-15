@@ -7,6 +7,7 @@ import "../styles/global.css";
 
 import ThemeScript from "../components/ThemeScript.astro";
 import PageTransitions from "../components/PageTransitions.astro";
+import SettingsDock from "../components/SettingsDock.astro";
 import PostHog from "../components/PostHog.astro";
 import { socialImagePath } from "../lib/social";
 import { markdownPath } from "../lib/crawlers";
@@ -91,6 +92,7 @@ const schemaJson = JSON.stringify(schema).replace(/</g, "\\u003c");
 		data-noindex={noindex ? "" : undefined}
 	>
 		<slot />
+		<SettingsDock />
 		<script>
 			import { registerStudioWebmcp } from "../scripts/webmcp";
 			registerStudioWebmcp();

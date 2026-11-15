@@ -1,6 +1,5 @@
 ---
 import Logo from "./Logo.astro";
-import ThemeToggle from "./ThemeToggle.astro";
 
 const pathname = Astro.url.pathname;
 
@@ -53,7 +52,6 @@ const isActive = (link: (typeof links)[number]) =>
 					</a>
 				))
 			}
-			<ThemeToggle />
 
 			<a
 				href="/contact"

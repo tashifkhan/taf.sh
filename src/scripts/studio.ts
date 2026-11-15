@@ -11,8 +11,9 @@ import {
 	slots,
 } from "./motion";
 import { initVideoPlayers } from "./video";
+import { motionReduced } from "./prefs";
 
-const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const reduced = motionReduced();
 const finePointer = matchMedia("(hover: hover) and (pointer: fine)").matches;
 
 const $ = <T extends Element = HTMLElement>(sel: string, root: ParentNode = document) =>
@@ -247,7 +248,7 @@ function heroField() {
 	new MutationObserver(() => {
 		readColors();
 		draw();
-	}).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme", "style"] });
+	}).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme", "data-accent", "style"] });
 	matchMedia("(prefers-color-scheme: light)").addEventListener("change", () => {
 		readColors();
 		draw();

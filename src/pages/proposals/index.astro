@@ -190,7 +190,7 @@ const views = [
 					b.setAttribute("aria-pressed", String(b.getAttribute("data-page") === id));
 				});
 				page?.querySelector<HTMLElement>("h2")?.focus({ preventScroll: true });
-				document.getElementById("prop-app")?.scrollIntoView({ behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth", block: "start" });
+				document.getElementById("prop-app")?.scrollIntoView({ behavior: (matchMedia("(prefers-reduced-motion: reduce)").matches || document.documentElement.hasAttribute("data-reduce-motion")) ? "instant" : "smooth", block: "start" });
 			}
 
 			function renderDashboard() {

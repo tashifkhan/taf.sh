@@ -1,7 +1,6 @@
 ---
 import Arrow from "../Arrow.astro";
 import Logo from "../Logo.astro";
-import ThemeToggle from "../ThemeToggle.astro";
 import { nav, email } from "./data";
 import { wrap, btn, btnAccent, btnArrow } from "./ui";
 
@@ -44,7 +43,6 @@ const menuBtn =
 		</nav>
 
 		<div class="flex items-center gap-3">
-			<div class="hidden sm:block"><ThemeToggle /></div>
 			<a href={base ? "/contact" : "#contact"} class:list={[btn, btnAccent, "h-10 max-sm:hidden"]} data-magnetic>
 				Start a project <span class={btnArrow} aria-hidden="true"><Arrow /></span>
 			</a>
@@ -95,10 +93,9 @@ const menuBtn =
 				))
 			}
 		</ol>
-		<div class="grid gap-4 border-t border-border py-6 font-mono text-xs text-muted sm:grid-cols-3">
+		<div class="grid gap-4 border-t border-border py-6 font-mono text-xs text-muted sm:grid-cols-2">
 			<a href={`mailto:${email}`} class="text-foreground hover:text-accent">{email}</a>
 			<span>Delhi, IST <span class="text-foreground tabular-nums" data-clock>--:--:--</span></span>
-			<div class="sm:justify-self-end"><ThemeToggle /></div>
 		</div>
 	</div>
 </div>

@@ -4,8 +4,8 @@
 /*
  * Theming: every token has a light value (the `@theme` default) and a dark
  * value in the overrides below. System preference applies through
- * `prefers-color-scheme`; the toggle pins one via `data-theme`. No JS is
- * needed for the system preference — the inline script in Layout.astro only
+ * `prefers-color-scheme`; the settings dock pins one via `data-theme`. No JS is
+ * needed for the system preference — the inline script in ThemeScript.astro only
  * handles the manual override stored in localStorage.
  *
  * These are deliberately NOT `light-dark()` pairs: the minifier strips the
@@ -34,6 +34,10 @@
 	--color-accent-strong: #0b5b50;
 	--color-accent-soft: rgba(15, 122, 108, 0.1);
 	--color-accent-contrast: #ffffff;
+
+	/* Dock swatches. Fixed per accent, so each previews its own hue. */
+	--color-swatch-teal: #0f7a6c;
+	--color-swatch-orange: #c2410c;
 
 	/* One easing + duration for every `transition-*` utility on the site */
 	--default-transition-duration: 180ms;
@@ -64,6 +68,8 @@
 		--color-accent-strong: #7ce3d9;
 		--color-accent-soft: rgba(79, 209, 197, 0.14);
 		--color-accent-contrast: #04211f;
+		--color-swatch-teal: #4fd1c5;
+		--color-swatch-orange: #fb923c;
 	}
 }
 
@@ -83,6 +89,8 @@ html[data-theme="dark"],
 	--color-accent-soft: rgba(79, 209, 197, 0.14);
 	/* Dark ink on the light-teal fill: ~9:1, the pairing the CTA depends on. */
 	--color-accent-contrast: #04211f;
+	--color-swatch-teal: #4fd1c5;
+	--color-swatch-orange: #fb923c;
 }
 
 html[data-theme="light"],
@@ -101,6 +109,65 @@ html[data-theme="light"],
 	--color-accent-soft: rgba(15, 122, 108, 0.1);
 	/* White on the deep-teal fill: ~5.2:1. */
 	--color-accent-contrast: #ffffff;
+	--color-swatch-teal: #0f7a6c;
+	--color-swatch-orange: #c2410c;
+}
+
+/*
+ * Accent palettes, picked in the settings dock. Teal is the default and needs
+ * no attribute; any other accent sets `data-accent` on <html>. Each one has
+ * the same four tokens in a light set and a dark set, and they follow the
+ * same three sources as the palette above, so the reel halves keep working.
+ * Selectors carry `html[data-accent]` to outrank the base `.t-dark`/`.t-light`.
+ */
+html[data-accent="orange"],
+html[data-accent="orange"] .t-light {
+	--color-accent: #c2410c;
+	--color-accent-strong: #9a3412;
+	--color-accent-soft: rgba(194, 65, 12, 0.1);
+	/* White on the deep-orange fill: ~5.2:1, the same pairing as teal. */
+	--color-accent-contrast: #ffffff;
+}
+
+@media (prefers-color-scheme: dark) {
+	html[data-accent="orange"]:not([data-theme="light"]) {
+		--color-accent: #fb923c;
+		--color-accent-strong: #fdba74;
+		--color-accent-soft: rgba(251, 146, 60, 0.14);
+		--color-accent-contrast: #2a1004;
+	}
+}
+
+html[data-accent="orange"][data-theme="dark"],
+html[data-accent="orange"] .t-dark {
+	--color-accent: #fb923c;
+	--color-accent-strong: #fdba74;
+	--color-accent-soft: rgba(251, 146, 60, 0.14);
+	--color-accent-contrast: #2a1004;
+}
+
+/*
+ * Reduced motion has two sources: the OS setting and the dock's switch, which
+ * sets `data-reduce-motion` on <html> (restored before paint by ThemeScript).
+ * Redefining the two Tailwind variants makes every `motion-reduce:` and
+ * `motion-safe:` utility answer to both.
+ */
+@custom-variant motion-reduce {
+	@media (prefers-reduced-motion: reduce) {
+		@slot;
+	}
+
+	&:where([data-reduce-motion], [data-reduce-motion] *) {
+		@slot;
+	}
+}
+
+@custom-variant motion-safe {
+	@media (prefers-reduced-motion: no-preference) {
+		&:where(:root:not([data-reduce-motion]), :root:not([data-reduce-motion]) *) {
+			@slot;
+		}
+	}
 }
 
 @layer base {
@@ -218,7 +285,8 @@ html.reel-open [data-geo] * {
  * The nav is identical and sticky on every page, so it is lifted out of the
  * root snapshot and cross-fades in place instead of sliding with the content.
  */
-::view-transition-group(site-nav) {
+::view-transition-group(site-nav),
+::view-transition-group(settings-dock) {
 	animation-duration: 220ms;
 }
 
@@ -268,7 +336,7 @@ html.reel-open [data-geo] * {
 
 /*
  * Theme switches reveal the new palette as a circle growing out of the toggle
- * that was pressed. ThemeToggle sets `--vt-x`, `--vt-y` (the button's centre)
+ * that was pressed. SettingsDock sets `--vt-x`, `--vt-y` (the button's centre)
  * and `--vt-r` (the distance to the farthest viewport corner) on the root,
  * and the pseudo-elements inherit them. The old page holds still underneath.
  * Every named element (the header, the product titles) gives its name up for
@@ -339,6 +407,7 @@ html.reel-open [data-geo] * {
 	::view-transition-new(root),
 	::view-transition-group(root),
 	::view-transition-group(site-nav),
+	::view-transition-group(settings-dock),
 	::view-transition-group(product-talentsync),
 	::view-transition-group(product-talentsync-hr),
 	::view-transition-group(product-rah-clinic) {
@@ -348,4 +417,39 @@ html.reel-open [data-geo] * {
 	html {
 		scroll-behavior: auto;
 	}
+}
+
+/*
+ * The same, switched on from the settings dock. Plain CSS animations and
+ * transitions jump to their end state; the reveals are scroll-driven, where a
+ * duration means nothing, so they are switched off by name.
+ */
+:root[data-reduce-motion] {
+	scroll-behavior: auto;
+}
+
+:root[data-reduce-motion] *,
+:root[data-reduce-motion] *::before,
+:root[data-reduce-motion] *::after {
+	scroll-behavior: auto !important;
+	transition-duration: 0s !important;
+	transition-delay: 0s !important;
+	animation-duration: 0.01ms !important;
+	animation-delay: 0s !important;
+	animation-iteration-count: 1 !important;
+}
+
+:root[data-reduce-motion] .reveal {
+	animation: none !important;
+}
+
+:root[data-reduce-motion]::view-transition-old(root),
+:root[data-reduce-motion]::view-transition-new(root),
+:root[data-reduce-motion]::view-transition-group(root),
+:root[data-reduce-motion]::view-transition-group(site-nav),
+:root[data-reduce-motion]::view-transition-group(settings-dock),
+:root[data-reduce-motion]::view-transition-group(product-talentsync),
+:root[data-reduce-motion]::view-transition-group(product-talentsync-hr),
+:root[data-reduce-motion]::view-transition-group(product-rah-clinic) {
+	animation: none !important;
 }
