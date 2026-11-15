@@ -4,7 +4,8 @@
 		if ("onpageswap" in window && "onpagereveal" in window) return;
 
 		const root = document.documentElement;
-		const reduced = matchMedia("(prefers-reduced-motion: reduce)");
+		const media = matchMedia("(prefers-reduced-motion: reduce)");
+		const reduced = { get matches() { return media.matches || root.hasAttribute("data-reduce-motion"); } };
 		const key = "taf-page-arrival";
 		let leaving = false;
 

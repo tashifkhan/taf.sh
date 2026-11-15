@@ -63,6 +63,7 @@ const html = frameHTML(mod.default()(t), mod.meta.palette, quiet);
 </style>
 
 <script>
+	import { motionReduced } from "../scripts/prefs";
 	import { frameHTML, type Piece } from "../lib/ascii-magic/render";
 
 	const pieces = import.meta.glob<Piece>("../lib/ascii-magic/{pieces,own}/*.js");
@@ -104,7 +105,7 @@ const html = frameHTML(mod.default()(t), mod.meta.palette, quiet);
 	// A fallback face that lands late changes the cell width without resizing the box.
 	document.fonts.addEventListener("loadingdone", () => arts.forEach(fit));
 
-	if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
+	if (!motionReduced()) {
 		const io = new IntersectionObserver((entries) => {
 			for (const e of entries) {
 				if (!e.isIntersecting) continue;

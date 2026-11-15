@@ -1,0 +1,404 @@
+---
+/**
+ * The settings dock, ported from tashif.codes: theme mode, accent, haptics
+ * and reduced motion in one panel pinned to the bottom-left corner. It folds
+ * into a round button once the page scrolls, and steps aside while the page
+ * is moving.
+ *
+ * Every choice is an attribute on <html> plus a localStorage key, restored
+ * before first paint by ThemeScript.astro. This file only changes them.
+ */
+const modes = [
+	{ id: "system", label: "System" },
+	{ id: "light", label: "Light" },
+	{ id: "dark", label: "Dark" },
+] as const;
+
+const accents = [
+	{ id: "teal", label: "Teal accent", swatch: "bg-swatch-teal" },
+	{ id: "orange", label: "Orange accent", swatch: "bg-swatch-orange" },
+] as const;
+
+const card = "rounded-2xl border border-border bg-background/60 p-2.5";
+const cardLabel = "truncate font-mono text-[0.625rem] tracking-wide text-muted";
+const focus = "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent";
+const sw =
+	"group/sw relative h-5 w-9 shrink-0 cursor-pointer rounded-full bg-border-strong transition-colors aria-checked:bg-accent aria-disabled:cursor-not-allowed aria-disabled:opacity-50";
+const knob =
+	"absolute top-0.5 left-0.5 size-4 rounded-full bg-elevated shadow-sm ring-1 ring-border-strong transition-[translate] duration-300 ease-expo group-aria-checked/sw:translate-x-4";
+---
+
+<div
+	class="group/dock fixed bottom-4 left-4 z-70 grid items-end justify-items-start transition-[opacity,translate] duration-300 ease-expo print:hidden sm:bottom-6 sm:left-6 [view-transition-name:settings-dock] [&.is-away]:pointer-events-none [&.is-away]:translate-y-4 [&.is-away]:opacity-0 max-sm:[html:has([data-toast]:not([hidden]))_&]:pointer-events-none max-sm:[html:has([data-toast]:not([hidden]))_&]:opacity-0"
+	data-settings-dock
+>
+	<div
+		id="settings-panel"
+		role="group"
+		aria-label="Appearance and motion"
+		class="[grid-area:1/1] w-[min(calc(100vw-2rem),22rem)] origin-bottom-left rounded-[1.75rem] border border-border-strong bg-elevated/85 p-2.5 shadow-[0_24px_70px_-24px_rgb(0_0_0/0.55)] backdrop-blur-xl transition-[opacity,scale,translate,display] transition-discrete duration-400 ease-expo starting:translate-y-3 starting:scale-90 starting:opacity-0 [&[hidden]]:translate-y-3 [&[hidden]]:scale-75 [&[hidden]]:opacity-0"
+		data-dock-panel
+		hidden
+	>
+		<div class="flex items-center justify-between pl-1.5">
+			<span class="flex items-center gap-1.5 font-mono text-[0.625rem] tracking-wide text-muted">
+				<svg class="size-3" width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+					<path d="M12 3a9 9 0 0 0 0 18Z" fill="currentColor"></path>
+					<path d="M12 3a9 9 0 0 1 0 18Z" fill="var(--color-accent)"></path>
+					<circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.5"></circle>
+				</svg>
+				Appearance
+			</span>
+			<button
+				type="button"
+				class:list={["grid size-9 cursor-pointer place-items-center rounded-full text-muted transition-colors hover:text-foreground", focus]}
+				aria-label="Collapse appearance settings"
+				title="Collapse"
+				data-haptic="manual"
+				data-dock-close
+			>
+				<svg class="size-3.5" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+					<path d="m4 6 4 4 4-4"></path>
+				</svg>
+			</button>
+		</div>
+
+		<div role="radiogroup" aria-label="Color theme" class="mt-1.5 grid grid-cols-3 gap-1 rounded-[1.25rem] bg-background/60 p-1">
+			{
+				modes.map((mode) => (
+					<button
+						type="button"
+						role="radio"
+						aria-checked="false"
+						aria-label={`${mode.label} theme`}
+						title={`${mode.label} theme`}
+						data-haptic="manual"
+						data-theme-set={mode.id}
+						class:list={[
+							"flex h-9 cursor-pointer items-center justify-center gap-1.5 rounded-2xl border border-transparent font-mono text-[0.6875rem] text-muted transition-[color,background-color,border-color,scale] hover:text-foreground active:scale-95 aria-checked:border-accent/40 aria-checked:bg-accent-soft aria-checked:text-accent",
+							focus,
+						]}
+					>
+						{mode.id === "system" && (
+							<svg class="size-3.5" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">
+								<rect x="1.5" y="2.5" width="13" height="9" />
+								<path d="M5.5 14h5M8 11.5V14" />
+							</svg>
+						)}
+						{mode.id === "light" && (
+							<svg class="size-3.5" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">
+								<circle cx="8" cy="8" r="3.1" />
+								<path d="M8 1v1.6M8 13.4V15M1 8h1.6M13.4 8H15M3.1 3.1l1.1 1.1M11.8 11.8l1.1 1.1M12.9 3.1l-1.1 1.1M4.2 11.8l-1.1 1.1" />
+							</svg>
+						)}
+						{mode.id === "dark" && (
+							<svg class="size-3.5" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">
+								<path d="M13.4 9.6A5.8 5.8 0 0 1 6.4 2.6a5.8 5.8 0 1 0 7 7Z" />
+							</svg>
+						)}
+						{mode.label}
+					</button>
+				))
+			}
+		</div>
+
+		<div class="mt-2 grid grid-cols-[auto_1fr_1fr] gap-2">
+			<div class={card}>
+				<p class={cardLabel}>Accent</p>
+				<div role="radiogroup" aria-label="Accent colour" class="mt-2 flex items-center gap-1.5">
+					{
+						accents.map((accent) => (
+							<button
+								type="button"
+								role="radio"
+								aria-checked="false"
+								aria-label={accent.label}
+								title={accent.label}
+								data-haptic="manual"
+								data-accent-set={accent.id}
+								class:list={[
+									"grid size-7 cursor-pointer place-items-center rounded-full ring-offset-2 ring-offset-elevated transition-[scale] hover:scale-110 aria-checked:ring-2 aria-checked:ring-foreground/60",
+									focus,
+								]}
+							>
+								<span class:list={["size-5 rounded-full ring-1 ring-foreground/10", accent.swatch]} />
+							</button>
+						))
+					}
+				</div>
+			</div>
+
+			<div class={card}>
+				<p class={cardLabel}>Haptics</p>
+				<div class="mt-2 flex h-7 items-center justify-between gap-2">
+					<svg class="size-3.5 shrink-0 text-muted" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">
+						<rect x="5" y="2" width="6" height="12" rx="1.2"></rect>
+						<path d="M2.5 5.5v5M13.5 5.5v5"></path>
+					</svg>
+					<button
+						type="button"
+						role="switch"
+						aria-checked="false"
+						aria-label="Haptic feedback"
+						title="Vibrate on taps, on phones that support it"
+						data-haptic="manual"
+						data-haptics-switch
+						class:list={[sw, focus]}
+					>
+						<span class={knob}></span>
+					</button>
+				</div>
+			</div>
+
+			<div class={card}>
+				<p class={cardLabel}>Reduce motion</p>
+				<div class="mt-2 flex h-7 items-center justify-between gap-2">
+					<svg class="size-3.5 shrink-0 text-muted" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">
+						<path d="M1.5 8h3l1.5-3 2 6 1.5-3h5"></path>
+					</svg>
+					<button
+						type="button"
+						role="switch"
+						aria-checked="false"
+						aria-label="Reduce motion"
+						data-haptic="manual"
+						data-motion-switch
+						class:list={[sw, focus]}
+					>
+						<span class={knob}></span>
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<button
+		type="button"
+		class:list={[
+			"group/open [grid-area:1/1] grid size-13 cursor-pointer place-items-center rounded-full border border-border-strong bg-elevated/85 text-foreground shadow-xl backdrop-blur-xl transition-[opacity,scale,display,border-color] transition-discrete duration-400 ease-expo hover:border-accent starting:scale-50 starting:opacity-0 [&[hidden]]:scale-50 [&[hidden]]:opacity-0",
+			focus,
+		]}
+		aria-label="Open appearance settings"
+		aria-controls="settings-panel"
+		aria-expanded="false"
+		title="Appearance and motion"
+		data-haptic="manual"
+		data-dock-open
+	>
+		<svg class="size-6 transition-transform duration-500 ease-expo group-hover/open:rotate-180" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+			<path d="M12 3a9 9 0 0 0 0 18Z" fill="currentColor"></path>
+			<path d="M12 3a9 9 0 0 1 0 18Z" fill="var(--color-accent)"></path>
+			<circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.5"></circle>
+		</svg>
+	</button>
+</div>
+
+<script>
+	import { KEYS, motionReduced, setReduceMotion, systemReducesMotion } from "../scripts/prefs";
+	import { hapticsEnabled, installHaptics, setHapticsEnabled, trigger } from "../scripts/haptics";
+
+	type Mode = "system" | "light" | "dark";
+	type Accent = "teal" | "orange";
+
+	const root = document.documentElement;
+	const dock = document.querySelector<HTMLElement>("[data-settings-dock]")!;
+	const panel = dock.querySelector<HTMLElement>("[data-dock-panel]")!;
+	const openBtn = dock.querySelector<HTMLButtonElement>("[data-dock-open]")!;
+	const closeBtn = dock.querySelector<HTMLButtonElement>("[data-dock-close]")!;
+	const hapticsSwitch = dock.querySelector<HTMLButtonElement>("[data-haptics-switch]")!;
+	const motionSwitch = dock.querySelector<HTMLButtonElement>("[data-motion-switch]")!;
+	const prefersLight = matchMedia("(prefers-color-scheme: light)");
+	const systemMotion = matchMedia("(prefers-reduced-motion: reduce)");
+	const supportsTypes = CSS.supports("selector(:active-view-transition-type(theme))");
+
+	const storage = {
+		get: (key: string) => {
+			try {
+				return localStorage.getItem(key);
+			} catch {
+				return null;
+			}
+		},
+		set: (key: string, value: string | null) => {
+			try {
+				if (value === null) localStorage.removeItem(key);
+				else localStorage.setItem(key, value);
+			} catch {}
+		},
+	};
+
+	const readMode = (): Mode => {
+		const stored = storage.get(KEYS.theme);
+		return stored === "light" || stored === "dark" ? stored : "system";
+	};
+	const readAccent = (): Accent => (root.dataset.accent === "orange" ? "orange" : "teal");
+
+	const sync = () => {
+		const mode = readMode();
+		const accent = readAccent();
+		dock.querySelectorAll<HTMLElement>("[data-theme-set]").forEach((b) => b.setAttribute("aria-checked", String(b.dataset.themeSet === mode)));
+		dock.querySelectorAll<HTMLElement>("[data-accent-set]").forEach((b) => b.setAttribute("aria-checked", String(b.dataset.accentSet === accent)));
+
+		hapticsSwitch.setAttribute("aria-checked", String(hapticsEnabled()));
+
+		const systemReduce = systemReducesMotion();
+		motionSwitch.setAttribute("aria-checked", String(motionReduced()));
+		motionSwitch.toggleAttribute("aria-disabled", systemReduce);
+		motionSwitch.title = systemReduce ? "Reduced by your system setting" : "Turn off page animations";
+
+		// The browser chrome follows the resolved canvas colour.
+		const resolved = mode === "system" ? (prefersLight.matches ? "light" : "dark") : mode;
+		document.querySelector("meta[data-theme-color]")?.setAttribute("content", resolved === "light" ? "#f6f1e9" : "#0e0d0d");
+	};
+
+	const applyMode = (mode: Mode) => {
+		if (mode === "system") delete root.dataset.theme;
+		else root.dataset.theme = mode;
+		storage.set(KEYS.theme, mode === "system" ? null : mode);
+		// ThemeScript pins `color-scheme` inline so an override is live before the
+		// stylesheet loads. That inline value outranks global.css, so keep it in
+		// step instead of leaving the previous mode behind.
+		root.style.colorScheme = mode === "system" ? "" : mode;
+		sync();
+	};
+
+	const applyAccent = (accent: Accent) => {
+		if (accent === "teal") delete root.dataset.accent;
+		else root.dataset.accent = accent;
+		storage.set(KEYS.accent, accent === "teal" ? null : accent);
+		sync();
+	};
+
+	/**
+	 * Mode and accent swaps share the circular reveal in global.css: it grows
+	 * from the pressed control out to the farthest corner. Browsers without
+	 * transition types would reuse the navigation slide, which reads wrong for
+	 * a palette change, so they repaint instantly instead.
+	 */
+	const reveal = (origin: HTMLElement, update: () => void) => {
+		if (!document.startViewTransition || !supportsTypes || motionReduced() || root.hasAttribute("data-theme-switch")) return update();
+		const box = origin.getBoundingClientRect();
+		const x = box.left + box.width / 2;
+		const y = box.top + box.height / 2;
+		root.style.setProperty("--vt-x", `${x}px`);
+		root.style.setProperty("--vt-y", `${y}px`);
+		root.style.setProperty("--vt-r", `${Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y))}px`);
+		root.dataset.themeSwitch = "";
+		try {
+			const transition = document.startViewTransition({ update, types: ["theme"] } as unknown as () => void);
+			transition.finished.finally(() => delete root.dataset.themeSwitch);
+		} catch {
+			delete root.dataset.themeSwitch;
+			update();
+		}
+	};
+
+	/* ---- open / closed ---- */
+
+	const scrollTop = () => scrollY || root.scrollTop || 0;
+	let expanded = false;
+
+	const setExpanded = (next: boolean, { focus = false } = {}) => {
+		if (next === expanded) return;
+		expanded = next;
+		panel.hidden = !next;
+		openBtn.hidden = next;
+		openBtn.setAttribute("aria-expanded", String(next));
+		if (focus) (next ? closeBtn : openBtn).focus();
+		armIdle();
+	};
+
+	// Once the page is scrolled, an open panel folds itself after 5s unless
+	// the pointer or focus is still on it.
+	let idle = 0;
+	const armIdle = () => {
+		clearTimeout(idle);
+		if (!expanded || scrollTop() < 96) return;
+		idle = window.setTimeout(() => {
+			if (dock.matches(":hover") || dock.contains(document.activeElement)) return armIdle();
+			setExpanded(false);
+		}, 5000);
+	};
+
+	// The dock steps aside while the page moves and comes back 220ms after it
+	// stops, folded unless the page is back at the top.
+	let settle = 0;
+	const onScroll = () => {
+		dock.classList.add("is-away");
+		clearTimeout(settle);
+		settle = window.setTimeout(() => {
+			dock.classList.remove("is-away");
+			if (scrollTop() >= 96) setExpanded(false);
+		}, 220);
+	};
+	addEventListener("scroll", onScroll, { passive: true });
+
+	document.addEventListener(
+		"pointerdown",
+		(event) => {
+			if (expanded && event.target instanceof Element && !event.target.closest("[data-settings-dock]")) setExpanded(false);
+		},
+		true,
+	);
+
+	document.addEventListener("keydown", (event) => {
+		if (event.key === "Escape" && expanded) setExpanded(false, { focus: dock.contains(document.activeElement) });
+	});
+
+	openBtn.addEventListener("click", () => {
+		trigger("selection");
+		setExpanded(true, { focus: true });
+	});
+
+	closeBtn.addEventListener("click", () => {
+		trigger("selection");
+		setExpanded(false, { focus: true });
+	});
+
+	/* ---- choices ---- */
+
+	dock.querySelectorAll<HTMLButtonElement>("[data-theme-set]").forEach((button) => {
+		button.addEventListener("click", () => {
+			trigger("selection");
+			const mode = button.dataset.themeSet as Mode;
+			if (mode !== readMode()) reveal(button, () => applyMode(mode));
+		});
+	});
+
+	dock.querySelectorAll<HTMLButtonElement>("[data-accent-set]").forEach((button) => {
+		button.addEventListener("click", () => {
+			trigger("selection");
+			const accent = button.dataset.accentSet as Accent;
+			if (accent !== readAccent()) reveal(button, () => applyAccent(accent));
+		});
+	});
+
+	hapticsSwitch.addEventListener("click", () => {
+		const next = !hapticsEnabled();
+		setHapticsEnabled(next);
+		if (next) trigger("selection");
+		sync();
+	});
+
+	motionSwitch.addEventListener("click", () => {
+		if (systemReducesMotion()) return;
+		trigger("selection");
+		setReduceMotion(!root.hasAttribute("data-reduce-motion"));
+		sync();
+	});
+
+	prefersLight.addEventListener("change", sync);
+	systemMotion.addEventListener("change", sync);
+	addEventListener("storage", (event) => {
+		if (event.key === KEYS.theme) applyMode(readMode());
+		else if (event.key === KEYS.accent) applyAccent(event.newValue === "orange" ? "orange" : "teal");
+		else if (event.key === KEYS.reduceMotion) root.toggleAttribute("data-reduce-motion", event.newValue === "true");
+		sync();
+	});
+
+	installHaptics();
+	sync();
+	// Open on arrival near the top of the page, except on phones, where the
+	// panel would cover a third of the first screen.
+	if (scrollTop() < 96 && matchMedia("(min-width: 640px)").matches) setExpanded(true);
+</script>

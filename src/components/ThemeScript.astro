@@ -33,14 +33,23 @@
 
 <script is:inline>
 	(() => {
-		const stored = localStorage.getItem("taf-theme");
+		const root = document.documentElement;
+		let stored = null;
+		try {
+			stored = localStorage.getItem("taf-theme");
+			// The settings dock's other two choices. Both are read by global.css,
+			// so they have to be on <html> before the first paint too.
+			const accent = localStorage.getItem("taf-accent");
+			if (accent === "orange") root.dataset.accent = accent;
+			if (localStorage.getItem("taf-reduce-motion") === "true") root.setAttribute("data-reduce-motion", "");
+		} catch {}
 		const override = stored === "light" || stored === "dark";
 		if (override) {
-			document.documentElement.dataset.theme = stored;
+			root.dataset.theme = stored;
 			// `data-theme` is only wired up in global.css, so set the used value
 			// directly too — otherwise an override flashes the system palette
 			// until the stylesheet arrives.
-			document.documentElement.style.colorScheme = stored;
+			root.style.colorScheme = stored;
 		}
 		const resolved = override
 			? stored

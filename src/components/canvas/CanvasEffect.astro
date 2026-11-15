@@ -42,6 +42,8 @@ const { effect, options = {}, class: className } = Astro.props;
 </style>
 
 <script>
+	import { motionReduced } from "../../scripts/prefs";
+
 	interface EffectInstance {
 		setOptions: (options: Record<string, unknown>) => void;
 		resize: () => void;
@@ -213,18 +215,18 @@ const { effect, options = {}, class: className } = Astro.props;
 		sync.observe(content);
 
 		/*
-		 * ThemeToggle flips `data-theme` on <html>. The sampled DOM re-paints on its
+		 * The settings dock flips `data-theme` and `data-accent` on <html>. The sampled DOM re-paints on its
 		 * own; only the two explicit color options need pushing back in.
 		 */
 		new MutationObserver(() => {
 			instance.setOptions(themedOptions(root, effect));
 		}).observe(document.documentElement, {
 			attributes: true,
-			attributeFilter: ["data-theme", "style"],
+			attributeFilter: ["data-theme", "data-accent", "style"],
 		});
 	}
 
-	const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+	const reduced = motionReduced();
 
 	if (!reduced && supportsHtmlInCanvas() && supportsWebgl2()) {
 		for (const root of document.querySelectorAll<HTMLElement>("[data-cui-effect]")) {

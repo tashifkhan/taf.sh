@@ -5,11 +5,13 @@
  * digits). None of it takes over scrolling: the wheel always moves the page
  * at the browser's own speed.
  *
- * Everything here is skipped under prefers-reduced-motion; the page reads
- * fine without any of it.
+ * Everything here is skipped under reduced motion, from the OS setting or
+ * the settings dock. The page reads fine without any of it.
  */
 
-const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+import { motionReduced } from "./prefs";
+
+const reduced = motionReduced();
 const finePointer = matchMedia("(hover: hover) and (pointer: fine)").matches;
 
 const $$ = <T extends Element = HTMLElement>(sel: string, root: ParentNode = document) =>
