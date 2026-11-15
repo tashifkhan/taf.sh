@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "./studio.css";
+@import "./skins.css";
 
 /*
  * Theming: every token has a light value (the `@theme` default) and a dark
@@ -35,10 +36,6 @@
 	--color-accent-soft: rgba(15, 122, 108, 0.1);
 	--color-accent-contrast: #ffffff;
 
-	/* Dock swatches. Fixed per accent, so each previews its own hue. */
-	--color-swatch-teal: #0f7a6c;
-	--color-swatch-orange: #c2410c;
-
 	/* One easing + duration for every `transition-*` utility on the site */
 	--default-transition-duration: 180ms;
 	--default-transition-timing-function: cubic-bezier(0.2, 0.7, 0.3, 1);
@@ -68,8 +65,6 @@
 		--color-accent-strong: #7ce3d9;
 		--color-accent-soft: rgba(79, 209, 197, 0.14);
 		--color-accent-contrast: #04211f;
-		--color-swatch-teal: #4fd1c5;
-		--color-swatch-orange: #fb923c;
 	}
 }
 
@@ -89,8 +84,6 @@ html[data-theme="dark"],
 	--color-accent-soft: rgba(79, 209, 197, 0.14);
 	/* Dark ink on the light-teal fill: ~9:1, the pairing the CTA depends on. */
 	--color-accent-contrast: #04211f;
-	--color-swatch-teal: #4fd1c5;
-	--color-swatch-orange: #fb923c;
 }
 
 html[data-theme="light"],
@@ -109,41 +102,6 @@ html[data-theme="light"],
 	--color-accent-soft: rgba(15, 122, 108, 0.1);
 	/* White on the deep-teal fill: ~5.2:1. */
 	--color-accent-contrast: #ffffff;
-	--color-swatch-teal: #0f7a6c;
-	--color-swatch-orange: #c2410c;
-}
-
-/*
- * Accent palettes, picked in the settings dock. Teal is the default and needs
- * no attribute; any other accent sets `data-accent` on <html>. Each one has
- * the same four tokens in a light set and a dark set, and they follow the
- * same three sources as the palette above, so the reel halves keep working.
- * Selectors carry `html[data-accent]` to outrank the base `.t-dark`/`.t-light`.
- */
-html[data-accent="orange"],
-html[data-accent="orange"] .t-light {
-	--color-accent: #c2410c;
-	--color-accent-strong: #9a3412;
-	--color-accent-soft: rgba(194, 65, 12, 0.1);
-	/* White on the deep-orange fill: ~5.2:1, the same pairing as teal. */
-	--color-accent-contrast: #ffffff;
-}
-
-@media (prefers-color-scheme: dark) {
-	html[data-accent="orange"]:not([data-theme="light"]) {
-		--color-accent: #fb923c;
-		--color-accent-strong: #fdba74;
-		--color-accent-soft: rgba(251, 146, 60, 0.14);
-		--color-accent-contrast: #2a1004;
-	}
-}
-
-html[data-accent="orange"][data-theme="dark"],
-html[data-accent="orange"] .t-dark {
-	--color-accent: #fb923c;
-	--color-accent-strong: #fdba74;
-	--color-accent-soft: rgba(251, 146, 60, 0.14);
-	--color-accent-contrast: #2a1004;
 }
 
 /*

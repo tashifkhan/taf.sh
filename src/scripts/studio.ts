@@ -248,7 +248,7 @@ function heroField() {
 	new MutationObserver(() => {
 		readColors();
 		draw();
-	}).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme", "data-accent", "style"] });
+	}).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme", "data-skin", "data-color", "style"] });
 	matchMedia("(prefers-color-scheme: light)").addEventListener("change", () => {
 		readColors();
 		draw();

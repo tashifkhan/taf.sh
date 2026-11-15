@@ -215,14 +215,14 @@ const { effect, options = {}, class: className } = Astro.props;
 		sync.observe(content);
 
 		/*
-		 * The settings dock flips `data-theme` and `data-accent` on <html>. The sampled DOM re-paints on its
+		 * The settings dock flips `data-theme`, `data-skin` and `data-color` on <html>. The sampled DOM re-paints on its
 		 * own; only the two explicit color options need pushing back in.
 		 */
 		new MutationObserver(() => {
 			instance.setOptions(themedOptions(root, effect));
 		}).observe(document.documentElement, {
 			attributes: true,
-			attributeFilter: ["data-theme", "data-accent", "style"],
+			attributeFilter: ["data-theme", "data-skin", "data-color", "style"],
 		});
 	}
 

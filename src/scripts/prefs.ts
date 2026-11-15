@@ -9,7 +9,6 @@
 
 export const KEYS = {
 	theme: "taf-theme",
-	accent: "taf-accent",
 	reduceMotion: "taf-reduce-motion",
 	haptics: "taf-haptics",
 } as const;
