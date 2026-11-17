@@ -247,6 +247,8 @@ export type ReelItem = {
 	/** Public site, when there is one; shows the "live site" badge. */
 	live?: string;
 	metric?: string;
+	/** For apps: where it runs. Listed under "Apps" on the homepage. */
+	platforms?: string[];
 	shots: string[];
 	video?: { src: string; poster: string; label?: string; phone?: { src: string; poster: string } };
 	/** Related services and source for projects with several entry points. */
@@ -320,7 +322,7 @@ export const reel: ReelItem[] = [
 		tags: ["tool", "ai"],
 		stack: ["LangGraph", "FastAPI", "MCP"],
 		href: "https://github.com/tashifkhan/agentic-browser",
-		live: "https://tashif.codes/u/agentic-browser",
+		live: "https://tashif.codes/projects/agentic-browser",
 		metric: "BYO keys",
 		shots: [],
 		video: { src: "/reel/agentic-browser-demo.mp4", poster: "/reel/agentic-browser-poster.jpg" },
@@ -373,17 +375,19 @@ export const reel: ReelItem[] = [
 		line: "DMRC and NMRC trip planning with live alerts, as a web app and an Android app on F-Droid.",
 		tags: ["app", "mobile"],
 		stack: ["Expo", "React Native"],
-		href: "https://ncr-metro.tashif.codes",
+		href: "https://tashif.codes/projects/delhi-metro",
 		live: "https://ncr-metro.tashif.codes",
 		metric: "F-Droid",
+	platforms: ["Android", "Web", "iOS"],
 		shots: Array.from({ length: 6 }, (_, i) => `/reel/ncr-metro-screenshots/web-${String(i + 1).padStart(2, "0")}.webp`),
 		video: {
 			src: "/reel/ncr-metro-web-demo.mp4",
+			label: "Web + phone walkthrough",
 			poster: "/reel/ncr-metro-web-poster.jpg",
 			phone: { src: "/reel/ncr-metro-phone-demo.mp4", poster: "/reel/ncr-metro-phone-poster.jpg" },
 		},
 		links: [
-			{ label: "Web video", href: "/reel/ncr-metro-web-demo.mp4" },
+			{ label: "Web + phone video", href: "/reel/ncr-metro-web-demo.mp4" },
 			{ label: "Phone video", href: "/reel/ncr-metro-phone-demo.mp4" },
 			{ label: "Screenshot pack", href: "/reel/ncr-metro-screenshots.zip" },
 		],
@@ -432,8 +436,10 @@ export const reel: ReelItem[] = [
 		line: "Expense tracking on Android and the web. On-device bank SMS parsing, optional AI entry, budgets, Material You colors, hidden amounts, app lock, and layouts for phones, foldables and tablets.",
 		tags: ["app", "mobile", "web"],
 		stack: ["Kotlin", "Compose Multiplatform", "SQLite"],
-		href: "https://github.com/tashifkhan/Paisa",
+		href: "https://tashif.codes/projects/paisa",
+		live: "https://paisa.tashif.codes",
 		metric: "Local-first",
+	platforms: ["Android", "Web"],
 		shots: shots("paisa", 19),
 		video: {
 			src: "/reel/paisa-demo.mp4",
@@ -457,8 +463,9 @@ export const reel: ReelItem[] = [
 		line: "CalDAV tasks, Nextcloud Deck boards, GitHub issues and Jira in one native app for iOS and Android. This walkthrough follows tasks and populated Jira boards across both native builds, including sprint filters and card dragging with sample data.",
 		tags: ["app", "mobile"],
 		stack: ["Expo", "React Native", "CalDAV", "Nextcloud Deck"],
-		href: "https://github.com/tashifkhan/Patchwork",
+		href: "https://tashif.codes/projects/patchwork",
 		metric: "Native iOS + Android",
+	platforms: ["iOS", "Android"],
 		shots: shots("patchwork", 6),
 		video: {
 			src: "/reel/patchwork-native-demo.mp4",

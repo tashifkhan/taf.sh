@@ -10,7 +10,7 @@ import { wrap, section, head, headRow, kicker, h2, lede, card, btn, btnGhost, bt
  * 1. Featured team work and studio products get full-width galleries with
  *    their galleries, specs and case-study links (carrying the shared-element
  *    view-transition-name for the product page morph).
- * 2. The eight digital shenanigans sit below as a compact interactive index
+ * 2. Apps, then the digital shenanigans, sit below as compact interactive index
  *    table (with cursor-following hover previews and one-click jump into the
  *    full split-screen reel), avoiding a second wall of galleries that repeats
  *    the slide-over work reel.
@@ -20,7 +20,26 @@ const slug = (name: string) => name.toLowerCase().replace(/[^a-z0-9]+/g, "-").re
 const productId = (href: string) => (href.startsWith("/products/") ? href.slice("/products/".length) : null);
 
 const featured = reel.filter((r) => r.group !== "shenanigan");
-const shenanigans = reel.filter((r) => r.group === "shenanigan");
+const smaller = reel.filter((r) => r.group === "shenanigan");
+// Apps get their own list with the platforms each one runs on.
+const apps = smaller.filter((r) => r.platforms);
+const shenanigans = smaller.filter((r) => !r.platforms);
+const lists = [
+	{
+		id: "apps",
+		label: "Apps",
+		title: "Apps I built",
+		lede: "Things you install. Each one says where it runs, and opens its own page on tashif.codes.",
+		items: apps,
+	},
+	{
+		id: "shenanigans",
+		label: "Archive",
+		title: "Digital shenanigans",
+		lede: "Open-source agents, developer dashboards and campus tools built along the way. Click any row to inspect its screens in the reel.",
+		items: shenanigans,
+	},
+];
 const metaById = Object.fromEntries(productMeta.map((p) => [p.id, p]));
 ---
 
@@ -115,23 +134,23 @@ const metaById = Object.fromEntries(productMeta.map((p) => [p.id, p]));
 		</ol>
 
 		<!-- Digital shenanigans: compact interactive index instead of a second wall of galleries. -->
-		<div class="mt-6 border-t border-border pt-12 sm:pt-16">
+		{lists.map((list) => (
+		<div class="mt-6 border-t border-border pt-12 sm:pt-16" id={`work-${list.id}`}>
 			<div class="flex flex-wrap items-end justify-between gap-4">
 				<div>
-					<span class={kicker}>Archive · {pad(shenanigans.length)} builds</span>
+					<span class={kicker}>{list.label} · {pad(list.items.length)} builds</span>
 					<h3 class="mt-2 font-display text-[clamp(1.65rem,3vw,2.35rem)] leading-tight font-semibold tracking-[-0.035em] text-foreground">
-						Digital shenanigans<span class="text-accent">.</span>
+						{list.title}<span class="text-accent">.</span>
 					</h3>
 				</div>
 				<p class="max-w-md text-sm leading-relaxed text-secondary">
-					Open-source agents, developer dashboards and campus tools built along the way.
-					Click any row to inspect its screens in the reel.
+					{list.lede}
 				</p>
 			</div>
 
 			<ol class="mt-8 divide-y divide-border border-y border-border">
 				{
-					shenanigans.map((r, i) => (
+					list.items.map((r, i) => (
 						<li
 							id={`p-${slug(r.name)}`}
 							class="group relative scroll-mt-24 transition-colors hover:bg-surface/70"
@@ -155,10 +174,18 @@ const metaById = Object.fromEntries(productMeta.map((p) => [p.id, p]));
 
 								<p class="text-sm text-secondary sm:truncate">{r.line}</p>
 
-								<span class="font-mono text-xs text-muted max-md:hidden">
-									{r.stack.join(" · ")}
-									{r.metric ? <span class="text-accent"> · {r.metric}</span> : ""}
-								</span>
+								{r.platforms ? (
+									<ul class="flex flex-wrap gap-1.5 max-md:col-start-2" aria-label="Runs on">
+										{r.platforms.map((platform) => (
+											<li class="rounded-md border border-border px-1.5 py-0.5 font-mono text-xs leading-none text-secondary">{platform}</li>
+										))}
+									</ul>
+								) : (
+									<span class="font-mono text-xs text-muted max-md:hidden">
+										{r.stack.join(" · ")}
+										{r.metric ? <span class="text-accent"> · {r.metric}</span> : ""}
+									</span>
+								)}
 
 								<div class="flex items-center gap-4 font-mono text-xs sm:justify-end">
 									<button
@@ -183,9 +210,12 @@ const metaById = Object.fromEntries(productMeta.map((p) => [p.id, p]));
 					))
 				}
 			</ol>
+		</div>
+		))}
+		<div class="mt-6">
 			<div class="mt-6 flex flex-wrap items-center justify-between gap-4">
 				<p class="text-sm text-secondary">
-					These eight are a sample. Visit{" "}
+					These are a sample. Visit{" "}
 					<a
 						href="https://tashif.codes"
 						target="_blank"
@@ -194,7 +224,7 @@ const metaById = Object.fromEntries(productMeta.map((p) => [p.id, p]));
 					>
 						tashif.codes <Arrow dir="up-right" />
 					</a>{" "}
-					for all 51 shenanigans, and{" "}
+					for the rest, and{" "}
 					<a
 						href="https://tashif.codes/blog"
 						target="_blank"
