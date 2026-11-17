@@ -2,7 +2,7 @@
 import Arrow from "../Arrow.astro";
 import Gallery from "./Gallery.astro";
 import PreviewCard from "./PreviewCard.astro";
-import { reel, products as productMeta } from "./data";
+import { reel, products as productMeta, playStoreApps, playStoreDeveloperUrl } from "./data";
 import { wrap, section, head, headRow, kicker, h2, lede, card, btn, btnGhost, btnArrow, chip, chipOn } from "./ui";
 
 /*
@@ -179,6 +179,11 @@ const metaById = Object.fromEntries(productMeta.map((p) => [p.id, p]));
 										{r.platforms.map((platform) => (
 											<li class="rounded-md border border-border px-1.5 py-0.5 font-mono text-xs leading-none text-secondary">{platform}</li>
 										))}
+										{playStoreApps[r.name] && (
+											<li>
+												<a href={playStoreApps[r.name]} target="_blank" rel="noopener noreferrer" class="relative z-10 rounded-md border border-accent px-1.5 py-0.5 font-mono text-xs leading-none text-accent transition-colors hover:bg-accent-soft">Google Play</a>
+											</li>
+										)}
 									</ul>
 								) : (
 									<span class="font-mono text-xs text-muted max-md:hidden">
@@ -210,6 +215,17 @@ const metaById = Object.fromEntries(productMeta.map((p) => [p.id, p]));
 					))
 				}
 			</ol>
+			{list.id === "apps" && (
+				<p class="mt-4 text-sm text-secondary">
+					Android builds come from my{" "}
+					<a href="https://tashif.codes/fdroid" target="_blank" rel="noopener noreferrer" class="text-foreground underline decoration-border-strong underline-offset-4 transition-colors hover:text-accent hover:decoration-accent">F-Droid repo</a>.{" "}
+					{playStoreDeveloperUrl ? (
+						<a href={playStoreDeveloperUrl} target="_blank" rel="noopener noreferrer" class="text-foreground underline decoration-border-strong underline-offset-4 transition-colors hover:text-accent hover:decoration-accent">They are on Google Play too.</a>
+					) : (
+						<span>Google Play is coming soon.</span>
+					)}
+				</p>
+			)}
 		</div>
 		))}
 		<div class="mt-6">

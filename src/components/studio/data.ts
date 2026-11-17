@@ -6,6 +6,23 @@
 
 export const email = "me@taf.sh";
 
+/**
+ * Where people can sponsor the work. Empty until a page exists: the footer's
+ * Sponsor link only shows once this is set.
+ */
+export const sponsorUrl = "";
+
+/**
+ * The Google Play developer page. Empty until the developer account is
+ * approved. While it is empty the Apps list says Google Play is coming, and
+ * once set it links there. A per-app store link goes in `playStoreApps`,
+ * keyed by the app's name in `reel`.
+ */
+export const playStoreDeveloperUrl = "";
+export const playStoreApps: Record<string, string> = {
+	// Paisa: "https://play.google.com/store/apps/details?id=codes.tashif.paisa",
+};
+
 export const nav = [
 	{ href: "/services", label: "Services" },
 	{ href: "#process", label: "Process" },
