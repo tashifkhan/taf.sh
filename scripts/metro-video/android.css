@@ -1,0 +1,23 @@
+/* Android captures retain their own status and navigation bars. */
+.intro-android{position:absolute;left:640px;top:323px;width:190px;padding:4px;border-radius:22px;background:#172536;box-shadow:0 28px 50px -22px #102D5655;z-index:4}
+.intro-android img{display:block;width:100%;aspect-ratio:9/20;border-radius:18px}
+.intro-android small,.close-phone small{position:absolute;left:0;top:-28px;white-space:nowrap;color:var(--accent);font:12px var(--mono);letter-spacing:.08em}
+.android-demo .win{left:820px;top:76px;width:284px;border:2px solid #34404C;border-radius:25px;box-shadow:0 22px 45px -30px #102D5655}
+.android-demo .win .bar{display:none}
+.android-demo .view{width:280px;height:622.222px;background:var(--bg)}
+.android-demo .demo-heading{position:absolute;left:96px;top:163px;width:600px;font:700 53px/1.07 var(--head);letter-spacing:-.035em;color:var(--fg)}
+.android-demo .demo-sub{position:absolute;left:96px;top:302px;width:570px;font:23px/1.4 var(--body);color:var(--muted)}
+.device-facts{position:absolute;left:96px;top:415px;width:570px;padding:0;margin:0;list-style:none;display:flex;flex-direction:column;gap:12px}
+.device-facts li{padding:15px 18px;border:1px solid var(--line);border-radius:14px;background:var(--card);font:20px/1.25 var(--body);color:var(--fg)}
+.android-demo .caption{display:none}
+.custom-close .copy{left:96px;top:145px;width:535px;right:auto}
+.custom-close .title{font-size:64px;line-height:1.04;max-width:450px}
+.outro-body{font:23px/1.45 var(--body);color:var(--muted);max-width:500px;margin:24px 0 0}
+.custom-close .chip.big{font-size:17px;padding:14px 17px;margin-top:25px}
+.close-phone{position:absolute;top:165px;left:725px;width:204px;background:#172536;border:4px solid #172536;border-radius:24px;box-shadow:0 28px 60px -24px #102D5655}
+.close-phone img{display:block;width:100%;aspect-ratio:9/20;border-radius:20px}
+.close-phone.phone-1{left:957px;top:235px}
+.custom-close .stackrow{left:96px;right:auto;bottom:105px;max-width:590px;flex-wrap:wrap}
+.custom-close .stackrow span{font-size:15px}
+
+.resource .copy{width:430px}.resource .title{font-size:58px}.resource .tilt{left:555px;top:158px;width:660px}.resource .tilt .win{width:660px}.resource .tilt .view{height:412.5px}.resource .bignum,.resource .prog{display:none}.resource .points li{font-size:16px}.resource .points li:last-child{font:14px var(--mono)}

@@ -45,9 +45,9 @@ const cue = (t, kind, gain = 1) => cues.push({ t: +t.toFixed(3), kind, gain });
 // ---------------------------------------------------------------- pieces
 const tafMark = `<svg class="tafmark" viewBox="0 0 28 20" width="28" height="20"><g fill="currentColor"><rect x="0" y="0" width="4" height="4"/><rect x="4" y="4" width="4" height="4"/><rect x="8" y="8" width="4" height="4"/><rect x="4" y="12" width="4" height="4"/><rect x="0" y="16" width="4" height="4"/></g><rect class="blink" x="16" y="12" width="10" height="8" fill="var(--accent)"/></svg>`;
 
-function chrome(path) {
+function chrome(path, host) {
   const el = $("div", "win");
-  el.innerHTML = `<div class="bar"><i></i><i></i><i></i><div class="url"><span class="lock">●</span>${esc(C.product.host)}<b>${esc(path || "")}</b></div></div><div class="view"><img class="shot" alt=""></div>`;
+  el.innerHTML = `<div class="bar"><i></i><i></i><i></i><div class="url"><span class="lock">●</span>${esc(host || C.product.host)}<b>${esc(path || "")}</b></div></div><div class="view"><img class="shot" alt=""></div>`;
   return el;
 }
 
@@ -121,14 +121,22 @@ S.intro = (sc) => {
   const kick = $("div", "kicker", esc(sc.kicker));
   const title = words(sc.title, "title");
   const tag = $("p", "tagline", esc(sc.tagline));
-  const url = $("div", "chip", `<span>$</span> open ${esc(C.product.host)}`);
-  copy.append(pre, kick, title.box, tag, url);
+  const hosts = sc.hosts || (sc.url ? [sc.url] : [C.product.host]);
+  const urls = hosts.map((h) => $("div", "chip", `<span>$</span> open ${esc(h)}`));
+  copy.append(pre, kick, title.box, tag, ...urls);
   el.append(floor, orbit, board, copy);
+  const android = sc.androidShot ? $("div", "intro-android", `<img src="${sc.androidShot}" alt="">`) : null;
+  if (android) el.append(android);
   title.list.forEach((_, i) => cue(sc.at + 0.55 + i * 0.07, "pop", 0.35));
   return {
     el,
     update(t) {
       floor.style.backgroundPosition = `0 ${px(t * 40)}`;
+      if (android) {
+        const p = outCubic((t - 0.7) / 0.8);
+        android.style.opacity = p;
+        android.style.transform = `translateY(${px((1 - p) * 50)})`;
+      }
       // Flat fan. A Y-orbit resamples every screenshot and the page type goes soft.
       // A landing intro is one window, slid in from the right, so the page reads.
       orbit.style.transform = sc.landing ? "none" : `translate(-50%,-50%)`;
@@ -158,6 +166,11 @@ S.intro = (sc) => {
         c.style.opacity = e.o;
         c.style.transform = `translate3d(0,${px(Math.sin(t * 1.1 + i * 2) * 12)},0) scale3d(${e.sx},${e.sy},1) rotateX(${(t * 38 + i * 40).toFixed(1)}deg) rotateY(${(t * 52 + i * 70).toFixed(1)}deg)`;
       });
+      urls.forEach((chip, i) => {
+        const e = pop(t - 1.15 - i * 0.16, 1.6, 0.4);
+        chip.style.opacity = e.o;
+        chip.style.transform = `translateY(${px((1 - Math.min(e.p, 1)) * 16)}) scale(${e.sx},${e.sy})`;
+      });
       if (caret) {
         const e = pop(t - 0.7, 1.4, 0.4);
         caret.style.opacity = e.o;
@@ -175,18 +188,16 @@ S.intro = (sc) => {
       });
       const tp = outCubic((t - 1.3) / 0.7);
       tag.style.opacity = tp; tag.style.transform = `translateY(${px((1 - tp) * 22)})`;
-      const u = pop(t - 1.8);
-      url.style.opacity = u.o; url.style.transform = `scale(${u.sx},${u.sy})`;
     },
   };
 };
 
 S.chapter = (sc) => {
-  const el = $("div", "scene chapter");
+  const el = $("div", "scene chapter" + (sc.resource ? " resource" : ""));
   el.append(hud(sc.n));
   const big = $("div", "bignum", String(sc.n).padStart(2, "0"));
   const copy = $("div", "copy");
-  const kick = $("div", "kicker", `Feature ${String(sc.n).padStart(2, "0")} / ${String(C.featureCount).padStart(2, "0")}`);
+  const kick = $("div", "kicker", sc.kicker || `Feature ${String(sc.n).padStart(2, "0")} / ${String(C.featureCount).padStart(2, "0")}`);
   const title = words(sc.title, "title");
   const body = $("p", "body", esc(sc.body));
   const pts = $("ul", "points");
@@ -233,9 +244,11 @@ S.chapter = (sc) => {
 
 S.demo = (sc) => {
   const el = $("div", "scene demo");
+  if (sc.device === "android") el.classList.add("android-demo");
   if (sc.heading) { const head = $("div", "demo-heading", esc(sc.heading)); const sub = $("div", "demo-sub", esc(sc.sub || "")); el.append(head, sub); }
+  if (sc.points?.length) el.append($("ul", "device-facts", sc.points.map(p => `<li>${esc(p)}</li>`).join("")));
   el.append(hud(sc.n));
-  const win = chrome(sc.path);
+  const win = chrome(sc.path, sc.host);
   const img = win.querySelector("img.shot");
   const view = win.querySelector(".view");
   const spot = $("div", "spot");
@@ -251,10 +264,11 @@ S.demo = (sc) => {
   });
   const cursor = $("div", "cursor", `<svg viewBox="0 0 24 24" width="26" height="26"><path d="M3 2l7 19 2.6-7.4L20 11z" fill="#fff" stroke="#111" stroke-width="1.6" stroke-linejoin="round"/></svg><i></i>`);
   view.append(cursor);
-  const cap = $("div", "caption", `<b>${String(sc.n).padStart(2, "0")}</b><span>${esc(sc.caption)}</span>`);
+  const cap = $("div", "caption", `${sc.n ? `<b>${String(sc.n).padStart(2, "0")}</b>` : ""}<span>${esc(sc.caption)}</span>`);
   el.append(win, cap);
   cue(sc.at + 0.5, "pop", 0.4);
-  const VW = PORTRAIT ? 420 : 1088, VH = PORTRAIT ? 909 : 680;
+  const VW = sc.device === "android" && !PORTRAIT ? 280 : PORTRAIT ? 420 : 1088;
+  const VH = sc.device === "android" && !PORTRAIT ? 622.222 : PORTRAIT ? 909 : 680;
   // Cursor path: rest at lower right, glide to each highlight shortly before it lights up.
   const stops = [{ t: 0, x: 0.78, y: 0.82 }];
   for (const { h } of rings) stops.push({ t: h.at - 0.7, x: stops.at(-1).x, y: stops.at(-1).y }, { t: h.at - 0.05, x: h.box[0] + h.box[2] / 2, y: h.box[1] + h.box[3] / 2 });
@@ -619,6 +633,7 @@ S.chat = (sc) => {
 
 S.outro = (sc) => {
   const el = $("div", "scene outro" + (sc.trace ? " trace" : ""));
+  if (sc.nativeShots?.length) el.classList.add("custom-close");
   const copy = $("div", "copy");
   const kick = $("div", "kicker", esc(sc.kicker));
   const title = words(sc.title, "title");
@@ -626,6 +641,7 @@ S.outro = (sc) => {
   // Other videos keep the URL chip under the title.
   const line = sc.trace ? null : $("div", "chip big", `<span>$</span> open ${esc(sc.url)}`);
   copy.append(kick, title.box);
+  if (sc.body) copy.append($("p", "outro-body", esc(sc.body)));
   if (line) copy.append(line);
   const names = (sc.trace || []).map((t) => (typeof t === "string" ? { name: t, status: "wired" } : t));
   const term = names.length ? $("div", "term") : null;
@@ -651,6 +667,11 @@ S.outro = (sc) => {
   el.append(copy, stack, sign);
   if (term) el.append(term);
   if (tilt) el.append(tilt);
+  const nativeShots = (sc.nativeShots || []).map((shot, i) => {
+    const phone = $("div", `close-phone phone-${i}`, `<small>${esc(shot.label)}</small><img src="${shot.src}" alt="">`);
+    el.append(phone);
+    return phone;
+  });
   title.list.forEach((_, i) => cue(sc.at + 0.4 + i * 0.07, "pop", 0.3));
   rows.forEach((_, i) => cue(sc.at + 1.05 + i * 0.32, "tick", 0.35));
   if (prompt) cue(sc.at + 1.05 + rows.length * 0.32, "pop", 0.5);
@@ -658,6 +679,11 @@ S.outro = (sc) => {
   return {
     el,
     update(t) {
+      nativeShots.forEach((phone, i) => {
+        const p = outCubic((t - 0.5 - i * 0.25) / 0.8);
+        phone.style.opacity = p;
+        phone.style.transform = `translateY(${px((1 - p) * 50)})`;
+      });
       const k = pop(t - 0.2);
       kick.style.opacity = k.o; kick.style.transform = `scale(${k.sx},${k.sy})`;
       title.list.forEach((w, i) => { const d = drop(t - 0.35 - i * 0.06, 60); w.style.opacity = d.o; w.style.transform = `translateY(${px(d.y)}) scale(${d.sx},${d.sy})`; });

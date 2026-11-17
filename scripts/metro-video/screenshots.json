@@ -70,12 +70,13 @@
       },
       {
         "id": "08",
-        "title": "Light or dark.<br><em>Your choice.</em>",
-        "sub": "Choose a theme and color palette in Appearance settings.",
+        "title": "Your metro.<br><em>Your settings.</em>",
+        "sub": "Colors, modes, AMOLED, contrast, haptics and Slide, Fade or Off page animations.",
         "shot": "appearance",
+        "native": "controls",
         "eyebrow": "Make it yours",
         "paper": "#ECEFF6",
-        "tag": "Light / dark / color palettes"
+        "tag": "Slide / Fade / Off"
       }
     ]
   },
@@ -135,13 +136,15 @@
       },
       {
         "id": "06",
-        "title": "Switch between<br><em>light and dark.</em>",
-        "sub": "Choose a comfortable theme and change the color palette in Appearance.",
+        "title": "Your metro.<br><em>Your settings.</em>",
+        "sub": "Choose colors and modes. Set AMOLED, contrast, haptics and page animations.",
         "phone": "appearance",
         "web": "appearance",
-        "eyebrow": "Your view of the commute",
+        "native": "controls",
+        "nativePair": "colors",
+        "eyebrow": "Make it yours",
         "paper": "#ECEFF6",
-        "tag": "Appearance settings"
+        "tag": "Slide / Fade / Off"
       }
     ]
   }

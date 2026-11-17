@@ -1,94 +1,45 @@
-# Delhi NCR Metro walkthroughs
+# Delhi NCR Metro videos and screenshots
 
-Two independently recorded cuts of the live application. Web is a landscape
-1920 x 1200 video. Phone is a portrait 1080 x 1920 video of the mobile web
-layout, not a desktop crop or a native simulator recording.
+Both videos use app 1.8.0, captured on 15 November 2026. The horizontal cut combines desktop web with native Android. The portrait cut combines mobile web with native Android. Every product screen is a real capture. The phone cut includes the same route comparison, offline demonstration, hosted API and settings as the horizontal cut.
 
-The story and capability checks are in story.md. These scripts adapt the
-product-video skill at /Users/taf/.codex/skills/product-video. The engine,
-recorder and audio synthesizer retain that skill's frame-accurate timeline,
-recording cursor, sound cues and generated music. Local changes support portrait
-canvases, phone-sized browser frames, portrait diagrams, explanatory headings,
-correct PNG chapter previews, CRF 22 web and CRF 24 phone exports, and a
-48 kHz AAC soundtrack at 128 kbps. Source windows
-explicitly crop the recorded CSS viewport to discard Playwright video padding.
+The Android footage comes from the published v1.8.0 APK on Patchwork_Things_35, Android 15. The web footage comes from https://ncr-metro.tashif.codes. Browser captures use the preview tools. Device interactions, screenshots and recordings use the device session's agent-device CLI. No Claude or delegated agents were used.
 
-## Reproduce
+## Capture and compose
 
-Requirements are Node, Bun, ffmpeg, uv and a Playwright Chromium headless shell
-in ~/Library/Caches/ms-playwright. EXE can override the browser executable.
-Run from the taf.sh repository root. No login or secret is needed.
+The current story is in story.md and the native sequence is in android-capture.md. Browser recordings and screenshots are listed in capture-sources.json. Capture the desktop viewport at 1440 x 900 and mobile web at 390 x 844. Save fresh screenshots to public/reel/ncr-metro-{web,phone}-<screen>.png. The phone screenshots also go in captures/ for the marketing cards.
+
+Use preview_recording_start, interact with the actual app, and stop with preview_recording_stop. Use preview_snapshot with save=true for the original screenshot. Keep the returned recording paths in capture-sources.json. The source recordings use a variable frame rate and may end at the last changing frame. normalize.py converts them to 30 fps and pads the final frame. It also normalizes the six native clips.
 
 ```sh
 bun install --cwd scripts/metro-video
-node scripts/metro-video/record.mjs web
-node scripts/metro-video/record-details.mjs web
-node scripts/metro-video/record.mjs phone
-node scripts/metro-video/record-details.mjs phone
+python3 scripts/metro-video/normalize.py
 node scripts/metro-video/compose.mjs
-node scripts/metro-video/engine/render.mjs /tmp/vid/comp/ncr-metro-web.json --still 3.8,10,18,25,40,65,90,120,145
-node scripts/metro-video/engine/render.mjs /tmp/vid/comp/ncr-metro-phone.json --still 3.8,10,18,25,40,65,90,120,145
-node scripts/metro-video/engine/render.mjs /tmp/vid/comp/ncr-metro-web.json
-node scripts/metro-video/engine/render.mjs /tmp/vid/comp/ncr-metro-phone.json
-bun run build
-```
-
-VID defaults to /tmp/vid and holds raw recordings, marker files, clip caches,
-rendered frames, generated music and contact sheets. WORKERS controls the
-number of rendering browsers. Compositions are generated into this directory
-and VID/comp. Rerun compose.mjs after recording because timings will change.
-Do not reuse old fixed still timestamps if the timeline changes. Read
-VID/frames/ncr-metro-{web,phone}/meta.json for the current scene boundaries.
-
-The second recording opens the gates and lifts sections and records appearance
-changes. Its clips replace those slots in the first recording. The first pass
-also captures station search, the fare comparison, the network transfer, lines,
-map zoom and dated notices. Screenshots in public/reel accompany the videos and
-provide the intro and chapter previews.
-
-Public outputs are public/reel/ncr-metro-web-demo.mp4 and
-public/reel/ncr-metro-phone-demo.mp4, with matching poster JPEGs. The Delhi NCR
-Metro gallery has both cuts with lazy playback. Its project links open the web
-video, phone video and screenshot ZIP directly.
-
-## Product screenshot cards
-
-Amy Food Journal at https://www.amyfoodjournal.com/ is the visual reference for
-pale backgrounds, large feature headlines and close phone views. The layouts,
-route-line drawings and Metro branding here are original. No Amy assets are
-included. Every app screen is a real capture of Delhi NCR Metro.
-
-```sh
-node scripts/metro-video/capture-product.mjs
+node scripts/metro-video/engine/render.mjs /tmp/vid/comp/ncr-metro-web.json --still 4,24,48,84,126,146,163,181
+node scripts/metro-video/engine/render.mjs /tmp/vid/comp/ncr-metro-phone.json --still 4,24,48,84,126,146,163,181
+WORKERS=6 node scripts/metro-video/engine/render.mjs /tmp/vid/comp/ncr-metro-web.json
+WORKERS=6 node scripts/metro-video/engine/render.mjs /tmp/vid/comp/ncr-metro-phone.json
 node scripts/metro-video/screenshots.mjs
 node scripts/metro-video/package-screenshots.mjs
+bun run build
+bun test worker/index.test.ts
 ```
 
-The package contains eight portrait PNG cards at 1290 x 2796 and six landscape
-PNG cards at 1920 x 1200. Full images, a contact sheet and usage notes are in
-public/reel/ncr-metro-screenshots.zip. The preview is
-public/reel/ncr-metro-screenshots/preview.jpg. Smaller WebP copies of the six
-landscape cards appear in the site gallery. The cards are App Store-style
-marketing images of the mobile web app. They do not claim an iOS release.
+VID defaults to /tmp/vid. Fresh sources and normalized clips live in VID/v180. Native raw names are android-{shortest,fewest,offline,colors,controls,animations}.mp4. Source recordings must exist before normalization. WORKERS controls renderer concurrency. The older record.mjs, record-details.mjs, record-api.mjs and capture-product.mjs scripts describe the 1.7.0 capture flow and are retained as history. They are not the source of this refresh.
 
-Capture screenshots at DPR 3 for sharp exports. Record video at DPR 1 because
-Playwright can alternate between CSS and device pixel sizes when screenshots
-and video recording share a context with a higher DPR.
+The local HTML engine comes from the product-video skill. It renders each frame from an explicit timeline, adds a synthesized soundtrack, and encodes H.264 with 48 kHz AAC audio. The horizontal canvas exports at 1920 x 1200. The portrait canvas exports at 1080 x 1920. Both use 30 fps and CRF 24. Native phone framing keeps Android's own status and navigation bars. There is no technical capture label.
+
+## Screenshot cards
+
+Amy Food Journal at https://www.amyfoodjournal.com/ is the reference for pale backgrounds, large headlines and close phone views. The Metro layouts and rail drawings are original. The app mark is the current Metro icon. No Amy artwork or app screenshots are included.
+
+The ZIP contains eight portrait PNG cards at 1290 x 2796 and six landscape PNG cards at 1920 x 1200, plus original Android and API documentation screenshots. Cards phone-08 and web-06 use Android customization screens. The other phone views are mobile web. The images do not claim an iOS release. Gallery WebP files and preview.jpg are rebuilt with the package.
 
 ## Content checks
 
-Both cuts use actual public transit data and real app interactions. There is no
-mockup footage or design-direction scene. Example fares and train times are
-those returned while recording, not future guarantees. There is no ticket
-purchase or WhatsApp interaction. The product marks iOS as coming soon.
+AIIMS to Karkarduma Court demonstrates different route strategies. Shortest is 44 minutes with two changes, Yellow to Blue to Pink. Fewer changes is 52 minutes with one change, Yellow to Pink at Dilli Haat INA. AIIMS to Noida Sector 137 shows the 300 metre walk and separate operator tickets.
 
-The current live build failed to restore a saved journey after a browser offline
-reload. The videos do not demonstrate or claim offline restoration. Local trip
-history appears in the architecture explanation because completed journeys
-persist in the application's local store. This limitation does not affect the
-recorded online planner.
+Offline footage comes after saving both routes online, disabling all emulator radios, and relaunching. The saved route reopens with its timestamp and fare warning. This demonstrates previously saved plans. Fares and service notices can change.
 
-Review the stills before a full render. After encoding, inspect frames extracted
-from both MP4 files and check duration, dimensions, audio and file size with
-ffprobe. Keep each video below the hosting provider's per-file upload limit.
-No deployment is part of this task.
+The API scene shows the actual hosted documentation at ncr-metro.tashif.codes/api and the source URL github.com/tashifkhan/delhi-metro. The app and API are MIT licensed. No ticket was purchased and no WhatsApp message was sent.
+
+Review stills before encoding. Then inspect frames from the exported MP4s, check their dimensions, duration, audio and size, and inspect both posters. Public files live in public/reel/ncr-metro-*. No deployment is part of this task.
