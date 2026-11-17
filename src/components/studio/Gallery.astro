@@ -9,7 +9,7 @@ import Arrow from "../Arrow.astro";
 interface Props {
 	name: string;
 	shots: string[];
-	/** A walkthrough video loaded on Play, then shown with native controls. */
+	/** A walkthrough video loaded on Play, then shown with the site's own controls. */
 	video?: { src: string; poster: string; label?: string; phone?: { src: string; poster: string } };
 	live?: string;
 	class?: string;
@@ -23,6 +23,8 @@ const videos = video ? [
 ] : [];
 const slides = videos.length + shots.length;
 const pad = (n: number) => String(n).padStart(2, "0");
+const control =
+	"grid size-10 shrink-0 place-items-center rounded-lg transition-colors hover:bg-background focus-visible:outline-2 focus-visible:outline-accent";
 const arrow =
 	"absolute top-1/2 grid size-11 -translate-y-1/2 place-items-center rounded-full bg-white text-neutral-900 shadow-lg transition-[opacity,scale] hover:scale-105 disabled:pointer-events-none disabled:opacity-0 max-sm:size-9";
 ---
@@ -68,6 +70,48 @@ const arrow =
 							{clip.label === "Video" ? "Play video" : `Play ${clip.label.toLowerCase()}`}
 						</span>
 					</button>
+					{/* The site's own controls. video.ts shows them once playback starts. */}
+					<div
+						class="absolute inset-x-3 bottom-3 flex items-center gap-1 rounded-xl border border-border bg-surface px-1.5 py-1 text-foreground transition-opacity duration-200 in-data-[video-state=playing]:not-in-[[data-video-player]:hover]:not-in-[[data-video-player]:focus-within]:not-in-data-video-menu:opacity-0 [&[hidden]]:hidden"
+						data-video-bar
+						hidden
+					>
+						<button type="button" class={control} aria-label="Pause" data-video-toggle>
+							<svg class="in-data-[video-state=playing]:hidden" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z" /></svg>
+							<svg class="not-in-data-[video-state=playing]:hidden" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 5h4v14H7zM13 5h4v14h-4z" /></svg>
+						</button>
+						<span class="min-w-10 text-center font-mono text-xs text-secondary tabular-nums" data-video-time>0:00</span>
+						<input type="range" min="0" max="1000" value="0" step="1" aria-label="Seek" class="h-10 min-w-0 flex-1 cursor-pointer accent-accent" data-video-seek />
+						<span class="min-w-10 text-center font-mono text-xs text-secondary tabular-nums max-sm:hidden" data-video-duration>0:00</span>
+						<div class="relative shrink-0">
+							<button type="button" class:list={[control, "w-auto min-w-10 px-2 font-mono text-xs tabular-nums"]} aria-expanded="false" aria-label="Playback speed, 1x" data-video-speed-btn>1x</button>
+							<div class="absolute right-0 bottom-[calc(100%+0.75rem)] grid w-60 gap-3 rounded-xl border border-border bg-surface p-4 text-sm [&[hidden]]:hidden" data-video-speed-pop hidden>
+								<label class="grid grid-cols-[1fr_auto] gap-x-4 gap-y-1 text-secondary">
+									<span>Speed</span>
+									<output class="font-mono text-foreground tabular-nums" data-video-speed-out>1x</output>
+									<input type="range" min="0.25" max="3" step="0.25" value="1" class="col-span-2 h-8 w-full cursor-pointer accent-accent" data-video-speed-range />
+								</label>
+								<div class="grid grid-cols-5 gap-1">
+									{[0.5, 1, 1.5, 2, 3].map((rate) => (
+										<button type="button" class="h-8 rounded-lg border border-border font-mono text-xs tabular-nums transition-colors hover:bg-background data-on:border-foreground data-on:bg-foreground data-on:text-background" data-video-rate={rate}>{rate}x</button>
+									))}
+								</div>
+							</div>
+						</div>
+						<button type="button" class={control} aria-label="Mute" data-video-mute>
+							<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+								<path d="M11 5 6 9H3v6h3l5 4z" fill="currentColor" />
+								<path class="in-data-video-muted:hidden" d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13" />
+								<path class="not-in-data-video-muted:hidden" d="m16 9 5 6M21 9l-5 6" />
+							</svg>
+						</button>
+						<button type="button" class={control} aria-label="Picture in picture" data-video-pip>
+							<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h5" /><rect x="13" y="13" width="8" height="6" rx="1" fill="currentColor" /></svg>
+						</button>
+						<button type="button" class={control} aria-label="Full screen" data-video-full>
+							<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3H3v5M16 3h5v5M8 21H3v-5M16 21h5v-5" /></svg>
+						</button>
+					</div>
 					<noscript>
 						<a href={clip.src} class="absolute inset-0 flex items-center justify-center text-white">
 							<span class="rounded-full bg-neutral-900/90 px-5 py-3 text-sm">Watch {name} demo</span>
