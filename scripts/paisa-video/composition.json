@@ -73,17 +73,10 @@
   },
   "scenes": [
     {
-      "type": "intro",
-      "dur": 5.5,
-      "pre": "Paisa",
-      "kicker": "Paisa",
-      "title": "Your money.<br>On <em>your terms.</em>",
-      "tagline": "Bank SMS, quick entries, budgets and private records. On your phone and every bigger screen.",
-      "shots": [
-        "/Users/taf/Projects/taf.sh/scripts/paisa-video/phone-manual-saved.png"
-      ],
-      "landing": true,
-      "decor": "none"
+      "type": "opening",
+      "dur": 4.8,
+      "title": "Your money. On your terms.",
+      "body": "Expenses, budgets and accounts in one place."
     },
     {
       "type": "chapter",
@@ -113,7 +106,7 @@
       "title": "A bank SMS becomes a transaction",
       "body": "Paisa reads supported bank alerts on your Android device and saves the amount and account.",
       "points": [
-        "Live sample bank alert",
+        "Automatic bank alert capture",
         "No AI key needed for bank SMS"
       ],
       "highlights": []
@@ -122,7 +115,7 @@
       "type": "demo",
       "n": 1,
       "path": "",
-      "caption": "\u20b9460 parsed from a sample bank SMS",
+      "caption": "\u20b9460 parsed from a bank SMS",
       "layout": "phone",
       "src": {
         "raw": "/Users/taf/Projects/taf.sh/scripts/paisa-video/raw/phone-sms.mp4",
@@ -174,7 +167,7 @@
       "type": "demo",
       "n": 1,
       "path": "",
-      "caption": "Real Gemini response \u00b7 two editable drafts",
+      "caption": "Two editable drafts \u00b7 your provider and key",
       "layout": "phone",
       "src": {
         "raw": "/Users/taf/Projects/taf.sh/scripts/paisa-video/raw/phone-ai-results.mp4",
@@ -186,9 +179,9 @@
       "hold": 0.6,
       "kicker": "Capture your spending",
       "title": "Let AI read the payment text",
-      "body": "Gemini turns a bank message and a ride note into two drafts with amounts, merchants and categories.",
+      "body": "Add with AI turns a bank message and a ride note into two drafts with amounts, merchants and categories.",
       "points": [
-        "Use your own AI provider",
+        "Bring your own key",
         "Check the drafts before saving"
       ],
       "highlights": []
@@ -257,7 +250,7 @@
       "type": "demo",
       "n": 1,
       "path": "",
-      "caption": "A sample coffee expense saved on the device",
+      "caption": "Coffee expense saved on the device",
       "layout": "phone",
       "src": {
         "raw": "/Users/taf/Projects/taf.sh/scripts/paisa-video/raw/phone-manual.mp4",
@@ -307,7 +300,7 @@
       "type": "demo",
       "n": 2,
       "path": "",
-      "caption": "Monthly analytics \u00b7 real sample records",
+      "caption": "Monthly spending and category breakdowns",
       "layout": "phone",
       "src": {
         "raw": "/Users/taf/Projects/taf.sh/scripts/paisa-video/raw/phone-analytics.mp4",
@@ -492,7 +485,7 @@
       "type": "demo",
       "n": 3,
       "path": "",
-      "caption": "App lock \u00b7 real locked screen",
+      "caption": "App lock",
       "layout": "phone",
       "src": {
         "raw": "/Users/taf/Projects/taf.sh/scripts/paisa-video/raw/phone-lock.mp4",

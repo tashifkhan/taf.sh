@@ -40,7 +40,7 @@
       "hand-weight": "600",
       "bgimg": "none"
     },
-    "css": "html,body{width:720px;height:1280px}.hud{display:none}.demo.portrait .win{left:146px;top:223px;width:428px;border:7px solid #263522;border-radius:34px;background:#000}.demo.portrait .bar{display:none}.demo.portrait .view{height:auto;aspect-ratio:1080/2424;border-radius:27px;background:#000}.demo.portrait .shot{object-fit:fill!important}.portrait-header{position:absolute;left:32px;right:32px;top:24px;text-align:center}.portrait-header small{display:block;height:42px}.portrait-header small .product-icon{width:42px;height:42px;border-radius:12px}.portrait-header h2{font:600 36px/1.1 var(--head);letter-spacing:-.03em;margin:16px 0 10px}.portrait-header p{font:18px/1.3 var(--body);color:var(--muted);margin:0}.caption{left:24px;right:24px;bottom:37px;justify-content:center;padding:10px 5px;font-size:18px;box-shadow:none}.caption b{display:none}.sample-data{left:0;right:0;bottom:12px;text-align:center;font-size:11px}"
+    "css": "html,body{width:720px;height:1280px}.hud{display:none}.demo.portrait .win{left:146px;top:223px;width:428px;border:7px solid #263522;border-radius:34px;background:#000}.demo.portrait .bar{display:none}.demo.portrait .view{height:auto;aspect-ratio:1080/2424;border-radius:27px;background:#000}.demo.portrait .shot{object-fit:fill!important}.portrait-header{position:absolute;left:32px;right:32px;top:24px;text-align:center}.portrait-header small{display:block;height:42px}.portrait-header small .product-icon{width:42px;height:42px;border-radius:12px}.portrait-header h2{font:600 36px/1.1 var(--head);letter-spacing:-.03em;margin:16px 0 10px}.portrait-header p{font:18px/1.3 var(--body);color:var(--muted);margin:0}.caption{left:24px;right:24px;bottom:37px;justify-content:center;padding:10px 5px;font-size:18px;box-shadow:none}.caption b{display:none}"
   },
   "music": {
     "bpm": 94,
@@ -73,6 +73,12 @@
   },
   "scenes": [
     {
+      "type": "opening",
+      "dur": 4.8,
+      "title": "Your money. On your terms.",
+      "body": "Expenses, budgets and accounts in one place."
+    },
+    {
       "type": "demo",
       "n": 1,
       "path": "",
@@ -90,7 +96,7 @@
       "title": "A bank SMS becomes a transaction",
       "body": "",
       "points": [
-        "Live sample bank alert",
+        "Automatic bank alert capture",
         "No AI key needed for bank SMS"
       ],
       "highlights": []
@@ -99,7 +105,7 @@
       "type": "demo",
       "n": 1,
       "path": "",
-      "caption": "\u20b9460 parsed from a sample bank SMS",
+      "caption": "\u20b9460 parsed from a bank SMS",
       "layout": "portrait",
       "src": {
         "raw": "/Users/taf/Projects/taf.sh/scripts/paisa-video/raw/phone-sms.mp4",
@@ -139,7 +145,7 @@
       "type": "demo",
       "n": 1,
       "path": "",
-      "caption": "Real Gemini response \u00b7 two editable drafts",
+      "caption": "Two editable drafts \u00b7 your provider and key",
       "layout": "portrait",
       "src": {
         "raw": "/Users/taf/Projects/taf.sh/scripts/paisa-video/raw/phone-ai-results.mp4",
@@ -153,7 +159,7 @@
       "title": "Let AI read the payment text",
       "body": "",
       "points": [
-        "Use your own AI provider",
+        "Bring your own key",
         "Check the drafts before saving"
       ],
       "highlights": []
@@ -222,7 +228,7 @@
       "type": "demo",
       "n": 1,
       "path": "",
-      "caption": "A sample coffee expense saved on the device",
+      "caption": "Coffee expense saved on the device",
       "layout": "portrait",
       "src": {
         "raw": "/Users/taf/Projects/taf.sh/scripts/paisa-video/raw/phone-manual.mp4",
@@ -262,7 +268,7 @@
       "type": "demo",
       "n": 2,
       "path": "",
-      "caption": "Monthly analytics \u00b7 real sample records",
+      "caption": "Monthly spending and category breakdowns",
       "layout": "portrait",
       "src": {
         "raw": "/Users/taf/Projects/taf.sh/scripts/paisa-video/raw/phone-analytics.mp4",
@@ -425,7 +431,7 @@
       "type": "demo",
       "n": 3,
       "path": "",
-      "caption": "App lock \u00b7 real locked screen",
+      "caption": "App lock",
       "layout": "portrait",
       "src": {
         "raw": "/Users/taf/Projects/taf.sh/scripts/paisa-video/raw/phone-lock.mp4",

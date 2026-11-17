@@ -73,6 +73,12 @@
   },
   "scenes": [
     {
+      "type": "opening",
+      "dur": 4.8,
+      "title": "Your money. On your terms.",
+      "body": "Expenses, budgets and accounts in one place."
+    },
+    {
       "type": "demo",
       "n": 3,
       "path": "",

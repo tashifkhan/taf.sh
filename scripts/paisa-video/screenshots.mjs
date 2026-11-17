@@ -1,4 +1,4 @@
-// Compose real Paisa captures into portrait store artwork and wide gallery cards.
+// Compose Paisa captures into portrait store artwork and wide gallery cards.
 // This browser only renders local artwork. It does not interact with the app.
 import { chromium } from './engine/node_modules/playwright-core/index.mjs';
 import { readFileSync, writeFileSync, mkdirSync, readdirSync } from 'node:fs';

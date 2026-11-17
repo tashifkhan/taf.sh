@@ -79,6 +79,33 @@ function hud(n) {
 // ---------------------------------------------------------------- scenes
 const S = {};
 
+S.opening = (sc) => {
+  const el = $("div", "scene opening" + (C.format === "portrait" ? " portrait" : ""));
+  const halo = $("div", "opening-halo");
+  const copy = $("div", "opening-copy");
+  const icon = $("div", "opening-icon", productMark);
+  const name = $("div", "opening-name", esc(C.product.name));
+  const title = $("h1", "opening-title", esc(C.format === "portrait" ? sc.title.replace(". On", ".\nOn") : sc.title));
+  const body = $("p", "opening-body", esc(sc.body));
+  const url = $("div", "opening-url", esc(C.product.host));
+  copy.append(icon, name, title, body, url);
+  el.append(halo, copy);
+  cue(sc.at + 0.3, "pop", 0.35);
+  return {
+    el,
+    update(t) {
+      const enter = outCubic(t / 0.8);
+      halo.style.transform = `scale(${0.92 + enter * 0.08})`;
+      halo.style.opacity = enter;
+      [icon, name, title, body, url].forEach((item, i) => {
+        const p = outCubic((t - i * 0.14) / 0.65);
+        item.style.opacity = p;
+        item.style.transform = `translateY(${px((1 - p) * 22)})`;
+      });
+    },
+  };
+};
+
 S.intro = (sc) => {
   const el = $("div", "scene intro");
   const floor = $("div", "floor");
@@ -622,7 +649,7 @@ S.chat = (sc) => {
         b.style.transform = `scale(${p.sx},${p.sy})`;
         b.querySelectorAll(".btns span").forEach((s, i) => { const q = pop(t - m.at - 0.35 - i * 0.12, 2.3, 0.4); s.style.transform = `scale(${q.sx},${q.sy})`; s.style.opacity = q.o; });
       }
-      // Keep the newest message in view, like the real app.
+      // Keep the newest message in view, matching the app.
       const over = thread.scrollHeight - thread.clientHeight;
       thread.scrollTop = over > 0 ? over : 0;
     },
@@ -717,7 +744,6 @@ const built = C.scenes.map((sc, i) => {
   const wrap = $("div", "wrap");
   wrap.append(s.el);
   stage.append(wrap);
-  s.el.append($("div", "sample-data", "Sample data · real app footage"));
   const item = { sc, s, wrap, start: at, end: at + sc.dur };
   if (i > 0) cue(at - 0.15, "whoosh", 1);
   at += sc.dur - TR;

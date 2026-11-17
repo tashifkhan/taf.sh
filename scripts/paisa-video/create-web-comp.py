@@ -6,7 +6,7 @@ comp=json.loads((root/'composition.json').read_text())
 old=json.loads(subprocess.check_output(['git','show','6139833:scripts/paisa-video/composition.json'],cwd=root))
 web=copy.deepcopy(comp)
 web.update(name='paisa-web',out=str(root.parents[1]/'public/reel/paisa-web-demo.mp4'),poster=str(root.parents[1]/'public/reel/paisa-web-poster.jpg'),posterAt=3)
-web['scenes']=[]
+web['scenes']=[copy.deepcopy(comp['scenes'][0])]
 for s in old['scenes']:
  if s['type']=='demo' and not s.get('layout'):
   s['layout']='desktop';s['path']='';s['highlights']=[]

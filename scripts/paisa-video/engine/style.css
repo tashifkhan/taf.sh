@@ -239,7 +239,20 @@ html,body{margin:0;width:1280px;height:800px;overflow:hidden;background:var(--bg
 .device-copy li{padding:12px 0;border-top:1px solid var(--line)}
 .demo.native-phone .caption,.demo.foldable .caption{font-size:17px;left:96px;bottom:36px;box-shadow:none}
 .hud .hr em{opacity:1}
-.sample-data{position:absolute;right:96px;bottom:14px;font:11px var(--mono);color:var(--muted)}
+.opening{display:flex;align-items:center;justify-content:center;text-align:center}
+.opening-halo{position:absolute;width:780px;height:780px;border:1px solid var(--accent-line);border-radius:50%;box-shadow:0 0 0 100px var(--accent-soft),0 0 0 220px var(--accent-soft)}
+.opening-copy{position:relative;width:900px;display:flex;flex-direction:column;align-items:center}
+.opening-icon .product-icon{width:100px;height:100px;border-radius:27px;box-shadow:0 18px 45px -20px var(--accent)}
+.opening-name{font:700 72px/1 var(--head);letter-spacing:-.04em;margin-top:24px}
+.opening-title{font:600 45px/1.15 var(--head);letter-spacing:-.035em;margin:25px 0 0;color:var(--accent)}
+.opening-body{font:24px/1.5 var(--body);color:var(--muted);margin:20px 0 0}
+.opening-url{font:18px var(--mono);color:var(--muted);margin-top:42px}
+.opening.portrait .opening-copy{width:600px}
+.opening.portrait .opening-icon .product-icon{width:144px;height:144px;border-radius:38px}
+.opening.portrait .opening-name{font-size:92px;margin-top:35px}
+.opening.portrait .opening-title{font-size:52px;max-width:580px;margin-top:38px;white-space:pre-line}
+.opening.portrait .opening-body{font-size:26px;max-width:520px;margin-top:28px}
+.opening.portrait .opening-url{font-size:22px;margin-top:55px}
 
 /* Match each physical screen without letterboxing or stretching. */
 .demo.native-phone .win{top:55px;border-radius:36px}
