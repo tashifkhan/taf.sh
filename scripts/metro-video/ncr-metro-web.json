@@ -1,0 +1,460 @@
+{
+  "name": "ncr-metro-web",
+  "canvas": {
+    "width": 1280,
+    "height": 800
+  },
+  "fps": 30,
+  "crf": 24,
+  "preset": "medium",
+  "out": "/Users/taf/Projects/taf.sh/public/reel/ncr-metro-web-demo.mp4",
+  "poster": "/Users/taf/Projects/taf.sh/public/reel/ncr-metro-web-poster.jpg",
+  "posterAt": 3.8,
+  "product": {
+    "name": "Delhi NCR Metro",
+    "host": "ncr-metro.tashif.codes"
+  },
+  "theme": {
+    "fonts": "",
+    "vars": {
+      "bg": "#FDFCFF",
+      "fg": "#1A1C1E",
+      "muted": "#43474E",
+      "card": "#F0F4FB",
+      "line": "#C4C6D0",
+      "shadow": "#2A436130",
+      "chrome": "#E9EFF9",
+      "urlbg": "#FDFCFF",
+      "slab": "#D8E3F8",
+      "accent": "#005FAF",
+      "accent-fg": "#FFFFFF",
+      "accent-soft": "#005FAF14",
+      "accent-line": "#005FAF5C",
+      "grid": "#005FAF18",
+      "dim": "#1A2E442B",
+      "pill-bg": "#FFFFFF",
+      "pill-fg": "#1A1C1E",
+      "fadebg": "#FDFCFF",
+      "head": "-apple-system,BlinkMacSystemFont,Arial,sans-serif",
+      "head-weight": "700",
+      "head-track": "-.035em",
+      "body": "-apple-system,BlinkMacSystemFont,Arial,sans-serif",
+      "mono": "Menlo,monospace",
+      "hand": "-apple-system,BlinkMacSystemFont,Arial,sans-serif",
+      "hand-weight": "700",
+      "bgimg": "radial-gradient(ellipse at 85% 20%,#D4E3FF55,transparent 60%)"
+    },
+    "css": "\n.gen .outtext{font:16px/1.55 var(--mono);white-space:pre}\n.intro .chip{margin-top:14px}\n.intro .chip + .chip{margin-top:10px}\n.outro .tilt{position:absolute;left:96px;top:285px;width:1088px}\n.outro .tilt .win{width:1088px}\n.outro .tilt .view{height:330px}\n.ring{border-color:#A65F00;box-shadow:0 0 0 5px #F4AA2640}\n.label{background:#854C00;color:#fff}\n.intro.landing .title{font-size:65px}\n.intro.landing .card3d img{background:var(--bg)}\n/* Android captures retain their own status and navigation bars. */\n.intro-android{position:absolute;left:640px;top:323px;width:190px;padding:4px;border-radius:22px;background:#172536;box-shadow:0 28px 50px -22px #102D5655;z-index:4}\n.intro-android img{display:block;width:100%;aspect-ratio:9/20;border-radius:18px}\n.intro-android small,.close-phone small{position:absolute;left:0;top:-28px;white-space:nowrap;color:var(--accent);font:12px var(--mono);letter-spacing:.08em}\n.android-demo .win{left:820px;top:76px;width:284px;border:2px solid #34404C;border-radius:25px;box-shadow:0 22px 45px -30px #102D5655}\n.android-demo .win .bar{display:none}\n.android-demo .view{width:280px;height:622.222px;background:var(--bg)}\n.android-demo .demo-heading{position:absolute;left:96px;top:163px;width:600px;font:700 53px/1.07 var(--head);letter-spacing:-.035em;color:var(--fg)}\n.android-demo .demo-sub{position:absolute;left:96px;top:302px;width:570px;font:23px/1.4 var(--body);color:var(--muted)}\n.device-facts{position:absolute;left:96px;top:415px;width:570px;padding:0;margin:0;list-style:none;display:flex;flex-direction:column;gap:12px}\n.device-facts li{padding:15px 18px;border:1px solid var(--line);border-radius:14px;background:var(--card);font:20px/1.25 var(--body);color:var(--fg)}\n.android-demo .caption{display:none}\n.custom-close .copy{left:96px;top:145px;width:535px;right:auto}\n.custom-close .title{font-size:64px;line-height:1.04;max-width:450px}\n.outro-body{font:23px/1.45 var(--body);color:var(--muted);max-width:500px;margin:24px 0 0}\n.custom-close .chip.big{font-size:17px;padding:14px 17px;margin-top:25px}\n.close-phone{position:absolute;top:165px;left:725px;width:204px;background:#172536;border:4px solid #172536;border-radius:24px;box-shadow:0 28px 60px -24px #102D5655}\n.close-phone img{display:block;width:100%;aspect-ratio:9/20;border-radius:20px}\n.close-phone.phone-1{left:957px;top:235px}\n.custom-close .stackrow{left:96px;right:auto;bottom:105px;max-width:590px;flex-wrap:wrap}\n.custom-close .stackrow span{font-size:15px}\n\n.resource .copy{width:430px}.resource .title{font-size:58px}.resource .tilt{left:555px;top:158px;width:660px}.resource .tilt .win{width:660px}.resource .tilt .view{height:412.5px}.resource .bignum,.resource .prog{display:none}.resource .points li{font-size:16px}.resource .points li:last-child{font:14px var(--mono)}\n"
+  },
+  "music": {
+    "bpm": 96,
+    "chords": [
+      [
+        50,
+        57,
+        62
+      ],
+      [
+        55,
+        59,
+        62
+      ],
+      [
+        52,
+        55,
+        59
+      ],
+      [
+        57,
+        61,
+        64
+      ]
+    ]
+  },
+  "cursor": false,
+  "scenes": [
+    {
+      "type": "intro",
+      "dur": 6,
+      "pre": "taf.sh / Delhi NCR Metro",
+      "kicker": "Delhi NCR Metro",
+      "title": "One API. <em>Both metros.</em>",
+      "tagline": "Delhi Metro and Noida Metro. Same contract, two hosts. No key.",
+      "decor": "none",
+      "hosts": [
+        "ncr-metro.tashif.codes/api",
+        "dmrc-rest-api.vercel.app/api"
+      ]
+    },
+    {
+      "type": "demo",
+      "path": "/api",
+      "caption": "ncr-metro.tashif.codes/api",
+      "src": {
+        "raw": "/tmp/vid/v180/api-site.mp4",
+        "a": 0,
+        "b": 3.6,
+        "speed": 1
+      },
+      "hold": 0.3
+    },
+    {
+      "type": "demo",
+      "host": "dmrc-rest-api.vercel.app",
+      "path": "/api",
+      "caption": "dmrc-rest-api.vercel.app/api",
+      "src": {
+        "raw": "/tmp/vid/v180/api-vercel.mp4",
+        "a": 0,
+        "b": 3.6,
+        "speed": 1
+      },
+      "hold": 0.3
+    },
+    {
+      "type": "stats",
+      "dur": 6.5,
+      "kicker": "Both hosts",
+      "title": "No key. <em>One contract.</em>",
+      "items": [
+        {
+          "text": "v1",
+          "label": "DMRC and NMRC, same schema"
+        },
+        {
+          "text": "v2",
+          "label": "planner, Sarthi then fallback"
+        },
+        {
+          "text": "MIT",
+          "label": "app and API, no auth"
+        }
+      ],
+      "foot": "Lines, stations, fares, routes, first and last trains, maps and notices.",
+      "links": [
+        "ncr-metro.tashif.codes/api",
+        "dmrc-rest-api.vercel.app/api"
+      ]
+    },
+    {
+      "type": "chapter",
+      "n": 1,
+      "dur": 6,
+      "title": "Call it. <em>Get the journey.</em>",
+      "body": "The app is one client. The endpoints are public.",
+      "points": [
+        "GET /api/v2/journeys/plan",
+        "Sarthi first. Legacy planner if that fails."
+      ],
+      "still": "/Users/taf/Projects/taf.sh/public/reel/ncr-metro-web-home.png",
+      "path": ""
+    },
+    {
+      "type": "gen",
+      "n": 1,
+      "dur": 9,
+      "caption": "AIIMS to Karkarduma Court",
+      "inputTitle": "Request",
+      "outputTitle": "Response",
+      "button": "Send",
+      "fields": [
+        [
+          "GET",
+          "/api/v2/journeys/plan"
+        ],
+        [
+          "from",
+          "AIIMS"
+        ],
+        [
+          "to",
+          "KKDC"
+        ],
+        [
+          "strategy",
+          "least-distance"
+        ]
+      ],
+      "output": "source   sarthi\n44 min · 18 stops · 18.7 km\nfare     ₹43 weekday · ₹33 Sunday\nchanges  Rajiv Chowk, Karkarduma\n\nThe same call plans Noida. Tickets stay separate."
+    },
+    {
+      "type": "demo",
+      "n": 1,
+      "path": "/api",
+      "caption": "Docs and a live playground",
+      "src": {
+        "raw": "/tmp/vid/raw/ncr-metro-api.webm",
+        "a": 3,
+        "b": 16,
+        "speed": 1.35
+      },
+      "hold": 0.4
+    },
+    {
+      "type": "arch",
+      "dur": 8,
+      "kicker": "Under the hood",
+      "title": "Two operators. <em>One response.</em>",
+      "cols": 2,
+      "rows": 3,
+      "nodes": [
+        {
+          "id": "app",
+          "x": 0,
+          "y": 0,
+          "kind": "Client",
+          "label": "The app",
+          "sub": "Web and Android"
+        },
+        {
+          "id": "api",
+          "x": 1,
+          "y": 0,
+          "kind": "Hosted",
+          "label": "The API",
+          "sub": "REST, no key",
+          "hot": true
+        },
+        {
+          "id": "v1",
+          "x": 0,
+          "y": 2,
+          "kind": "v1",
+          "label": "DMRC and NMRC",
+          "sub": "Same schemas"
+        },
+        {
+          "id": "v2",
+          "x": 1,
+          "y": 2,
+          "kind": "v2",
+          "label": "The planner",
+          "sub": "Sarthi, then fallback",
+          "hot": true
+        }
+      ],
+      "edges": [
+        {
+          "from": "app",
+          "to": "api",
+          "label": "calls"
+        },
+        {
+          "from": "api",
+          "to": "v1",
+          "label": "lines, fares, stations"
+        },
+        {
+          "from": "api",
+          "to": "v2",
+          "label": "plan"
+        }
+      ]
+    },
+    {
+      "type": "chapter",
+      "n": 2,
+      "dur": 6,
+      "title": "Pick the ride. <em>See the fare.</em>",
+      "body": "Shortest and fewer changes are two answers for one trip.",
+      "points": [
+        "AIIMS to Karkarduma Court",
+        "₹43 weekday, ₹33 Sunday"
+      ],
+      "still": "/Users/taf/Projects/taf.sh/public/reel/ncr-metro-web-journey.png",
+      "path": ""
+    },
+    {
+      "type": "demo",
+      "device": "android",
+      "n": 2,
+      "heading": "44 minutes. Two changes.",
+      "sub": "Yellow, Blue, then Pink. The map and the stop list come from the planner.",
+      "points": [
+        "Change at Rajiv Chowk",
+        "Change again at Karkarduma"
+      ],
+      "caption": "44 minutes. Two changes.",
+      "src": {
+        "raw": "/tmp/vid/v180/android-shortest-cfr.mp4",
+        "a": 0,
+        "b": 8,
+        "speed": 1
+      },
+      "hold": 1
+    },
+    {
+      "type": "demo",
+      "device": "android",
+      "n": 2,
+      "heading": "52 minutes. One change.",
+      "sub": "Same trip, minimum interchange. One change at Dilli Haat INA.",
+      "points": [
+        "Yellow to Pink",
+        "Longer ride, one interchange"
+      ],
+      "caption": "52 minutes. One change.",
+      "src": {
+        "raw": "/tmp/vid/v180/android-fewest-cfr.mp4",
+        "a": 0,
+        "b": 8,
+        "speed": 1
+      },
+      "hold": 1
+    },
+    {
+      "type": "demo",
+      "n": 2,
+      "caption": "Weekday and Sunday fare",
+      "src": {
+        "raw": "/tmp/vid/v180/web-fares-62b8f412-cfr.mp4",
+        "a": 0,
+        "b": 6,
+        "speed": 1
+      },
+      "hold": 1
+    },
+    {
+      "type": "chapter",
+      "n": 3,
+      "dur": 6,
+      "title": "Cross operators. <em>Keep both tickets.</em>",
+      "body": "AIIMS to Noida Sector 137 stays one plan. The tickets do not merge.",
+      "points": [
+        "About 300 m on foot, Sector 52 to 51",
+        "Delhi fare and Noida fare, listed apart"
+      ],
+      "still": "/Users/taf/Projects/taf.sh/public/reel/ncr-metro-web-cross.png",
+      "path": ""
+    },
+    {
+      "type": "demo",
+      "n": 3,
+      "caption": "One plan, both networks",
+      "src": {
+        "raw": "/tmp/vid/v180/web-cross-31570333-cfr.mp4",
+        "a": 0,
+        "b": 6,
+        "speed": 1
+      },
+      "hold": 1
+    },
+    {
+      "type": "demo",
+      "n": 3,
+      "caption": "The walk is a leg",
+      "src": {
+        "raw": "/tmp/vid/v180/web-transfer-6a1362c2-cfr.mp4",
+        "a": 0,
+        "b": 6,
+        "speed": 1
+      },
+      "hold": 1
+    },
+    {
+      "type": "demo",
+      "n": 3,
+      "caption": "Two fares, not one",
+      "src": {
+        "raw": "/tmp/vid/v180/web-split-fare-2deb340c-cfr.mp4",
+        "a": 0,
+        "b": 6,
+        "speed": 1
+      },
+      "hold": 1
+    },
+    {
+      "type": "chapter",
+      "n": 4,
+      "dur": 6,
+      "title": "Read the station <em>before you arrive</em>",
+      "body": "Gates, lifts and the network map are in the same response as the route.",
+      "points": [
+        "Where the gate comes out",
+        "The line, on a map you can move"
+      ],
+      "still": "/Users/taf/Projects/taf.sh/public/reel/ncr-metro-web-gates.png",
+      "path": ""
+    },
+    {
+      "type": "demo",
+      "n": 4,
+      "caption": "Where the gate comes out",
+      "src": {
+        "raw": "/tmp/vid/v180/web-gates-b7220503-cfr.mp4",
+        "a": 0,
+        "b": 6,
+        "speed": 1
+      },
+      "hold": 1
+    },
+    {
+      "type": "demo",
+      "n": 4,
+      "caption": "The whole network",
+      "src": {
+        "raw": "/tmp/vid/v180/web-map-538fc741-cfr.mp4",
+        "a": 0,
+        "b": 6,
+        "speed": 1
+      },
+      "hold": 1
+    },
+    {
+      "type": "chapter",
+      "n": 5,
+      "dur": 6,
+      "title": "Keep the plan <em>when the signal drops</em>",
+      "body": "A journey you already opened comes back offline, with the time it was saved.",
+      "points": [
+        "Airplane mode, app restarted",
+        "The fare is marked as possibly stale"
+      ],
+      "still": "/Users/taf/Projects/taf.sh/public/reel/ncr-metro-web-journey.png",
+      "path": ""
+    },
+    {
+      "type": "demo",
+      "device": "android",
+      "n": 5,
+      "heading": "Saved, then opened offline.",
+      "sub": "The AIIMS to Karkarduma Court plan is still there. The app says the fare may have changed.",
+      "points": [
+        "Saved time stays on screen",
+        "Live search does not, until you are back online"
+      ],
+      "caption": "Saved, then opened offline.",
+      "src": {
+        "raw": "/tmp/vid/v180/android-offline-cfr.mp4",
+        "a": 0,
+        "b": 8,
+        "speed": 1
+      },
+      "hold": 1
+    },
+    {
+      "type": "outro",
+      "dur": 6.5,
+      "kicker": "Open source",
+      "title": "Build on it. <em>Or just ride.</em>",
+      "body": "The API is public. The app is the client. Both are MIT.",
+      "url": "ncr-metro.tashif.codes/api",
+      "nativeShots": [
+        {
+          "src": "/Users/taf/Projects/taf.sh/public/reel/ncr-metro-api-docs.png",
+          "label": "THE API"
+        },
+        {
+          "src": "/Users/taf/Projects/taf.sh/public/reel/ncr-metro-android-shortest.png",
+          "label": "THE APP"
+        }
+      ],
+      "stack": [
+        "REST, no key",
+        "DMRC + NMRC",
+        "Web and Android"
+      ],
+      "sign": "<b>built by taf.sh</b> · github.com/tashifkhan/delhi-metro"
+    }
+  ]
+}

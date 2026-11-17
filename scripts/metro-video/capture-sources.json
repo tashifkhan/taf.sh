@@ -1,0 +1,205 @@
+{
+  "web-cross": {
+    "shot": "/Users/taf/Projects/taf.sh/public/reel/ncr-metro-web-cross.png",
+    "raw": "/Users/taf/.t3/userdata/attachments/51d0fb16-e429-45d0-b74e-ed258e7485b3-93e63a44-8198-4c30-b391-4d9a0545a42f-mp4.mp4",
+    "a": 0,
+    "b": 4.8,
+    "speed": 1
+  },
+  "web-transfer": {
+    "shot": "/Users/taf/Projects/taf.sh/public/reel/ncr-metro-web-transfer.png",
+    "raw": "/Users/taf/.t3/userdata/attachments/51d0fb16-e429-45d0-b74e-ed258e7485b3-efef7fad-40d8-4911-8252-05d52538bfe8-mp4.mp4",
+    "a": 0,
+    "b": 4.8,
+    "speed": 1
+  },
+  "web-split-fare": {
+    "shot": "/Users/taf/Projects/taf.sh/public/reel/ncr-metro-web-split-fare.png",
+    "raw": "/Users/taf/.t3/userdata/attachments/51d0fb16-e429-45d0-b74e-ed258e7485b3-ed1b72b8-7d26-4b73-876a-fd80dab221a3-mp4.mp4",
+    "a": 0,
+    "b": 4.8,
+    "speed": 1
+  },
+  "web-gates": {
+    "shot": "/Users/taf/Projects/taf.sh/public/reel/ncr-metro-web-gates.png",
+    "raw": "/Users/taf/.t3/userdata/attachments/51d0fb16-e429-45d0-b74e-ed258e7485b3-e34fae92-3318-4714-b6dd-4f0d249a34d6-mp4.mp4",
+    "a": 0,
+    "b": 4.8,
+    "speed": 1
+  },
+  "web-lifts": {
+    "shot": "/Users/taf/Projects/taf.sh/public/reel/ncr-metro-web-lifts.png",
+    "raw": "/Users/taf/.t3/userdata/attachments/51d0fb16-e429-45d0-b74e-ed258e7485b3-7c08095d-872b-46e4-a142-4fd533628151-mp4.mp4",
+    "a": 0,
+    "b": 4.8,
+    "speed": 1
+  },
+  "web-map": {
+    "shot": "/Users/taf/Projects/taf.sh/public/reel/ncr-metro-web-map.png",
+    "raw": "/Users/taf/.t3/userdata/attachments/51d0fb16-e429-45d0-b74e-ed258e7485b3-cdc8374d-0878-4530-a5f4-1b2d286b8fa2-mp4.mp4",
+    "a": 0,
+    "b": 4.8,
+    "speed": 1
+  },
+  "web-alerts": {
+    "shot": "/Users/taf/Projects/taf.sh/public/reel/ncr-metro-web-alerts.png",
+    "raw": "/Users/taf/.t3/userdata/attachments/51d0fb16-e429-45d0-b74e-ed258e7485b3-0563fb80-ac63-4d6a-8540-9c0b72a026bf-mp4.mp4",
+    "a": 0,
+    "b": 4.8,
+    "speed": 1
+  },
+  "web-home": {
+    "shot": "/Users/taf/Projects/taf.sh/public/reel/ncr-metro-web-home.png",
+    "raw": "/Users/taf/.t3/userdata/attachments/51d0fb16-e429-45d0-b74e-ed258e7485b3-debb9e96-8845-49e7-b8ae-3be96e49c754-mp4.mp4",
+    "a": 0,
+    "b": 4.8,
+    "speed": 1
+  },
+  "web-journey": {
+    "shot": "/Users/taf/Projects/taf.sh/public/reel/ncr-metro-web-journey.png",
+    "raw": "/Users/taf/.t3/userdata/attachments/51d0fb16-e429-45d0-b74e-ed258e7485b3-74e362b5-031f-442c-a269-b4e58d59f582-mp4.mp4",
+    "a": 0,
+    "b": 4.8,
+    "speed": 1
+  },
+  "web-route": {
+    "shot": "/Users/taf/Projects/taf.sh/public/reel/ncr-metro-web-route.png",
+    "raw": "/Users/taf/.t3/userdata/attachments/51d0fb16-e429-45d0-b74e-ed258e7485b3-f6913f70-c905-447f-acd2-6aec9be2a89c-mp4.mp4",
+    "a": 0,
+    "b": 4.8,
+    "speed": 1
+  },
+  "web-appearance": {
+    "shot": "/Users/taf/Projects/taf.sh/public/reel/ncr-metro-web-appearance.png",
+    "raw": "/Users/taf/.t3/userdata/attachments/51d0fb16-e429-45d0-b74e-ed258e7485b3-f85d837a-e5e3-4636-ac4e-7e6207671592-mp4.mp4",
+    "a": 0,
+    "b": 4.8,
+    "speed": 1
+  },
+  "phone-home": {
+    "shot": "/Users/taf/Projects/taf.sh/public/reel/ncr-metro-phone-home.png",
+    "raw": "/Users/taf/.t3/userdata/attachments/51d0fb16-e429-45d0-b74e-ed258e7485b3-62b490f9-d3f6-4e80-bbd1-1aec50e1c121-mp4.mp4",
+    "a": 0,
+    "b": 4.8,
+    "speed": 1
+  },
+  "phone-journey": {
+    "shot": "/Users/taf/Projects/taf.sh/public/reel/ncr-metro-phone-journey.png",
+    "raw": "/Users/taf/.t3/userdata/attachments/51d0fb16-e429-45d0-b74e-ed258e7485b3-4e546bd8-072e-4fb3-be85-e353955eb299-mp4.mp4",
+    "a": 0,
+    "b": 4.8,
+    "speed": 1
+  },
+  "phone-fares": {
+    "shot": "/Users/taf/Projects/taf.sh/public/reel/ncr-metro-phone-fares.png",
+    "raw": "/Users/taf/.t3/userdata/attachments/51d0fb16-e429-45d0-b74e-ed258e7485b3-91de57a3-4ba4-4500-b3f5-803c6b71bd12-mp4.mp4",
+    "a": 0,
+    "b": 4.8,
+    "speed": 1
+  },
+  "phone-cross": {
+    "shot": "/Users/taf/Projects/taf.sh/public/reel/ncr-metro-phone-cross.png",
+    "raw": "/Users/taf/.t3/userdata/attachments/51d0fb16-e429-45d0-b74e-ed258e7485b3-88dfc1e2-0bdb-4298-8527-9f3b240e8e67-mp4.mp4",
+    "a": 0,
+    "b": 4.8,
+    "speed": 1
+  },
+  "phone-transfer": {
+    "shot": "/Users/taf/Projects/taf.sh/public/reel/ncr-metro-phone-transfer.png",
+    "raw": "/Users/taf/.t3/userdata/attachments/51d0fb16-e429-45d0-b74e-ed258e7485b3-aea2df77-c149-459c-9125-0ea3aa79a790-mp4.mp4",
+    "a": 0,
+    "b": 4.8,
+    "speed": 1
+  },
+  "phone-split-fare": {
+    "shot": "/Users/taf/Projects/taf.sh/public/reel/ncr-metro-phone-split-fare.png",
+    "raw": "/Users/taf/.t3/userdata/attachments/51d0fb16-e429-45d0-b74e-ed258e7485b3-c0045332-ef7a-4c24-981b-d45d08a4a549-mp4.mp4",
+    "a": 0,
+    "b": 4.8,
+    "speed": 1
+  },
+  "phone-gates": {
+    "shot": "/Users/taf/Projects/taf.sh/public/reel/ncr-metro-phone-gates.png",
+    "raw": "/Users/taf/.t3/userdata/attachments/51d0fb16-e429-45d0-b74e-ed258e7485b3-1343e343-cd63-40e0-9ab7-bd5f1d9025f1-mp4.mp4",
+    "a": 0,
+    "b": 4.8,
+    "speed": 1
+  },
+  "phone-lifts": {
+    "shot": "/Users/taf/Projects/taf.sh/public/reel/ncr-metro-phone-lifts.png",
+    "raw": "/Users/taf/.t3/userdata/attachments/51d0fb16-e429-45d0-b74e-ed258e7485b3-ae421c32-7ec7-4639-a7b9-5ca139e91e12-mp4.mp4",
+    "a": 0,
+    "b": 4.8,
+    "speed": 1
+  },
+  "phone-map": {
+    "shot": "/Users/taf/Projects/taf.sh/public/reel/ncr-metro-phone-map.png",
+    "raw": "/Users/taf/.t3/userdata/attachments/51d0fb16-e429-45d0-b74e-ed258e7485b3-572f8320-9d33-419c-927a-b25adcfd8d56-mp4.mp4",
+    "a": 0,
+    "b": 4.8,
+    "speed": 1
+  },
+  "phone-alerts": {
+    "shot": "/Users/taf/Projects/taf.sh/public/reel/ncr-metro-phone-alerts.png",
+    "raw": "/Users/taf/.t3/userdata/attachments/51d0fb16-e429-45d0-b74e-ed258e7485b3-e4774009-80a0-4f2d-982d-430e108682d6-mp4.mp4",
+    "a": 0,
+    "b": 4.8,
+    "speed": 1
+  },
+  "phone-appearance": {
+    "shot": "/Users/taf/Projects/taf.sh/public/reel/ncr-metro-phone-appearance.png",
+    "raw": "/Users/taf/.t3/userdata/attachments/51d0fb16-e429-45d0-b74e-ed258e7485b3-7a40264e-dfdf-4bcf-a84f-f179ac067502-mp4.mp4",
+    "a": 0,
+    "b": 4.8,
+    "speed": 1
+  },
+  "phone-lines": {
+    "shot": "/Users/taf/Projects/taf.sh/public/reel/ncr-metro-phone-lines.png",
+    "raw": "/Users/taf/.t3/userdata/attachments/51d0fb16-e429-45d0-b74e-ed258e7485b3-d3c6c024-d754-4284-aa06-78a239356687-mp4.mp4",
+    "a": 0,
+    "b": 4.8,
+    "speed": 1
+  },
+  "phone-search": {
+    "shot": "/Users/taf/Projects/taf.sh/public/reel/ncr-metro-phone-search.png",
+    "raw": "/Users/taf/.t3/userdata/attachments/51d0fb16-e429-45d0-b74e-ed258e7485b3-c556e2e8-214d-439b-a21f-a67b46da6c34-mp4.mp4",
+    "a": 0,
+    "b": 4.8,
+    "speed": 1
+  },
+  "web-search": {
+    "shot": "/Users/taf/Projects/taf.sh/public/reel/ncr-metro-web-search.png",
+    "raw": "/Users/taf/.t3/userdata/attachments/51d0fb16-e429-45d0-b74e-ed258e7485b3-a0cadc21-1310-425e-8109-f6a805381639-mp4.mp4",
+    "a": 0,
+    "b": 4.8,
+    "speed": 1
+  },
+  "web-lines": {
+    "shot": "/Users/taf/Projects/taf.sh/public/reel/ncr-metro-web-lines.png",
+    "raw": "/Users/taf/.t3/userdata/attachments/51d0fb16-e429-45d0-b74e-ed258e7485b3-6fcd273e-8622-4dcc-b713-a176ce0fdd8b-mp4.mp4",
+    "a": 0,
+    "b": 4.8,
+    "speed": 1
+  },
+  "web-fares": {
+    "raw": "/Users/taf/.t3/userdata/attachments/51d0fb16-e429-45d0-b74e-ed258e7485b3-128f6540-3c95-4786-abf9-564b186eaeae-mp4.mp4",
+    "shot": "/Users/taf/.t3/userdata/browser-artifacts/browser-screenshot-ncr-metro-tashif-codes-mwgwn4mi-c714d7e3.png",
+    "a": 0,
+    "b": 4.8,
+    "speed": 1
+  },
+  "web-summary": {
+    "raw": "/Users/taf/.t3/userdata/attachments/51d0fb16-e429-45d0-b74e-ed258e7485b3-4d8c0c1c-64c5-4cf9-91cb-91e3f85c7b81-mp4.mp4",
+    "shot": "/Users/taf/.t3/userdata/browser-artifacts/browser-screenshot-ncr-metro-tashif-codes-mwgwlucw-9bca7ec1.png",
+    "a": 0,
+    "b": 4.8,
+    "speed": 1
+  },
+  "phone-route": {
+    "shot": "/Users/taf/Projects/taf.sh/public/reel/ncr-metro-phone-route.png",
+    "raw": "/Users/taf/.t3/userdata/attachments/51d0fb16-e429-45d0-b74e-ed258e7485b3-19481f73-557a-4dd2-97d9-3770d756d79b-mp4.mp4",
+    "a": 0,
+    "b": 4.8,
+    "speed": 1
+  }
+}

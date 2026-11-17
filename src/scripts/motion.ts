@@ -51,7 +51,16 @@ export function marquees() {
 	if (reduced) return;
 	let last = scrollY;
 	let v = 0;
+	const root = document.documentElement;
 	const frame = () => {
+		// Hold still under the open work sheet. The style writes below force a
+		// restyle, paint and commit every frame, which costs the sheet's slide
+		// frames on phones, for type nobody can see.
+		if (root.classList.contains("reel-open")) {
+			last = scrollY;
+			requestAnimationFrame(frame);
+			return;
+		}
 		// Scroll speed in px/frame, smoothed so a single jump doesn't jolt it.
 		v = lerp(v, scrollY - last, 0.2);
 		last = scrollY;

@@ -6,6 +6,23 @@
 
 export const email = "me@taf.sh";
 
+/**
+ * Where people can sponsor the work. Empty until a page exists: the footer's
+ * Sponsor link only shows once this is set.
+ */
+export const sponsorUrl = "";
+
+/**
+ * The Google Play developer page. Empty until the developer account is
+ * approved. While it is empty the Apps list says Google Play is coming, and
+ * once set it links there. A per-app store link goes in `playStoreApps`,
+ * keyed by the app's name in `reel`.
+ */
+export const playStoreDeveloperUrl = "";
+export const playStoreApps: Record<string, string> = {
+	// Paisa: "https://play.google.com/store/apps/details?id=codes.tashif.paisa",
+};
+
 export const nav = [
 	{ href: "/services", label: "Services" },
 	{ href: "#process", label: "Process" },
@@ -247,8 +264,10 @@ export type ReelItem = {
 	/** Public site, when there is one; shows the "live site" badge. */
 	live?: string;
 	metric?: string;
+	/** For apps: where it runs. Listed under "Apps" on the homepage. */
+	platforms?: string[];
 	shots: string[];
-	video?: { src: string; poster: string };
+	video?: { src: string; poster: string; label?: string; phone?: { src: string; poster: string } };
 	/** Related services and source for projects with several entry points. */
 	links?: { label: string; href: string }[];
 };
@@ -320,7 +339,7 @@ export const reel: ReelItem[] = [
 		tags: ["tool", "ai"],
 		stack: ["LangGraph", "FastAPI", "MCP"],
 		href: "https://github.com/tashifkhan/agentic-browser",
-		live: "https://tashif.codes/u/agentic-browser",
+		live: "https://tashif.codes/projects/agentic-browser",
 		metric: "BYO keys",
 		shots: [],
 		video: { src: "/reel/agentic-browser-demo.mp4", poster: "/reel/agentic-browser-poster.jpg" },
@@ -373,10 +392,22 @@ export const reel: ReelItem[] = [
 		line: "DMRC and NMRC trip planning with live alerts, as a web app and an Android app on F-Droid.",
 		tags: ["app", "mobile"],
 		stack: ["Expo", "React Native"],
-		href: "https://ncr-metro.tashif.codes",
+		href: "https://tashif.codes/projects/delhi-metro",
 		live: "https://ncr-metro.tashif.codes",
 		metric: "F-Droid",
-		shots: shots("ncr-metro", 3),
+	platforms: ["Android", "Web", "iOS"],
+		shots: Array.from({ length: 6 }, (_, i) => `/reel/ncr-metro-screenshots/web-${String(i + 1).padStart(2, "0")}.webp`),
+		video: {
+			src: "/reel/ncr-metro-web-demo.mp4",
+			label: "Web + phone walkthrough",
+			poster: "/reel/ncr-metro-web-poster.jpg",
+			phone: { src: "/reel/ncr-metro-phone-demo.mp4", poster: "/reel/ncr-metro-phone-poster.jpg" },
+		},
+		links: [
+			{ label: "Web + phone video", href: "/reel/ncr-metro-web-demo.mp4" },
+			{ label: "Phone video", href: "/reel/ncr-metro-phone-demo.mp4" },
+			{ label: "Screenshot pack", href: "/reel/ncr-metro-screenshots.zip" },
+		],
 	},
 	{
 		name: "WikiSpark",
@@ -419,13 +450,52 @@ export const reel: ReelItem[] = [
 		group: "shenanigan",
 		sector: "finance",
 		year: "2025",
-		line: "Local-first expense manager for Android. No nags, no cloud lock-in.",
-		tags: ["app", "mobile"],
-		stack: ["Kotlin", "Android"],
-		href: "https://paisa.tashif.codes",
+		line: "Expense tracking on Android and the web. On-device bank SMS parsing, optional AI entry, budgets, Material You colors, hidden amounts, app lock, and layouts for phones, foldables and tablets.",
+		tags: ["app", "mobile", "web"],
+		stack: ["Kotlin", "Compose Multiplatform", "SQLite"],
+		href: "https://tashif.codes/projects/paisa",
 		live: "https://paisa.tashif.codes",
 		metric: "Local-first",
-		shots: shots("paisa", 1),
+	platforms: ["Android", "Web"],
+		shots: shots("paisa", 19),
+		video: {
+			src: "/reel/paisa-demo.mp4",
+			poster: "/reel/paisa-poster.jpg",
+		},
+		links: [
+			{ label: "Source", href: "https://github.com/tashifkhan/Paisa" },
+			{ label: "Android releases", href: "https://github.com/tashifkhan/Paisa/releases" },
+			{ label: "Phone video", href: "/reel/paisa-phone-demo.mp4" },
+			{ label: "Foldable video", href: "/reel/paisa-foldable-demo.mp4" },
+			{ label: "Tablet video", href: "/reel/paisa-tablet-demo.mp4" },
+			{ label: "Web video", href: "/reel/paisa-web-demo.mp4" },
+			{ label: "Product screenshots", href: "/reel/paisa-appstore-screenshots.zip" },
+		],
+	},
+	{
+		name: "Patchwork",
+		group: "shenanigan",
+		sector: "productivity",
+		year: "2026",
+		line: "CalDAV tasks, Nextcloud Deck boards, GitHub issues and Jira in one native app for iOS and Android. This walkthrough follows tasks and populated Jira boards across both native builds, including sprint filters and card dragging with sample data.",
+		tags: ["app", "mobile"],
+		stack: ["Expo", "React Native", "CalDAV", "Nextcloud Deck"],
+		href: "https://tashif.codes/projects/patchwork",
+		metric: "Native iOS + Android",
+	platforms: ["iOS", "Android"],
+		shots: shots("patchwork", 6),
+		video: {
+			src: "/reel/patchwork-native-demo.mp4",
+			poster: "/reel/patchwork-native-poster.jpg",
+			label: "iOS + Android",
+		},
+		links: [
+			{ label: "Source", href: "https://github.com/tashifkhan/Patchwork" },
+			{ label: "Native app video", href: "/reel/patchwork-native-demo.mp4" },
+			{ label: "iOS screenshot pack", href: "/reel/patchwork-store/patchwork-ios-screenshots.zip" },
+			{ label: "Android screenshot pack", href: "/reel/patchwork-store/patchwork-android-screenshots.zip" },
+			{ label: "All screenshots", href: "/reel/patchwork-store/patchwork-ios-android-screenshots.zip" },
+		],
 	},
 ];
 

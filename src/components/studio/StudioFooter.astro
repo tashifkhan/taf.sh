@@ -2,7 +2,7 @@
 import Arrow from "../Arrow.astro";
 import Logo from "../Logo.astro";
 import AsciiArt from "../AsciiArt.astro";
-import { email } from "./data";
+import { email, sponsorUrl } from "./data";
 import { wrap, kicker, btn, btnLg, btnAccent, btnArrow, card, dot, live } from "./ui";
 
 interface Props { cta?: boolean; }
@@ -35,6 +35,8 @@ const columns = [
 			{ href: "https://linkedin.com/in/tashifkhan", label: "LinkedIn" },
 			{ href: "https://tashif.codes", label: "tashif.codes" },
 			{ href: "https://tashif.codes/blog", label: "tashif.codes/blog" },
+			// Shows once sponsorUrl is set in data.ts.
+			...(sponsorUrl ? [{ href: sponsorUrl, label: "Sponsor" }] : []),
 		],
 	},
 ];

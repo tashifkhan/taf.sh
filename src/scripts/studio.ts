@@ -916,9 +916,17 @@ function reel() {
 		}
 	};
 
+	let frame = 0;
 	const clearTimers = () => {
 		timers.forEach(clearTimeout);
 		timers = [];
+		cancelAnimationFrame(frame);
+	};
+	// Runs fn once the current frame has painted. The callback of the first
+	// rAF still belongs to the frame that is being built; the second one
+	// fires after that frame reached the screen.
+	const afterPaint = (fn: () => void) => {
+		frame = requestAnimationFrame(() => (frame = requestAnimationFrame(fn)));
 	};
 	const later = (fn: () => void, ms: number) => {
 		timers.push(window.setTimeout(fn, ms));
@@ -931,8 +939,19 @@ function reel() {
 		page.style.transformOrigin = "";
 		page.style.transform = "";
 		page.style.opacity = "";
+		page.style.willChange = "";
 		void page.offsetWidth;
 		page.style.transition = "";
+	};
+
+	// showModal() focuses the first control in the panel while the panel is
+	// still parked below the screen, and the browser scrolls the dialog to
+	// reveal it. The dialog uses overflow: clip so it can't scroll, and
+	// this undoes any offset an older engine still applies. Without it the
+	// sheet slides into a frame shifted up by a few hundred pixels.
+	const resetScroll = () => {
+		dialog.scrollTop = 0;
+		if (panel) panel.scrollTop = 0;
 	};
 
 	const applySplit = (openState: boolean, then?: () => void) => {
@@ -942,6 +961,7 @@ function reel() {
 				root.classList.add("reel-open");
 				document.body.style.overflow = "hidden";
 				if (!dialog.open) dialog.showModal();
+				resetScroll();
 				dialog.classList.add("is-open");
 				if (bg) bg.style.opacity = "1";
 				wlItems.forEach((i) => (i.style.opacity = "1"));
@@ -970,25 +990,35 @@ function reel() {
 				panel?.style.removeProperty("--sheet-y");
 				root.classList.add("reel-open");
 				document.body.style.overflow = "hidden";
+				// Only transform and opacity animate here, so the compositor runs
+				// the whole open. Animating clip-path on a page this tall repaints
+				// it every frame, which stutters on phones. The rounded clip is set
+				// once up front; at full scale the screen's own corners hide it.
 				page.style.transition = "none";
 				page.style.transformOrigin = `50% ${top + vh / 2}px`;
-				page.style.clipPath = `inset(${top}px 0 ${bot}px 0 round 0px)`;
-				if (!dialog.open) dialog.showModal();
-				void page.offsetWidth;
-				void dialog.offsetWidth;
-				dialog.classList.add("is-open");
-				page.style.transition = `transform 0.65s ${E}, clip-path 0.65s ${E}, opacity 0.65s`;
-				page.style.transform = "scale(0.94)";
-				page.style.opacity = "0.42";
 				page.style.clipPath = `inset(${top}px 0 ${bot}px 0 round 24px)`;
+				page.style.willChange = "transform, opacity";
+				if (!dialog.open) dialog.showModal();
+				resetScroll();
+				// showModal() makes the rest of the document inert, and Chrome
+				// restyles every element for it: around 70ms on a mid-range phone,
+				// plus the dialog's first paint. Starting the slide in that same
+				// frame lets the transition clock run through the stall, so the
+				// sheet appears partway up and jumps. Pay for it first with the
+				// sheet still off screen, and start moving on the next frame.
+				afterPaint(() => {
+					dialog.classList.add("is-open");
+					page.style.transition = `transform 0.65s ${E}, opacity 0.65s ${E}`;
+					page.style.transform = "scale(0.94)";
+					page.style.opacity = "0.42";
+				});
 			} else {
 				dialog.classList.remove("is-open", "is-expanded", "is-dragging");
 				panel?.style.removeProperty("--sheet-y");
 				root.classList.remove("reel-open");
-				page.style.transition = `transform 0.65s ${E}, clip-path 0.65s ${E}, opacity 0.65s`;
+				page.style.transition = `transform 0.65s ${E}, opacity 0.65s ${E}`;
 				page.style.transform = "";
 				page.style.opacity = "";
-				page.style.clipPath = `inset(${top}px 0 ${bot}px 0 round 0px)`;
 				later(() => {
 					dialog.close();
 					cleanupPage();
@@ -1025,6 +1055,7 @@ function reel() {
 				i.style.transform = "translate3d(0,32px,0)";
 			});
 			if (!dialog.open) dialog.showModal();
+			resetScroll();
 			void page.offsetWidth;
 			void dialog.offsetWidth;
 			dialog.classList.add("is-open");

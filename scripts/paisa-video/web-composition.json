@@ -1,0 +1,187 @@
+{
+  "name": "paisa-web",
+  "out": "/Users/taf/Projects/taf.sh/public/reel/paisa-web-demo.mp4",
+  "poster": "/Users/taf/Projects/taf.sh/public/reel/paisa-web-poster.jpg",
+  "posterAt": 3,
+  "fps": 30,
+  "product": {
+    "name": "Paisa",
+    "host": "paisa.tashif.codes",
+    "icon": "/Users/taf/Projects/taf.sh/scripts/paisa-video/paisa-icon.svg"
+  },
+  "cursor": false,
+  "theme": {
+    "fonts": "family=Roboto:wght@400;500;600;700&family=Roboto+Mono:wght@400;500",
+    "vars": {
+      "bg": "#F1F8E9",
+      "fg": "#172116",
+      "muted": "#4E604A",
+      "card": "#E5EFDD",
+      "line": "#C8D8BF",
+      "shadow": "rgba(28,58,22,.20)",
+      "chrome": "#E1ECD9",
+      "urlbg": "#F1F8E9",
+      "slab": "#CBDCC3",
+      "accent": "#1B5E20",
+      "accent-fg": "#FFFFFF",
+      "accent-soft": "rgba(27,94,32,.10)",
+      "accent-line": "rgba(27,94,32,.30)",
+      "grid": "rgba(27,94,32,.08)",
+      "dim": "rgba(15,32,12,.22)",
+      "pill-bg": "#193A1A",
+      "pill-fg": "#FFFFFF",
+      "fadebg": "#F1F8E9",
+      "head": "Roboto, Arial, sans-serif",
+      "head-weight": "600",
+      "head-track": "-.035em",
+      "body": "Roboto, Arial, sans-serif",
+      "mono": "\"Roboto Mono\", monospace",
+      "hand": "Roboto, Arial, sans-serif",
+      "hand-weight": "600",
+      "bgimg": "none"
+    },
+    "css": ".intro .chip{display:none}.intro .copy{width:550px}.intro .title{font-size:72px}.intro .tagline{max-width:490px}.intro .orbit{left:1050px}.chapter .copy{width:480px}.chapter .title{font-size:54px}.chapter .tilt{left:650px;width:590px}.chapter .tilt .win{width:590px}.chapter .tilt .view{height:368px}.outro .title{font-size:64px}.outro .copy{top:170px}.outro .stackrow{top:540px}.intro.landing .orbit{left:830px;right:auto;top:75px;width:290px;height:652px}.intro.landing .card3d{width:290px;height:auto;border:7px solid #263522;border-radius:34px}.intro.landing .card3d .bar{display:none}.intro.landing .card3d img{width:100%;height:auto;aspect-ratio:1080/2424;border-radius:27px}.intro.landing .copy{width:550px}"
+  },
+  "music": {
+    "bpm": 94,
+    "chords": [
+      [
+        48,
+        55,
+        60,
+        64
+      ],
+      [
+        45,
+        52,
+        57,
+        60
+      ],
+      [
+        41,
+        48,
+        53,
+        57
+      ],
+      [
+        43,
+        50,
+        55,
+        59
+      ]
+    ]
+  },
+  "scenes": [
+    {
+      "type": "opening",
+      "dur": 4.8,
+      "title": "Your money. On your terms.",
+      "body": "Expenses, budgets and accounts in one place."
+    },
+    {
+      "type": "demo",
+      "n": 3,
+      "path": "",
+      "caption": "Search a merchant across the record",
+      "src": {
+        "raw": "/Users/taf/Projects/taf.sh/scripts/paisa-video/raw/desktop-details.mp4",
+        "a": 16,
+        "b": 24,
+        "speed": 1.25
+      },
+      "hold": 1,
+      "highlights": [],
+      "layout": "desktop"
+    },
+    {
+      "type": "demo",
+      "n": 3,
+      "path": "",
+      "caption": "Open the source record beside the results",
+      "src": {
+        "raw": "/Users/taf/Projects/taf.sh/scripts/paisa-video/raw/desktop-details.mp4",
+        "a": 46,
+        "b": 54,
+        "speed": 1.25
+      },
+      "hold": 1,
+      "highlights": [],
+      "layout": "desktop"
+    },
+    {
+      "type": "demo",
+      "n": 3,
+      "path": "",
+      "caption": "Compare the month and inspect category spending",
+      "src": {
+        "raw": "/Users/taf/Projects/taf.sh/scripts/paisa-video/raw/desktop.mp4",
+        "a": 15,
+        "b": 23,
+        "speed": 1.25
+      },
+      "hold": 1,
+      "highlights": [],
+      "layout": "desktop"
+    },
+    {
+      "type": "demo",
+      "n": 3,
+      "path": "",
+      "caption": "Monthly budgets with category progress",
+      "src": {
+        "raw": "/Users/taf/Projects/taf.sh/scripts/paisa-video/raw/desktop.mp4",
+        "a": 40,
+        "b": 48,
+        "speed": 1.25
+      },
+      "hold": 1,
+      "highlights": [],
+      "layout": "desktop"
+    },
+    {
+      "type": "demo",
+      "n": 4,
+      "path": "",
+      "caption": "Accounts keep cash, bank and credit records separate",
+      "src": {
+        "raw": "/Users/taf/Projects/taf.sh/scripts/paisa-video/raw/desktop.mp4",
+        "a": 54,
+        "b": 61,
+        "speed": 1.25
+      },
+      "hold": 1,
+      "highlights": [],
+      "layout": "desktop"
+    },
+    {
+      "type": "demo",
+      "n": 4,
+      "path": "",
+      "caption": "Backup and sync are optional",
+      "src": {
+        "raw": "/Users/taf/Projects/taf.sh/scripts/paisa-video/raw/desktop.mp4",
+        "a": 89,
+        "b": 97,
+        "speed": 1.25
+      },
+      "hold": 1,
+      "highlights": [],
+      "layout": "desktop"
+    },
+    {
+      "type": "demo",
+      "n": 4,
+      "path": "",
+      "caption": "Bring your own AI provider and model",
+      "src": {
+        "raw": "/Users/taf/Projects/taf.sh/scripts/paisa-video/raw/desktop.mp4",
+        "a": 104,
+        "b": 112,
+        "speed": 1.25
+      },
+      "hold": 1,
+      "highlights": [],
+      "layout": "desktop"
+    }
+  ]
+}

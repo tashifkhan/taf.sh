@@ -1,0 +1,30 @@
+[
+  {
+    "label": "analytics",
+    "t": 1.86
+  },
+  {
+    "label": "budgets",
+    "t": 36.55
+  },
+  {
+    "label": "accounts",
+    "t": 53.49
+  },
+  {
+    "label": "settings",
+    "t": 72.54
+  },
+  {
+    "label": "backup",
+    "t": 85.75
+  },
+  {
+    "label": "encryption",
+    "t": 102.23
+  },
+  {
+    "label": "ai",
+    "t": 104.15
+  }
+]
