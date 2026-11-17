@@ -24,8 +24,11 @@ const FPS = comp.fps || 30, DPR = 1.5;
 const sh = (cmd, a) => execFileSync(cmd, a, { stdio: ["ignore", "pipe", "inherit"], maxBuffer: 1 << 28 });
 
 // ------------------------------------------------------------ footage
-for (const [i, sc] of comp.scenes.entries()) {
-  if (!["demo", "phone"].includes(sc.type) || !sc.src) continue;
+const footage = comp.scenes.flatMap(sc => [
+  ...(sc.src ? [{ target: sc, phone: sc.type === "phone" }] : []),
+  ...(sc.phones || []).filter(p => p.src).map(p => ({ target: p, phone: true })),
+]);
+for (const { target: sc, phone } of footage) {
   const { raw, a, b, speed = 1, crop } = sc.src;
   const key = createHash("sha1").update("native-trim2:" + JSON.stringify(sc.src)).digest("hex").slice(0, 10);
   const dir = `${VID}/footage/${comp.name}-${key}`;
@@ -38,7 +41,7 @@ for (const [i, sc] of comp.scenes.entries()) {
     // Don't rescale. The demo window is 1088 CSS px wide at device scale 1.5,
     // so a 1632-wide frame is already 1:1 with what gets drawn. Scaling it
     // up to 2880 and back down is what washed the page out.
-    const vf = [crop ? `crop=${crop}` : null, `setpts=(PTS-STARTPTS)/${speed}`, `fps=${FPS}`, `trim=duration=${(b-a)/speed}`, "crop=trunc(iw/2)*2:trunc(ih/2)*2", sc.type === "phone" ? "scale=600:-2" : null].filter(Boolean).join(",");
+    const vf = [crop ? `crop=${crop}` : null, `setpts=(PTS-STARTPTS)/${speed}`, `fps=${FPS}`, `trim=duration=${(b-a)/speed}`, "crop=trunc(iw/2)*2:trunc(ih/2)*2", phone ? "scale=600:-2" : null].filter(Boolean).join(",");
     // PNG, not JPEG. A near-black page compresses into a gray film, which is
     // the mask over the screen recordings. Chapter stills were already PNG.
     sh("ffmpeg", ["-v", "error", "-ss", String(a), "-to", String(b), "-i", raw, "-vf", vf, `${dir}/%05d.png`]);
@@ -78,13 +81,16 @@ const launch = () => chromium.launch({ executablePath: EXE, args: ["--allow-file
 const probe = await launch();
 const p0 = await open(probe);
 const meta = await p0.evaluate(() => window.__meta());
-writeFileSync(`${OUT}/meta.json`, JSON.stringify({ ...meta, music: comp.music, raws: comp.scenes.filter((s) => s.src).map((s) => s.src) }, null, 1));
+writeFileSync(`${OUT}/meta.json`, JSON.stringify({ ...meta, music: comp.music, raws: footage.map(({target}) => target.src) }, null, 1));
 const N = Math.ceil(meta.total * FPS);
 console.log(`${comp.name}: ${meta.total.toFixed(1)}s, ${N} frames`);
 
 if (opt("--still")) {
   for (const t of opt("--still").split(",").map(Number)) {
-    await p0.evaluate((t) => window.__seek(t), t);
+    await p0.evaluate(async (t) => {
+      window.__seek(t);
+      await Promise.all([...document.querySelectorAll(".wrap")].filter(el => el.style.display !== "none").flatMap(el => [...el.querySelectorAll("img")]).map(img => img.decode()));
+    }, t);
     await p0.screenshot({ path: `${OUT}/still-${t}.jpg`, type: "png" });
     console.log(`${OUT}/still-${t}.jpg`);
   }
@@ -106,7 +112,10 @@ await Promise.all(Array.from({ length: WORKERS }, async (_, w) => {
   const browser = await launch();
   const page = await open(browser);
   for (let f = a; f < b; f++) {
-    await page.evaluate((t) => window.__seek(t), f / FPS);
+    await page.evaluate(async (t) => {
+      window.__seek(t);
+      await Promise.all([...document.querySelectorAll(".wrap")].filter(el => el.style.display !== "none").flatMap(el => [...el.querySelectorAll("img")]).map(img => img.decode()));
+    }, f / FPS);
     await page.screenshot({ path: `${OUT}/f/${String(f).padStart(5, "0")}.jpg`, type: "jpeg", quality: 97 });
     if (++done % 200 === 0) console.log(`${done}/${to - from} frames, ${((Date.now() - t0) / 1000).toFixed(0)}s`);
   }

@@ -2,12 +2,13 @@
   "name": "patchwork-native-demo",
   "out": "/Users/taf/Projects/taf.sh/public/reel/patchwork-native-demo.mp4",
   "poster": "/Users/taf/Projects/taf.sh/public/reel/patchwork-native-poster.jpg",
-  "posterAt": 4,
+  "posterAt": 3.2,
   "fps": 30,
   "cursor": false,
   "product": {
     "name": "Patchwork",
-    "host": "github.com/tashifkhan/Patchwork"
+    "host": "github.com/tashifkhan/Patchwork",
+    "icon": "/Users/taf/Projects/Patchwork/app/assets/images/icon.png"
   },
   "theme": {
     "vars": {
@@ -67,435 +68,742 @@
   },
   "scenes": [
     {
+      "id": "opening",
+      "type": "opening",
+      "dur": 4.8,
+      "title": "Every task list you have, in one app.",
+      "body": "CalDAV tasks, Deck cards, Jira boards and GitHub issues."
+    },
+    {
+      "id": "intro",
       "type": "phone",
       "n": null,
-      "platform": "Native iOS",
       "dur": 9,
-      "title": "The work is scattered. Pick your <em>next step.</em>",
-      "body": "Patchwork brings your tasks and project boards onto your phone.",
+      "title": "Stop checking <em>four apps.</em>",
+      "body": "Patchwork signs in to CalDAV, Nextcloud Deck, Jira and GitHub, then edits your work where it already lives.",
       "points": [
-        "CalDAV, Nextcloud Deck and Jira boards",
-        "Native apps for iOS and Android"
+        "The phone talks to your servers directly",
+        "Passwords and API keys stay in secure storage"
       ],
       "showPlatform": true,
-      "note": "Sample tasks, Deck cards and Jira issues",
+      "note": "",
       "kicker": "Patchwork · iOS + Android",
       "dual": true,
       "phones": [
         {
           "platform": "Native iOS",
+          "state": "tasks",
           "still": "/Users/taf/Projects/taf.sh/public/reel/patchwork-ios-tasks.png"
         },
         {
           "platform": "Native Android",
+          "state": "tasks",
           "still": "/Users/taf/Projects/taf.sh/public/reel/patchwork-android-tasks.png"
         }
       ]
     },
     {
+      "id": "tasks",
       "type": "phone",
       "n": 1,
-      "platform": "Native iOS",
-      "dur": 8,
+      "dur": 9,
       "title": "Start with <em>today.</em>",
-      "body": "Personal errands and release work share one view, grouped by due date.",
+      "body": "Every list lands in one view, split into Today, Tomorrow and Upcoming.",
       "points": [
-        "See today, tomorrow and upcoming tasks",
-        "Keep each task connected to its list"
+        "Tag chips filter the list in one tap",
+        "Each row shows its due date and its list"
       ],
       "showPlatform": false,
-      "note": "Sample tasks, Deck cards and Jira issues",
-      "kicker": "01 · Decide what needs doing",
-      "still": "/Users/taf/Projects/taf.sh/public/reel/patchwork-ios-tasks.png"
-    },
-    {
-      "type": "phone",
-      "n": 1,
-      "platform": "Native Android",
-      "dur": 8,
-      "title": "Focus on the <em>release.</em>",
-      "body": "The day has nine open tasks. Filter the release tag to find the two that belong together.",
-      "points": [
-        "Plan the Patchwork release",
-        "Publish release notes"
-      ],
-      "showPlatform": false,
-      "note": "Sample tasks, Deck cards and Jira issues",
-      "kicker": "01 · Decide what needs doing",
-      "src": {
-        "raw": "/Users/taf/Projects/taf.sh/scripts/patchwork-video/recordings/android-plan.mp4",
-        "a": 0,
-        "b": 5,
-        "speed": 1
-      },
-      "hold": 3
-    },
-    {
-      "type": "phone",
-      "n": 1,
-      "platform": "Native Android",
-      "dur": 8,
-      "title": "Remember a word. Find the <em>work.</em>",
-      "body": "Search release across tasks and Deck cards, then narrow the results to cards.",
-      "points": [
-        "Task notes appear in the results",
-        "Switch result types without a new search"
-      ],
-      "showPlatform": false,
-      "note": "Sample tasks, Deck cards and Jira issues",
-      "kicker": "01 · Decide what needs doing",
+      "note": "",
+      "kicker": "01 · Tasks and search",
       "dual": true,
       "phones": [
         {
           "platform": "Native iOS",
+          "state": "tasks",
+          "still": "/Users/taf/Projects/taf.sh/public/reel/patchwork-ios-tasks.png"
+        },
+        {
+          "platform": "Native Android",
+          "state": "tasks",
+          "still": "/Users/taf/Projects/taf.sh/public/reel/patchwork-android-tasks.png"
+        }
+      ]
+    },
+    {
+      "id": "search",
+      "type": "phone",
+      "n": 1,
+      "dur": 9,
+      "title": "One search across <em>tasks and cards.</em>",
+      "body": "Searching release finds six matches. Two are tasks and four are Deck cards.",
+      "points": [
+        "Chips narrow the results to tasks or cards",
+        "Each card names its board and column"
+      ],
+      "showPlatform": false,
+      "note": "",
+      "kicker": "01 · Tasks and search",
+      "dual": true,
+      "phones": [
+        {
+          "platform": "Native iOS",
+          "state": "search",
           "still": "/Users/taf/Projects/taf.sh/public/reel/patchwork-ios-search.png"
         },
         {
           "platform": "Native Android",
+          "state": "search",
           "still": "/Users/taf/Projects/taf.sh/public/reel/patchwork-android-search.png"
         }
-      ],
-      "activePhone": 1,
-      "src": {
-        "raw": "/Users/taf/Projects/taf.sh/scripts/patchwork-video/recordings/android-search-clean.mp4",
-        "a": 0,
-        "b": 4.5,
-        "speed": 1
-      },
-      "hold": 3.5
+      ]
     },
     {
+      "id": "detail",
       "type": "phone",
       "n": 2,
-      "platform": "Native iOS",
-      "dur": 8,
-      "title": "Read before you <em>act.</em>",
-      "body": "Open the release task to see what still needs checking before the builds ship.",
+      "dur": 9,
+      "title": "Open a task <em>inside the list.</em>",
+      "body": "Tap a row and it expands in place to show its Markdown notes and checklist.",
       "points": [
-        "Release checks in the same note",
-        "The task list stays behind the detail view"
+        "Tag, due date and list sit under the notes",
+        "Move it, delete it or open the full editor"
       ],
       "showPlatform": false,
-      "note": "Sample tasks, Deck cards and Jira issues",
-      "kicker": "02 · Turn a task into a next step",
-      "src": {
-        "raw": "/Users/taf/Projects/taf.sh/scripts/patchwork-video/recordings/ios-detail.mp4",
-        "a": 0,
-        "b": 9,
-        "speed": 1
-      },
-      "hold": 0
-    },
-    {
-      "type": "phone",
-      "n": 2,
-      "platform": "Native Android",
-      "dur": 8,
-      "title": "The same task. Every <em>detail.</em>",
-      "body": "Open the release notes, then check the deadline, tags and source list before you act.",
-      "points": [
-        "Markdown and checklist together",
-        "Tags, due date and source list in view"
-      ],
-      "showPlatform": false,
-      "note": "Sample tasks, Deck cards and Jira issues",
-      "kicker": "02 · Turn a task into a next step",
-      "src": {
-        "raw": "/Users/taf/Projects/taf.sh/scripts/patchwork-video/recordings/android-detail.mp4",
-        "a": 0,
-        "b": 4.5,
-        "speed": 1
-      },
-      "hold": 2.5
-    },
-    {
-      "type": "phone",
-      "n": 2,
-      "platform": "Native Android",
-      "dur": 8,
-      "title": "Decide what comes <em>next.</em>",
-      "body": "Change the release task from High to Medium priority in the full task editor.",
-      "points": [
-        "Update priority in the task editor",
-        "Deadline and reminder controls alongside"
-      ],
-      "showPlatform": false,
-      "note": "Sample tasks, Deck cards and Jira issues",
-      "kicker": "02 · Turn a task into a next step",
-      "src": {
-        "raw": "/Users/taf/Projects/taf.sh/scripts/patchwork-video/recordings/android-priority.mp4",
-        "a": 0,
-        "b": 4.5,
-        "speed": 1
-      },
-      "hold": 3.5
-    },
-    {
-      "type": "phone",
-      "n": 3,
-      "platform": "Native iOS",
-      "dur": 8,
-      "title": "Your project. On <em>either phone.</em>",
-      "body": "Open a populated Jira board with sprint groups, issue keys, priorities and assignees.",
-      "points": [
-        "Active sprints and backlog together",
-        "Issue details stay connected to the board"
-      ],
-      "showPlatform": false,
-      "note": "Sample tasks, Deck cards and Jira issues",
-      "kicker": "03 · Keep the project moving",
+      "note": "",
+      "kicker": "02 · One task, up close",
       "dual": true,
       "phones": [
         {
           "platform": "Native iOS",
+          "state": "detail",
+          "still": "/Users/taf/Projects/taf.sh/public/reel/patchwork-ios-detail.png",
+          "src": {
+            "raw": "/Users/taf/Projects/taf.sh/scripts/patchwork-video/recordings/ios-detail.mp4",
+            "a": 2,
+            "b": 5.8
+          },
+          "timeline": [
+            [
+              0,
+              0
+            ],
+            [
+              2,
+              0.5
+            ],
+            [
+              2.15,
+              0.6
+            ],
+            [
+              2.8,
+              1.2
+            ],
+            [
+              4,
+              1.8
+            ],
+            [
+              6,
+              3.6
+            ],
+            [
+              9,
+              3.6
+            ]
+          ]
+        },
+        {
+          "platform": "Native Android",
+          "state": "detail",
+          "still": "/Users/taf/Projects/taf.sh/public/reel/patchwork-android-detail.png",
+          "src": {
+            "raw": "/Users/taf/Projects/taf.sh/scripts/patchwork-video/recordings/android-detail.mp4",
+            "a": 0,
+            "b": 4.5
+          },
+          "timeline": [
+            [
+              0,
+              0
+            ],
+            [
+              2,
+              0.5
+            ],
+            [
+              2.15,
+              0.65
+            ],
+            [
+              2.8,
+              1.2
+            ],
+            [
+              4,
+              2.6
+            ],
+            [
+              6,
+              4
+            ],
+            [
+              9,
+              4
+            ]
+          ]
+        }
+      ],
+      "events": [
+        {
+          "at": 2,
+          "state": "Open release checklist"
+        },
+        {
+          "at": 4,
+          "state": "Release details visible"
+        }
+      ]
+    },
+    {
+      "id": "priority",
+      "type": "phone",
+      "n": 2,
+      "dur": 9,
+      "title": "Edit the <em>whole task.</em>",
+      "body": "The full editor adds priority, deadline and reminder. Here the release task drops from High to Medium.",
+      "points": [
+        "Edits save back to your CalDAV server",
+        "ETags stop two devices overwriting each other"
+      ],
+      "showPlatform": false,
+      "note": "",
+      "kicker": "02 · One task, up close",
+      "dual": true,
+      "phones": [
+        {
+          "platform": "Native iOS",
+          "state": "editor",
+          "still": "/Users/taf/Projects/taf.sh/public/reel/patchwork-ios-editor.png",
+          "src": {
+            "raw": "/Users/taf/Projects/taf.sh/scripts/patchwork-video/recordings/ios-edit.mp4",
+            "a": 0,
+            "b": 6.6
+          },
+          "timeline": [
+            [
+              0,
+              0
+            ],
+            [
+              2,
+              1.7
+            ],
+            [
+              2.5,
+              2.2
+            ],
+            [
+              3,
+              2.6
+            ],
+            [
+              4,
+              3.6
+            ],
+            [
+              6,
+              5.6
+            ],
+            [
+              9,
+              5.6
+            ]
+          ]
+        },
+        {
+          "platform": "Native Android",
+          "state": "editor",
+          "still": "/Users/taf/Projects/taf.sh/public/reel/patchwork-android-editor.png",
+          "src": {
+            "raw": "/Users/taf/Projects/taf.sh/scripts/patchwork-video/recordings/android-priority.mp4",
+            "a": 0,
+            "b": 4.5
+          },
+          "timeline": [
+            [
+              0,
+              0
+            ],
+            [
+              2,
+              1.1
+            ],
+            [
+              2.5,
+              1.5
+            ],
+            [
+              3,
+              1.8
+            ],
+            [
+              4,
+              2.8
+            ],
+            [
+              6,
+              4
+            ],
+            [
+              9,
+              4
+            ]
+          ]
+        }
+      ],
+      "events": [
+        {
+          "at": 3,
+          "state": "Medium priority selected"
+        }
+      ]
+    },
+    {
+      "id": "board",
+      "type": "phone",
+      "n": 3,
+      "dur": 9,
+      "title": "Your Jira board, <em>sprints included.</em>",
+      "body": "Columns scroll sideways. Each card carries its issue key, priority and assignee.",
+      "points": [
+        "Sprint chips show the days left",
+        "Backlog issues sit under the active sprint"
+      ],
+      "showPlatform": false,
+      "note": "",
+      "kicker": "03 · Jira boards",
+      "dual": true,
+      "phones": [
+        {
+          "platform": "Native iOS",
+          "state": "jira-board",
           "still": "/Users/taf/Projects/taf.sh/public/reel/patchwork-ios-jira-board.png"
         },
         {
           "platform": "Native Android",
+          "state": "jira-board",
           "still": "/Users/taf/Projects/taf.sh/public/reel/patchwork-android-jira-board.png"
         }
       ]
     },
     {
+      "id": "filter",
       "type": "phone",
       "n": 3,
-      "platform": "Native Android",
-      "dur": 8,
-      "title": "Bring your work into <em>focus.</em>",
-      "body": "Switch from all issues to work assigned to you or reported by you.",
+      "dur": 9,
+      "title": "Show only <em>your issues.</em>",
+      "body": "The filter sheet cuts a board down to issues assigned to you, reported by you, or both.",
       "points": [
-        "Choose whose issues load",
-        "Narrow by sprint, type or priority"
-      ],
-      "showPlatform": false,
-      "note": "Sample tasks, Deck cards and Jira issues",
-      "kicker": "03 · Keep the project moving",
-      "dual": true,
-      "phones": [
-        {
-          "platform": "Native iOS",
-          "still": "/Users/taf/Projects/taf.sh/public/reel/patchwork-ios-jira-filter.png"
-        },
-        {
-          "platform": "Native Android",
-          "still": "/Users/taf/Projects/taf.sh/public/reel/patchwork-android-jira-filter.png"
-        }
-      ],
-      "activePhone": 1,
-      "src": {
-        "raw": "/Users/taf/Projects/taf.sh/scripts/patchwork-video/recordings/android-jira-filter.mp4",
-        "a": 0,
-        "b": 5.67,
-        "speed": 1
-      },
-      "hold": 2.33
-    },
-    {
-      "type": "phone",
-      "n": 3,
-      "platform": "Native iOS",
-      "dur": 8,
-      "title": "Find your place in <em>the project.</em>",
-      "body": "Choose an issue scope. The board updates to show the work assigned to you or reported by you.",
-      "points": [
-        "Assignee and reporter scopes",
-        "Sprint groups remain visible"
-      ],
-      "showPlatform": false,
-      "note": "Sample tasks, Deck cards and Jira issues",
-      "kicker": "03 · Keep the project moving",
-      "src": {
-        "raw": "/Users/taf/Projects/taf.sh/scripts/patchwork-video/recordings/ios-jira-filter.mp4",
-        "a": 0,
-        "b": 7.5,
-        "speed": 1
-      },
-      "hold": 0.5
-    },
-    {
-      "type": "phone",
-      "n": 3,
-      "platform": "Native iOS",
-      "dur": 8,
-      "title": "One sprint. A clearer <em>next step.</em>",
-      "body": "Select the active sprint to focus on the work scheduled now.",
-      "points": [
-        "Switch with the sprint chips",
-        "Return to All for the full board"
-      ],
-      "showPlatform": false,
-      "note": "Sample tasks, Deck cards and Jira issues",
-      "kicker": "03 · Keep the project moving",
-      "src": {
-        "raw": "/Users/taf/Projects/taf.sh/scripts/patchwork-video/recordings/ios-jira-sprint.mp4",
-        "a": 0,
-        "b": 4.5,
-        "speed": 1
-      },
-      "hold": 2.5
-    },
-    {
-      "type": "phone",
-      "n": 3,
-      "platform": "Native iOS",
-      "dur": 8,
-      "title": "Pick up a card. Place it <em>where it belongs.</em>",
-      "body": "Long press and drag the setup-guide card to a new position on the board.",
-      "points": [
-        "The lifted card stays under your finger",
-        "A line marks the drop position"
-      ],
-      "showPlatform": false,
-      "note": "Sample tasks, Deck cards and Jira issues",
-      "kicker": "03 · Keep the project moving",
-      "src": {
-        "raw": "/Users/taf/Projects/taf.sh/scripts/patchwork-video/recordings/ios-jira-drag.mp4",
-        "a": 0,
-        "b": 4.6,
-        "speed": 1
-      },
-      "hold": 3.4
-    },
-    {
-      "type": "phone",
-      "n": 3,
-      "platform": "Native Android",
-      "dur": 8,
-      "title": "Move the work. Keep <em>the context.</em>",
-      "body": "Drag a card while its issue key, priority and assignee remain in view.",
-      "points": [
-        "Issue key, priority and assignee stay visible",
-        "A drop marker guides placement"
-      ],
-      "showPlatform": false,
-      "note": "Sample tasks, Deck cards and Jira issues",
-      "kicker": "03 · Keep the project moving",
-      "src": {
-        "raw": "/Users/taf/Projects/taf.sh/scripts/patchwork-video/recordings/android-jira-drag.mp4",
-        "a": 0,
-        "b": 9.3,
-        "speed": 1.4
-      },
-      "hold": 1.36
-    },
-    {
-      "type": "phone",
-      "n": 4,
-      "platform": "Native iOS",
-      "dur": 8,
-      "title": "Make room for <em>your way.</em>",
-      "body": "Choose light, dark or system appearance, then pick an accent palette.",
-      "points": [
-        "Light, dark or system appearance",
-        "Accent palettes and contrast options"
+        "Sprint, type and priority filters stack on top",
+        "The board subtitle names the active scope"
       ],
       "showPlatform": false,
       "note": "",
-      "kicker": "04 · Choose how you work",
+      "kicker": "03 · Jira boards",
       "dual": true,
       "phones": [
         {
           "platform": "Native iOS",
-          "still": "/Users/taf/Projects/taf.sh/public/reel/patchwork-ios-appearance.png"
+          "state": "jira-filter",
+          "still": "/Users/taf/Projects/taf.sh/public/reel/patchwork-ios-jira-filter.png",
+          "src": {
+            "raw": "/Users/taf/Projects/taf.sh/scripts/patchwork-video/recordings/ios-jira-filter.mp4",
+            "a": 0,
+            "b": 5
+          },
+          "timeline": [
+            [
+              0,
+              0
+            ],
+            [
+              2,
+              1.6
+            ],
+            [
+              2.5,
+              2.2
+            ],
+            [
+              3,
+              2.5
+            ],
+            [
+              4.2,
+              2.6
+            ],
+            [
+              4.7,
+              3.3
+            ],
+            [
+              6,
+              4.5
+            ],
+            [
+              9,
+              4.5
+            ]
+          ]
         },
         {
           "platform": "Native Android",
-          "still": "/Users/taf/Projects/taf.sh/public/reel/patchwork-android-appearance.png"
+          "state": "jira-filter",
+          "still": "/Users/taf/Projects/taf.sh/public/reel/patchwork-android-jira-filter.png",
+          "src": {
+            "raw": "/Users/taf/Projects/taf.sh/scripts/patchwork-video/recordings/android-jira-filter.mp4",
+            "a": 0,
+            "b": 5.67
+          },
+          "timeline": [
+            [
+              0,
+              0.4
+            ],
+            [
+              2,
+              0.8
+            ],
+            [
+              2.5,
+              1.2
+            ],
+            [
+              3,
+              1.5
+            ],
+            [
+              4.2,
+              4
+            ],
+            [
+              4.7,
+              4.7
+            ],
+            [
+              6,
+              5.4
+            ],
+            [
+              9,
+              5.4
+            ]
+          ]
         }
       ],
-      "activePhone": 0,
-      "src": {
-        "raw": "/Users/taf/Projects/taf.sh/scripts/patchwork-video/recordings/ios-appearance.mp4",
-        "a": 0,
-        "b": 4.5,
-        "speed": 1
-      },
-      "hold": 3.5
+      "events": [
+        {
+          "at": 3,
+          "state": "Assigned or reported selected"
+        },
+        {
+          "at": 4.7,
+          "state": "Filtered board visible"
+        }
+      ]
     },
     {
+      "id": "focused-board",
       "type": "phone",
-      "n": 4,
-      "platform": "Native Android",
-      "dur": 8,
-      "title": "Light or dark. Still <em>Patchwork.</em>",
-      "body": "Switch to light mode, then tune the accent and contrast to suit you.",
+      "n": 3,
+      "dur": 9,
+      "title": "Six issues become <em>three.</em>",
+      "body": "With Assigned or reported on, To do keeps only your issues, still split by sprint and backlog.",
       "points": [
-        "Theme and accent are your choice",
-        "OLED and contrast options in settings"
+        "PATCH-266 and PATCH-267 in Sprint 14",
+        "PATCH-270 waiting in the backlog"
       ],
       "showPlatform": false,
       "note": "",
-      "kicker": "04 · Choose how you work",
+      "kicker": "03 · Jira boards",
       "dual": true,
       "phones": [
         {
           "platform": "Native iOS",
-          "still": "/Users/taf/Projects/taf.sh/public/reel/patchwork-ios-appearance.png"
+          "state": "jira-assigned",
+          "still": "/Users/taf/Projects/taf.sh/public/reel/patchwork-ios-jira-assigned.png"
         },
         {
           "platform": "Native Android",
-          "still": "/Users/taf/Projects/taf.sh/public/reel/patchwork-android-appearance.png"
+          "state": "jira-assigned",
+          "still": "/Users/taf/Projects/taf.sh/public/reel/patchwork-android-jira-assigned.png"
         }
-      ],
-      "activePhone": 1,
-      "src": {
-        "raw": "/Users/taf/Projects/taf.sh/scripts/patchwork-video/recordings/android-appearance.mp4",
-        "a": 0,
-        "b": 4.8,
-        "speed": 1
-      },
-      "hold": 3.2
+      ]
     },
     {
+      "id": "drag",
       "type": "phone",
-      "n": 4,
-      "platform": "Native Android",
-      "dur": 8,
-      "title": "Choose your <em>AI provider.</em>",
-      "body": "Configure providers and models in the app. Bring your own key and review imported task drafts.",
+      "n": 3,
+      "dur": 9,
+      "title": "Hold a card and <em>move it.</em>",
+      "body": "A long press lifts PATCH-267. A line shows where the card will land.",
       "points": [
-        "Provider and model configuration",
-        "No generated result shown in this film"
+        "Dropping it updates the rank in Jira",
+        "Deck cards drag the same way"
       ],
       "showPlatform": false,
-      "note": "No API key values shown",
-      "kicker": "04 · Choose how you work",
+      "note": "",
+      "kicker": "03 · Jira boards",
       "dual": true,
       "phones": [
         {
           "platform": "Native iOS",
+          "state": "jira-drag",
+          "still": "/Users/taf/Projects/taf.sh/public/reel/patchwork-ios-jira-drag.png",
+          "src": {
+            "raw": "/Users/taf/Projects/taf.sh/scripts/patchwork-video/recordings/ios-jira-drag.mp4",
+            "a": 0,
+            "b": 4.6
+          },
+          "timeline": [
+            [
+              0,
+              0
+            ],
+            [
+              1.8,
+              1.7
+            ],
+            [
+              2.3,
+              2.15
+            ],
+            [
+              3.3,
+              2.8
+            ],
+            [
+              4.5,
+              3.7
+            ],
+            [
+              6,
+              4.3
+            ],
+            [
+              9,
+              4.3
+            ]
+          ]
+        },
+        {
+          "platform": "Native Android",
+          "state": "jira-drag",
+          "still": "/Users/taf/Projects/taf.sh/public/reel/patchwork-android-jira-drag.png",
+          "src": {
+            "raw": "/Users/taf/Projects/taf.sh/scripts/patchwork-video/recordings/android-jira-drag.mp4",
+            "a": 0,
+            "b": 8
+          },
+          "timeline": [
+            [
+              0,
+              0
+            ],
+            [
+              1.8,
+              0.9
+            ],
+            [
+              2.3,
+              1.7
+            ],
+            [
+              3.3,
+              4.8
+            ],
+            [
+              4.5,
+              6.5
+            ],
+            [
+              6,
+              7.4
+            ],
+            [
+              9,
+              7.4
+            ]
+          ]
+        }
+      ],
+      "events": [
+        {
+          "at": 2.3,
+          "state": "Drag marker visible"
+        },
+        {
+          "at": 4.5,
+          "state": "PATCH-267 lifted to the same row"
+        }
+      ]
+    },
+    {
+      "id": "appearance",
+      "type": "phone",
+      "n": 4,
+      "dur": 9,
+      "title": "Choose the theme <em>and the accent.</em>",
+      "body": "iOS takes a custom accent. Android pulls Material You colours from your wallpaper, or a fixed palette.",
+      "points": [
+        "System, light and dark themes",
+        "High contrast and pure black OLED modes"
+      ],
+      "showPlatform": false,
+      "note": "",
+      "kicker": "04 · Themes and AI",
+      "dual": true,
+      "phones": [
+        {
+          "platform": "Native iOS",
+          "state": "appearance",
+          "still": "/Users/taf/Projects/taf.sh/public/reel/patchwork-ios-appearance.png",
+          "src": {
+            "raw": "/Users/taf/Projects/taf.sh/scripts/patchwork-video/recordings/ios-appearance.mp4",
+            "a": 0,
+            "b": 4
+          },
+          "timeline": [
+            [
+              0,
+              0
+            ],
+            [
+              2,
+              1.6
+            ],
+            [
+              2.6,
+              2.2
+            ],
+            [
+              3,
+              2.6
+            ],
+            [
+              4.5,
+              3.9
+            ],
+            [
+              9,
+              3.9
+            ]
+          ]
+        },
+        {
+          "platform": "Native Android",
+          "state": "appearance",
+          "still": "/Users/taf/Projects/taf.sh/public/reel/patchwork-android-appearance.png",
+          "src": {
+            "raw": "/Users/taf/Projects/taf.sh/scripts/patchwork-video/recordings/android-appearance.mp4",
+            "a": 0,
+            "b": 4.8
+          },
+          "timeline": [
+            [
+              0,
+              0
+            ],
+            [
+              2,
+              1.6
+            ],
+            [
+              2.6,
+              2.05
+            ],
+            [
+              3,
+              2.5
+            ],
+            [
+              4.5,
+              4.5
+            ],
+            [
+              9,
+              4.5
+            ]
+          ]
+        }
+      ],
+      "events": [
+        {
+          "at": 3,
+          "state": "Light mode on both phones"
+        }
+      ]
+    },
+    {
+      "id": "ai",
+      "type": "phone",
+      "n": 4,
+      "dur": 9,
+      "title": "Bring your <em>own model.</em>",
+      "body": "AI import drafts tasks from a photo of your notes or a typed prompt. Nothing saves until you review it.",
+      "points": [
+        "OpenAI, Anthropic, Google or OpenRouter",
+        "Your key stays on the phone"
+      ],
+      "showPlatform": false,
+      "note": "",
+      "kicker": "04 · Themes and AI",
+      "dual": true,
+      "phones": [
+        {
+          "platform": "Native iOS",
+          "state": "ai",
           "still": "/Users/taf/Projects/taf.sh/public/reel/patchwork-ios-ai.png"
         },
         {
           "platform": "Native Android",
+          "state": "ai",
           "still": "/Users/taf/Projects/taf.sh/public/reel/patchwork-android-ai.png"
         }
       ]
     },
     {
-      "type": "phone",
-      "n": null,
-      "platform": "Native iOS",
-      "dur": 9,
-      "title": "Pick up the <em>next task.</em>",
-      "body": "Your task lists and project boards, on your phone.",
-      "points": [
-        "Source and build instructions on GitHub"
-      ],
-      "showPlatform": false,
-      "note": "github.com/tashifkhan/Patchwork · Sample data in task and board scenes",
-      "kicker": "Patchwork",
-      "dual": true,
+      "id": "close",
+      "type": "close",
+      "dur": 6.5,
+      "title": "Install it. <em>Add your accounts.</em>",
+      "body": "Your lists and boards show up as they are. Nothing to import.",
+      "url": "github.com/tashifkhan/Patchwork",
       "phones": [
         {
-          "platform": "Native iOS",
           "still": "/Users/taf/Projects/taf.sh/public/reel/patchwork-ios-tasks.png"
         },
         {
-          "platform": "Native Android",
-          "still": "/Users/taf/Projects/taf.sh/public/reel/patchwork-android-tasks.png"
+          "still": "/Users/taf/Projects/taf.sh/public/reel/patchwork-android-jira-board.png"
         }
-      ]
+      ],
+      "facts": [
+        {
+          "k": "Android",
+          "v": "F-Droid repo or APK"
+        },
+        {
+          "k": "iOS",
+          "v": "Build from source"
+        },
+        {
+          "k": "Connects to",
+          "v": "CalDAV, Deck, Jira, GitHub"
+        }
+      ],
+      "by": "taf.sh"
     }
   ]
 }

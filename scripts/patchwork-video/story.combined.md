@@ -7,7 +7,7 @@ Keep platform labels only on the first image of each store set and the first vid
 
 ## Story
 
-Open with both phones and a concrete problem. A release checklist is in a task
+Open on a title card, then both phones and a concrete problem. A release checklist is in a task
 list, the setup guide is on a board, and the day has personal tasks too.
 "The work is scattered. Your next step doesn't have to be."
 
@@ -22,13 +22,12 @@ list, the setup guide is on a board, and the day has personal tasks too.
    provider configuration and explain reviewable AI drafts without pretending
    to demonstrate an AI result.
 
-Close with both phones and "Pick up the next task. On your phone."
-Show the source URL. Name iOS and Android only in the opening scene. Keep source
+Close on both phones, the source URL, and a line that says it was built by taf.sh. Name iOS and Android only in the opening scene. Keep source
 integration and storage explanations short so the film follows the work.
 
 Task and board recordings use synthetic local fixtures. Label those video
 scenes as sample data. GitHub and Jira are unconnected in this recording.
-All Android scenes use captured native screens and UI interactions. The final cut is 123.8 seconds.
+All Android scenes use captured native screens and UI interactions. The final cut is 100.7 seconds.
 
 ## Jira revision
 

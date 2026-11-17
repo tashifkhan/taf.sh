@@ -1,34 +1,142 @@
-import {readFileSync,writeFileSync,mkdirSync} from 'node:fs';
-import {dirname,resolve} from 'node:path';
-import {fileURLToPath} from 'node:url';
-const here=dirname(fileURLToPath(import.meta.url)),root=resolve(here,'../..');
-const vid=process.env.VID || '/tmp/patchwork-video';
-const base=JSON.parse(readFileSync(`${here}/composition.ios-preview.json`));
-const shot=(p,n)=>`${root}/public/reel/patchwork-${p}-${n}.png`;
-const src=(p,n,d)=>({raw:`${here}/recordings/${p}-${n}.mp4`,a:0,b:d,speed:1});
-const pair=(a='tasks',b='tasks')=>({dual:true,phones:[{platform:'Native iOS',still:shot('ios',a)},{platform:'Native Android',still:shot('android',b)}]});
-const phone=(n,p,title,body,points,extra={})=>({type:'phone',n,platform:`Native ${p==='ios'?'iOS':'Android'}`,dur:8,title,body,points,showPlatform:false,note:'Sample tasks, Deck cards and Jira issues',kicker:`0${n} · ${['','Decide what needs doing','Turn a task into a next step','Keep the project moving','Choose how you work'][n]}`,...extra});
-const comp={...base,name:'patchwork-native-demo',out:`${root}/public/reel/patchwork-native-demo.mp4`,poster:`${root}/public/reel/patchwork-native-poster.jpg`,posterAt:4,
-scenes:[
-phone(null,'ios','The work is scattered. Pick your <em>next step.</em>','Patchwork brings your tasks and project boards onto your phone.',['CalDAV, Nextcloud Deck and Jira boards','Native apps for iOS and Android'],{...pair(),dur:9,showPlatform:true,kicker:'Patchwork · iOS + Android'}),
-phone(1,'ios','Start with <em>today.</em>','Personal errands and release work share one view, grouped by due date.',['See today, tomorrow and upcoming tasks','Keep each task connected to its list'],{still:shot('ios','tasks'),dur:8}),
-phone(1,'android','Focus on the <em>release.</em>','The day has nine open tasks. Filter the release tag to find the two that belong together.',['Plan the Patchwork release','Publish release notes'],{src:src('android','plan',5),hold:3}),
-phone(1,'android','Remember a word. Find the <em>work.</em>','Search release across tasks and Deck cards, then narrow the results to cards.',['Task notes appear in the results','Switch result types without a new search'],{...pair('search','search'),activePhone:1,src:src('android','search-clean',4.5),hold:3.5}),
-phone(2,'ios','Read before you <em>act.</em>','Open the release task to see what still needs checking before the builds ship.',['Release checks in the same note','The task list stays behind the detail view'],{src:src('ios','detail',9),hold:0}),
-phone(2,'android','The same task. Every <em>detail.</em>','Open the release notes, then check the deadline, tags and source list before you act.',['Markdown and checklist together','Tags, due date and source list in view'],{src:src('android','detail',4.5),hold:2.5}),
-phone(2,'android','Decide what comes <em>next.</em>','Change the release task from High to Medium priority in the full task editor.',['Update priority in the task editor','Deadline and reminder controls alongside'],{src:src('android','priority',4.5),hold:3.5}),
-phone(3,'ios','Your project. On <em>either phone.</em>','Open a populated Jira board with sprint groups, issue keys, priorities and assignees.',['Active sprints and backlog together','Issue details stay connected to the board'],{...pair('jira-board','jira-board'),dur:8}),
-phone(3,'android','Bring your work into <em>focus.</em>','Switch from all issues to work assigned to you or reported by you.',['Choose whose issues load','Narrow by sprint, type or priority'],{...pair('jira-filter','jira-filter'),activePhone:1,src:src('android','jira-filter',5.67),hold:2.33}),
-phone(3,'ios','Find your place in <em>the project.</em>','Choose an issue scope. The board updates to show the work assigned to you or reported by you.',['Assignee and reporter scopes','Sprint groups remain visible'],{src:src('ios','jira-filter',7.5),hold:.5}),
-phone(3,'ios','One sprint. A clearer <em>next step.</em>','Select the active sprint to focus on the work scheduled now.',['Switch with the sprint chips','Return to All for the full board'],{src:src('ios','jira-sprint',4.5),hold:2.5}),
-phone(3,'ios','Pick up a card. Place it <em>where it belongs.</em>','Long press and drag the setup-guide card to a new position on the board.',['The lifted card stays under your finger','A line marks the drop position'],{src:src('ios','jira-drag',4.6),hold:3.4}),
-phone(3,'android','Move the work. Keep <em>the context.</em>','Drag a card while its issue key, priority and assignee remain in view.',['Issue key, priority and assignee stay visible','A drop marker guides placement'],{src:{...src('android','jira-drag',9.3),speed:1.4},hold:1.36}),
-phone(4,'ios','Make room for <em>your way.</em>','Choose light, dark or system appearance, then pick an accent palette.',['Light, dark or system appearance','Accent palettes and contrast options'],{...pair('appearance','appearance'),activePhone:0,src:src('ios','appearance',4.5),hold:3.5,note:''}),
-phone(4,'android','Light or dark. Still <em>Patchwork.</em>','Switch to light mode, then tune the accent and contrast to suit you.',['Theme and accent are your choice','OLED and contrast options in settings'],{...pair('appearance','appearance'),activePhone:1,src:src('android','appearance',4.8),hold:3.2,note:''}),
-phone(4,'android','Choose your <em>AI provider.</em>','Configure providers and models in the app. Bring your own key and review imported task drafts.',['Provider and model configuration','No generated result shown in this film'],{...pair('ai','ai'),dur:8,note:'No API key values shown'}),
-phone(null,'ios','Pick up the <em>next task.</em>','Your task lists and project boards, on your phone.',['Source and build instructions on GitHub'],{...pair(),dur:9,kicker:'Patchwork',note:'github.com/tashifkhan/Patchwork · Sample data in task and board scenes'})
-]};
-mkdirSync(`${vid}/comp`,{recursive:true});
-writeFileSync(`${vid}/comp/${comp.name}.json`,JSON.stringify(comp,null,2));
-writeFileSync(`${here}/composition.combined.json`,JSON.stringify(comp,null,2));
-let t=0;console.log(comp.scenes.map(s=>{let x=t+3;t+=s.src?s.src.b/(s.src.speed||1)+(s.hold??.5):s.dur;return x}).join(','));console.log(`Scene holds total ${t}s before crossfades. See render metadata for final duration.`);
+import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
+import { dirname, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const here = dirname(fileURLToPath(import.meta.url));
+const root = resolve(here, '../..');
+const vid = process.env.VID || '/tmp/patchwork-video';
+const base = JSON.parse(readFileSync(`${here}/composition.ios-preview.json`));
+const shot = (platform, name) => `${root}/public/reel/patchwork-${platform}-${name}.png`;
+const recording = (name, end, start = 0) => ({ raw: `${here}/recordings/${name}.mp4`, a: start, b: end });
+const pair = (state, tracks = {}) => ({
+  dual: true,
+  phones: ['ios', 'android'].map(platform => ({
+    platform: `Native ${platform === 'ios' ? 'iOS' : 'Android'}`,
+    state,
+    still: shot(platform, state),
+    ...tracks[platform],
+  })),
+});
+const chapters = ['', 'Tasks and search', 'One task, up close', 'Jira boards', 'Themes and AI'];
+const scene = (id, n, state, title, body, points, extra = {}) => ({
+  id, type: 'phone', n, dur: 9, title, body, points,
+  showPlatform: false,
+  note: '',
+  kicker: n ? `0${n} · ${chapters[n]}` : 'Patchwork',
+  ...pair(state),
+  ...extra,
+});
+
+const comp = {
+  ...base,
+  name: 'patchwork-native-demo',
+  out: `${root}/public/reel/patchwork-native-demo.mp4`,
+  poster: `${root}/public/reel/patchwork-native-poster.jpg`,
+  posterAt: 3.2,
+  product: { ...base.product, icon: '/Users/taf/Projects/Patchwork/app/assets/images/icon.png' },
+  scenes: [
+    {
+      id: 'opening', type: 'opening', dur: 4.8,
+      title: 'Every task list you have, in one app.',
+      body: 'CalDAV tasks, Deck cards, Jira boards and GitHub issues.',
+    },
+    scene('intro', null, 'tasks', 'Stop checking <em>four apps.</em>',
+      'Patchwork signs in to CalDAV, Nextcloud Deck, Jira and GitHub, then edits your work where it already lives.',
+      ['The phone talks to your servers directly', 'Passwords and API keys stay in secure storage'],
+      { showPlatform: true, kicker: 'Patchwork · iOS + Android' }),
+    scene('tasks', 1, 'tasks', 'Start with <em>today.</em>',
+      'Every list lands in one view, split into Today, Tomorrow and Upcoming.',
+      ['Tag chips filter the list in one tap', 'Each row shows its due date and its list']),
+    scene('search', 1, 'search', 'One search across <em>tasks and cards.</em>',
+      'Searching release finds six matches. Two are tasks and four are Deck cards.',
+      ['Chips narrow the results to tasks or cards', 'Each card names its board and column']),
+    scene('detail', 2, 'detail', 'Open a task <em>inside the list.</em>',
+      'Tap a row and it expands in place to show its Markdown notes and checklist.',
+      ['Tag, due date and list sit under the notes', 'Move it, delete it or open the full editor'], {
+        ...pair('detail', {
+          ios: { src: recording('ios-detail', 5.8, 2), timeline: [[0,0],[2,.5],[2.15,.6],[2.8,1.2],[4,1.8],[6,3.6],[9,3.6]] },
+          android: { src: recording('android-detail', 4.5), timeline: [[0,0],[2,.5],[2.15,.65],[2.8,1.2],[4,2.6],[6,4],[9,4]] },
+        }),
+        events: [{ at: 2, state: 'Open release checklist' }, { at: 4, state: 'Release details visible' }],
+      }),
+    scene('priority', 2, 'editor', 'Edit the <em>whole task.</em>',
+      'The full editor adds priority, deadline and reminder. Here the release task drops from High to Medium.',
+      ['Edits save back to your CalDAV server', 'ETags stop two devices overwriting each other'], {
+        ...pair('editor', {
+          ios: { src: recording('ios-edit', 6.6), timeline: [[0,0],[2,1.7],[2.5,2.2],[3,2.6],[4,3.6],[6,5.6],[9,5.6]] },
+          android: { src: recording('android-priority', 4.5), timeline: [[0,0],[2,1.1],[2.5,1.5],[3,1.8],[4,2.8],[6,4],[9,4]] },
+        }),
+        events: [{ at: 3, state: 'Medium priority selected' }],
+      }),
+    scene('board', 3, 'jira-board', 'Your Jira board, <em>sprints included.</em>',
+      'Columns scroll sideways. Each card carries its issue key, priority and assignee.',
+      ['Sprint chips show the days left', 'Backlog issues sit under the active sprint']),
+    scene('filter', 3, 'jira-filter', 'Show only <em>your issues.</em>',
+      'The filter sheet cuts a board down to issues assigned to you, reported by you, or both.',
+      ['Sprint, type and priority filters stack on top', 'The board subtitle names the active scope'], {
+        ...pair('jira-filter', {
+          ios: { src: recording('ios-jira-filter', 5), timeline: [[0,0],[2,1.6],[2.5,2.2],[3,2.5],[4.2,2.6],[4.7,3.3],[6,4.5],[9,4.5]] },
+          android: { src: recording('android-jira-filter', 5.67), timeline: [[0,.4],[2,.8],[2.5,1.2],[3,1.5],[4.2,4],[4.7,4.7],[6,5.4],[9,5.4]] },
+        }),
+        events: [{ at: 3, state: 'Assigned or reported selected' }, { at: 4.7, state: 'Filtered board visible' }],
+      }),
+    scene('focused-board', 3, 'jira-assigned', 'Six issues become <em>three.</em>',
+      'With Assigned or reported on, To do keeps only your issues, still split by sprint and backlog.',
+      ['PATCH-266 and PATCH-267 in Sprint 14', 'PATCH-270 waiting in the backlog']),
+    scene('drag', 3, 'jira-drag', 'Hold a card and <em>move it.</em>',
+      'A long press lifts PATCH-267. A line shows where the card will land.',
+      ['Dropping it updates the rank in Jira', 'Deck cards drag the same way'], {
+        ...pair('jira-drag', {
+          ios: { src: recording('ios-jira-drag', 4.6), timeline: [[0,0],[1.8,1.7],[2.3,2.15],[3.3,2.8],[4.5,3.7],[6,4.3],[9,4.3]] },
+          android: { src: recording('android-jira-drag', 8), timeline: [[0,0],[1.8,.9],[2.3,1.7],[3.3,4.8],[4.5,6.5],[6,7.4],[9,7.4]] },
+        }),
+        events: [{ at: 2.3, state: 'Drag marker visible' }, { at: 4.5, state: 'PATCH-267 lifted to the same row' }],
+      }),
+    scene('appearance', 4, 'appearance', 'Choose the theme <em>and the accent.</em>',
+      'iOS takes a custom accent. Android pulls Material You colours from your wallpaper, or a fixed palette.',
+      ['System, light and dark themes', 'High contrast and pure black OLED modes'], {
+        note: '',
+        ...pair('appearance', {
+          ios: { src: recording('ios-appearance', 4), timeline: [[0,0],[2,1.6],[2.6,2.2],[3,2.6],[4.5,3.9],[9,3.9]] },
+          android: { src: recording('android-appearance', 4.8), timeline: [[0,0],[2,1.6],[2.6,2.05],[3,2.5],[4.5,4.5],[9,4.5]] },
+        }),
+        events: [{ at: 3, state: 'Light mode on both phones' }],
+      }),
+    scene('ai', 4, 'ai', 'Bring your <em>own model.</em>',
+      'AI import drafts tasks from a photo of your notes or a typed prompt. Nothing saves until you review it.',
+      ['OpenAI, Anthropic, Google or OpenRouter', 'Your key stays on the phone']),
+    {
+      id: 'close', type: 'close', dur: 6.5,
+      title: 'Install it. <em>Add your accounts.</em>',
+      body: 'Your lists and boards show up as they are. Nothing to import.',
+      url: 'github.com/tashifkhan/Patchwork',
+      phones: [
+        { still: shot('ios', 'tasks') },
+        { still: shot('android', 'jira-board') },
+      ],
+      facts: [
+        { k: 'Android', v: 'F-Droid repo or APK' },
+        { k: 'iOS', v: 'Build from source' },
+        { k: 'Connects to', v: 'CalDAV, Deck, Jira, GitHub' },
+      ],
+      by: 'taf.sh',
+    },
+  ],
+};
+
+for (const sc of comp.scenes) {
+  if (sc.type !== 'phone') continue;
+  if (sc.phones.length !== 2 || sc.phones.some(p => p.state !== sc.phones[0].state)) throw Error(`Unmatched states in ${sc.id}`);
+  const animated = sc.phones.filter(p => p.src);
+  if (animated.length && animated.length !== 2) throw Error(`Only one phone moves in ${sc.id}`);
+  for (const p of animated) {
+    if (p.timeline.at(-1)[0] !== sc.dur) throw Error(`Timeline does not cover ${sc.id}`);
+    for (let i = 1; i < p.timeline.length; i++) {
+      if (p.timeline[i][0] <= p.timeline[i-1][0] || p.timeline[i][1] < p.timeline[i-1][1]) throw Error(`Invalid timeline in ${sc.id}`);
+    }
+  }
+}
+mkdirSync(`${vid}/comp`, { recursive: true });
+writeFileSync(`${vid}/comp/${comp.name}.json`, JSON.stringify(comp, null, 2));
+writeFileSync(`${here}/composition.combined.json`, JSON.stringify(comp, null, 2));
+console.log(`${comp.scenes.length} matched scene pairs, ${comp.scenes.filter(s => s.events).length} synchronized interactions.`);

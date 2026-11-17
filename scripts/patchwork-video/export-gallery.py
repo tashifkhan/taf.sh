@@ -8,7 +8,7 @@ root = Path(__file__).resolve().parents[2]
 media = root / 'public/reel'
 store = media / 'patchwork-store'
 frames = Path(os.environ.get('VID', '/tmp/patchwork-video')) / 'frames/patchwork-native-demo'
-for i, timestamp in enumerate([3.5, 26.1, 54.9, 69.3, 89.9, 104.3], 1):
+for i, timestamp in enumerate([8, 24.5, 49.5, 66, 74, 82.5], 1):
     path = frames / f'still-{timestamp}.jpg'
     if path.exists():
         image = Image.open(path).convert('RGB')

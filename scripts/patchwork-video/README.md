@@ -13,7 +13,7 @@ App Store and Google Play screenshot set. Later frames focus on the product.
 
 ## Outputs
 
-- `public/reel/patchwork-native-demo.mp4`, 123.8 seconds, 1920 × 1200, 30 fps.
+- `public/reel/patchwork-native-demo.mp4`, 100.7 seconds, 1920 × 1200, 30 fps.
 - `public/reel/patchwork-native-poster.jpg`.
 - `public/reel/patchwork-1.jpg` through `patchwork-6.jpg`, landscape gallery.
 - `public/reel/patchwork-store/ios/`, eight 1320 × 2868 PNGs.
@@ -35,7 +35,7 @@ API 35. Android uses the bundled release APK. `recordings/sources.json` and
 `recordings/sources.jira.json` records the new Jira board clips. Retained clips use CFR30.
 
 Tasks and Deck boards contain synthetic fixtures served by `demo-server.py`.
-Video scenes label that data. The priority scene shows the native High to Medium
+The priority scene shows the native High to Medium
 UI change. It does not claim a server round trip or cross-device synchronization.
 Jira uses synthetic issues in `jira-fixtures.py`, captured through each native
 client. GitHub is unconnected in this recording. AI settings show provider
