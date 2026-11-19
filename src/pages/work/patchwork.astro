@@ -5,12 +5,10 @@
  * public/media/patchwork/store/{ios,android}, and the film in
  * public/media/patchwork.
  */
-import Arrow from "../../components/Arrow.astro";
 import PageLayout from "../../layouts/PageLayout.astro";
 import { Landing, LandingHero, Section, Shot, LandingVideo, Pinned, Rows, StoreRail, Faq, Routes, Icon } from "../../components/landing";
 import { fdroidRoute, playRoute } from "../../components/landing/fdroid";
 import { reel, media, playStoreApps } from "../../components/studio/data";
-import { projectSlug } from "../../lib/seo";
 import { wrap } from "../../components/studio/ui";
 
 const item = reel.find((entry) => entry.id === "patchwork")!;
@@ -121,9 +119,6 @@ const faq = [
 ---
 
 <PageLayout title="Patchwork" description="Patchwork, one task app for CalDAV, Nextcloud Deck, Jira and GitHub Issues on iOS and Android. A case study by Tashif Ahmad Khan.">
-	<div class:list={[wrap, "mb-8"]}>
-		<a href={`/work/#${projectSlug(item.name)}`} class="text-sm text-muted transition-colors hover:text-foreground"><Arrow dir="left" /> Work</a>
-	</div>
 	<div class={wrap}>
 		<Landing name="patchwork">
 			<LandingHero wide kicker="Patchwork / Mobile app / iOS and Android" title="Every task list, in one app." lead="Patchwork signs in to CalDAV, Nextcloud Deck, Jira and GitHub, and edits your work where it lives.">

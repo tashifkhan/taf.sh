@@ -6,12 +6,10 @@
  * public/media/delhi-metro. The portrait cards are App Store style, but the
  * app ships on Android and the web only.
  */
-import Arrow from "../../components/Arrow.astro";
 import PageLayout from "../../layouts/PageLayout.astro";
 import { Landing, LandingHero, Section, Shot, LandingVideo, Pinned, Rows, StoreRail, Faq, Routes, Icon } from "../../components/landing";
 import { fdroidRoute, playRoute } from "../../components/landing/fdroid";
 import { reel, media, playStoreApps } from "../../components/studio/data";
-import { projectSlug } from "../../lib/seo";
 import { wrap } from "../../components/studio/ui";
 
 const item = reel.find((entry) => entry.id === "delhi-metro")!;
@@ -135,9 +133,6 @@ const faq = [
 ---
 
 <PageLayout title="Delhi NCR Metro" description="Delhi NCR Metro plans trips across Delhi Metro and the Noida Aqua Line, with both fares. Android on F-Droid and the web, by Tashif Ahmad Khan.">
-	<div class:list={[wrap, "mb-8"]}>
-		<a href={`/work/#${projectSlug(item.name)}`} class="text-sm text-muted transition-colors hover:text-foreground"><Arrow dir="left" /> Work</a>
-	</div>
 	<div class={wrap}>
 		<Landing name="delhi-metro">
 			<LandingHero kicker="Delhi NCR Metro / Mobile app / Android and web" title="Two metros, one plan." lead="Plan a trip across Delhi Metro and the Noida Aqua Line, with the fare for each.">

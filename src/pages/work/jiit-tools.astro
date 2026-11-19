@@ -5,7 +5,6 @@ import PageIntro from "../../components/studio/PageIntro.astro";
 import Gallery from "../../components/studio/Gallery.astro";
 import { reel } from "../../components/studio/data";
 import { jiitFigures, jiitHub, jiitTools } from "../../data/jiit-tools";
-import { projectSlug } from "../../lib/seo";
 import { wrap, kicker, h2, chip, btn, btnAccent, btnGhost, btnArrow } from "../../components/studio/ui";
 
 const suite = reel.find(item => item.href === "/work/jiit-tools")!;
@@ -14,9 +13,6 @@ const host = (url: string) => new URL(url).host + new URL(url).pathname.replace(
 ---
 
 <PageLayout title="JIIT Tools Suite" description="JPortal, the JIIT timetable, mess menu, placement portal, Telegram bot and Sophos auto-login. Previews of every tool, built at JIIT by Tashif Ahmad Khan.">
-	<div class:list={[wrap, "mb-8"]}>
-		<a href={`/work/#${projectSlug(suite.name)}`} class="text-sm text-muted transition-colors hover:text-foreground"><Arrow dir="left" /> Work</a>
-	</div>
 	<PageIntro label="Case study / Education" summary="JIIT keeps attendance in a web portal, timetables in one sheet per year, placement posts in SuperSet and hostel Wi-Fi behind a login page that times out. I built tools on top of each while studying there, from 2022 to 2026. Five sites and a Telegram bot, all linked from one hub.">
 		<Fragment slot="title">JIIT Tools <em>Suite.</em></Fragment>
 		<a href={jiitHub} target="_blank" rel="noopener noreferrer" class:list={[btn, btnAccent]}>Open the hub <span class={btnArrow} aria-hidden="true"><Arrow dir="up-right" /></span></a>

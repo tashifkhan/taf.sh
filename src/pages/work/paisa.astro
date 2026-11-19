@@ -4,12 +4,10 @@
  * live in public/media/paisa/landing/screens, the store art in
  * public/media/paisa/store/phone, and the films in public/media/paisa.
  */
-import Arrow from "../../components/Arrow.astro";
 import PageLayout from "../../layouts/PageLayout.astro";
 import { Landing, LandingHero, Section, Shot, LandingVideo, Pinned, MediaSwitcher, Rows, StoreRail, Faq, Routes, Icon } from "../../components/landing";
 import { fdroidRoute, playRoute } from "../../components/landing/fdroid";
 import { reel, media, playStoreApps } from "../../components/studio/data";
-import { projectSlug } from "../../lib/seo";
 import { wrap } from "../../components/studio/ui";
 
 const item = reel.find((entry) => entry.id === "paisa")!;
@@ -159,9 +157,6 @@ const routes = [
 ---
 
 <PageLayout title="Paisa" description="Paisa, an expense manager that reads bank SMS on the phone and keeps the ledger there. Android and the web, by Tashif Ahmad Khan.">
-	<div class:list={[wrap, "mb-8"]}>
-		<a href={`/work/#${projectSlug(item.name)}`} class="text-sm text-muted transition-colors hover:text-foreground"><Arrow dir="left" /> Work</a>
-	</div>
 	<div class={wrap}>
 		<Landing name="paisa">
 			<LandingHero kicker="Paisa / Mobile app / Android and web" title="Your money stays on your phone." lead="Paisa turns bank SMS into transactions on the device, with no account.">

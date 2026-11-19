@@ -7,11 +7,9 @@
  * in public/media/agentic-browser/landing/slides and the film in
  * public/media/agentic-browser.
  */
-import Arrow from "../../components/Arrow.astro";
 import PageLayout from "../../layouts/PageLayout.astro";
 import { Landing, LandingHero, Section, Shot, LandingVideo, Rows, Rail, Faq, Routes, Icon } from "../../components/landing";
 import { reel, media } from "../../components/studio/data";
-import { projectSlug } from "../../lib/seo";
 import { wrap } from "../../components/studio/ui";
 
 const item = reel.find((entry) => entry.id === "agentic-browser")!;
@@ -113,9 +111,6 @@ const faq = [
 ---
 
 <PageLayout title="Agentic Browser" description="Agentic Browser, a side panel whose agents plan, act and check their work on any page, with three-store memory and your own model keys.">
-	<div class:list={[wrap, "mb-8"]}>
-		<a href={`/work/#${projectSlug(item.name)}`} class="text-sm text-muted transition-colors hover:text-foreground"><Arrow dir="left" /> Work</a>
-	</div>
 	<div class={wrap}>
 		<Landing name="agentic-browser">
 			<LandingHero wide kicker="Agentic Browser / AI agents" title="An agent that acts on the page." lead="It plans, clicks and checks its own work in your browser, on the model you choose.">
