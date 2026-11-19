@@ -8,7 +8,7 @@
  * public/media/agentic-browser.
  */
 import PageLayout from "../../layouts/PageLayout.astro";
-import { Landing, LandingHero, Section, Shot, LandingVideo, Rows, Rail, Faq, Routes, Icon } from "../../components/landing";
+import { Landing, LandingHero, Section, Shot, LandingVideo, Rows, Deck, DeckOpen, Faq, Routes, Icon } from "../../components/landing";
 import { reel, media } from "../../components/studio/data";
 import { wrap } from "../../components/studio/ui";
 
@@ -89,6 +89,7 @@ const slideAlt = [
 ];
 const slides = slideAlt.map((alt, i) => ({
 	src: m.file(`landing/slides/${String(i + 1).padStart(2, "0")}.webp`),
+	hd: m.file(`landing/slides/hd/${String(i + 1).padStart(2, "0")}.webp`),
 	alt: `Slide ${i + 1}: ${alt}`,
 }));
 
@@ -197,7 +198,8 @@ const faq = [
 			</Section>
 
 			<Section id="deck" title="The deck." lead="Eighteen slides, from the problem to the results." gap="l">
-				<Rail panels={slides} label="Project deck" width={1280} height={854} wide />
+				<DeckOpen slot="action" />
+				<Deck slides={slides} title="Agentic Browser deck" width={1280} height={853} />
 			</Section>
 
 			<Section id="commands" title="Slash commands." lead="Each one is a tool the agents can also call on their own." layout="side">
