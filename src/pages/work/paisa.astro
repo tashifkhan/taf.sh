@@ -1,0 +1,216 @@
+---
+/**
+ * Paisa case study, ported from the tashif.codes landing. Feature screens
+ * live in public/media/paisa/landing/screens, the store art in
+ * public/media/paisa/store/phone, and the films in public/media/paisa.
+ */
+import Arrow from "../../components/Arrow.astro";
+import PageLayout from "../../layouts/PageLayout.astro";
+import { Landing, LandingHero, Section, Shot, LandingVideo, Pinned, MediaSwitcher, Rows, StoreRail, Faq, Routes, Icon } from "../../components/landing";
+import { fdroidRoute, playRoute } from "../../components/landing/fdroid";
+import { reel, media, playStoreApps } from "../../components/studio/data";
+import { projectSlug } from "../../lib/seo";
+import { wrap } from "../../components/studio/ui";
+
+const item = reel.find((entry) => entry.id === "paisa")!;
+const m = media("paisa");
+const repo = "https://github.com/tashifkhan/Paisa";
+const apk = `${repo}/releases/latest`;
+const webApp = item.live!;
+
+// Every feature screen is cropped to the same size.
+const screen = { width: 650, height: 1462 };
+const shot = (name: string, alt: string) => ({ src: m.file(`landing/screens/${name}.webp`), alt });
+
+// The same four chapters the walkthrough follows.
+const chapters = [
+	{
+		title: "Capture",
+		features: [
+			{ title: "Bank SMS import", body: "Parsers for about 140 Indian banks turn an alert into a transaction on the phone. A bulk scan reads the inbox once, and a live receiver catches new alerts." },
+			{ title: "The source stays attached", body: "Open any imported transaction to read the original message under it." },
+			{ title: "Add with AI", body: 'Type "lunch 240 yesterday, uber 180 today" or attach a receipt. Ask it to change a draft in plain words, then save them together.' },
+			{ title: "Manual entry", body: "A cash expense takes an amount, a title and a category." },
+		],
+		shots: [
+			shot("sms", "A UPI transfer of 460 rupees, parsed from a bank SMS"),
+			shot("source", "The same transaction with the original bank SMS shown under it"),
+			shot("ai", "Two AI drafts, Chaayos and Uber, ready to save"),
+		],
+	},
+	{
+		title: "Review",
+		features: [
+			{ title: "Merchant search", body: "Type a merchant and get every payment to it, with the total." },
+			{ title: "Analytics", body: "Spending by category for a month or a range you pick." },
+			{ title: "Budgets", body: "A monthly cap per category, with progress beside each one." },
+			{ title: "Accounts", body: "Bank, cash, card and wallet balances in one list." },
+		],
+		shots: [
+			shot("search", "Search results for Swiggy, four transactions"),
+			shot("analytics", "Analytics by category with a ring chart"),
+			shot("budgets", "Monthly budgets for food, groceries, shopping and transport"),
+		],
+	},
+	{
+		title: "Make it yours",
+		features: [
+			{ title: "Material You", body: "Wallpaper colours on Android 12 and up, or one of 31 fixed palettes." },
+			{ title: "AMOLED black", body: "Pure black surfaces in dark mode." },
+			{ title: "Contrast, motion and navigation", body: "High contrast, calmer motion and a floating navigation bar are each one switch." },
+		],
+		shots: [
+			shot("appearance", "Appearance settings with wallpaper colours selected"),
+			shot("customize", "Dark appearance settings with AMOLED black and a floating navbar on"),
+			shot("amoled", "The home screen in AMOLED black with the Ocean palette"),
+		],
+	},
+	{
+		title: "Keep it yours",
+		features: [
+			{ title: "Hide amounts", body: "One tap swaps every amount for dots." },
+			{ title: "App lock", body: "A fingerprint, your face or the screen lock, each time you come back." },
+			{ title: "Backup and sync", body: "Google Drive, Nextcloud or a .paisa file, encrypted with AES-256-GCM when you set a password. A phone and a browser can share one destination." },
+		],
+		shots: [
+			shot("hide", "Home screen with every balance replaced by dots"),
+			shot("lock", "Paisa is locked. Unlock with fingerprint, face or device credentials"),
+			shot("backup", "Backup settings with Google Drive and Nextcloud"),
+		],
+	},
+];
+
+const stays = [
+	{ title: "Your SMS", body: "Parsed on the device. Never uploaded." },
+	{ title: "The ledger", body: "Room and SQLite, on the phone." },
+	{ title: "AI keys", body: "Held in EncryptedSharedPreferences." },
+];
+const leaves = [
+	{ title: "A statement", body: "To the AI endpoint you configured, when you import one." },
+	{ title: "A backup", body: "To the Drive, Nextcloud or file you picked." },
+];
+
+// The main walkthrough and the four platform cuts rendered from it.
+const clips = [
+	{ id: "walkthrough", label: "Walkthrough", note: "The full tour, about two minutes, with sound.", ...m.video, width: 1280, height: 800, controls: true },
+	{ id: "phone", label: "Phone", note: "Every phone feature in portrait, about 90 seconds.", ...m.cut("phone"), width: 1280, height: 2276, controls: true },
+	{ id: "foldable", label: "Foldable", note: "Unfolded, a transaction opens beside the list.", ...m.cut("foldable"), width: 1280, height: 800, controls: true },
+	{ id: "tablet", label: "Tablet", note: "From 840dp wide, analytics goes to two columns.", ...m.cut("tablet"), width: 1280, height: 800, controls: true },
+	{ id: "web", label: "Browser", note: "The same Kotlin, compiled to WebAssembly.", ...m.cut("web"), width: 1280, height: 800, controls: true },
+];
+
+const more = [
+	{ title: "Statement import", body: "Feed it PDF, CSV or image statements, several at once. Duplicates across files are dropped." },
+	{ title: "Model ladder", body: "Pick a model per provider and order fallbacks, with your own key." },
+	{ title: "Categories that learn", body: "Your merchant rules run first. Fix a merchant once and the fix sticks." },
+	{ title: "Split with others", body: "A split adds each person's share to what they owe you in Debts." },
+	{ title: "Credit cards", body: "Available credit and what you owe, on the home screen." },
+	{ title: "Export", body: "CSV for a spreadsheet, PDF for a person." },
+	{ title: "Widgets", body: "Your balance and quick add on the home screen." },
+	{ title: "Keyboard in the browser", body: "n adds, / searches, 1 to 6 switch tabs." },
+];
+
+// The store art, in the order of the screenshot pack.
+const storeAlt = [
+	"Paisa overview. Your money, your business.",
+	"A bank SMS recorded as a transaction",
+	"The original bank message beside the parsed transaction",
+	"Add with AI turns a sentence into two drafts",
+	"Manual entry for a coffee",
+	"Analytics by category",
+	"Monthly budgets per category",
+	"All account balances in one list",
+	"Merchant search results",
+	"Material You colours from the wallpaper",
+	"Appearance settings with fixed palettes",
+	"Dark mode with AMOLED black",
+	"Amounts hidden behind dots",
+	"App lock screen",
+	"Unfolded foldable with list and detail",
+	"Tablet layout",
+	"Web app on a wide screen",
+	"Backup destinations",
+	"Paisa on phone, foldable, tablet and web",
+];
+const store = [
+	{
+		id: "phone",
+		label: "Phone",
+		width: 640,
+		height: 1385,
+		panels: storeAlt.map((alt, i) => ({ src: m.file(`store/phone/${String(i + 1).padStart(2, "0")}.webp`), alt })),
+	},
+];
+
+const faq = [
+	{ q: "Do I need an account?", a: "No. There is no sign up and no Paisa server. Setup asks for a currency and a theme." },
+	{ q: "Which banks does SMS import cover?", a: 'About 140 Indian banks. The parsers come from <a href="https://github.com/sarim2000/pennywiseai-tracker" target="_blank" rel="noopener noreferrer">PennyWise</a>. A financial message that no parser claims goes to an unrecognized list instead of vanishing.' },
+	{ q: "Is the AI required?", a: "No. SMS parsing uses on-device parsers and no model. Add with AI and statement import stay off until you add your own key for an OpenAI compatible endpoint, Gemini or Anthropic." },
+	{ q: "Is there an iPhone app?", a: `Not yet. Paisa runs on Android 7.0 and up, and in a recent Chrome, Edge, Firefox or Safari at <a href="${webApp}" target="_blank" rel="noopener noreferrer">paisa.tashif.codes</a>. The browser build can't read SMS, because browsers can't.` },
+	{ q: "What does it cost?", a: `Nothing. Paisa is free under AGPL-3.0, and the source is on <a href="${repo}" target="_blank" rel="noopener noreferrer">GitHub</a>.` },
+];
+
+const routes = [
+	{ title: "APK", body: `The newest build from <a href="${repo}/releases" target="_blank" rel="noopener noreferrer">GitHub releases</a>. A .sha256 file ships beside every build.`, action: { label: "Download APK", href: apk, primary: true, external: true } },
+	fdroidRoute("Paisa"),
+	{ title: "Browser", body: "Nothing to install. Add <code>?demo</code> for three months of sample data.", action: { label: "Open the web demo", href: `${webApp}/?demo`, external: true } },
+	playRoute(playStoreApps[item.name]),
+];
+---
+
+<PageLayout title="Paisa" description="Paisa, an expense manager that reads bank SMS on the phone and keeps the ledger there. Android and the web, by Tashif Ahmad Khan.">
+	<div class:list={[wrap, "mb-8"]}>
+		<a href={`/work/#${projectSlug(item.name)}`} class="text-sm text-muted transition-colors hover:text-foreground"><Arrow dir="left" /> Work</a>
+	</div>
+	<div class={wrap}>
+		<Landing name="paisa">
+			<LandingHero kicker="Paisa / Mobile app / Android and web" title="Your money stays on your phone." lead="Paisa turns bank SMS into transactions on the device, with no account.">
+				<Fragment slot="actions">
+					<a href={apk} target="_blank" rel="noopener noreferrer" class="ld-btn ld-btn-primary"><Icon name="download" /> Download APK</a>
+					<a href={`${webApp}/?demo`} target="_blank" rel="noopener noreferrer" class="ld-btn"><Icon name="globe" /> Open the web demo</a>
+				</Fragment>
+				<Fragment slot="terms">
+					For Android 7.0 and up. Free under AGPL-3.0. <a class="ld-link" href={`${repo}/releases`} target="_blank" rel="noopener noreferrer">Release notes</a>
+				</Fragment>
+				<Shot slot="media" width={720} height={1280}>
+					<LandingVideo src={m.file("landing/phone.mp4")} poster={m.file("landing/phone-poster.webp")} label="Paisa on a phone: an SMS becomes a transaction, then AI drafts, budgets and themes" autoplay />
+				</Shot>
+			</LandingHero>
+
+			<Section id="features" title="Everything it does, in four chapters." gap="s">
+				<Pinned chapters={chapters} {...screen} />
+			</Section>
+
+			<Section id="privacy" title="What leaves the phone." lead="Two things, and only when you send them." layout="side">
+				<div class="ld-rows-group">
+					<h3>Stays on the phone</h3>
+					<Rows rows={stays} />
+				</div>
+				<div class="ld-rows-group">
+					<h3>Leaves when you send it</h3>
+					<Rows rows={leaves} />
+				</div>
+			</Section>
+
+			<Section id="screens" title="One codebase, four screen sizes." lead="The layout follows the window, not the platform. Each cut has its own soundtrack." gap="l">
+				<MediaSwitcher clips={clips} label="Paisa on different screens" name="Paisa" />
+			</Section>
+
+			<Section id="more" title="Also in the app." layout="side">
+				<Rows rows={more} dense />
+			</Section>
+
+			<Section id="store" title="Nineteen store screens." lead="The screenshot set for the app stores, made from real captures." gap="s">
+				<StoreRail sets={store} label="Paisa store screenshots" />
+			</Section>
+
+			<Section id="faq" title="Before you install." layout="side">
+				<Faq items={faq} />
+			</Section>
+
+			<Section id="get" title="Get Paisa." layout="side" gap="l">
+				<Routes routes={routes} />
+			</Section>
+		</Landing>
+	</div>
+</PageLayout>

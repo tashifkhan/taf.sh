@@ -7,6 +7,7 @@
 
 import { videoResponse } from "./video";
 import videoSizes from "./video-manifest.json";
+import mediaRedirects from "./media-redirects.json";
 
 const DEFAULT_CANONICAL_HOST = "taf.sh";
 const API_HOST = "eu.i.posthog.com";
@@ -111,6 +112,15 @@ export default {
 		// people probe /sitemap.xml first. Point the conventional path at it.
 		if (url.pathname === "/sitemap.xml") {
 			url.pathname = "/sitemap-index.xml";
+			return Response.redirect(url.toString(), 301);
+		}
+
+		// Media used to sit flat in /reel/ and /work/tashif-codes/. Resumes,
+		// tashif.codes and old links still point there, so each old file
+		// answers with a permanent redirect to its home in /media/<id>/.
+		const moved = (mediaRedirects as Record<string, string>)[url.pathname];
+		if (moved) {
+			url.pathname = moved;
 			return Response.redirect(url.toString(), 301);
 		}
 

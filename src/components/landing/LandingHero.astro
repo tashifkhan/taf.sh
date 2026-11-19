@@ -1,0 +1,32 @@
+---
+/**
+ * The first screen: a short headline, one sentence, the actions, and a
+ * visual beside them. The headline is the page's only h1. `kicker` names
+ * the project above it, so the h1 can make the claim and the name still
+ * leads. Slots: `actions` for the buttons, `terms` for one small line under
+ * them, `media` for a Shot.
+ */
+import { kicker as kickerClass } from "../studio/ui";
+
+interface Props {
+	title: string;
+	lead: string;
+	/** The project name and what it is, above the headline. */
+	kicker?: string;
+	/** For a landscape visual: the text takes five columns, the media seven. */
+	wide?: boolean;
+}
+
+const { title, lead, kicker, wide = false } = Astro.props;
+---
+
+<section class="ld-hero" data-wide={wide ? "" : undefined}>
+	<div class="ld-hero-text">
+		{kicker && <p class={kickerClass}>{kicker}</p>}
+		<h1 class="ld-display">{title}</h1>
+		<p class="ld-lead">{lead}</p>
+		<div class="ld-actions"><slot name="actions" /></div>
+		{Astro.slots.has("terms") && <p class="ld-small"><slot name="terms" /></p>}
+	</div>
+	<div class="ld-hero-media"><slot name="media" /></div>
+</section>

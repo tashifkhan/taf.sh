@@ -1,0 +1,32 @@
+---
+/**
+ * Questions that open in place. Native <details>, so it works without script.
+ */
+import Icon from "./Icon.astro";
+
+export interface FaqItem {
+	q: string;
+	/** Plain text or trusted HTML. */
+	a: string;
+}
+
+interface Props {
+	items: FaqItem[];
+}
+
+const { items } = Astro.props;
+---
+
+<div class="ld-faq">
+	{
+		items.map((item) => (
+			<details>
+				<summary>
+					{item.q}
+					<Icon name="plus" />
+				</summary>
+				<div class="ld-faq-answer" set:html={item.a} />
+			</details>
+		))
+	}
+</div>

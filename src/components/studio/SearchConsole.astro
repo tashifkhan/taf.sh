@@ -1,0 +1,122 @@
+---
+import { kicker } from "./ui";
+import searchConsole from "../../data/search-console.json";
+import { formatCount, formatDate } from "../../data/web-presence";
+
+/*
+ * Google Search Console for the tashif.codes domain property, from the dated
+ * snapshot in src/data/search-console.json. Refresh it with
+ * `bun scripts/import-search-console.ts <export.zip>`.
+ */
+const data = searchConsole;
+const monthLabel = (month: string) =>
+	new Intl.DateTimeFormat("en-GB", { month: "short", year: "2-digit", timeZone: "UTC" }).format(new Date(`${month}-01`));
+
+// One bar per month, as HTML so each bar can carry a hover and focus label.
+const peak = Math.max(...data.monthly.map(m => m.clicks));
+const bars = data.monthly.map((m, i) => ({
+	...m,
+	height: Math.max(1.5, (m.clicks / peak) * 100),
+	peak: m.clicks === peak,
+	partial: i === 0 || i === data.monthly.length - 1,
+}));
+const peakBar = bars.find(b => b.peak)!;
+const siteTotal = data.sites.reduce((sum, s) => sum + s.clicks, 0);
+const stats = [
+	{ label: "Clicks from Google search", value: formatCount(data.clicks), accent: true },
+	{ label: "Impressions", value: formatCount(data.impressions) },
+	{ label: "Click-through rate", value: `${data.ctr}%` },
+	{ label: "Average position", value: String(data.position) },
+];
+---
+
+<section class="min-w-0 overflow-hidden rounded-lg border border-border bg-surface" aria-labelledby="search-console">
+	<header class="p-6 sm:p-9">
+		<p class={kicker}>03 / Search Console</p>
+		<h2 id="search-console" class="mt-3 font-display text-[clamp(1.5rem,2.6vw,2.1rem)] leading-tight font-medium tracking-[-0.03em]">
+			{formatCount(data.clicks)} clicks from Google, most of them for the JIIT tools.
+		</h2>
+		<p class="mt-3 max-w-[62ch] text-sm leading-7 text-secondary">
+			Search Console for the tashif.codes domain, {formatDate(data.from)} to {formatDate(data.to)}. A domain property counts every subdomain, so this covers the portfolio, the blog, the JIIT tools and the stats APIs together.
+		</p>
+	</header>
+
+	<dl class="grid grid-cols-2 border-t border-border lg:grid-cols-4">
+		{stats.map((stat, i) => (
+			<div class:list={["flex flex-col border-border p-6 sm:p-9", i % 2 === 0 && "border-r", i < 2 && "border-b lg:border-b-0", i === 1 && "lg:border-r", i === 2 && "lg:border-r"]}>
+				<dt class="mt-3 text-sm text-secondary">{stat.label}</dt>
+				<dd class:list={["order-first font-display text-[clamp(1.9rem,3.4vw,3rem)] leading-none font-medium tracking-[-0.05em] tabular-nums", stat.accent && "text-accent"]}>{stat.value}</dd>
+			</div>
+		))}
+	</dl>
+
+	<figure class="border-t border-border p-6 sm:p-9">
+		<figcaption class="flex flex-wrap items-baseline justify-between gap-2">
+			<span class="font-display text-lg font-medium tracking-[-0.02em]">Clicks per month</span>
+			<span class="font-mono text-xs text-muted">peak {formatCount(peak)} in {monthLabel(peakBar.month)}</span>
+		</figcaption>
+		<ol class="mt-5 flex h-36 items-end gap-0.5 border-b border-border sm:h-44" aria-label={`Monthly clicks from Google search for tashif.codes, ${formatDate(data.from)} to ${formatDate(data.to)}. Peak of ${formatCount(peak)} clicks in ${monthLabel(peakBar.month)}. First and last months are partial.`}>
+			{bars.map((bar, i) => (
+				<li class="group/bar relative flex h-full min-w-0 flex-1 items-end" tabindex="0" aria-label={`${monthLabel(bar.month)}${bar.partial ? ", partial" : ""}: ${formatCount(bar.clicks)} clicks, ${formatCount(bar.impressions)} impressions`}>
+					<span class:list={["block w-full rounded-t-[4px] bg-accent transition-opacity group-hover/bar:opacity-75 group-focus-visible/bar:opacity-75", bar.partial && "opacity-45"]} style={`height: ${bar.height.toFixed(1)}%`}></span>
+					<span class:list={["pointer-events-none absolute bottom-full z-10 mb-2 hidden w-max rounded-md border border-border bg-background px-2.5 py-1.5 font-mono text-xs leading-5 text-foreground shadow-sm group-hover/bar:block group-focus-visible/bar:block", i < bars.length / 2 ? "left-0" : "right-0"]} aria-hidden="true">
+						{monthLabel(bar.month)}{bar.partial ? " (partial)" : ""}<br /><span class="text-secondary">{formatCount(bar.clicks)} clicks · {formatCount(bar.impressions)} impr.</span>
+					</span>
+				</li>
+			))}
+		</ol>
+		<div class="mt-2 flex justify-between font-mono text-xs text-muted" aria-hidden="true">
+			<span>{monthLabel(data.monthly[0].month)}</span>
+			<span>{monthLabel(data.monthly[Math.floor(data.monthly.length / 2)].month)}</span>
+			<span>{monthLabel(data.monthly.at(-1)!.month)}</span>
+		</div>
+		<details class="mt-4 text-sm text-secondary">
+			<summary class="cursor-pointer font-mono text-xs text-muted transition-colors hover:text-foreground">Monthly figures as a table</summary>
+			<table class="mt-3 w-full max-w-md text-left text-sm tabular-nums">
+				<thead class="font-mono text-xs text-muted"><tr><th class="py-1.5 font-normal">Month</th><th class="py-1.5 text-right font-normal">Clicks</th><th class="py-1.5 text-right font-normal">Impressions</th></tr></thead>
+				<tbody class="divide-y divide-border">
+					{data.monthly.map(m => <tr><td class="py-1.5">{monthLabel(m.month)}</td><td class="py-1.5 text-right">{formatCount(m.clicks)}</td><td class="py-1.5 text-right">{formatCount(m.impressions)}</td></tr>)}
+				</tbody>
+			</table>
+		</details>
+	</figure>
+
+	<div class="grid border-t border-border md:grid-cols-2">
+		<div class="min-w-0 border-b border-border p-6 sm:p-9 md:border-r md:border-b-0">
+			<h3 class="font-display text-lg font-medium tracking-[-0.02em]">Top searches</h3>
+			<table class="mt-4 w-full text-left text-sm tabular-nums">
+				<thead class="font-mono text-xs text-muted"><tr><th class="pb-2 font-normal">Query</th><th class="pb-2 text-right font-normal">Clicks</th><th class="pb-2 text-right font-normal">Position</th></tr></thead>
+				<tbody class="divide-y divide-border">
+					{data.queries.slice(0, 8).map(q => (
+						<tr>
+							<td class="py-2 pr-3 text-foreground">{q.query}</td>
+							<td class="py-2 text-right text-secondary">{formatCount(q.clicks)}</td>
+							<td class="py-2 text-right text-secondary">{q.position.toFixed(1)}</td>
+						</tr>
+					))}
+				</tbody>
+			</table>
+		</div>
+		<div class="min-w-0 p-6 sm:p-9">
+			<h3 class="font-display text-lg font-medium tracking-[-0.02em]">Clicks by site</h3>
+			<ul class="mt-4 space-y-3.5 text-sm">
+				{data.sites.slice(0, 5).map(site => (
+					<li>
+						<div class="flex items-baseline justify-between gap-3">
+							<span class="truncate font-mono text-xs text-foreground">{site.host}</span>
+							<span class="text-secondary tabular-nums">{formatCount(site.clicks)}</span>
+						</div>
+						<div class="mt-1.5 h-1.5 overflow-hidden rounded-full bg-border/60" aria-hidden="true">
+							<div class="h-full rounded-full bg-accent" style={`width: ${Math.max(1, (site.clicks / siteTotal) * 100).toFixed(1)}%`}></div>
+						</div>
+					</li>
+				))}
+			</ul>
+			<p class="mt-5 text-xs leading-6 text-muted">The JIIT timetable, mess menu and placement portal bring in most of the clicks. The portfolio itself mostly earns impressions.</p>
+		</div>
+	</div>
+
+	<p class="border-t border-border px-6 py-4 text-xs leading-6 text-muted sm:px-9">
+		Exported from Google Search Console on {formatDate(data.exportedAt)}, web search only. Faded bars are partial months. Clicks count visits from Google results to any tashif.codes subdomain. The pageview figures above count analytics on tashif.codes itself, so the two don't add up and aren't meant to.
+	</p>
+</section>

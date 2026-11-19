@@ -5,10 +5,18 @@ import PageIntro from "../../components/studio/PageIntro.astro";
 import usage from "../../data/stats-api-usage.json";
 import { formatCount, formatDate } from "../../data/web-presence";
 import { wrap, kicker, h2, btn, btnAccent, btnGhost, btnArrow } from "../../components/studio/ui";
+import { Landing, Section, Shot, LandingVideo } from "../../components/landing";
+import { statsApis, samplePath } from "../../components/landing/statsApis";
+import { reel, media } from "../../components/studio/data";
 
 const tools = usage.sites.filter(site => site.kind === "tool");
 const others = usage.sites.filter(site => site.kind !== "tool");
 const topApi = Math.max(...usage.perApi.map(row => row.requests));
+const item = reel.find(entry => entry.id === "stats-apis")!;
+const m = media("stats-apis");
+const lead = statsApis.find(api => api.platform === "LeetCode")!;
+const call = `curl https://${lead.host}${samplePath(lead)}`;
+const endpointCount = statsApis.reduce((sum, api) => sum + api.endpoints.length, 0);
 const figures = [
 	{ value: formatCount(usage.requests30d), label: "Requests in the last 30 days" },
 	{ value: formatCount(usage.requests90d), label: "Requests over 90 days" },
@@ -16,18 +24,28 @@ const figures = [
 ];
 ---
 
-<PageLayout title="Stats API usage" description="Who calls the coding platform stats APIs: request counts and every site that embeds them, from Vercel request logs.">
+<PageLayout title="Stats APIs" description="Seven coding platform stats APIs: the walkthrough, every endpoint, request counts and every site that calls them, from Vercel request logs.">
 	<div class:list={[wrap, "mb-8"]}>
 		<a href="/work/#coding-platforms-stats-apis" class="text-sm text-muted transition-colors hover:text-foreground"><Arrow dir="left" /> Work</a>
 	</div>
-	<PageIntro label="Usage / Developer tools" summary="Seven public REST APIs for GitHub, LeetCode, Codeforces, GeeksforGeeks, CodeChef, HackerRank and takeUforward. Nobody signs up, so the only record of who uses them is where the requests come from. This page lists those sites.">
+	<PageIntro label="Case study / Developer tools" summary="Seven public REST APIs for GitHub, LeetCode, Codeforces, GeeksforGeeks, CodeChef, HackerRank and takeUforward. No key and no sign up. Below: the walkthrough, every endpoint, and the sites that call them.">
 		<Fragment slot="title">Stats APIs, <em>in use.</em></Fragment>
 		<a href="https://codetrace.xyz" target="_blank" rel="noopener noreferrer" class:list={[btn, btnAccent]}>Open CodeTrace <span class={btnArrow} aria-hidden="true"><Arrow dir="up-right" /></span></a>
 		<a href="https://leetcode-stats.tashif.codes" target="_blank" rel="noopener noreferrer" class:list={[btn, btnGhost]}>Try an API <span class={btnArrow} aria-hidden="true"><Arrow dir="up-right" /></span></a>
 	</PageIntro>
 
 	<div class:list={[wrap, "pb-16 sm:pb-24"]}>
-		<div class="min-w-0 overflow-hidden rounded-lg border border-border bg-surface">
+		<Landing name="stats-apis">
+			<Shot width={1280} height={800}>
+				<LandingVideo {...item.video!} label="A walkthrough of the seven stats APIs and their playgrounds" controls />
+			</Shot>
+			<div class="sa-try">
+				<h2>One call, no key.</h2>
+				<code class="ld-code">{call}</code>
+			</div>
+		</Landing>
+
+		<div class="mt-16 min-w-0 overflow-hidden rounded-lg border border-border bg-surface sm:mt-24">
 			<dl class="grid sm:grid-cols-3">
 				{figures.map((fig, i) => <div class:list={["flex flex-col border-border p-6 sm:p-9", i < 2 && "border-b sm:border-b-0 sm:border-r"]}>
 					<dt class="mt-3 text-sm text-secondary">{fig.label}</dt>
@@ -46,6 +64,39 @@ const figures = [
 			</div>
 			<p class="border-t border-border px-6 py-4 text-xs leading-6 text-muted sm:px-9">{formatDate(usage.from)} to {formatDate(usage.to)}. Source: {usage.source}. {formatCount(usage.uniqueIps30d)} unique IP addresses in 30 days. About two thirds of requests carry no referrer (servers, scripts and READMEs), so the real number of users is higher than this list.</p>
 		</div>
+
+		<Landing name="stats-apis">
+			<Section id="endpoints" title="Seven platforms, one shape." lead={`${endpointCount} endpoints. Each API returns profiles, stats and activity in the same JSON layout, so one client reads them all.`} gap="s">
+				<div class="sa-apis">
+					{statsApis.map(api => (
+						<section id={api.slug} class="sa-api" aria-labelledby={`${api.slug}-name`}>
+							<div class="sa-api-head">
+								<h3 id={`${api.slug}-name`}>{api.platform}</h3>
+								<a class="ld-link" href={`https://${api.host}`} target="_blank" rel="noopener noreferrer">{api.host}</a>
+								<p>{api.angle}</p>
+							</div>
+							<dl class="sa-endpoints">
+								{api.endpoints.map(endpoint => (
+									<div>
+										<dt><code>{endpoint.path}</code></dt>
+										<dd>{endpoint.body}</dd>
+									</div>
+								))}
+							</dl>
+						</section>
+					))}
+				</div>
+				<p class="sa-note">
+					Forgejo, Gitea and Codeberg share one self-hosted adapter, <a class="ld-link" href="https://github.com/tashifkhan/GitHost-Stats-API" target="_blank" rel="noopener noreferrer">GitHost Stats API</a>. <a class="ld-link" href="/work/codetrace/">CodeTrace</a> is the dashboard built on all of them.
+				</p>
+			</Section>
+
+			<Section id="screens" title="A playground on every API." gap="s">
+				<div class="ld-shots">
+					{item.shots.map((src, i) => <Shot src={src} alt={`Stats API playground, screen ${i + 1}`} width={1440} height={900} />)}
+				</div>
+			</Section>
+		</Landing>
 
 		<section class="mt-16 sm:mt-24" aria-labelledby="tools">
 			<p class={kicker}>Fig 2. Tools and colleges</p>
@@ -71,3 +122,76 @@ const figures = [
 		</section>
 	</div>
 </PageLayout>
+
+<style>
+	.sa-try {
+		display: grid;
+		gap: var(--ld-space-md);
+		margin-top: var(--ld-space-xl);
+		min-width: 0;
+	}
+	.sa-try h2 {
+		font-size: var(--ld-text-title);
+	}
+	.sa-apis {
+		display: grid;
+		gap: var(--ld-space-2xl);
+	}
+	.sa-api {
+		display: grid;
+		gap: var(--ld-space-lg);
+		scroll-margin-top: var(--ld-sticky-top);
+	}
+	.sa-api-head {
+		display: grid;
+		gap: var(--ld-space-xs);
+		align-content: start;
+		min-width: 0;
+	}
+	.sa-api-head a {
+		font-family: var(--ld-font-code);
+		font-size: var(--ld-text-sm);
+		overflow-wrap: anywhere;
+	}
+	.sa-api-head p {
+		color: var(--ld-muted);
+	}
+	.sa-endpoints {
+		display: grid;
+		margin: 0;
+		border-top: 1px solid var(--ld-rule);
+	}
+	.sa-endpoints > div {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr);
+		gap: var(--ld-space-2xs);
+		padding-block: var(--ld-space-sm);
+		border-bottom: 1px solid var(--ld-rule);
+	}
+	.sa-endpoints dt code {
+		font-weight: 500;
+		overflow-wrap: anywhere;
+	}
+	.sa-endpoints dd {
+		margin: 0;
+		color: var(--ld-muted);
+	}
+	.sa-note {
+		margin-top: var(--ld-space-xl);
+		max-width: 60ch;
+		color: var(--ld-muted);
+	}
+	@media (min-width: 40rem) {
+		.sa-endpoints > div {
+			grid-template-columns: minmax(0, 6fr) minmax(0, 6fr);
+			column-gap: var(--ld-gap-columns);
+			align-items: baseline;
+		}
+	}
+	@media (min-width: 60rem) {
+		.sa-api {
+			grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+			column-gap: var(--ld-gap-columns);
+		}
+	}
+</style>

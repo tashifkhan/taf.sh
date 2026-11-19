@@ -1,0 +1,127 @@
+---
+/**
+ * CodeTrace case study, ported from the tashif.codes landing. The film and
+ * screens live in public/media/codetrace. The seven APIs under it have
+ * their own case study at /work/stats-apis.
+ */
+import Arrow from "../../components/Arrow.astro";
+import PageLayout from "../../layouts/PageLayout.astro";
+import { Landing, LandingHero, Section, Shot, LandingVideo, Rows, Icon } from "../../components/landing";
+import { statsApis } from "../../components/landing/statsApis";
+import { reel, media } from "../../components/studio/data";
+import usage from "../../data/stats-api-usage.json";
+import { formatCount } from "../../data/web-presence";
+import { projectSlug } from "../../lib/seo";
+import { wrap } from "../../components/studio/ui";
+
+const item = reel.find((entry) => entry.id === "codetrace")!;
+const m = media("codetrace");
+const repo = "https://github.com/tashifkhan/CodeTrace";
+const sample = "https://codetrace.xyz/app?github=tashifkhan&leetcode=khan-tashif";
+
+const features = [
+	{ title: "One dashboard", body: "Type the usernames you have, on all seven platforms or any few, and get one summary." },
+	{ title: "One heatmap", body: "Daily commits and submissions from every platform land on a single calendar." },
+	{ title: "A page per platform", body: "Rating history, solved counts by difficulty and top languages, each with its own charts." },
+	{ title: "A link you can share", body: "The usernames live in the URL, so the address is the profile. Sign in with Google to claim a short one." },
+];
+
+// Captured from codetrace.xyz on 19 November 2026, for tashifkhan on GitHub
+// and khan-tashif on LeetCode.
+const screens = [
+	{ src: item.shots[0], alt: "The unified profile: GitHub commits and LeetCode solved at the top, then the GitHub card with languages and pinned repositories beside the LeetCode card" },
+	{ src: item.shots[1], alt: "The GitHub page: streaks, total commits, stars and the full language breakdown" },
+	{ src: item.shots[2], alt: "The GitHub contribution heatmap for 2026, then pinned repositories" },
+	{ src: item.shots[3], alt: "The LeetCode page: total solved, global rank, acceptance rate and problems by difficulty" },
+];
+---
+
+<PageLayout title="CodeTrace" description="CodeTrace puts coding profiles from GitHub, LeetCode, Codeforces and four more on one page, on seven stats APIs. By Tashif Ahmad Khan.">
+	<div class:list={[wrap, "mb-8"]}>
+		<a href={`/work/#${projectSlug(item.name)}`} class="text-sm text-muted transition-colors hover:text-foreground"><Arrow dir="left" /> Work</a>
+	</div>
+	<div class={wrap}>
+		<Landing name="codetrace">
+			<LandingHero wide kicker="CodeTrace / Developer tool" title="Your coding profiles, on one page." lead="CodeTrace reads seven platforms and draws them as one dashboard.">
+				<Fragment slot="actions">
+					<a href={sample} target="_blank" rel="noopener noreferrer" class="ld-btn ld-btn-primary"><Icon name="external" /> See a live profile</a>
+					<a href={repo} target="_blank" rel="noopener noreferrer" class="ld-btn"><Icon name="github" /> Source</a>
+				</Fragment>
+				<Fragment slot="terms">Free. No account needed to look someone up.</Fragment>
+				<Shot slot="media" width={1280} height={800}>
+					<LandingVideo {...m.video} label="CodeTrace walkthrough: a combined dashboard, then one page per platform" controls />
+				</Shot>
+			</LandingHero>
+
+			<Section id="features" title="What it shows." layout="side" gap="s">
+				<Rows rows={features} />
+			</Section>
+
+			<Section id="screens" title="The dashboard." gap="l">
+				<div class="ld-shots">
+					{screens.map((screen) => <Shot src={screen.src} alt={screen.alt} width={1920} height={1200} />)}
+				</div>
+			</Section>
+
+			<Section
+				id="apis"
+				title="Seven APIs under it."
+				lead="None of these platforms hands out this data in one shape, so I wrote an API for each. They are free to use on their own."
+				layout="side"
+			>
+				<ul class="ct-apis">
+					{statsApis.map((api) => (
+						<li>
+							<a href={`/work/stats-apis/#${api.slug}`}>{api.platform}</a>
+							<span>{api.endpoints.length} endpoints</span>
+						</li>
+					))}
+				</ul>
+				<p class="ct-usage">
+					{formatCount(usage.requests30d)} requests in the last 30 days, from {usage.externalSites}+ other sites.
+					<a class="ld-link" href="/work/stats-apis/">The APIs, the film and who calls them</a>
+				</p>
+			</Section>
+		</Landing>
+	</div>
+</PageLayout>
+
+<style>
+	.ct-apis {
+		display: grid;
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		border-top: 1px solid var(--ld-rule);
+	}
+	.ct-apis li {
+		display: flex;
+		align-items: baseline;
+		justify-content: space-between;
+		gap: var(--ld-space-lg);
+		padding-block: var(--ld-space-md);
+		border-bottom: 1px solid var(--ld-rule);
+	}
+	.ct-apis a {
+		font-family: var(--ld-font-display);
+		font-size: var(--ld-text-title);
+		font-weight: 700;
+		letter-spacing: -0.02em;
+		line-height: 1.2;
+	}
+	.ct-apis a:hover {
+		color: var(--ld-accent);
+	}
+	.ct-apis span {
+		font-size: var(--ld-text-sm);
+		font-variant-numeric: tabular-nums;
+		color: var(--ld-muted);
+	}
+	.ct-usage {
+		display: grid;
+		gap: var(--ld-space-sm);
+		justify-items: start;
+		margin-top: var(--ld-space-lg);
+		color: var(--ld-muted);
+	}
+</style>

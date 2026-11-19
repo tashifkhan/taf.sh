@@ -1,0 +1,161 @@
+---
+/**
+ * Patchwork case study, ported from the tashif.codes landing. Feature
+ * screens live in public/media/patchwork/landing/screens, the store art in
+ * public/media/patchwork/store/{ios,android}, and the film in
+ * public/media/patchwork.
+ */
+import Arrow from "../../components/Arrow.astro";
+import PageLayout from "../../layouts/PageLayout.astro";
+import { Landing, LandingHero, Section, Shot, LandingVideo, Pinned, Rows, StoreRail, Faq, Routes, Icon } from "../../components/landing";
+import { fdroidRoute, playRoute } from "../../components/landing/fdroid";
+import { reel, media, playStoreApps } from "../../components/studio/data";
+import { projectSlug } from "../../lib/seo";
+import { wrap } from "../../components/studio/ui";
+
+const item = reel.find((entry) => entry.id === "patchwork")!;
+const m = media("patchwork");
+const repo = "https://github.com/tashifkhan/Patchwork";
+const apk = `${repo}/releases/latest`;
+
+const screen = { width: 600, height: 1334 };
+const shot = (name: string, alt: string) => ({ src: m.file(`landing/screens/${name}.webp`), alt });
+
+const chapters = [
+	{
+		title: "Tasks",
+		features: [
+			{ title: "CalDAV, from any server", body: "Nextcloud or anything else that speaks CalDAV. Subtasks, tags, priorities, due dates, reminders and Markdown notes." },
+			{ title: "Two devices, no lost edits", body: "Every save checks the server's ETag first, so a phone and a tablet can't quietly overwrite each other." },
+			{ title: "A full editor", body: "Notes render as Markdown, with a checklist you can tick from the task." },
+		],
+		shots: [
+			shot("tasks", "Task list grouped by today, tomorrow and upcoming"),
+			shot("detail", "A task with Markdown notes and a checklist"),
+			shot("editor", "The task editor"),
+		],
+	},
+	{
+		title: "Boards",
+		features: [
+			{ title: "Nextcloud Deck", body: "Drag cards, reorder columns, and create or edit anything from the app." },
+			{ title: "Jira", body: "Sprints, a backlog and a full issue editor. Dragging a card updates its rank on the server." },
+			{ title: "GitHub Issues", body: "Across repositories. Sign in with device flow or a token, then create, close and reopen." },
+			{ title: "More than one account", body: "Several Jira and GitHub logins at once." },
+		],
+		shots: [
+			shot("boards", "Boards from Jira and Nextcloud Deck"),
+			shot("jira-board", "A Jira sprint board"),
+			shot("jira-drag", "Dragging a card between Jira columns"),
+		],
+	},
+	{
+		title: "Find it",
+		features: [
+			{ title: "Search across everything", body: "One search over tasks, lists and tags." },
+			{ title: "Jira filters", body: "By sprint, by type, or only what is assigned to you." },
+		],
+		shots: [
+			shot("search", "Search with lists and tags"),
+			shot("jira-filter", "Jira filters by sprint and type"),
+			shot("jira-assigned", "Jira issues assigned to me"),
+		],
+	},
+	{
+		title: "Make it yours",
+		features: [
+			{ title: "AI import, with your own model", body: "Photograph handwritten notes or describe what you need, and it drafts tasks. You review each one before it is saved." },
+			{ title: "Nine providers", body: "OpenAI, Anthropic, Google, DeepSeek, OpenRouter, NVIDIA, OpenCode Zen, RelayRoom, or any OpenAI compatible endpoint." },
+			{ title: "Material You", body: "Wallpaper colours on Android, a custom accent on iOS, high contrast, and pure black for OLED." },
+		],
+		shots: [
+			shot("ai", "AI import provider with a model list"),
+			shot("appearance", "Theme and colour palette settings"),
+			shot("settings", "Settings with integrations"),
+		],
+	},
+];
+
+const more = [
+	{ title: "Voice dictation", body: "Say a task instead of typing it." },
+	{ title: "Widgets", body: "Today and upcoming tasks on the Android home screen." },
+	{ title: "Calendar", body: "Add a task to a calendar on the device." },
+	{ title: "Tablets and foldables", body: "Layouts that use the extra width." },
+	{ title: "No Patchwork server", body: "Credentials and API keys sit in the device's secure storage, and the app talks to your servers directly." },
+];
+
+// The eight store screens, the same set on each platform.
+const storeScreens = [
+	["01-tasks", "Tasks grouped by day"],
+	["02-detail", "A task with Markdown notes and a checklist"],
+	["03-boards", "Boards from Jira and Nextcloud Deck"],
+	["04-search", "Search across tasks, lists and tags"],
+	["05-appearance", "Theme and colour settings"],
+	["06-ai", "AI import drafting tasks from a note"],
+	["07-filters", "Jira filters by sprint and type"],
+	["08-drag", "Dragging a card between Jira columns"],
+];
+const storeSet = (platform: "ios" | "android", label: string, height: number) => ({
+	id: platform,
+	label,
+	width: 640,
+	height,
+	panels: storeScreens.map(([file, alt]) => ({ src: m.file(`store/${platform}/${file}.webp`), alt: `${label}: ${alt}` })),
+});
+const store = [storeSet("ios", "iOS", 1391), storeSet("android", "Android", 1422)];
+
+const routes = [
+	fdroidRoute("Patchwork"),
+	{ title: "APK", body: `The newest build from <a href="${repo}/releases" target="_blank" rel="noopener noreferrer">GitHub releases</a>.`, action: { label: "Download APK", href: apk, primary: true, external: true } },
+	{ title: "iOS", body: `Build it yourself from <a href="${repo}#building-the-ios-app" target="_blank" rel="noopener noreferrer">the source</a>. It is not on the App Store.` },
+	playRoute(playStoreApps[item.name]),
+];
+
+const faq = [
+	{ q: "Does it need Nextcloud?", a: "No. Each integration works alone. Use only GitHub Issues, or only Jira, or any CalDAV server." },
+	{ q: "Where do my passwords go?", a: "Into the device's secure storage. The app calls your servers directly, and nothing passes through a server of mine." },
+	{ q: "Is the AI required?", a: "No. AI import is off until you add your own key." },
+	{ q: "Is there a web or Mac app?", a: "Both are in progress and not shipped. Slack and Linear integrations are planned too." },
+	{ q: "What does it cost?", a: `Nothing. Patchwork is MIT licensed, and the source is on <a href="${repo}" target="_blank" rel="noopener noreferrer">GitHub</a>.` },
+];
+---
+
+<PageLayout title="Patchwork" description="Patchwork, one task app for CalDAV, Nextcloud Deck, Jira and GitHub Issues on iOS and Android. A case study by Tashif Ahmad Khan.">
+	<div class:list={[wrap, "mb-8"]}>
+		<a href={`/work/#${projectSlug(item.name)}`} class="text-sm text-muted transition-colors hover:text-foreground"><Arrow dir="left" /> Work</a>
+	</div>
+	<div class={wrap}>
+		<Landing name="patchwork">
+			<LandingHero wide kicker="Patchwork / Mobile app / iOS and Android" title="Every task list, in one app." lead="Patchwork signs in to CalDAV, Nextcloud Deck, Jira and GitHub, and edits your work where it lives.">
+				<Fragment slot="actions">
+					<a href={apk} target="_blank" rel="noopener noreferrer" class="ld-btn ld-btn-primary"><Icon name="download" /> Download APK</a>
+					<a href={repo} target="_blank" rel="noopener noreferrer" class="ld-btn"><Icon name="github" /> Source</a>
+				</Fragment>
+				<Fragment slot="terms">Android 7.0 and up. iOS builds from source. Free under MIT.</Fragment>
+				<Shot slot="media" width={1280} height={800}>
+					<LandingVideo {...m.video} label="Patchwork on iOS and Android: tasks, Jira boards, filters and dragging a card" controls />
+				</Shot>
+			</LandingHero>
+
+			<Section id="features" title="Four services, one list." gap="s">
+				<Pinned chapters={chapters} {...screen} />
+			</Section>
+
+			<Section id="store" title="The store screens." lead="Eight screens per platform, made from the native iOS and Android builds." gap="l">
+				<StoreRail sets={store} label="Patchwork store screenshots" />
+			</Section>
+
+			<Section id="more" title="Also in the app." layout="side">
+				<Rows rows={more} dense />
+			</Section>
+
+			<Section id="faq" title="Before you install." layout="side" gap="l">
+				<Faq items={faq} />
+			</Section>
+
+			<Section id="get" title="Get Patchwork." layout="side">
+				<Routes routes={routes} />
+			</Section>
+		</Landing>
+	</div>
+</PageLayout>

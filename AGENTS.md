@@ -77,8 +77,28 @@ Canvas UI supplies the ambient effect on each product page body: RetroDither on 
 - `src/layouts/Layout.astro` — base HTML shell (fonts, meta, Nav + Footer)
 - `src/components/` — `Nav.astro`, `Footer.astro`, `Logo.astro` (shell-prompt mark: pixel `>` chevron + blinking accent block cursor), `ProductPage.astro` (shared layout for product pages)
 - Inline `<svg>` needs `width`/`height` attributes alongside its sizing class. An SVG with only a `viewBox` lays out at 100% of its container, so while the stylesheet is in flight the mark fills the viewport; the attributes are the CSS-less fallback and the class still wins once styles land
-- `src/pages/` — `index`, `services`, `about`, `contact`, `products/{talentsync,talentsync-hr,cliniq}`, `design/` (design lab)
+- `src/pages/` — `index`, `services`, `about`, `contact`, `products/{talentsync,talentsync-hr,rah-clinic,systematic-reasoning}`, `work/` (index, one case study per project, `tashif-codes`), `design/` (design lab)
 - New product pages should use the `ProductPage` component to stay consistent
+
+## Projects and media
+
+Every project in the reel has one id, and that id names all of its parts. Keep them in step when adding or renaming one.
+
+| Part | Where |
+|---|---|
+| Reel entry | `reel` in `src/components/studio/data.ts` |
+| Page | `/products/<id>` for products and team work, `/work/<id>` for mobile apps and tools. `pageFor()` derives `href` from the group, so a title never points off the site |
+| Media the site serves | `public/media/<id>/` |
+| Film and screenshot sources | `video/<id>/`, ignored by git and kept on disk only |
+
+- Groups are `product`, `team`, `app` (shown as "Mobile apps") and `shenanigan`. The reel panel, the homepage and `/work` all list by group
+- Outbound places (the running app, source, releases, stores, F-Droid) go in `live` and `links`, never in `href`
+- Inside `public/media/<id>/`: `demo.mp4` and `poster.jpg` for the main film, `cuts/<name>.mp4` with `cuts/<name>.jpg` for other cuts, `shots/<n>.jpg` (or `.webp`) for the landscape gallery, `store/<platform>/<nn>.webp` for store screenshots at 640px wide, and `landing/` for images used only by the case study. The Agentic Browser deck PDF is the one document served from here. Use the `media(id)` helper rather than typing paths
+- Only files a page references belong in `public/`. Raw captures, full-size store PNGs, screenshot zips and recordings stay in `video/<id>/assets/`. The site offers no download packs
+- Media used to sit flat in `/reel/` and `/work/tashif-codes/`. `worker/media-redirects.json` maps each old URL to its new one, and the Worker answers with a 301 because resume PDFs and tashif.codes still link the old paths. Keep an entry while its target exists. A test fails if a target is missing
+- Workers Assets caps each file at 25 MiB. Several films sit near it, so check the size before replacing one. `bun run media:manifest` (part of the build) records MP4 sizes for the range-request shim in `worker/video.ts`
+- Case studies were ported from tashif.codes' landing kit and now live here. tashif.codes keeps the repo index, READMEs, releases, docs, the F-Droid repo and the blog
+- `/work/tashif-codes` shows a Search Console snapshot from `src/data/search-console.json`. Refresh it with `bun scripts/import-search-console.ts <export.zip>`, as described in `src/data/README.md`
 
 ## Design lab
 

@@ -1,0 +1,99 @@
+---
+/**
+ * The store screenshots for an app, one Rail per platform behind a
+ * segmented control. With a single platform the control is left out.
+ *
+ * The images are WebP copies in public/media/<id>/store/<platform>/, sized
+ * for the page. The full-size originals live in video/<id>/assets/store/,
+ * which is kept out of git.
+ */
+import Rail, { type Panel } from "./Rail.astro";
+
+export interface StoreSet {
+	id: string;
+	label: string;
+	panels: Panel[];
+	width: number;
+	height: number;
+	/** Landscape screens, such as the web app: wider cards. */
+	wide?: boolean;
+}
+
+interface Props {
+	sets: StoreSet[];
+	/** Accessible name for the control and the rows. */
+	label: string;
+}
+
+const { sets, label } = Astro.props;
+const tabs = sets.length > 1;
+const key = (set: StoreSet) => `ld-store-${set.id}`;
+---
+
+<div data-ld-store>
+	{
+		tabs && (
+			<div class="ld-switch-bar">
+				<div role="tablist" aria-label={label} class="ld-tabs">
+					{sets.map((set, i) => (
+						<button
+							type="button"
+							role="tab"
+							id={`${key(set)}-tab`}
+							aria-controls={key(set)}
+							aria-selected={i === 0 ? "true" : "false"}
+							tabindex={i === 0 ? 0 : -1}
+							class="ld-tab"
+						>
+							{set.label}
+						</button>
+					))}
+				</div>
+			</div>
+		)
+	}
+	{
+		sets.map((set, i) => (
+			<div
+				id={key(set)}
+				role={tabs ? "tabpanel" : undefined}
+				aria-labelledby={tabs ? `${key(set)}-tab` : undefined}
+				hidden={i !== 0}
+			>
+				<Rail panels={set.panels} label={`${label}, ${set.label}`} width={set.width} height={set.height} wide={set.wide} />
+			</div>
+		))
+	}
+</div>
+
+<script>
+	function initStores() {
+		document.querySelectorAll<HTMLElement>("[data-ld-store]:not([data-wired])").forEach((root) => {
+			root.dataset.wired = "true";
+			const tabs = [...root.querySelectorAll<HTMLElement>('[role="tab"]')];
+			const select = (tab: HTMLElement, focus = false) => {
+				for (const t of tabs) {
+					const on = t === tab;
+					t.setAttribute("aria-selected", String(on));
+					t.tabIndex = on ? 0 : -1;
+					const panel = document.getElementById(t.getAttribute("aria-controls") ?? "");
+					if (panel) panel.hidden = !on;
+				}
+				// A rail measured while hidden has no width. Let it count again.
+				window.dispatchEvent(new Event("resize"));
+				if (focus) tab.focus({ preventScroll: true });
+			};
+			tabs.forEach((tab, i) => {
+				tab.addEventListener("click", () => select(tab));
+				tab.addEventListener("keydown", (e) => {
+					const step = e.key === "ArrowRight" ? 1 : e.key === "ArrowLeft" ? -1 : 0;
+					if (!step) return;
+					e.preventDefault();
+					select(tabs[(i + step + tabs.length) % tabs.length], true);
+				});
+			});
+		});
+	}
+
+	initStores();
+</script>

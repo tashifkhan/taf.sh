@@ -1,5 +1,6 @@
 import { describe, expect, test } from "bun:test";
 import worker from "./index";
+import videoSizes from "./video-manifest.json";
 
 const ctx = { waitUntil() {} } as ExecutionContext;
 function environment(overrides: Partial<Env> = {}, status = 200) {
@@ -19,6 +20,15 @@ describe("SEO routing", () => {
 		const response = await worker.fetch(new Request(`https://taf.sh${path}?source=old`), environment(), ctx);
 		expect(response.status).toBe(301);
 		expect(response.headers.get("Location")).toBe("https://taf.sh/products/rah-clinic/?source=old");
+	});
+	test("old flat media paths redirect to their project folder", async () => {
+		const response = await worker.fetch(new Request("https://taf.sh/reel/paisa-demo.mp4"), environment(), ctx);
+		expect(response.status).toBe(301);
+		expect(response.headers.get("Location")).toBe("https://taf.sh/media/paisa/demo.mp4");
+	});
+	test("every media redirect points at a file that exists", async () => {
+		const targets = Object.values((await import("./media-redirects.json")).default as Record<string, string>);
+		for (const target of targets) expect(await Bun.file(`public${target}`).exists()).toBe(true);
 	});
 	test("conventional sitemap path redirects to the generated index", async () => {
 		const response = await worker.fetch(new Request("https://taf.sh/sitemap.xml"), environment(), ctx);
@@ -58,7 +68,7 @@ describe("video streaming", () => {
 		["bytes=0-3", 0, 3], ["bytes=4-10", 4, 10], ["bytes=17-", 17, 19],
 		["bytes=0-999", 0, 19], ["bytes=-4", 16, 19], ["bytes=-99", 0, 19],
 	] as const) test(`serves ${range} when Assets ignores the range`, async () => {
-		const response = await worker.fetch(new Request("https://taf.sh/reel/stats-api-demo.mp4", {
+		const response = await worker.fetch(new Request("https://taf.sh/media/stats-apis/demo.mp4", {
 			headers: { Range: range },
 		}), fullVideo(), ctx);
 		expect(response.status).toBe(206);
@@ -67,7 +77,7 @@ describe("video streaming", () => {
 		expect([...new Uint8Array(await response.arrayBuffer())]).toEqual([...bytes.slice(start, end + 1)]);
 	});
 	for (const range of ["bytes=20-", "bytes=-0"]) test(`rejects unsatisfiable ${range}`, async () => {
-		const response = await worker.fetch(new Request("https://taf.sh/reel/stats-api-demo.mp4", {
+		const response = await worker.fetch(new Request("https://taf.sh/media/stats-apis/demo.mp4", {
 			headers: { Range: range },
 		}), fullVideo(), ctx);
 		expect(response.status).toBe(416);
@@ -75,21 +85,21 @@ describe("video streaming", () => {
 		expect(await response.text()).toBe("");
 	});
 	for (const range of ["bytes=", "bytes=8-2", "bytes=0-1,4-5", "items=0-1"]) test(`ignores unsupported ${range}`, async () => {
-		const response = await worker.fetch(new Request("https://taf.sh/reel/stats-api-demo.mp4", {
+		const response = await worker.fetch(new Request("https://taf.sh/media/stats-apis/demo.mp4", {
 			headers: { Range: range },
 		}), fullVideo(), ctx);
 		expect(response.status).toBe(200);
 		expect([...new Uint8Array(await response.arrayBuffer())]).toEqual([...bytes]);
 	});
 	for (const [ifRange, status] of [['"video-v1"', 206], ['"old-video"', 200], ['W/"video-v1"', 200]] as const) test(`respects If-Range ${ifRange}`, async () => {
-		const response = await worker.fetch(new Request("https://taf.sh/reel/stats-api-demo.mp4", {
+		const response = await worker.fetch(new Request("https://taf.sh/media/stats-apis/demo.mp4", {
 			headers: { Range: "bytes=0-3", "If-Range": ifRange },
 		}), fullVideo(), ctx);
 		expect(response.status).toBe(status);
 		expect((await response.arrayBuffer()).byteLength).toBe(status === 206 ? 4 : 20);
 	});
 	test("HEAD advertises ranges without a response body", async () => {
-		const response = await worker.fetch(new Request("https://taf.sh/reel/stats-api-demo.mp4", {
+		const response = await worker.fetch(new Request("https://taf.sh/media/stats-apis/demo.mp4", {
 			method: "HEAD", headers: { Range: "bytes=0-3" },
 		}), fullVideo("HEAD"), ctx);
 		expect(response.status).toBe(200);
@@ -101,11 +111,11 @@ describe("video streaming", () => {
 		const env = environment({ ASSETS: { fetch: async () => new Response(bytes, {
 			headers: { "Content-Type": "video/mp4" },
 		}) } as Fetcher });
-		const response = await worker.fetch(new Request("https://taf.sh/reel/stats-api-demo.mp4", {
+		const response = await worker.fetch(new Request("https://taf.sh/media/stats-apis/demo.mp4", {
 			headers: { Range: "bytes=0-3" },
 		}), env, ctx);
 		expect(response.status).toBe(206);
-		expect(response.headers.get("Content-Range")).toBe("bytes 0-3/22391889");
+		expect(response.headers.get("Content-Range")).toBe(`bytes 0-3/${videoSizes["/media/stats-apis/demo.mp4"]}`);
 		expect([...new Uint8Array(await response.arrayBuffer())]).toEqual([0, 1, 2, 3]);
 	});
 	test("leaves unknown-length videos unchanged when metadata is unavailable", async () => {
@@ -129,7 +139,7 @@ describe("video streaming", () => {
 			},
 			cancel() { cancelled = true; },
 		}), { headers: { "Content-Type": "video/mp4", "Content-Length": "20" } }) } as Fetcher });
-		const response = await worker.fetch(new Request("https://taf.sh/reel/stats-api-demo.mp4", {
+		const response = await worker.fetch(new Request("https://taf.sh/media/stats-apis/demo.mp4", {
 			headers: { Range: "bytes=4-7" },
 		}), env, ctx);
 		expect([...new Uint8Array(await response.arrayBuffer())]).toEqual([4, 5, 6, 7]);
@@ -152,7 +162,7 @@ describe("video streaming", () => {
 				});
 			} } as Fetcher,
 		});
-		const response = await worker.fetch(new Request("https://taf.sh/reel/stats-api-demo.mp4", {
+		const response = await worker.fetch(new Request("https://taf.sh/media/stats-apis/demo.mp4", {
 			headers: { Range: "bytes=0-3" },
 		}), env, ctx);
 		expect(range).toBe("bytes=0-3");

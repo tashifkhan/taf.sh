@@ -10,7 +10,7 @@ import { wrap, section, head, headRow, kicker, h2, lede, card, btn, btnGhost, bt
  * 1. Featured team work and studio products get full-width galleries with
  *    their galleries, specs and case-study links (carrying the shared-element
  *    view-transition-name for the product page morph).
- * 2. Apps, then the digital shenanigans, sit below as compact interactive index
+ * 2. Mobile apps, then the digital shenanigans, sit below as compact index
  *    table (with cursor-following hover previews and one-click jump into the
  *    full split-screen reel), avoiding a second wall of galleries that repeats
  *    the slide-over work reel.
@@ -19,24 +19,23 @@ const pad = (n: number) => String(n).padStart(2, "0");
 const slug = (name: string) => name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 const productId = (href: string) => (href.startsWith("/products/") ? href.slice("/products/".length) : null);
 
-const featured = reel.filter((r) => r.group !== "shenanigan");
-const smaller = reel.filter((r) => r.group === "shenanigan");
+const featured = reel.filter((r) => r.group === "product" || r.group === "team");
 // Apps get their own list with the platforms each one runs on.
-const apps = smaller.filter((r) => r.platforms);
-const shenanigans = smaller.filter((r) => !r.platforms);
+const apps = reel.filter((r) => r.group === "app");
+const shenanigans = reel.filter((r) => r.group === "shenanigan");
 const lists = [
 	{
 		id: "apps",
-		label: "Apps",
+		label: "Mobile apps",
 		title: "Apps I built",
-		lede: "Things you install. Each one says where it runs, and opens its own page on tashif.codes.",
+		lede: "Things you install. Each one says where it runs and has its own page with the store screenshots and walkthrough.",
 		items: apps,
 	},
 	{
 		id: "shenanigans",
 		label: "Archive",
 		title: "Digital shenanigans",
-		lede: "Open-source agents, developer dashboards and campus tools built along the way. Click any row to inspect its screens in the reel.",
+		lede: "Open-source agents, developer dashboards and campus tools built along the way. Open any one for its case study, or its screens in the reel.",
 		items: shenanigans,
 	},
 ];
@@ -52,7 +51,7 @@ const metaById = Object.fromEntries(productMeta.map((p) => [p.id, p]));
 			</div>
 			<div class="flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:gap-6">
 				<p class:list={[lede, "mt-0 max-w-sm text-[0.9375rem]"]}>
-					Three studio products, team work at Systematic Reasoning, and the smaller tools built along the way.
+					Three studio products, team work at Systematic Reasoning, three mobile apps, and the smaller tools built along the way.
 				</p>
 				<a href="/work" class="text-sm text-accent underline underline-offset-4">Browse all projects</a>
 				<button type="button" class:list={[btn, btnGhost]} data-reel-open data-magnetic>
@@ -163,14 +162,12 @@ const metaById = Object.fromEntries(productMeta.map((p) => [p.id, p]));
 									{pad(i + 1)}
 								</span>
 
-								<button
-									type="button"
+								<a
+									href={r.href}
 									class="w-fit text-left font-display text-lg font-semibold tracking-[-0.025em] text-foreground transition-colors group-hover:text-accent"
-									data-reel-open
-									data-reel-target={`r-${slug(r.name)}`}
 								>
 									{r.name}
-								</button>
+								</a>
 
 								<p class="text-sm text-secondary sm:truncate">{r.line}</p>
 
@@ -201,14 +198,16 @@ const metaById = Object.fromEntries(productMeta.map((p) => [p.id, p]));
 									>
 										screens <Arrow dir="up-right" />
 									</button>
-									<a
-										href={r.live ?? r.href}
-										target="_blank"
-										rel="noopener noreferrer"
-										class="text-foreground transition-colors hover:text-accent"
-									>
-										visit <Arrow dir="up-right" />
-									</a>
+									{r.live && (
+										<a
+											href={r.live}
+											target="_blank"
+											rel="noopener noreferrer"
+											class="text-foreground transition-colors hover:text-accent"
+										>
+											site <Arrow dir="up-right" />
+										</a>
+									)}
 								</div>
 							</div>
 						</li>

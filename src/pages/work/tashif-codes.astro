@@ -3,6 +3,7 @@ import Arrow from "../../components/Arrow.astro";
 import PageLayout from "../../layouts/PageLayout.astro";
 import PageIntro from "../../components/studio/PageIntro.astro";
 import WebPresenceExample from "../../components/studio/WebPresenceExample.astro";
+import SearchConsole from "../../components/studio/SearchConsole.astro";
 import { wrap, btn, btnAccent, btnGhost, btnArrow } from "../../components/studio/ui";
 ---
 
@@ -10,12 +11,13 @@ import { wrap, btn, btnAccent, btnGhost, btnArrow } from "../../components/studi
 	<div class:list={[wrap, "mb-8"]}>
 		<a href="/services/#web" class="text-sm text-muted transition-colors hover:text-foreground"><Arrow dir="left" /> Web presence</a>
 	</div>
-	<PageIntro label="Case study / Web presence" summary="My project directory, developer tools and engineering blog. I built the site with Astro and React, including the design, search metadata, analytics and deployment. The traffic and search captures below document the results.">
+	<PageIntro label="Case study / Web presence" summary="My project directory, developer tools and engineering blog. I built the site with Astro and React, including the design, search metadata, analytics and deployment. The traffic, search captures and Search Console figures below document the results.">
 		<Fragment slot="title">tashif.codes</Fragment>
 		<a href="https://tashif.codes" target="_blank" rel="noopener noreferrer" class:list={[btn, btnAccent]}>Visit the site <span class={btnArrow} aria-hidden="true"><Arrow dir="up-right" /></span></a>
 		<a href="https://tashif.codes/blog" target="_blank" rel="noopener noreferrer" class:list={[btn, btnGhost]}>Read the blog <span class={btnArrow} aria-hidden="true"><Arrow dir="up-right" /></span></a>
 	</PageIntro>
 	<div class:list={[wrap, "pb-16 sm:pb-24"]}>
 		<WebPresenceExample />
+		<div class="mt-6"><SearchConsole /></div>
 	</div>
 </PageLayout>

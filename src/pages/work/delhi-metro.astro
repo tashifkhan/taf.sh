@@ -1,0 +1,194 @@
+---
+/**
+ * Delhi NCR Metro case study, ported from the tashif.codes landing. Feature
+ * screens live in public/media/delhi-metro/landing/screens, the store art in
+ * public/media/delhi-metro/store/phone and shots/, and the films in
+ * public/media/delhi-metro. The portrait cards are App Store style, but the
+ * app ships on Android and the web only.
+ */
+import Arrow from "../../components/Arrow.astro";
+import PageLayout from "../../layouts/PageLayout.astro";
+import { Landing, LandingHero, Section, Shot, LandingVideo, Pinned, Rows, StoreRail, Faq, Routes, Icon } from "../../components/landing";
+import { fdroidRoute, playRoute } from "../../components/landing/fdroid";
+import { reel, media, playStoreApps } from "../../components/studio/data";
+import { projectSlug } from "../../lib/seo";
+import { wrap } from "../../components/studio/ui";
+
+const item = reel.find((entry) => entry.id === "delhi-metro")!;
+const m = media("delhi-metro");
+const repo = "https://github.com/tashifkhan/delhi-metro";
+const apk = `${repo}/releases/latest`;
+const webApp = item.live!;
+
+const screen = { width: 600, height: 1299 };
+const shot = (name: string, alt: string) => ({ src: m.file(`landing/screens/${name}.webp`), alt });
+
+const chapters = [
+	{
+		title: "Plan a trip",
+		features: [
+			{ title: "Shortest, or fewest changes", body: "Both routes side by side, with time, fare, every station and where to change." },
+			{ title: "Fares for the day you travel", body: "Weekday and weekend fares, plus first and last train times." },
+			{ title: "Book on WhatsApp", body: "A journey opens the operator's ticket chat, one step per operator." },
+		],
+		shots: [
+			shot("journey", "A journey from AIIMS to Noida Sector 137"),
+			shot("route", "The route drawn on the network map"),
+			shot("fares", "Fares for the journey"),
+		],
+	},
+	{
+		title: "Two operators",
+		features: [
+			{ title: "Delhi to Noida in one plan", body: "DMRC and NMRC don't share tickets. The app joins the trip at Sector 52 and 51 with a walk between them." },
+			{ title: "Two fares, shown as two", body: "You see what to pay each operator, and where to buy the second ticket." },
+		],
+		shots: [
+			shot("cross", "A trip that crosses from Delhi Metro to the Aqua Line"),
+			shot("transfer", "The walk between Sector 52 and Sector 51"),
+			shot("split-fare", "A fare split between the two operators"),
+		],
+	},
+	{
+		title: "Stations",
+		features: [
+			{ title: "Search by name or code", body: "Either operator's station code works." },
+			{ title: "What is at the station", body: "Gates, lifts, platforms, facilities, parking and what is nearby." },
+		],
+		shots: [
+			shot("search", "Station search"),
+			shot("gates", "Gates at a station"),
+			shot("lifts", "Lifts and platforms at a station"),
+		],
+	},
+	{
+		title: "Map and alerts",
+		features: [
+			{ title: "A map you can zoom", body: "Drawn from station coordinates, with search and a sheet for the station you tap. The official maps are one tap away." },
+			{ title: "Service alerts", body: "From both operators, in one list." },
+			{ title: "Works with no signal", body: "Lines, stations, alerts and the journeys you already planned stay readable offline." },
+		],
+		shots: [
+			shot("map", "The network map"),
+			shot("lines", "Lines with their stations"),
+			shot("alerts", "Service alerts"),
+		],
+	},
+];
+
+// The store cards, in the order of the screenshot pack.
+const phoneCards = [
+	"Your whole commute, one clear plan: Delhi Metro and the Aqua Line with the changes in between",
+	"A shorter trip or fewer changes: compare routes, fares and train times",
+	"The walk is part of the plan: the Sector 52 to Sector 51 transfer",
+	"Two tickets, both fares: what each operator charges",
+	"Find your exit before you arrive: gate destinations",
+	"Know where the lifts are: lifts and station facilities",
+	"Zoom in on the network: the network map",
+	"Your metro, your settings: colours, AMOLED, contrast and page animations",
+];
+const webCards = [
+	"Delhi and Noida, one clear plan, on the web and Android",
+	"Compare the ride and check the fare",
+	"The walk between networks is a leg of the plan",
+	"Choose the exit before you arrive",
+	"Zoom in and find your connection on the network map",
+	"Your metro, your settings",
+];
+const store = [
+	{
+		id: "phone",
+		label: "Phone",
+		width: 640,
+		height: 1387,
+		panels: phoneCards.map((alt, i) => ({ src: m.file(`store/phone/${String(i + 1).padStart(2, "0")}.webp`), alt })),
+	},
+	{
+		id: "web",
+		label: "Web",
+		width: 1920,
+		height: 1200,
+		wide: true,
+		panels: webCards.map((alt, i) => ({ src: m.file(`shots/${i + 1}.webp`), alt })),
+	},
+];
+
+const api = [
+	{ title: "/api/v1/dmrc and /api/v1/nmrc", body: "Lines, stations, fares, timings and maps for each operator, in one shared schema." },
+	{ title: "/api/v2/journeys/plan", body: "Plans through the Delhi Metro Sarthi API, and falls back to the older planner when Sarthi times out. The response says which one answered." },
+	{ title: "No key", body: "JSON over REST with no auth. Swagger at /docs, OpenAPI at /openapi.json, and a playground to try calls." },
+];
+
+const routes = [
+	fdroidRoute("Delhi NCR Metro"),
+	{ title: "APK", body: `The newest build from <a href="${repo}/releases" target="_blank" rel="noopener noreferrer">GitHub releases</a>.`, action: { label: "Download APK", href: apk, primary: true, external: true } },
+	{ title: "Browser", body: "The same app at ncr-metro.tashif.codes. Nothing to install.", action: { label: "Open the web app", href: webApp, external: true } },
+	playRoute(playStoreApps[item.name]),
+];
+
+const faq = [
+	{ q: "Is this an official app?", a: "No. It is not made by DMRC or NMRC. It reads their public services and pages." },
+	{ q: "Can I buy tickets in it?", a: "Not inside the app. It opens the operator's WhatsApp ticket chat for the journey, and you pick the stations again there." },
+	{ q: "Does it track my location?", a: "The Android app asks for no location permission." },
+	{ q: "Is there an iPhone app?", a: `No. The web app at <a href="${webApp}" target="_blank" rel="noopener noreferrer">ncr-metro.tashif.codes</a> works on an iPhone.` },
+];
+---
+
+<PageLayout title="Delhi NCR Metro" description="Delhi NCR Metro plans trips across Delhi Metro and the Noida Aqua Line, with both fares. Android on F-Droid and the web, by Tashif Ahmad Khan.">
+	<div class:list={[wrap, "mb-8"]}>
+		<a href={`/work/#${projectSlug(item.name)}`} class="text-sm text-muted transition-colors hover:text-foreground"><Arrow dir="left" /> Work</a>
+	</div>
+	<div class={wrap}>
+		<Landing name="delhi-metro">
+			<LandingHero kicker="Delhi NCR Metro / Mobile app / Android and web" title="Two metros, one plan." lead="Plan a trip across Delhi Metro and the Noida Aqua Line, with the fare for each.">
+				<Fragment slot="actions">
+					<a href={apk} target="_blank" rel="noopener noreferrer" class="ld-btn ld-btn-primary"><Icon name="download" /> Download APK</a>
+					<a href={webApp} target="_blank" rel="noopener noreferrer" class="ld-btn"><Icon name="globe" /> Open the web app</a>
+				</Fragment>
+				<Fragment slot="terms">Android 7.0 and up, and any browser. Free under MIT.</Fragment>
+				<Shot slot="media" width={720} height={1280}>
+					<LandingVideo {...m.cut("phone")} label="Delhi NCR Metro on a phone: planning a trip from AIIMS to Karkarduma Court" controls />
+				</Shot>
+			</LandingHero>
+
+			<Section id="features" title="What the app does." gap="s">
+				<Pinned chapters={chapters} {...screen} />
+			</Section>
+
+			<Section id="web" title="The same app in a browser." lead="The web app and the Android app, planning the same trips side by side." gap="l">
+				<Shot width={1280} height={800}>
+					<LandingVideo {...m.video} label="Delhi NCR Metro walkthrough on the web and on Android" controls />
+				</Shot>
+			</Section>
+
+			<Section id="store" title="The store cards." lead="Eight portrait cards and six for the web, made from live captures of version 1.8.0." gap="l">
+				<StoreRail sets={store} label="Delhi NCR Metro store cards" />
+			</Section>
+
+			<Section id="api" title="The API under it." lead="I wrapped both operators' services into one contract. Use it for your own app." layout="side">
+				<Rows rows={api} />
+				<p class="api-try">
+					<code class="ld-code">curl {webApp}/api/v1/dmrc/lines</code>
+					<a class="ld-link" href={`${webApp}/api/playground`} target="_blank" rel="noopener noreferrer">Open the playground</a>
+				</p>
+			</Section>
+
+			<Section id="faq" title="Before you install." layout="side" gap="l">
+				<Faq items={faq} />
+			</Section>
+
+			<Section id="get" title="Get the app." layout="side">
+				<Routes routes={routes} />
+			</Section>
+		</Landing>
+	</div>
+</PageLayout>
+
+<style>
+	.api-try {
+		display: grid;
+		gap: var(--ld-space-md);
+		justify-items: start;
+		margin-top: var(--ld-space-lg);
+	}
+</style>

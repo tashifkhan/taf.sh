@@ -1,0 +1,85 @@
+---
+import Arrow from "../../components/Arrow.astro";
+import PageLayout from "../../layouts/PageLayout.astro";
+import PageIntro from "../../components/studio/PageIntro.astro";
+import Gallery from "../../components/studio/Gallery.astro";
+import { reel } from "../../components/studio/data";
+import { jiitFigures, jiitHub, jiitTools } from "../../data/jiit-tools";
+import { projectSlug } from "../../lib/seo";
+import { wrap, kicker, h2, chip, btn, btnAccent, btnGhost, btnArrow } from "../../components/studio/ui";
+
+const suite = reel.find(item => item.href === "/work/jiit-tools")!;
+const pad = (n: number) => String(n).padStart(2, "0");
+const host = (url: string) => new URL(url).host + new URL(url).pathname.replace(/\/$/, "");
+---
+
+<PageLayout title="JIIT Tools Suite" description="JPortal, the JIIT timetable, mess menu, placement portal, Telegram bot and Sophos auto-login. Previews of every tool, built at JIIT by Tashif Ahmad Khan.">
+	<div class:list={[wrap, "mb-8"]}>
+		<a href={`/work/#${projectSlug(suite.name)}`} class="text-sm text-muted transition-colors hover:text-foreground"><Arrow dir="left" /> Work</a>
+	</div>
+	<PageIntro label="Case study / Education" summary="JIIT keeps attendance in a web portal, timetables in one sheet per year, placement posts in SuperSet and hostel Wi-Fi behind a login page that times out. I built tools on top of each while studying there, from 2022 to 2026. Five sites and a Telegram bot, all linked from one hub.">
+		<Fragment slot="title">JIIT Tools <em>Suite.</em></Fragment>
+		<a href={jiitHub} target="_blank" rel="noopener noreferrer" class:list={[btn, btnAccent]}>Open the hub <span class={btnArrow} aria-hidden="true"><Arrow dir="up-right" /></span></a>
+		<a href="https://github.com/tashifkhan/JIIT-tools-docs" target="_blank" rel="noopener noreferrer" class:list={[btn, btnGhost]}>Hub source <span class={btnArrow} aria-hidden="true"><Arrow dir="up-right" /></span></a>
+	</PageIntro>
+
+	<div class:list={[wrap, "pb-16 sm:pb-24"]}>
+		<Gallery name={suite.name} shots={["/media/jiit-tools/shots/1.jpg"]} video={suite.video} live={jiitHub} eager />
+		<p class="mt-4 text-sm leading-6 text-muted">A three-minute walkthrough of all six tools. JPortal runs on a phone through its demo account; the Telegram thread is rendered from the bot's own templates.</p>
+
+		<dl class="mt-12 grid overflow-hidden rounded-lg border border-border bg-surface sm:grid-cols-2 lg:grid-cols-4">
+			{jiitFigures.map((fig, i) => <div class:list={["flex flex-col border-border p-6 sm:p-8", i < 3 && "border-b lg:border-b-0 lg:border-r", i === 1 && "sm:border-r-0 lg:border-r", i === 0 && "sm:border-r", i === 2 && "sm:border-r sm:border-b-0"]}>
+				<dt class="mt-3 text-sm text-secondary">{fig.label}</dt>
+				<dd class:list={["order-first font-display text-[clamp(2.25rem,4vw,3.25rem)] leading-none font-medium tracking-[-0.05em] tabular-nums", i === 0 && "text-accent"]}>{fig.value}</dd>
+			</div>)}
+		</dl>
+		<p class="mt-3 text-xs leading-6 text-muted">User counts as of June 2026, as listed on the hub.</p>
+
+		<nav class="mt-16 sm:mt-24" aria-labelledby="tools-index">
+			<p class={kicker}>Fig 1. The suite</p>
+			<h2 id="tools-index" class={h2}>Six tools, <em>one campus.</em></h2>
+			<ol class="mt-8 grid gap-x-8 border-t border-border sm:grid-cols-2 lg:grid-cols-3">
+				{jiitTools.map((tool, i) => <li class="border-b border-border">
+					<a href={`#${tool.id}`} class="group flex items-baseline gap-4 py-4">
+						<span class="font-mono text-xs text-muted">{pad(i + 1)}</span>
+						<span class="text-foreground transition-colors group-hover:text-accent">{tool.name}</span>
+						{tool.users && <span class="ml-auto font-mono text-xs text-muted">{tool.users}</span>}
+					</a>
+				</li>)}
+			</ol>
+		</nav>
+
+		{jiitTools.map((tool, i) => <section id={tool.id} class="mt-16 grid scroll-mt-28 gap-8 border-t border-border pt-10 sm:mt-20 lg:grid-cols-[0.85fr_1.15fr] lg:gap-14" aria-labelledby={`${tool.id}-name`}>
+			<div>
+				<p class={kicker}>Tool {pad(i + 1)}</p>
+				<h2 id={`${tool.id}-name`} class="mt-3 font-display text-3xl font-[650] tracking-[-0.03em]">{tool.name}</h2>
+				<a href={tool.url} target="_blank" rel="noopener noreferrer" class="mt-2 inline-block font-mono text-xs text-muted underline-offset-4 hover:text-accent hover:underline">{host(tool.url)}</a>
+				<p class="mt-5 max-w-[56ch] leading-7 text-secondary">{tool.line}</p>
+				{tool.note && <p class="mt-3 max-w-[56ch] text-sm leading-6 text-muted">{tool.note}</p>}
+				<div class="mt-5 flex flex-wrap gap-2">
+					{tool.users && <span class:list={[chip, "border-accent text-accent"]}>{tool.users}</span>}
+					{tool.stack.map(s => <span class={chip}>{s}</span>)}
+				</div>
+				<ul class="mt-6 flex flex-wrap gap-x-5 gap-y-2 text-sm" aria-label={`${tool.name} links`}>
+					{tool.links.map((link, k) => <li><a href={link.href} target="_blank" rel="noopener noreferrer" class:list={["underline underline-offset-4", k === 0 ? "text-accent" : "text-secondary hover:text-foreground"]}>{link.label}</a></li>)}
+				</ul>
+			</div>
+			{tool.phone
+				? <div class="-mx-(--gutter) flex snap-x snap-mandatory gap-4 overflow-x-auto px-(--gutter) pb-2 [scrollbar-width:none] lg:mx-0 lg:px-0" aria-label={`${tool.name} on a phone`}>
+					{tool.phone.map(src => <img src={src} alt={`${tool.name} on a phone`} width="412" height="892" loading="lazy" decoding="async" class="w-[min(44vw,13.5rem)] shrink-0 snap-start rounded-[1.75rem] border-[6px] border-neutral-900 bg-neutral-900 shadow-[0_24px_60px_-30px_rgb(0_0_0/0.45)] lg:w-[calc((100%-3rem)/4)]" />)}
+				</div>
+				: <Gallery name={tool.name} shots={tool.shots ?? []} live={tool.url} />}
+		</section>)}
+
+		<section class="mt-20 border-t border-border pt-10 sm:mt-28" aria-labelledby="how">
+			<p class={kicker}>Fig 2. How they connect</p>
+			<h2 id="how" class={h2}>Four sources, <em>one layer.</em></h2>
+			<ul class="mt-8 grid gap-6 leading-7 text-secondary md:grid-cols-2">
+				<li><b class="font-medium text-foreground">Web portal to JPortal.</b> The portal's API only accepts its own origin, so requests go through a Cloudflare Worker proxy. Marks PDFs are parsed on the phone with Pyodide.</li>
+				<li><b class="font-medium text-foreground">Timetable sheet to your week.</b> A Python parser runs in the browser through Pyodide and keeps only your batch and electives.</li>
+				<li><b class="font-medium text-foreground">SuperSet to the feed and the bot.</b> A Python scraper stores new posts in MongoDB. The portal reads them, and the bot sends them to Telegram.</li>
+				<li><b class="font-medium text-foreground">Sophos login page to staying online.</b> A Python script re-authenticates on a timer and switches IDs at the data cap.</li>
+			</ul>
+		</section>
+	</div>
+</PageLayout>

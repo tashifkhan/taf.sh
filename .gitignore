@@ -31,3 +31,6 @@ pnpm-debug.log*
 # wrangler
 .wrangler
 .dev.vars
+
+# product film sources and raw captures: internal, kept on disk only
+video/

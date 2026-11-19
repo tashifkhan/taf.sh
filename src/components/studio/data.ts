@@ -249,33 +249,53 @@ export const assurances = [
 ];
 
 /*
- * The work panel groups team work, studio products and smaller tools.
- * Screens show the real applications in use.
+ * The work panel groups studio products, team work, mobile apps and smaller
+ * tools. Screens show the real applications in use.
+ *
+ * `id` names everything that belongs to an entry: its page on taf.sh, its
+ * media in public/media/<id>/ and its film sources in video/<id>/. Products
+ * and team work live at /products/<id>, everything else at /work/<id>, and
+ * `href` is derived from that so a title can never point off the site.
+ * External places (the running app, source, stores) go in `live` and `links`.
  */
-export type ReelItem = {
+export type ReelGroup = "product" | "team" | "app" | "shenanigan";
+
+type ReelEntry = {
+	id: string;
 	name: string;
-	group: "team" | "product" | "shenanigan";
+	group: ReelGroup;
 	sector: string;
 	year: string;
 	line: string;
 	tags: string[];
 	stack: string[];
-	href: string;
 	/** Public site, when there is one; shows the "live site" badge. */
 	live?: string;
 	metric?: string;
-	/** For apps: where it runs. Listed under "Apps" on the homepage. */
+	/** For apps: where it runs. */
 	platforms?: string[];
 	shots: string[];
 	video?: { src: string; poster: string; label?: string; phone?: { src: string; poster: string } };
-	/** Related services and source for projects with several entry points. */
+	/** Source, stores, downloads and related services. */
 	links?: { label: string; href: string }[];
 };
 
-const shots = (name: string, n: number) => Array.from({ length: n }, (_, i) => `/reel/${name}-${i + 1}.jpg`);
+export type ReelItem = ReelEntry & { href: string };
 
-export const reel: ReelItem[] = [
+export const pageFor = (item: Pick<ReelEntry, "id" | "group">) =>
+	item.group === "product" || item.group === "team" ? `/products/${item.id}` : `/work/${item.id}`;
+
+/** Paths inside public/media/<id>/. */
+export const media = (id: string) => ({
+	file: (path: string) => `/media/${id}/${path}`,
+	shots: (n: number, ext = "jpg") => Array.from({ length: n }, (_, i) => `/media/${id}/shots/${i + 1}.${ext}`),
+	video: { src: `/media/${id}/demo.mp4`, poster: `/media/${id}/poster.jpg` },
+	cut: (name: string) => ({ src: `/media/${id}/cuts/${name}.mp4`, poster: `/media/${id}/cuts/${name}.jpg` }),
+});
+
+const entries: ReelEntry[] = [
 	{
+		id: "talentsync",
 		name: "TalentSync AI",
 		group: "product",
 		sector: "hiring",
@@ -283,13 +303,13 @@ export const reel: ReelItem[] = [
 		line: "Resume analysis, role prediction, cold emails and interview prep for job seekers. Free and unlimited.",
 		tags: ["product", "ai"],
 		stack: ["Next.js", "FastAPI", "LangGraph", "Kafka"],
-		href: "/products/talentsync",
 		live: "https://talentsync.tashif.codes",
 		metric: "Free, unlimited",
-		shots: shots("talentsync", 9),
-		video: { src: "/reel/talentsync-demo.mp4", poster: "/reel/talentsync-poster.jpg" },
+		shots: media("talentsync").shots(9),
+		video: media("talentsync").video,
 	},
 	{
+		id: "talentsync-hr",
 		name: "TalentSync HR",
 		group: "product",
 		sector: "hiring",
@@ -297,12 +317,12 @@ export const reel: ReelItem[] = [
 		line: "Evidence-backed candidate scoring for recruiters. Claims checked against GitHub and LeetCode, then ranked.",
 		tags: ["product", "ai"],
 		stack: ["FastAPI", "Evals", "PostgreSQL"],
-		href: "/products/talentsync-hr",
 		metric: "Beta",
 		// Invite-only, and its stack is kept off to save RAM: one public screen for now.
-		shots: ["/reel/talentsync-hr.jpg"],
+		shots: media("talentsync-hr").shots(1),
 	},
 	{
+		id: "rah-clinic",
 		name: "rah.clinic",
 		group: "product",
 		sector: "healthcare",
@@ -310,13 +330,13 @@ export const reel: ReelItem[] = [
 		line: "A clinic that runs in WhatsApp. Prescriptions, reminders, vitals, recalls and billing after the consult.",
 		tags: ["product", "messaging"],
 		stack: ["WhatsApp", "Kafka", "Schedulers"],
-		href: "/products/rah-clinic",
 		live: "https://rah.clinic",
 		metric: "In development",
-		shots: shots("rah-clinic", 9),
-		video: { src: "/reel/rah-clinic-demo.mp4", poster: "/reel/rah-clinic-poster.jpg" },
+		shots: media("rah-clinic").shots(9),
+		video: media("rah-clinic").video,
 	},
 	{
+		id: "systematic-reasoning",
 		name: "Systematic Reasoning",
 		group: "team",
 		sector: "compliance",
@@ -324,104 +344,89 @@ export const reel: ReelItem[] = [
 		line: "Founding engineer at Systematic Reasoning. We built ForgeIQX to connect regulatory requirements, policy documents, findings and evidence.",
 		tags: ["team", "compliance", "ai"],
 		stack: ["React", "Django", "PostgreSQL", "Kafka"],
-		href: "/products/systematic-reasoning",
 		live: "https://app.systematicreasoning.com/",
 		metric: "Founding engineer",
-		shots: shots("systematic-reasoning", 8),
-		video: { src: "/reel/systematic-reasoning-demo.mp4", poster: "/reel/systematic-reasoning-poster.jpg" },
+		shots: media("systematic-reasoning").shots(8),
+		video: media("systematic-reasoning").video,
 	},
 	{
-		name: "Agentic Browser",
-		group: "shenanigan",
-		sector: "ai agents",
+		id: "paisa",
+		name: "Paisa",
+		group: "app",
+		sector: "finance",
 		year: "2025",
-		line: "A browser side panel whose agents plan, act and verify on any page. REST and MCP clients, bring your own keys.",
-		tags: ["tool", "ai"],
-		stack: ["LangGraph", "FastAPI", "MCP"],
-		href: "https://github.com/tashifkhan/agentic-browser",
-		live: "https://tashif.codes/projects/agentic-browser",
-		metric: "BYO keys",
-		shots: [],
-		video: { src: "/reel/agentic-browser-demo.mp4", poster: "/reel/agentic-browser-poster.jpg" },
+		line: "Expense tracking on Android and the web. On-device bank SMS parsing, optional AI entry, budgets, Material You colors, hidden amounts, app lock, and layouts for phones, foldables and tablets.",
+		tags: ["app", "mobile", "web"],
+		stack: ["Kotlin", "Compose Multiplatform", "SQLite"],
+		live: "https://paisa.tashif.codes",
+		metric: "Local-first",
+		platforms: ["Android", "Web"],
+		shots: media("paisa").shots(19),
+		video: media("paisa").video,
+		links: [
+			{ label: "Source", href: "https://github.com/tashifkhan/Paisa" },
+			{ label: "Android releases", href: "https://github.com/tashifkhan/Paisa/releases" },
+		],
 	},
 	{
-		name: "CodeTrace",
-		group: "shenanigan",
-		sector: "developer",
-		year: "2025",
-		line: "One dashboard for a coding footprint across seven platforms, each backed by its own stats API.",
-		tags: ["tool", "apis"],
-		stack: ["React", "TanStack Router", "FastAPI", "Redis"],
-		href: "https://codetrace.xyz/app?github=tashifkhan&leetcode=khan-tashif",
-		live: "https://codetrace.xyz",
-		metric: "7 APIs",
-		shots: shots("codetrace", 3),
-		video: { src: "/reel/codetrace-demo.mp4", poster: "/reel/codetrace-poster.jpg" },
+		id: "patchwork",
+		name: "Patchwork",
+		group: "app",
+		sector: "productivity",
+		year: "2026",
+		line: "CalDAV tasks, Nextcloud Deck boards, GitHub issues and Jira in one native app for iOS and Android. This walkthrough follows tasks and populated Jira boards across both native builds, including sprint filters and card dragging with sample data.",
+		tags: ["app", "mobile"],
+		stack: ["Expo", "React Native", "CalDAV", "Nextcloud Deck"],
+		metric: "Native iOS + Android",
+		platforms: ["iOS", "Android"],
+		shots: media("patchwork").shots(6),
+		video: { ...media("patchwork").video, label: "iOS + Android" },
+		links: [
+			{ label: "Source", href: "https://github.com/tashifkhan/Patchwork" },
+		],
 	},
 	{
-		name: "JIIT Campus Updates",
-		group: "shenanigan",
-		sector: "education",
-		year: "2025",
-		line: "Placement and campus notices in one feed, with job listings and placement stats pulled from the portals.",
-		tags: ["app", "automation"],
-		stack: ["Next.js", "Python", "MongoDB"],
-		href: "https://jiit-placement-updates.tashif.codes",
-		live: "https://jiit-placement-updates.tashif.codes",
-		metric: "4k+ users",
-		shots: shots("campus", 3),
-	},
-	{
-		name: "JIIT Timetable",
-		group: "shenanigan",
-		sector: "education",
-		year: "2024",
-		line: "Personal timetables parsed from the official PDF in the browser, plus mess menu, calendar and exams.",
-		tags: ["app"],
-		stack: ["Next.js", "Pyodide"],
-		href: "https://jiit-timetable.tashif.codes",
-		live: "https://jiit-timetable.tashif.codes",
-		metric: "6.5k+ users",
-		shots: shots("jptt", 3),
-	},
-	{
+		id: "delhi-metro",
 		name: "Delhi NCR Metro",
-		group: "shenanigan",
+		group: "app",
 		sector: "transit",
 		year: "2025",
 		line: "DMRC and NMRC trip planning with live alerts, as a web app and an Android app on F-Droid.",
 		tags: ["app", "mobile"],
 		stack: ["Expo", "React Native"],
-		href: "https://tashif.codes/projects/delhi-metro",
 		live: "https://ncr-metro.tashif.codes",
 		metric: "F-Droid",
-	platforms: ["Android", "Web", "iOS"],
-		shots: Array.from({ length: 6 }, (_, i) => `/reel/ncr-metro-screenshots/web-${String(i + 1).padStart(2, "0")}.webp`),
-		video: {
-			src: "/reel/ncr-metro-web-demo.mp4",
-			label: "Web + phone walkthrough",
-			poster: "/reel/ncr-metro-web-poster.jpg",
-			phone: { src: "/reel/ncr-metro-phone-demo.mp4", poster: "/reel/ncr-metro-phone-poster.jpg" },
-		},
+		platforms: ["Android", "Web"],
+		shots: media("delhi-metro").shots(6, "webp"),
+		video: { ...media("delhi-metro").video, label: "Web + phone walkthrough", phone: media("delhi-metro").cut("phone") },
 		links: [
-			{ label: "Web + phone video", href: "/reel/ncr-metro-web-demo.mp4" },
-			{ label: "Phone video", href: "/reel/ncr-metro-phone-demo.mp4" },
-			{ label: "Screenshot pack", href: "/reel/ncr-metro-screenshots.zip" },
+			{ label: "Source", href: "https://github.com/tashifkhan/delhi-metro" },
 		],
 	},
 	{
-		name: "WikiSpark",
+		id: "jiit-tools",
+		name: "JIIT Tools Suite",
 		group: "shenanigan",
-		sector: "reading",
-		year: "2025",
-		line: "A calmer Wikipedia reader, with a browser extension that sends every Wikipedia link through it.",
-		tags: ["app", "extension"],
-		stack: ["TypeScript", "Wikipedia API"],
-		href: "https://wikispark.tashif.codes",
-		live: "https://wikispark.tashif.codes",
-		shots: shots("wikispark", 2),
+		sector: "education",
+		year: "2023",
+		line: "Six tools for JIIT students: JPortal for attendance and marks on a phone, a timetable builder with the mess menu, calendar and exams, a placement portal with a Telegram bot, and Sophos Wi-Fi auto-login for the hostels.",
+		tags: ["app", "automation"],
+		stack: ["React", "Next.js", "Pyodide", "Python", "MongoDB"],
+		live: "https://jiit-tools.tashif.codes",
+		metric: "18k+ on JPortal",
+		shots: media("jiit-tools").shots(15),
+		video: media("jiit-tools").video,
+		links: [
+			{ label: "JPortal", href: "https://jportal.tashif.codes" },
+			{ label: "Timetable", href: "https://jiit-timetable.tashif.codes" },
+			{ label: "Mess menu", href: "https://jiit-timetable.tashif.codes/mess-menu" },
+			{ label: "Placements", href: "https://jiit-placement-updates.tashif.codes" },
+			{ label: "Telegram bot", href: "https://t.me/SupersetNotificationBot" },
+			{ label: "Sophos auto-login", href: "https://sophos-autologin.tashif.codes" },
+		],
 	},
 	{
+		id: "stats-apis",
 		name: "Coding platforms stats APIs",
 		group: "shenanigan",
 		sector: "developer",
@@ -429,13 +434,11 @@ export const reel: ReelItem[] = [
 		line: "REST APIs for GitHub, LeetCode, Codeforces, GeeksforGeeks, CodeChef, HackerRank and takeUforward, plus self-hosted Forgejo and Gitea. Profiles, coding stats and activity share one JSON response format, with SVG cards for READMEs and a browser playground to try each endpoint. 151K requests in the last 30 days, from 400+ other sites.",
 		tags: ["api", "developer tools"],
 		stack: ["FastAPI", "Pydantic", "Redis"],
-		href: "https://github-stats.tashif.codes",
 		live: "https://github-stats.tashif.codes",
 		metric: "151K requests / 30 days",
-		shots: shots("stats-api", 6),
-		video: { src: "/reel/stats-api-demo.mp4", poster: "/reel/stats-api-poster.jpg" },
+		shots: media("stats-apis").shots(6),
+		video: media("stats-apis").video,
 		links: [
-			{ label: "Usage and sites", href: "/work/stats-apis" },
 			{ label: "GitHub", href: "https://github-stats.tashif.codes" },
 			{ label: "LeetCode", href: "https://leetcode-stats.tashif.codes" },
 			{ label: "Codeforces", href: "https://codeforces-stats.tashif.codes" },
@@ -447,62 +450,46 @@ export const reel: ReelItem[] = [
 		],
 	},
 	{
-		name: "Paisa",
+		id: "codetrace",
+		name: "CodeTrace",
 		group: "shenanigan",
-		sector: "finance",
+		sector: "developer",
 		year: "2025",
-		line: "Expense tracking on Android and the web. On-device bank SMS parsing, optional AI entry, budgets, Material You colors, hidden amounts, app lock, and layouts for phones, foldables and tablets.",
-		tags: ["app", "mobile", "web"],
-		stack: ["Kotlin", "Compose Multiplatform", "SQLite"],
-		href: "https://tashif.codes/projects/paisa",
-		live: "https://paisa.tashif.codes",
-		metric: "Local-first",
-	platforms: ["Android", "Web"],
-		shots: shots("paisa", 19),
-		video: {
-			src: "/reel/paisa-demo.mp4",
-			poster: "/reel/paisa-poster.jpg",
-		},
+		line: "One dashboard for a coding footprint across seven platforms, each backed by its own stats API.",
+		tags: ["tool", "apis"],
+		stack: ["React", "TanStack Router", "FastAPI", "Redis"],
+		live: "https://codetrace.xyz",
+		metric: "7 APIs",
+		shots: media("codetrace").shots(6),
+		video: media("codetrace").video,
 		links: [
-			{ label: "Source", href: "https://github.com/tashifkhan/Paisa" },
-			{ label: "Android releases", href: "https://github.com/tashifkhan/Paisa/releases" },
-			{ label: "Phone video", href: "/reel/paisa-phone-demo.mp4" },
-			{ label: "Foldable video", href: "/reel/paisa-foldable-demo.mp4" },
-			{ label: "Tablet video", href: "/reel/paisa-tablet-demo.mp4" },
-			{ label: "Web video", href: "/reel/paisa-web-demo.mp4" },
-			{ label: "Product screenshots", href: "/reel/paisa-appstore-screenshots.zip" },
+			{ label: "Open the dashboard", href: "https://codetrace.xyz/app?github=tashifkhan&leetcode=khan-tashif" },
+			{ label: "Source", href: "https://github.com/tashifkhan/CodeTrace" },
 		],
 	},
 	{
-		name: "Patchwork",
+		id: "agentic-browser",
+		name: "Agentic Browser",
 		group: "shenanigan",
-		sector: "productivity",
-		year: "2026",
-		line: "CalDAV tasks, Nextcloud Deck boards, GitHub issues and Jira in one native app for iOS and Android. This walkthrough follows tasks and populated Jira boards across both native builds, including sprint filters and card dragging with sample data.",
-		tags: ["app", "mobile"],
-		stack: ["Expo", "React Native", "CalDAV", "Nextcloud Deck"],
-		href: "https://tashif.codes/projects/patchwork",
-		metric: "Native iOS + Android",
-	platforms: ["iOS", "Android"],
-		shots: shots("patchwork", 6),
-		video: {
-			src: "/reel/patchwork-native-demo.mp4",
-			poster: "/reel/patchwork-native-poster.jpg",
-			label: "iOS + Android",
-		},
-		links: [
-			{ label: "Source", href: "https://github.com/tashifkhan/Patchwork" },
-			{ label: "Native app video", href: "/reel/patchwork-native-demo.mp4" },
-			{ label: "iOS screenshot pack", href: "/reel/patchwork-store/patchwork-ios-screenshots.zip" },
-			{ label: "Android screenshot pack", href: "/reel/patchwork-store/patchwork-android-screenshots.zip" },
-			{ label: "All screenshots", href: "/reel/patchwork-store/patchwork-ios-android-screenshots.zip" },
-		],
+		sector: "ai agents",
+		year: "2025",
+		line: "A browser side panel whose agents plan, act and verify on any page. REST and MCP clients, bring your own keys.",
+		tags: ["tool", "ai"],
+		stack: ["LangGraph", "FastAPI", "MCP"],
+		metric: "BYO keys",
+		// Slides from the project deck, also shown on its case study.
+		shots: Array.from({ length: 6 }, (_, i) => media("agentic-browser").file(`landing/slides/${String(i + 1).padStart(2, "0")}.webp`)),
+		video: media("agentic-browser").video,
+		links: [{ label: "Source", href: "https://github.com/tashifkhan/agentic-browser" }],
 	},
 ];
+
+export const reel: ReelItem[] = entries.map((entry) => ({ ...entry, href: pageFor(entry) }));
 
 export const reelGroups = [
 	{ id: "all", label: "All" },
 	{ id: "product", label: "Products" },
 	{ id: "team", label: "Team work" },
+	{ id: "app", label: "Mobile apps" },
 	{ id: "shenanigan", label: "Digital shenanigans" },
 ] as const;

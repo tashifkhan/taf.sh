@@ -6,11 +6,14 @@ import AsciiArt from "../../components/AsciiArt.astro";
 import PreviewCard from "../../components/studio/PreviewCard.astro";
 import { reel } from "../../components/studio/data";
 import { projectSlug } from "../../lib/seo";
+import searchConsole from "../../data/search-console.json";
+import { formatCount } from "../../data/web-presence";
 import { wrap, kicker, h2, btn, btnGhost, btnArrow } from "../../components/studio/ui";
 const groups = [
 	{ id: "product", name: "Studio products" },
 	{ id: "team", name: "Team work" },
-	{ id: "shenanigan", name: "Apps and developer tools" },
+	{ id: "app", name: "Mobile apps" },
+	{ id: "shenanigan", name: "Developer tools and campus apps" },
 ];
 ---
 <PageLayout title="Work">
@@ -43,7 +46,13 @@ const groups = [
 		<div><p class={kicker}>The personal site</p><h2 class={h2}>More on <em>tashif.codes.</em></h2><AsciiArt piece="tashif-codes" t={12} max={12} class="mt-10" /></div>
 		<div class="space-y-5 leading-7 text-secondary">
 			<p><a href="https://tashif.codes" rel="me" class="text-accent underline underline-offset-4">tashif.codes</a> is my personal portfolio and project directory. taf.sh is my software studio. Both cover work I build and maintain.</p>
-			<p>My <a href="https://tashif.codes/blog" class="text-accent underline underline-offset-4">engineering blog</a> covers implementation details and lessons from these projects. The <a href="/work/tashif-codes" class="text-accent underline underline-offset-4">tashif.codes case study</a> documents the site's Astro build, search results and public traffic analytics.</p>
+			<p>My <a href="https://tashif.codes/blog" class="text-accent underline underline-offset-4">engineering blog</a> covers implementation details and lessons from these projects. The <a href="/work/tashif-codes" class="text-accent underline underline-offset-4">tashif.codes case study</a> documents the site's Astro build, public traffic analytics and Google Search Console data.</p>
+			<dl class="grid grid-cols-3 gap-4 border-y border-border py-5 font-mono text-xs">
+				<div><dt class="text-muted">Search clicks</dt><dd class="mt-1 font-display text-2xl font-medium tracking-[-0.03em] text-accent tabular-nums">{formatCount(searchConsole.clicks)}</dd></div>
+				<div><dt class="text-muted">Impressions</dt><dd class="mt-1 font-display text-2xl font-medium tracking-[-0.03em] text-foreground tabular-nums">{formatCount(searchConsole.impressions)}</dd></div>
+				<div><dt class="text-muted">Avg. position</dt><dd class="mt-1 font-display text-2xl font-medium tracking-[-0.03em] text-foreground tabular-nums">{searchConsole.position}</dd></div>
+			</dl>
+			<p class="text-sm">Google Search, tashif.codes and its subdomains, the last 16 months. "{searchConsole.queries[0].query}" alone brought {formatCount(searchConsole.queries[0].clicks)} clicks at an average position of {searchConsole.queries[0].position.toFixed(1)}.</p>
 		</div>
 	</section>
 	<PreviewCard />

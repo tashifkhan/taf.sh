@@ -1,0 +1,20 @@
+---
+/**
+ * Root of a case study. It loads the kit's stylesheet and sets the `--ld-*`
+ * tokens that every kit piece and every page's own CSS reads. It sits inside
+ * the site's page wrapper, so it takes the same width and gutter as the
+ * rest of the page.
+ */
+import "./landing.css";
+
+interface Props {
+	/** The project id, exposed as data-landing for page-specific CSS. */
+	name: string;
+}
+
+const { name } = Astro.props;
+---
+
+<div data-landing={name}>
+	<slot />
+</div>

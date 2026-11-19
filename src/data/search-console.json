@@ -1,0 +1,236 @@
+{
+	"property": "tashif.codes",
+	"scope": "Domain property, so every tashif.codes subdomain is included. Web search only.",
+	"exportedAt": "2026-11-19",
+	"from": "2025-07-18",
+	"to": "2026-11-17",
+	"clicks": 10228,
+	"impressions": 568728,
+	"ctr": 1.8,
+	"position": 9.4,
+	"monthly": [
+		{
+			"month": "2025-07",
+			"clicks": 52,
+			"impressions": 1335
+		},
+		{
+			"month": "2025-08",
+			"clicks": 135,
+			"impressions": 3944
+		},
+		{
+			"month": "2025-09",
+			"clicks": 215,
+			"impressions": 5483
+		},
+		{
+			"month": "2025-10",
+			"clicks": 306,
+			"impressions": 3788
+		},
+		{
+			"month": "2025-11",
+			"clicks": 620,
+			"impressions": 12145
+		},
+		{
+			"month": "2025-12",
+			"clicks": 708,
+			"impressions": 13938
+		},
+		{
+			"month": "2026-01",
+			"clicks": 878,
+			"impressions": 34820
+		},
+		{
+			"month": "2026-02",
+			"clicks": 642,
+			"impressions": 31451
+		},
+		{
+			"month": "2026-03",
+			"clicks": 669,
+			"impressions": 28312
+		},
+		{
+			"month": "2026-04",
+			"clicks": 1032,
+			"impressions": 77356
+		},
+		{
+			"month": "2026-05",
+			"clicks": 897,
+			"impressions": 101446
+		},
+		{
+			"month": "2026-06",
+			"clicks": 597,
+			"impressions": 61168
+		},
+		{
+			"month": "2026-07",
+			"clicks": 1214,
+			"impressions": 57926
+		},
+		{
+			"month": "2026-08",
+			"clicks": 723,
+			"impressions": 62504
+		},
+		{
+			"month": "2026-09",
+			"clicks": 597,
+			"impressions": 36845
+		},
+		{
+			"month": "2026-10",
+			"clicks": 666,
+			"impressions": 24169
+		},
+		{
+			"month": "2026-11",
+			"clicks": 277,
+			"impressions": 12098
+		}
+	],
+	"queries": [
+		{
+			"query": "jiit mess menu",
+			"clicks": 2105,
+			"impressions": 3587,
+			"position": 1.64
+		},
+		{
+			"query": "jiit mess",
+			"clicks": 776,
+			"impressions": 1215,
+			"position": 1.97
+		},
+		{
+			"query": "jiit timetable",
+			"clicks": 765,
+			"impressions": 4649,
+			"position": 4.52
+		},
+		{
+			"query": "jiit placement",
+			"clicks": 297,
+			"impressions": 3401,
+			"position": 7.05
+		},
+		{
+			"query": "jiit time table",
+			"clicks": 274,
+			"impressions": 1544,
+			"position": 3.66
+		},
+		{
+			"query": "jiit placements",
+			"clicks": 184,
+			"impressions": 1340,
+			"position": 6.5
+		},
+		{
+			"query": "jiit planner",
+			"clicks": 164,
+			"impressions": 57409,
+			"position": 5.5
+		},
+		{
+			"query": "jportal",
+			"clicks": 107,
+			"impressions": 86488,
+			"position": 7.65
+		},
+		{
+			"query": "jiit academic calendar",
+			"clicks": 98,
+			"impressions": 10505,
+			"position": 5.83
+		},
+		{
+			"query": "timetable jiit",
+			"clicks": 87,
+			"impressions": 437,
+			"position": 3.15
+		}
+	],
+	"sites": [
+		{
+			"host": "jiit-timetable.tashif.codes",
+			"clicks": 6778,
+			"impressions": 148104
+		},
+		{
+			"host": "jiit-placement-updates.tashif.codes",
+			"clicks": 2157,
+			"impressions": 28629
+		},
+		{
+			"host": "tashif.codes",
+			"clicks": 1267,
+			"impressions": 326512
+		},
+		{
+			"host": "jportal.tashif.codes",
+			"clicks": 96,
+			"impressions": 30206
+		},
+		{
+			"host": "blog.tashif.codes",
+			"clicks": 45,
+			"impressions": 50615
+		},
+		{
+			"host": "simple-timetable.tashif.codes",
+			"clicks": 20,
+			"impressions": 519
+		}
+	],
+	"devices": [
+		{
+			"device": "Mobile",
+			"clicks": 7498,
+			"impressions": 239682
+		},
+		{
+			"device": "Desktop",
+			"clicks": 2641,
+			"impressions": 326566
+		},
+		{
+			"device": "Tablet",
+			"clicks": 89,
+			"impressions": 2480
+		}
+	],
+	"countries": [
+		{
+			"country": "India",
+			"clicks": 9667,
+			"impressions": 282461
+		},
+		{
+			"country": "United States",
+			"clicks": 70,
+			"impressions": 146693
+		},
+		{
+			"country": "United Kingdom",
+			"clicks": 31,
+			"impressions": 15488
+		},
+		{
+			"country": "Germany",
+			"clicks": 31,
+			"impressions": 5127
+		},
+		{
+			"country": "Netherlands",
+			"clicks": 24,
+			"impressions": 2894
+		}
+	]
+}

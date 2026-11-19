@@ -2,11 +2,11 @@
   "site": "https://tashif.codes",
   "source": "https://tashif.codes/projects/stats?project=dashboard",
   "api": "https://tashif.codes/projects/stats/api/v1/stats?slugs=dashboard&days=0",
-  "capturedAt": "2026-10-18T01:34:08.667633Z",
+  "capturedAt": "2026-11-19T06:34:08.921173Z",
   "from": "2025-07-31",
-  "to": "2026-10-18",
-  "pageviews": 49884,
-  "googleReferralPageviews": 15409,
+  "to": "2026-11-19",
+  "pageviews": 51892,
+  "googleReferralPageviews": 15610,
   "monthly": [
     {
       "month": "2025-07",
@@ -70,7 +70,11 @@
     },
     {
       "month": "2026-10",
-      "pageviews": 589
+      "pageviews": 1854
+    },
+    {
+      "month": "2026-11",
+      "pageviews": 743
     }
   ]
 }
