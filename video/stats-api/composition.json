@@ -427,14 +427,7 @@
           "label": "Unique IP addresses calling them in 30 days."
         }
       ],
-      "foot": "",
-      "links": [
-        "sptracker1.vercel.app",
-        "codeindex.ershaurya.dev",
-        "college-leaderboard-delta.vercel.app",
-        "gub-dragons.pro.bd",
-        "prep-loop-six.vercel.app"
-      ]
+      "foot": ""
     },
     {
       "type": "contact",
