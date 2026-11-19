@@ -11,3 +11,7 @@ Pageviews sum the daily timeseries. Google referral pageviews come from the `goo
 Screenshots in `public/work/tashif-codes/` were captured on 18 October 2026. The Google image is an actual public search for `site:tashif.codes/blog`. It demonstrates indexed results, not ranking for a competitive query. No authenticated Search Console data is included because Google rejected the preview sign-in and Safari automation timed out.
 
 The homepage chart uses calendar month totals. The first and last months are partial. Refreshing the JSON does not update the dated screenshots.
+
+## Stats API usage
+
+`stats-api-usage.json` feeds `/work/stats-apis`. It is a dated snapshot of Vercel request metrics for the seven public stats APIs, production only, grouped by referrer hostname. The site list drops the author's own domains and preview deployments, Netlify and EdgeOne preview builds, search engines and localhost. Requests without a referrer (about two thirds) cannot be attributed, so the list undercounts users. Refresh it by re-running the Vercel metrics query and regenerating the file.

@@ -1,0 +1,73 @@
+---
+import Arrow from "../../components/Arrow.astro";
+import PageLayout from "../../layouts/PageLayout.astro";
+import PageIntro from "../../components/studio/PageIntro.astro";
+import usage from "../../data/stats-api-usage.json";
+import { formatCount, formatDate } from "../../data/web-presence";
+import { wrap, kicker, h2, btn, btnAccent, btnGhost, btnArrow } from "../../components/studio/ui";
+
+const tools = usage.sites.filter(site => site.kind === "tool");
+const others = usage.sites.filter(site => site.kind !== "tool");
+const topApi = Math.max(...usage.perApi.map(row => row.requests));
+const figures = [
+	{ value: formatCount(usage.requests30d), label: "Requests in the last 30 days" },
+	{ value: formatCount(usage.requests90d), label: "Requests over 90 days" },
+	{ value: `${usage.externalSites}+`, label: "Other sites calling the APIs" },
+];
+---
+
+<PageLayout title="Stats API usage" description="Who calls the coding platform stats APIs: request counts and every site that embeds them, from Vercel request logs.">
+	<div class:list={[wrap, "mb-8"]}>
+		<a href="/work/#coding-platforms-stats-apis" class="text-sm text-muted transition-colors hover:text-foreground"><Arrow dir="left" /> Work</a>
+	</div>
+	<PageIntro label="Usage / Developer tools" summary="Seven public REST APIs for GitHub, LeetCode, Codeforces, GeeksforGeeks, CodeChef, HackerRank and takeUforward. Nobody signs up, so the only record of who uses them is where the requests come from. This page lists those sites.">
+		<Fragment slot="title">Stats APIs, <em>in use.</em></Fragment>
+		<a href="https://codetrace.xyz" target="_blank" rel="noopener noreferrer" class:list={[btn, btnAccent]}>Open CodeTrace <span class={btnArrow} aria-hidden="true"><Arrow dir="up-right" /></span></a>
+		<a href="https://leetcode-stats.tashif.codes" target="_blank" rel="noopener noreferrer" class:list={[btn, btnGhost]}>Try an API <span class={btnArrow} aria-hidden="true"><Arrow dir="up-right" /></span></a>
+	</PageIntro>
+
+	<div class:list={[wrap, "pb-16 sm:pb-24"]}>
+		<div class="min-w-0 overflow-hidden rounded-lg border border-border bg-surface">
+			<dl class="grid sm:grid-cols-3">
+				{figures.map((fig, i) => <div class:list={["flex flex-col border-border p-6 sm:p-9", i < 2 && "border-b sm:border-b-0 sm:border-r"]}>
+					<dt class="mt-3 text-sm text-secondary">{fig.label}</dt>
+					<dd class:list={["order-first font-display text-[clamp(2.25rem,4vw,3.5rem)] leading-none font-medium tracking-[-0.05em] tabular-nums", i === 2 && "text-accent"]}>{fig.value}</dd>
+				</div>)}
+			</dl>
+			<div class="border-t border-border p-6 sm:p-9">
+				<p class={kicker}>Fig 1. Requests by API, last 30 days</p>
+				<ul class="mt-5 space-y-3">
+					{usage.perApi.map(row => <li class="grid grid-cols-[7.5rem_1fr_4.5rem] items-center gap-3 text-sm">
+						<span class="text-secondary">{row.api}</span>
+						<span class="h-2 rounded-full bg-accent-soft"><span class="block h-full rounded-full bg-accent" style={`width:${(row.requests / topApi * 100).toFixed(1)}%`}></span></span>
+						<span class="text-right font-mono text-xs tabular-nums text-muted">{formatCount(row.requests)}</span>
+					</li>)}
+				</ul>
+			</div>
+			<p class="border-t border-border px-6 py-4 text-xs leading-6 text-muted sm:px-9">{formatDate(usage.from)} to {formatDate(usage.to)}. Source: {usage.source}. {formatCount(usage.uniqueIps30d)} unique IP addresses in 30 days. About two thirds of requests carry no referrer (servers, scripts and READMEs), so the real number of users is higher than this list.</p>
+		</div>
+
+		<section class="mt-16 sm:mt-24" aria-labelledby="tools">
+			<p class={kicker}>Fig 2. Tools and colleges</p>
+			<h2 id="tools" class={h2}>Built on <em>these APIs.</em></h2>
+			<ul class="mt-8 divide-y divide-border border-y border-border">
+				{tools.map(site => <li class="grid gap-1 py-4 sm:grid-cols-[1fr_auto] sm:gap-6">
+					<a href={`https://${site.host}`} target="_blank" rel="noopener noreferrer nofollow" class="break-all text-foreground underline decoration-border-strong underline-offset-4 hover:decoration-accent">{site.host}</a>
+					<span class="font-mono text-xs text-muted">{formatCount(site.requests)} requests · {site.apis.join(", ")}</span>
+				</li>)}
+			</ul>
+		</section>
+
+		<section class="mt-16 sm:mt-24" aria-labelledby="portfolios">
+			<p class={kicker}>Fig 3. Every other site</p>
+			<h2 id="portfolios" class={h2}>{usage.externalSites}+ sites <em>call the APIs.</em></h2>
+			<p class="mt-5 max-w-[60ch] leading-7 text-secondary">Mostly developer portfolios with a stats card, sorted by requests in the 30 days. Netlify and EdgeOne preview builds are left out, so the list is a little shorter than the count. Some hosts belong to the same person.</p>
+			<ul class="mt-8 grid gap-x-8 gap-y-2 text-sm sm:grid-cols-2 lg:grid-cols-3">
+				{others.map(site => <li class="flex min-w-0 items-baseline justify-between gap-3 border-b border-border py-2">
+					<a href={`https://${site.host}`} target="_blank" rel="noopener noreferrer nofollow" class="truncate text-secondary hover:text-accent">{site.host}</a>
+					<span class="shrink-0 font-mono text-xs tabular-nums text-muted" title={site.apis.join(", ")}>{formatCount(site.requests)}</span>
+				</li>)}
+			</ul>
+		</section>
+	</div>
+</PageLayout>

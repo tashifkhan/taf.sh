@@ -406,6 +406,37 @@
       ]
     },
     {
+      "type": "stats",
+      "dur": 7.2,
+      "kicker": "Who uses it",
+      "title": "Running in other people's builds.",
+      "items": [
+        {
+          "n": 151,
+          "suffix": "K",
+          "label": "Requests in the last 30 days, across the seven public APIs."
+        },
+        {
+          "n": 400,
+          "suffix": "+",
+          "label": "Other sites calling them, including college leaderboards."
+        },
+        {
+          "n": 8,
+          "suffix": "K+",
+          "label": "Unique IP addresses calling them in 30 days."
+        }
+      ],
+      "foot": "",
+      "links": [
+        "sptracker1.vercel.app",
+        "codeindex.ershaurya.dev",
+        "college-leaderboard-delta.vercel.app",
+        "gub-dragons.pro.bd",
+        "prep-loop-six.vercel.app"
+      ]
+    },
+    {
       "type": "contact",
       "dur": 8.6,
       "kicker": "Stats API",
