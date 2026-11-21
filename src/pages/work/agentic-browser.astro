@@ -17,6 +17,7 @@ const m = media("agentic-browser");
 const repo = "https://github.com/tashifkhan/agentic-browser";
 const files = "https://drive.tashif.codes/public.php/dav/files/9XPLTERoHiNdnBw";
 const report = `${files}/Report.pdf`;
+const install = "curl -fsSL https://tashif.codes/agentic-browser:install | sh";
 
 const loop = [
 	{ title: "Plan", body: "It reads the page's DOM as it is right now, then writes the steps it means to take." },
@@ -60,6 +61,18 @@ const models: { name: string; ids: string[]; note?: string }[] = [
 	{ name: "Ollama, local", ids: [], note: "Any model you pull, with no key and no network" },
 ];
 
+// Shipped after the May defence, in PR #122.
+const since = [
+	{ title: "Your plan, not just your keys", body: "Run a turn on your Claude, ChatGPT, Google AI or OpenCode subscription. That plan's own agent does the work, with this browser's tools and no shell." },
+	{ title: "Screenshots and files", body: "Attach an image, a PDF or a log and ask about it. Images go to any model that can see." },
+	{ title: "Voice in one pass", body: "Ramble and correct yourself. A model that hears audio writes down what you meant, then the agent acts on it." },
+	{ title: "Long chats", body: "Older messages fold into running notes instead of falling off the end of the context." },
+	{ title: "From your phone", body: "Text a task to the Telegram bot. It runs in your browser at home and replies with the answer or a screenshot. Only people on your allow list can use it." },
+	{ title: "Coding agents drive it", body: "Claude Code, Codex, Cursor and other MCP clients get your real tabs and your memory." },
+	{ title: "A repo agent", body: "It clones a repository, greps it and reads the files before it answers. Private repos work through your GitHub token." },
+	{ title: "One command to install", body: "Databases, backend, extension, browsers and MCP, on macOS and Linux. It asks before anything that touches your machine." },
+];
+
 const compatible = [
 	{ title: "OpenAI-compatible", body: "Give the OpenAI provider another base URL. vLLM, LM Studio, Groq and most hosted gateways speak this format." },
 	{ title: "Anthropic-compatible", body: "The Anthropic provider takes a base URL too, for any proxy or gateway that speaks the Messages API." },
@@ -86,6 +99,14 @@ const slideAlt = [
 	"Results and system impact",
 	"Conclusion, limitations and future scope",
 	"Closing slide",
+	"Since the report: what's new in November 2026",
+	"Runs on the plan you already pay for",
+	"Show it, say it: attachments and voice",
+	"Long chats, no amnesia",
+	"Your coding agent and your phone drive it",
+	"A repo agent that reads the code",
+	"One command to install",
+	"Try it",
 ];
 const slides = slideAlt.map((alt, i) => ({
 	src: m.file(`landing/slides/${String(i + 1).padStart(2, "0")}.webp`),
@@ -105,7 +126,8 @@ const commands = [
 
 const papers = [
 	{ title: "Report", body: "76 pages. Architecture, the memory algorithms, the security model, and the results above.", action: { label: "Read the report", href: report, primary: true, external: true } },
-	{ title: "Deck", body: "The 18 slides shown above, as a PDF.", action: { label: "Open the deck", href: m.file("deck.pdf"), external: true } },
+	{ title: "Deck", body: "All 26 slides shown above, as a PDF.", action: { label: "Open the deck", href: m.file("deck.pdf"), external: true } },
+	{ title: "Deck as PowerPoint", body: "The same 26 slides with editable text, 5 MB.", action: { label: "Download the PowerPoint", href: `${files}/PPT.pptx`, external: true } },
 	{
 		title: "Similarity report",
 		body: "The university's plagiarism check of the report: 8% overall similarity.",
@@ -115,28 +137,29 @@ const papers = [
 			external: true,
 		},
 	},
+	{ title: "The film in full resolution", body: "The film at the top of this page at 1920x1200, straight from the render, 121 MB.", action: { label: "Watch in full resolution", href: `${files}/demo-hd.mp4`, external: true } },
 	{ title: "Full demo", body: "The longer recording, 48 MB.", action: { label: "Watch the full demo", href: `${files}/demo.mp4`, external: true } },
 	{ title: "Source", body: "The extension, the Python server and the debug dashboard, in one repository.", action: { label: "Open on GitHub", href: repo, external: true } },
 ];
 
 const faq = [
-	{ q: "Which models work?", a: "Six providers: Google Gemini, OpenAI, Anthropic, DeepSeek, OpenRouter, and local models through Ollama. Any API that speaks the OpenAI, Anthropic or Gemini format works too. You bring the key." },
+	{ q: "Which models work?", a: "Six providers: Google Gemini, OpenAI, Anthropic, DeepSeek, OpenRouter, and local models through Ollama. Any API that speaks the OpenAI, Anthropic or Gemini format works too. Bring a key, or use a Claude, ChatGPT, Google AI or OpenCode subscription you already have." },
 	{ q: "Does it act without asking?", a: "No. Browser actions are declared first and wait for your approval, and every action is logged." },
 	{ q: "Where do my keys and memories go?", a: "Keys stay on your machine. Stored memories are encrypted with AES-CBC." },
 	{ q: "What does it not do yet?", a: "Safari is not supported. Local models through Ollama want a GPU, and the MLX setup needs macOS." },
-	{ q: "How do I install it?", a: `Build it from <a href="${repo}" target="_blank" rel="noopener noreferrer">the source</a>. It is not on a browser store.` },
+	{ q: "How do I install it?", a: `Run <code>${install}</code>. It sets up the databases, backend and extension, and registers the MCP server with your coding agents. It is not on a browser store.` },
 ];
 ---
 
 <PageLayout title="Agentic Browser" description="Agentic Browser, a side panel whose agents plan, act and check their work on any page, with three-store memory and your own model keys.">
 	<div class={wrap}>
 		<Landing name="agentic-browser">
-			<LandingHero wide kicker="Agentic Browser / AI agents" title="An agent that acts on the page." lead="It plans, clicks and checks its own work in your browser, on the model you choose.">
+			<LandingHero wide kicker="Agentic Browser / AI agents" title="An agent that acts on the page." lead="It plans, clicks and checks its own work in your browser, on your own keys or the plan you already pay for.">
 				<Fragment slot="actions">
 					<a href={report} target="_blank" rel="noopener noreferrer" class="ld-btn ld-btn-primary"><Icon name="file" /> Read the report</a>
 					<a href={repo} target="_blank" rel="noopener noreferrer" class="ld-btn"><Icon name="github" /> Source</a>
 				</Fragment>
-				<Fragment slot="terms">My B.Tech major project at JIIT, May 2026. Open source.</Fragment>
+				<Fragment slot="terms">My B.Tech major project at JIIT, May 2026, still growing. Open source.</Fragment>
 				<Shot slot="media" width={1280} height={800}>
 					<LandingVideo {...m.video} label="Agentic Browser walkthrough: the side panel planning and acting on a page" controls />
 				</Shot>
@@ -153,11 +176,23 @@ const faq = [
 				</ol>
 			</Section>
 
+			<Section id="since" title="Since May." lead="What shipped after the defence." layout="side" gap="l">
+				<Rows rows={since} />
+			</Section>
+
+			<Section id="install" title="Install." lead="One command on macOS or Linux. It clones the repo into ~/agentic‑browser and walks through seven steps." layout="side">
+				<div class="ab-install">
+					<pre><code>{install}</code></pre>
+					<button type="button" class="ld-btn" data-copy={install}><Icon name="copy" /> Copy</button>
+				</div>
+				<p class="ab-note">Add <code>-s -- --yes</code> after <code>sh</code> to take every default, or <code>--dry-run</code> to see what it would do. <a href={`${repo}/blob/main/install.sh`} target="_blank" rel="noopener noreferrer">Read the script</a> before you pipe it into a shell.</p>
+			</Section>
+
 			<Section id="memory" title="It remembers, in three stores." lead="Most agents forget everything between sessions. This one writes what it learns to three databases, each good at one kind of recall." layout="side" gap="l">
 				<Rows rows={stores} />
 			</Section>
 
-			<Section id="models" title="Any model." lead="Six providers are built in, and any endpoint that speaks the OpenAI, Anthropic or Gemini API works too. You bring the key. Model ids are current as of November 2026, from models.dev." layout="side">
+			<Section id="models" title="Any model." lead="Six providers are built in, and any endpoint that speaks the OpenAI, Anthropic or Gemini API works too. Bring a key, or run on your Claude, ChatGPT, Google AI or OpenCode plan. Model ids are current as of November 2026, from models.dev." layout="side">
 				<div class="ld-table-wrap">
 					<table class="ld-table">
 						<caption>Built-in providers</caption>
@@ -197,7 +232,7 @@ const faq = [
 				</div>
 			</Section>
 
-			<Section id="deck" title="The deck." lead="Eighteen slides, from the problem to the results." gap="l">
+			<Section id="deck" title="The deck." lead="The May defence in 18 slides, then eight on what's new since." gap="l">
 				<DeckOpen slot="action" />
 				<Deck slides={slides} title="Agentic Browser deck" width={1280} height={853} />
 			</Section>
@@ -224,7 +259,47 @@ const faq = [
 	</div>
 </PageLayout>
 
+<script>
+	document.querySelectorAll<HTMLButtonElement>(".ab-install [data-copy]").forEach((button) => {
+		button.addEventListener("click", async () => {
+			try {
+				await navigator.clipboard.writeText(button.dataset.copy || "");
+				button.lastChild!.textContent = " Copied";
+				setTimeout(() => (button.lastChild!.textContent = " Copy"), 1600);
+			} catch {}
+		});
+	});
+</script>
+
 <style>
+	.ab-install {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--ld-space-sm);
+		align-items: stretch;
+	}
+	.ab-install pre {
+		flex: 1 1 22rem;
+		min-width: 0;
+		margin: 0;
+		padding: var(--ld-space-md) var(--ld-space-lg);
+		overflow-x: auto;
+		border: 1px solid var(--ld-rule);
+		border-radius: var(--ld-radius);
+		background: var(--ld-paper-2);
+		font-family: var(--ld-font-code);
+		font-size: var(--ld-text-sm);
+	}
+	.ab-note {
+		margin: var(--ld-space-md) 0 0;
+		max-width: 60ch;
+		color: var(--ld-muted);
+	}
+	.ab-note a {
+		color: var(--ld-ink);
+		text-decoration: underline;
+		text-underline-offset: 0.2em;
+	}
 	.ab-loop,
 	.ab-commands {
 		display: grid;
