@@ -127,6 +127,7 @@ const commands = [
 const papers = [
 	{ title: "Report", body: "76 pages. Architecture, the memory algorithms, the security model, and the results above.", action: { label: "Read the report", href: report, primary: true, external: true } },
 	{ title: "Deck", body: "All 26 slides shown above, as a PDF.", action: { label: "Open the deck", href: m.file("deck.pdf"), external: true } },
+	{ title: "Deck as PowerPoint", body: "The same 26 slides with editable text, 5 MB.", action: { label: "Download the PowerPoint", href: `${files}/PPT.pptx`, external: true } },
 	{
 		title: "Similarity report",
 		body: "The university's plagiarism check of the report: 8% overall similarity.",
@@ -136,6 +137,7 @@ const papers = [
 			external: true,
 		},
 	},
+	{ title: "The film in full resolution", body: "The film at the top of this page at 1920x1200, straight from the render, 121 MB.", action: { label: "Watch in full resolution", href: `${files}/demo-hd.mp4`, external: true } },
 	{ title: "Full demo", body: "The longer recording, 48 MB.", action: { label: "Watch the full demo", href: `${files}/demo.mp4`, external: true } },
 	{ title: "Source", body: "The extension, the Python server and the debug dashboard, in one repository.", action: { label: "Open on GitHub", href: repo, external: true } },
 ];
