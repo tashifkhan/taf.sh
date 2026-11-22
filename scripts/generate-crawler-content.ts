@@ -58,7 +58,7 @@ start_contact drafts a message to ${email}, fills the contact form when it is on
 
 ## Studio and services
 
-${["/", "/about", "/services", "/contact", "/work", "/work/tashif-codes", "/work/jiit-tools", "/work/stats-apis", "/work/paisa", "/work/patchwork", "/work/delhi-metro", "/work/codetrace", "/work/agentic-browser"].map(entry).join("\n")}
+${["/", "/about", "/services", "/contact", "/work", "/work/tashif-codes", "/work/jiit-tools", "/work/stats-apis", "/work/billi", "/work/patchwork", "/work/delhi-metro", "/work/codetrace", "/work/agentic-browser"].map(entry).join("\n")}
 
 ## Products and team work
 

@@ -32,7 +32,7 @@ const SCRIPT = [
 	{ cmd: "ls *.tashif.codes" },
 	{ out: [
 		["", "talentsync  jiit-timetable  ncr-metro"],
-		["", "wikispark  github-stats  paisa"],
+		["", "wikispark  github-stats  billi"],
 	] },
 ];
 const TYPE = 0.07, LINE = 0.18, PAUSE = 0.6, HOLD = 20;
