@@ -21,6 +21,7 @@ export default defineConfig({
 	// CliniQ was renamed to rah.clinic; keep the old product URL working.
 	redirects: {
 		'/products/cliniq': '/products/rah-clinic',
+		'/work/paisa': '/work/billi',
 	},
 	server: {
 		// Dev only: lets the server answer when reached through `tailscale serve`

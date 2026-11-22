@@ -9,6 +9,12 @@ import { videoResponse } from "./video";
 import videoSizes from "./video-manifest.json";
 import mediaRedirects from "./media-redirects.json";
 
+/** Pages that moved, as old path (no trailing slash) to new path. */
+const renamedPages: Record<string, string> = {
+	"/products/cliniq": "/products/rah-clinic/",
+	"/work/paisa": "/work/billi/",
+};
+
 const DEFAULT_CANONICAL_HOST = "taf.sh";
 const API_HOST = "eu.i.posthog.com";
 const ASSET_HOST = "eu-assets.i.posthog.com";
@@ -102,9 +108,10 @@ export default {
 		if (redirect) return redirect;
 
 		// Astro's static redirect is an HTML refresh. Send a permanent HTTP
-		// redirect before Assets so crawlers consolidate the renamed product.
-		if (url.pathname.replace(/\/+$/, "") === "/products/cliniq") {
-			url.pathname = "/products/rah-clinic/";
+		// redirect before Assets so crawlers consolidate renamed pages.
+		const renamed = renamedPages[url.pathname.replace(/\/+$/, "")];
+		if (renamed) {
+			url.pathname = renamed;
 			return Response.redirect(url.toString(), 301);
 		}
 

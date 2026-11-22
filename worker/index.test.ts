@@ -24,7 +24,17 @@ describe("SEO routing", () => {
 	test("old flat media paths redirect to their project folder", async () => {
 		const response = await worker.fetch(new Request("https://taf.sh/reel/paisa-demo.mp4"), environment(), ctx);
 		expect(response.status).toBe(301);
-		expect(response.headers.get("Location")).toBe("https://taf.sh/media/paisa/demo.mp4");
+		expect(response.headers.get("Location")).toBe("https://taf.sh/media/billi/demo.mp4");
+	});
+	for (const path of ["/work/paisa", "/work/paisa/"]) test(`Paisa's page follows the rename to Billi: ${path}`, async () => {
+		const response = await worker.fetch(new Request(`https://taf.sh${path}`), environment(), ctx);
+		expect(response.status).toBe(301);
+		expect(response.headers.get("Location")).toBe("https://taf.sh/work/billi/");
+	});
+	test("Paisa's media URLs redirect to Billi's", async () => {
+		const response = await worker.fetch(new Request("https://taf.sh/media/paisa/poster.jpg"), environment(), ctx);
+		expect(response.status).toBe(301);
+		expect(response.headers.get("Location")).toBe("https://taf.sh/media/billi/poster.jpg");
 	});
 	test("every media redirect points at a file that exists", async () => {
 		const targets = Object.values((await import("./media-redirects.json")).default as Record<string, string>);
