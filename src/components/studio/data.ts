@@ -20,7 +20,7 @@ export const sponsorUrl = "";
  */
 export const playStoreDeveloperUrl = "";
 export const playStoreApps: Record<string, string> = {
-	// Paisa: "https://play.google.com/store/apps/details?id=codes.tashif.paisa",
+	// Billi: "https://play.google.com/store/apps/details?id=sh.taf.billi",
 };
 
 export const nav = [
@@ -350,22 +350,22 @@ const entries: ReelEntry[] = [
 		video: media("systematic-reasoning").video,
 	},
 	{
-		id: "paisa",
-		name: "Paisa",
+		id: "billi",
+		name: "Billi",
 		group: "app",
 		sector: "finance",
 		year: "2025",
-		line: "Expense tracking on Android and the web. On-device bank SMS parsing, optional AI entry, budgets, Material You colors, hidden amounts, app lock, and layouts for phones, foldables and tablets.",
+		line: "A budgeting and expense manager for Android and the web, formerly Paisa. On-device bank SMS parsing, AI entry with Gemini Nano or your own key, budgets, app shortcuts, actions for assistants on Android 16, and layouts for phones, foldables and tablets.",
 		tags: ["app", "mobile", "web"],
 		stack: ["Kotlin", "Compose Multiplatform", "SQLite"],
-		live: "https://paisa.tashif.codes",
+		live: "https://billi.taf.sh",
 		metric: "Local-first",
 		platforms: ["Android", "Web"],
-		shots: media("paisa").shots(19),
-		video: media("paisa").video,
+		shots: media("billi").shots(21),
+		video: media("billi").video,
 		links: [
-			{ label: "Source", href: "https://github.com/tashifkhan/Paisa" },
-			{ label: "Android releases", href: "https://github.com/tashifkhan/Paisa/releases" },
+			{ label: "Source", href: "https://github.com/tashifkhan/Billi" },
+			{ label: "Android releases", href: "https://github.com/tashifkhan/Billi/releases" },
 		],
 	},
 	{

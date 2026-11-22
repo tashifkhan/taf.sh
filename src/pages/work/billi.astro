@@ -1,8 +1,9 @@
 ---
 /**
- * Paisa case study, ported from the tashif.codes landing. Feature screens
- * live in public/media/paisa/landing/screens, the store art in
- * public/media/paisa/store/phone, and the films in public/media/paisa.
+ * Billi case study. Billi was called Paisa until 2.0.0; /work/paisa redirects
+ * here. Feature screens live in public/media/billi/landing/screens, the store
+ * art in public/media/billi/store/phone, and the films in public/media/billi.
+ * The full-resolution film is in Projects/Billi on drive.tashif.codes, shared publicly.
  */
 import PageLayout from "../../layouts/PageLayout.astro";
 import { Landing, LandingHero, Section, Shot, LandingVideo, Pinned, MediaSwitcher, Rows, StoreRail, Faq, Routes, Icon } from "../../components/landing";
@@ -10,28 +11,29 @@ import { fdroidRoute, playRoute } from "../../components/landing/fdroid";
 import { reel, media, playStoreApps } from "../../components/studio/data";
 import { wrap } from "../../components/studio/ui";
 
-const item = reel.find((entry) => entry.id === "paisa")!;
-const m = media("paisa");
-const repo = "https://github.com/tashifkhan/Paisa";
+const item = reel.find((entry) => entry.id === "billi")!;
+const m = media("billi");
+const repo = "https://github.com/tashifkhan/Billi";
 const apk = `${repo}/releases/latest`;
 const webApp = item.live!;
+const files = "https://drive.tashif.codes/public.php/dav/files/wBieeRMpBr6RRsJ";
 
 // Every feature screen is cropped to the same size.
-const screen = { width: 650, height: 1462 };
+const screen = { width: 650, height: 1444 };
 const shot = (name: string, alt: string) => ({ src: m.file(`landing/screens/${name}.webp`), alt });
 
-// The same four chapters the walkthrough follows.
+// The same chapters the walkthrough follows.
 const chapters = [
 	{
 		title: "Capture",
 		features: [
 			{ title: "Bank SMS import", body: "Parsers for about 140 Indian banks turn an alert into a transaction on the phone. A bulk scan reads the inbox once, and a live receiver catches new alerts." },
 			{ title: "The source stays attached", body: "Open any imported transaction to read the original message under it." },
-			{ title: "Add with AI", body: 'Type "lunch 240 yesterday, uber 180 today" or attach a receipt. Ask it to change a draft in plain words, then save them together.' },
+			{ title: "Add with AI", body: 'Type "lunch 240 at Chaayos yesterday, Uber 180 today" or attach a receipt. Ask it to change a draft in plain words, then save them together. It runs on Gemini Nano on phones that have it, or on a model and key you add.' },
 			{ title: "Manual entry", body: "A cash expense takes an amount, a title and a category." },
 		],
 		shots: [
-			shot("sms", "A UPI transfer of 460 rupees, parsed from a bank SMS"),
+			shot("sms", "A ₹460 Swiggy Instamart payment, parsed from an HDFC Bank SMS"),
 			shot("source", "The same transaction with the original bank SMS shown under it"),
 			shot("ai", "Two AI drafts, Chaayos and Uber, ready to save"),
 		],
@@ -42,10 +44,10 @@ const chapters = [
 			{ title: "Merchant search", body: "Type a merchant and get every payment to it, with the total." },
 			{ title: "Analytics", body: "Spending by category for a month or a range you pick." },
 			{ title: "Budgets", body: "A monthly cap per category, with progress beside each one." },
-			{ title: "Accounts", body: "Bank, cash, card and wallet balances in one list." },
+			{ title: "Accounts", body: "Bank, cash, card and wallet balances, as cards or a list." },
 		],
 		shots: [
-			shot("search", "Search results for Swiggy, four transactions"),
+			shot("search", "Search results for Swiggy"),
 			shot("analytics", "Analytics by category with a ring chart"),
 			shot("budgets", "Monthly budgets for food, groceries, shopping and transport"),
 		],
@@ -53,14 +55,14 @@ const chapters = [
 	{
 		title: "Make it yours",
 		features: [
-			{ title: "Material You", body: "Wallpaper colours on Android 12 and up, or one of 31 fixed palettes." },
+			{ title: "Palettes", body: "Billi orange by default, wallpaper colours on Android 12 and up, or one of 32 fixed palettes." },
 			{ title: "AMOLED black", body: "Pure black surfaces in dark mode." },
-			{ title: "Contrast, motion and navigation", body: "High contrast, calmer motion and a floating navigation bar are each one switch." },
+			{ title: "Contrast, motion and navigation", body: "High contrast, calmer motion, a floating navigation bar, and whether Home shows credit cards and debts. Each is one switch." },
 		],
 		shots: [
-			shot("appearance", "Appearance settings with wallpaper colours selected"),
+			shot("appearance", "Appearance settings with the palette grid open"),
 			shot("customize", "Dark appearance settings with AMOLED black and a floating navbar on"),
-			shot("amoled", "The home screen in AMOLED black with the Ocean palette"),
+			shot("amoled", "The home screen in AMOLED black with the Billi palette"),
 		],
 	},
 	{
@@ -68,12 +70,25 @@ const chapters = [
 		features: [
 			{ title: "Hide amounts", body: "One tap swaps every amount for dots." },
 			{ title: "App lock", body: "A fingerprint, your face or the screen lock, each time you come back." },
-			{ title: "Backup and sync", body: "Google Drive, Nextcloud or a .paisa file, encrypted with AES-256-GCM when you set a password. A phone and a browser can share one destination." },
+			{ title: "Backup and sync", body: "Google Drive, Nextcloud or a .billi file, encrypted with AES-256-GCM when you set a password. A phone and a browser can share one destination." },
 		],
 		shots: [
 			shot("hide", "Home screen with every balance replaced by dots"),
-			shot("lock", "Paisa is locked. Unlock with fingerprint, face or device credentials"),
+			shot("lock", "Billi is locked, with Billi the cat guarding the wallet"),
 			shot("backup", "Backup settings with Google Drive and Nextcloud"),
+		],
+	},
+	{
+		title: "Quicker ways in",
+		features: [
+			{ title: "App shortcuts", body: "Long-press the icon for Add transaction, Add with AI, Budgets and Spending." },
+			{ title: "Actions for assistants", body: "On Android 16, Billi exposes Android AppFunctions to add a transaction and read balances, spending, budgets and recent payments. An assistant can call them once Google lists Billi as a connected app." },
+			{ title: "One switch to stop it", body: "Turn off Gemini and assistants under Privacy and security, and every call is refused." },
+		],
+		shots: [
+			shot("shortcuts", "The shortcuts on Billi's launcher icon"),
+			shot("assistant", "Privacy and security with the Gemini and assistants switch"),
+			shot("welcome", "Billi's welcome screen with the mascot"),
 		],
 	},
 ];
@@ -81,28 +96,31 @@ const chapters = [
 const stays = [
 	{ title: "Your SMS", body: "Parsed on the device. Never uploaded." },
 	{ title: "The ledger", body: "Room and SQLite, on the phone." },
+	{ title: "On-device AI", body: "Gemini Nano runs notes and photos on the phone, where the phone has it." },
 	{ title: "AI keys", body: "Held in EncryptedSharedPreferences." },
 ];
 const leaves = [
-	{ title: "A statement", body: "To the AI endpoint you configured, when you import one." },
+	{ title: "A note or statement", body: "To the AI endpoint you configured, when you ask it to read one." },
 	{ title: "A backup", body: "To the Drive, Nextcloud or file you picked." },
 ];
 
 // The main walkthrough and the four platform cuts rendered from it.
 const clips = [
-	{ id: "walkthrough", label: "Walkthrough", note: "The full tour, about two minutes, with sound.", ...m.video, width: 1280, height: 800, controls: true },
-	{ id: "phone", label: "Phone", note: "Every phone feature in portrait, about 90 seconds.", ...m.cut("phone"), width: 1280, height: 2276, controls: true },
+	{ id: "walkthrough", label: "Walkthrough", note: "The full tour, about three and a half minutes, with sound.", ...m.video, width: 1280, height: 800, controls: true },
+	{ id: "phone", label: "Phone", note: "Every phone feature in portrait.", ...m.cut("phone"), width: 1280, height: 2276, controls: true },
 	{ id: "foldable", label: "Foldable", note: "Unfolded, a transaction opens beside the list.", ...m.cut("foldable"), width: 1280, height: 800, controls: true },
 	{ id: "tablet", label: "Tablet", note: "From 840dp wide, analytics goes to two columns.", ...m.cut("tablet"), width: 1280, height: 800, controls: true },
 	{ id: "web", label: "Browser", note: "The same Kotlin, compiled to WebAssembly.", ...m.cut("web"), width: 1280, height: 800, controls: true },
 ];
 
 const more = [
+	{ title: "Billi the cat", body: "A ginger cat who is also a wallet. It welcomes you, naps on empty lists, thinks while AI reads, and guards the lock screen." },
 	{ title: "Statement import", body: "Feed it PDF, CSV or image statements, several at once. Duplicates across files are dropped." },
 	{ title: "Model ladder", body: "Pick a model per provider and order fallbacks, with your own key." },
 	{ title: "Categories that learn", body: "Your merchant rules run first. Fix a merchant once and the fix sticks." },
+	{ title: "Payment notifications", body: "Google Pay, PhonePe and bank app alerts become transactions, saved once even when the SMS arrives too." },
 	{ title: "Split with others", body: "A split adds each person's share to what they owe you in Debts." },
-	{ title: "Credit cards", body: "Available credit and what you owe, on the home screen." },
+	{ title: "Credit cards", body: "Available credit and what you owe, on the home screen, if you want it there." },
 	{ title: "Export", body: "CSV for a spreadsheet, PDF for a person." },
 	{ title: "Widgets", body: "Your balance and quick add on the home screen." },
 	{ title: "Keyboard in the browser", body: "n adds, / searches, 1 to 6 switch tabs." },
@@ -110,7 +128,8 @@ const more = [
 
 // The store art, in the order of the screenshot pack.
 const storeAlt = [
-	"Paisa overview. Your money, your business.",
+	"Billi overview. Your money, your business.",
+	"Meet Billi, a cat who is a wallet",
 	"A bank SMS recorded as a transaction",
 	"The original bank message beside the parsed transaction",
 	"Add with AI turns a sentence into two drafts",
@@ -119,16 +138,17 @@ const storeAlt = [
 	"Monthly budgets per category",
 	"All account balances in one list",
 	"Merchant search results",
-	"Material You colours from the wallpaper",
-	"Appearance settings with fixed palettes",
+	"Palettes in the appearance settings",
+	"Appearance controls in dark mode",
 	"Dark mode with AMOLED black",
 	"Amounts hidden behind dots",
 	"App lock screen",
+	"Shortcuts on the app icon",
 	"Unfolded foldable with list and detail",
 	"Tablet layout",
 	"Web app on a wide screen",
 	"Backup destinations",
-	"Paisa on phone, foldable, tablet and web",
+	"Billi on phone, foldable, tablet and web",
 ];
 const store = [
 	{
@@ -141,38 +161,41 @@ const store = [
 ];
 
 const faq = [
-	{ q: "Do I need an account?", a: "No. There is no sign up and no Paisa server. Setup asks for a currency and a theme." },
+	{ q: "Wasn't this called Paisa?", a: "Yes, until 2.0.0. The package changed to sh.taf.billi, so Android installs Billi next to Paisa. Save a backup in Paisa, then pick it from <em>I have a backup</em> on Billi's first screen. Billi reads .paisa files and lists Paisa's old Drive and Nextcloud backups." },
+	{ q: "Do I need an account?", a: "No. There is no sign up and no Billi server. Setup asks for a currency and a theme." },
 	{ q: "Which banks does SMS import cover?", a: 'About 140 Indian banks. The parsers come from <a href="https://github.com/sarim2000/pennywiseai-tracker" target="_blank" rel="noopener noreferrer">PennyWise</a>. A financial message that no parser claims goes to an unrecognized list instead of vanishing.' },
-	{ q: "Is the AI required?", a: "No. SMS parsing uses on-device parsers and no model. Add with AI and statement import stay off until you add your own key for an OpenAI compatible endpoint, Gemini or Anthropic." },
-	{ q: "Is there an iPhone app?", a: `Not yet. Paisa runs on Android 7.0 and up, and in a recent Chrome, Edge, Firefox or Safari at <a href="${webApp}" target="_blank" rel="noopener noreferrer">paisa.tashif.codes</a>. The browser build can't read SMS, because browsers can't.` },
-	{ q: "What does it cost?", a: `Nothing. Paisa is free under AGPL-3.0, and the source is on <a href="${repo}" target="_blank" rel="noopener noreferrer">GitHub</a>.` },
+	{ q: "Is the AI required?", a: "No. SMS parsing uses on-device parsers and no model. Add with AI and statement import stay off until you turn on Gemini Nano, on phones that have it, or add your own key for an OpenAI compatible endpoint, Gemini or Anthropic." },
+	{ q: "Can Gemini use Billi?", a: "Billi exposes Android AppFunctions on Android 16, tested with the system's own app_function tool. Gemini only calls apps Google has registered as connected apps, and Billi isn't one yet. The switch under Privacy and security turns the actions off either way." },
+	{ q: "Is there an iPhone app?", a: `Not yet. Billi runs on Android 7.0 and up, and in a recent Chrome, Edge, Firefox or Safari at <a href="${webApp}" target="_blank" rel="noopener noreferrer">billi.taf.sh</a>. The browser build can't read SMS, because browsers can't.` },
+	{ q: "What does it cost?", a: `Nothing. Billi is free under AGPL-3.0, and the source is on <a href="${repo}" target="_blank" rel="noopener noreferrer">GitHub</a>.` },
 ];
 
 const routes = [
 	{ title: "APK", body: `The newest build from <a href="${repo}/releases" target="_blank" rel="noopener noreferrer">GitHub releases</a>. A .sha256 file ships beside every build.`, action: { label: "Download APK", href: apk, primary: true, external: true } },
-	fdroidRoute("Paisa"),
+	fdroidRoute("Billi"),
 	{ title: "Browser", body: "Nothing to install. Add <code>?demo</code> for three months of sample data.", action: { label: "Open the web demo", href: `${webApp}/?demo`, external: true } },
+	{ title: "The film in full resolution", body: "The walkthrough at 1920x1200, straight from the render.", action: { label: "Watch in full resolution", href: `${files}/billi-demo-hd.mp4`, external: true } },
 	playRoute(playStoreApps[item.name]),
 ];
 ---
 
-<PageLayout title="Paisa" description="Paisa, an expense manager that reads bank SMS on the phone and keeps the ledger there. Android and the web, by Tashif Ahmad Khan.">
+<PageLayout title="Billi" description="Billi, a budgeting and expense manager that reads bank SMS on the phone and keeps the ledger there. Local AI, Android and the web, by Tashif Ahmad Khan.">
 	<div class={wrap}>
-		<Landing name="paisa">
-			<LandingHero kicker="Paisa / Mobile app / Android and web" title="Your money stays on your phone." lead="Paisa turns bank SMS into transactions on the device, with no account.">
+		<Landing name="billi">
+			<LandingHero kicker="Billi / Mobile app / Android and web" title="Your money stays on your phone." lead="Billi is a budgeting and expense manager. It turns bank SMS into transactions on the device, with no account.">
 				<Fragment slot="actions">
 					<a href={apk} target="_blank" rel="noopener noreferrer" class="ld-btn ld-btn-primary"><Icon name="download" /> Download APK</a>
 					<a href={`${webApp}/?demo`} target="_blank" rel="noopener noreferrer" class="ld-btn"><Icon name="globe" /> Open the web demo</a>
 				</Fragment>
 				<Fragment slot="terms">
-					For Android 7.0 and up. Free under AGPL-3.0. <a class="ld-link" href={`${repo}/releases`} target="_blank" rel="noopener noreferrer">Release notes</a>
+					For Android 7.0 and up. Free under AGPL-3.0. Formerly Paisa. <a class="ld-link" href={`${repo}/releases`} target="_blank" rel="noopener noreferrer">Release notes</a>
 				</Fragment>
 				<Shot slot="media" width={720} height={1280}>
-					<LandingVideo src={m.file("landing/phone.mp4")} poster={m.file("landing/phone-poster.webp")} label="Paisa on a phone: an SMS becomes a transaction, then AI drafts, budgets and themes" autoplay />
+					<LandingVideo src={m.file("landing/phone.mp4")} poster={m.file("landing/phone-poster.webp")} label="Billi on a phone: setup, an SMS becoming a transaction, AI drafts, budgets and themes" autoplay />
 				</Shot>
 			</LandingHero>
 
-			<Section id="features" title="Everything it does, in four chapters." gap="s">
+			<Section id="features" title="Everything it does, in five chapters." gap="s">
 				<Pinned chapters={chapters} {...screen} />
 			</Section>
 
@@ -188,22 +211,22 @@ const routes = [
 			</Section>
 
 			<Section id="screens" title="One codebase, four screen sizes." lead="The layout follows the window, not the platform. Each cut has its own soundtrack." gap="l">
-				<MediaSwitcher clips={clips} label="Paisa on different screens" name="Paisa" />
+				<MediaSwitcher clips={clips} label="Billi on different screens" name="Billi" />
 			</Section>
 
 			<Section id="more" title="Also in the app." layout="side">
 				<Rows rows={more} dense />
 			</Section>
 
-			<Section id="store" title="Nineteen store screens." lead="The screenshot set for the app stores, made from real captures." gap="s">
-				<StoreRail sets={store} label="Paisa store screenshots" />
+			<Section id="store" title="Twenty-one store screens." lead="The screenshot set for the app stores, made from real captures." gap="s">
+				<StoreRail sets={store} label="Billi store screenshots" />
 			</Section>
 
 			<Section id="faq" title="Before you install." layout="side">
 				<Faq items={faq} />
 			</Section>
 
-			<Section id="get" title="Get Paisa." layout="side" gap="l">
+			<Section id="get" title="Get Billi." layout="side" gap="l">
 				<Routes routes={routes} />
 			</Section>
 		</Landing>
